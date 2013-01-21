@@ -1,0 +1,23 @@
+<GlobalDefinition>
+	<Properties>
+		<Property Name="Framework::DebugWindow" Value="0"/>
+		<Property Name="Scheduler::Benchmarking" Value="0"/>
+		<Property Name="TaskManager::Threads" Value="0"/>
+		<Property Name="TaskManager::TPEventsForTasks" Value="0"/>
+		<Property Name="TaskManager::TPEventsForJobs" Value="0"/>
+		<Property Name="TaskManager::TPEventsForSynchronize" Value="0"/>
+	</Properties>
+	<Systems>
+		<System Type="Graphic">
+			<Properties>
+			</Properties>
+		</System>
+		<System Type="Input">
+		</System>
+		<!--<System Type="Network"/>-->
+		<System Type="Physic"/>
+	</Systems>
+	<Scenes Startup="Main">
+		<Scene Name="Main"/>
+	</Scenes>
+</GlobalDefinition>
