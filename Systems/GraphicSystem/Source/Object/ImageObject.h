@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,15 +12,12 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #pragma once
 
 #include "System.h"
-#include "System/ISystemObject.h"
-#include "SpinMutex.h"
+#include "Object/Object.h"
 
-class GraphicSystem;
-class OGREGraphicsScene;
+class ISystemScene;
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
@@ -28,31 +25,19 @@ class OGREGraphicsScene;
  * 
  * @sa  ISystemObject
  */
-class GraphicObject : public ISystemObject {
+class ImageGraphicObject : public GraphicObject {
     
     public:
 
-        enum Types {
-            Type_Image,              // Object from Image
-            Type_Count,
-        };
-        
         /**
          * @inheritDoc
          */
-        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
+        ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
          * @inheritDoc
          */
-        virtual ~GraphicObject(void);
-
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Graphic;
-        }
+        virtual ~ImageGraphicObject(void);
 
         /**
          * @inheritDoc
@@ -88,9 +73,17 @@ class GraphicObject : public ISystemObject {
             return m_Type;
         }
 
+        /**
+         * Update the system object.
+         *
+         * @param   DeltaTime   Time of the delta.
+         */
+        virtual void Update(f32 DeltaTime);
+
     public:
 
         Types                               m_Type;
+        SDL_Surface*                        m_image;
 
         DEFINE_SPIN_MUTEX(m_mutex);
 

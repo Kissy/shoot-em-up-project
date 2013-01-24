@@ -31,8 +31,6 @@ class GraphicObject;
 class GraphicScene : public ISystemScene {
 
     public:
-        
-        typedef std::vector<GraphicObject*>    ObjectsList;
 
         DECLARE_STATIC_SPIN_MUTEX(m_mutex);
         

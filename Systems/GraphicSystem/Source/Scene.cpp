@@ -21,6 +21,7 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
+#include "Object/ImageObject.h"
 
 extern ManagerInterfaces       g_Managers;
 
@@ -43,10 +44,9 @@ void ProcessObjects(void* Data);
  * @inheritDoc
  */
 GraphicScene::GraphicScene(ISystem* pSystem) : ISystemScene(pSystem) {
-    
     m_TaskFactory = boost::factory<GraphicTask*>();
-
-    //m_ObjectFactories["Camera"] = boost::factory<GraphicObjectCamera*>();
+    
+    m_ObjectFactories["Image"] = boost::factory<ImageGraphicObject*>();
 }
 
 /**
@@ -70,6 +70,15 @@ Error GraphicScene::initialize(void) {
  */
 void GraphicScene::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*> (m_pSystem)->GetScreen();
-
+    if (m_pObjects.empty()) {
+        m_pObjects.push_back(CreateObject("test", "Image"));
+    }
     memset(screen->pixels, SDL_MapRGB(screen->format, 50, 0, 0), 800 * 600);
+    
+    ObjectsList Objects = m_pObjects;
+
+    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
+        GraphicObject* pObject = static_cast<GraphicObject*>(*it);
+        pObject->Update(DeltaTime);
+    }
 }
