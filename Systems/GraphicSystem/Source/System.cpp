@@ -54,7 +54,7 @@ Error GraphicSystem::initialize(void) {
         return Errors::Failure;
     }
 
-    screen = SDL_SetVideoMode(800, 600, 8, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
     if ( screen == NULL ) {
         return Errors::Failure;
     }
