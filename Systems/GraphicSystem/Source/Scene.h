@@ -78,6 +78,7 @@ class GraphicScene : public ISystemScene {
     protected:
 
         bool                                m_bPause;
+        SDL_Surface*                        m_background;
 
 };
 

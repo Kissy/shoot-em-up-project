@@ -12,7 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "boost/functional/factory.hpp"
+#include <boost/functional/factory.hpp>
+#include <SDL_image.h>
 
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -53,7 +54,9 @@ GraphicScene::GraphicScene(ISystem* pSystem) : ISystemScene(pSystem) {
  * @inheritDoc
  */
 GraphicScene::~GraphicScene(void) {
-
+    if (m_bInitialized) {
+        SDL_FreeSurface(m_background);
+    }
 }
 
 /**
@@ -61,6 +64,8 @@ GraphicScene::~GraphicScene(void) {
  */
 Error GraphicScene::initialize(void) {
     ASSERT(!m_bInitialized);
+
+    m_background = IMG_Load("../../Assets/Media/Graphic/Background.png");
 
     return Errors::Success;
 }
@@ -73,10 +78,9 @@ void GraphicScene::Update(f32 DeltaTime) {
     if (m_pObjects.empty()) {
         m_pObjects.push_back(CreateObject("test", "Image"));
     }
-    memset(screen->pixels, SDL_MapRGB(screen->format, 50, 0, 0), 800 * 600);
+    SDL_BlitSurface(m_background, NULL, screen, NULL);
     
     ObjectsList Objects = m_pObjects;
-
     for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
         GraphicObject* pObject = static_cast<GraphicObject*>(*it);
         pObject->Update(DeltaTime);

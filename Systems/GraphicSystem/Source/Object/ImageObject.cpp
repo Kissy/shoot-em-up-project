@@ -35,7 +35,10 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* p
  * @inheritDoc
  */
 ImageGraphicObject::~ImageGraphicObject(void) {
-    SDL_FreeSurface(m_image);
+    delete m_position;
+    if (m_bInitialized) {
+        SDL_FreeSurface(m_image);
+    }
 }
 
 /**
