@@ -85,6 +85,8 @@ class ImageGraphicObject : public GraphicObject {
         Types                               m_Type;
         SDL_Surface*                        m_image;
 
+        SDL_Rect*                           m_position;
+
         DEFINE_SPIN_MUTEX(m_mutex);
 
 };

@@ -12,9 +12,11 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "boost/functional/factory.hpp"
-#include "boost/lexical_cast.hpp"
-#include "boost/bind.hpp"
+#include <boost/functional/factory.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/bind.hpp>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "Defines.h"
 #include "BaseTypes.h"
@@ -48,8 +50,18 @@ GraphicSystem::~GraphicSystem(void) {
 Error GraphicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
 
+    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
+        return Errors::Failure;
+    }
+
     screen = SDL_SetVideoMode(800, 600, 8, SDL_SWSURFACE);
     if ( screen == NULL ) {
+        return Errors::Failure;
+    }
+
+    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+    int initted = IMG_Init(flags);
+    if(initted & flags != flags) {
         return Errors::Failure;
     }
 

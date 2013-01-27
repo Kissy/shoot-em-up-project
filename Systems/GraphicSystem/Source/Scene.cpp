@@ -81,4 +81,6 @@ void GraphicScene::Update(f32 DeltaTime) {
         GraphicObject* pObject = static_cast<GraphicObject*>(*it);
         pObject->Update(DeltaTime);
     }
+    
+    SDL_Flip(screen);
 }

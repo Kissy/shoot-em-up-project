@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <SDL_image.h>
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -23,14 +25,17 @@
  * @inheritDoc
  */
 ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName) {
-    m_image = SDL_LoadBMP("../../Assets/Media/Graphic/SpaceShip.bmp");
+    m_position = new SDL_Rect();
+    m_position->x = 100;
+    m_position->y = 100;
+    m_image = IMG_Load("../../Assets/Media/Graphic/SpaceShip.png");
 }
 
 /**
  * @inheritDoc
  */
 ImageGraphicObject::~ImageGraphicObject(void) {
-
+    SDL_FreeSurface(m_image);
 }
 
 /**
@@ -58,10 +63,6 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 }
 
 void ImageGraphicObject::Update(f32 DeltaTime) {
-    SDL_Rect position;
-    position.x = 0;
-    position.y = 0;
     SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
-    SDL_BlitSurface(m_image, NULL, screen, &position);
-    SDL_Flip(screen);
+    SDL_BlitSurface(m_image, NULL, screen, m_position);
 }
