@@ -136,43 +136,20 @@ namespace System {
             static const u32 All                = CreateObject | DeleteObject | ExtendObject | UnextendObject;
         }
 
-        namespace Audio {
-
-        }
-
-        namespace Geometry {
-            static const u32 Position           = (1 <<  4);
-            static const u32 Orientation        = (1 <<  5);
-            static const u32 Scale              = (1 <<  6);
-            static const u32 All                = Position | Orientation | Scale;
-        }
-
-        namespace Graphics {
-            static const u32 IndexDecl          = (1 <<  7);
-            static const u32 VertexDecl         = (1 <<  8);
-            static const u32 IndexBuffer        = (1 <<  9);
-            static const u32 VertexBuffer       = (1 << 10);
-            static const u32 AABB               = (1 << 11);
-            static const u32 AllMesh            = IndexDecl | VertexDecl | AABB | IndexBuffer | VertexBuffer;
-            static const u32 ParticlesDecl      = (1 << 12);
-            static const u32 Particles          = (1 << 13);
-            static const u32 AllParticles       = ParticlesDecl | Particles;
-            static const u32 Animation          = (1 << 14);
-            static const u32 GUI                = (1 << 15);
-            static const u32 All                = AllMesh | AllParticles;
-        }
-
-        namespace Gui {
+        namespace Graphic {
 
         }
 
         namespace Input {
-            static const u32 Velocity           = (1 << 17);
-            static const u32 Mouse              = (1 << 18);
+            static const u32 Velocity           = (1 << 4);
         }
 
-        namespace Physics {
-            static const u32 Position           = (1 << 19);
+        namespace Network {
+
+        }
+
+        namespace Physic {
+            static const u32 Position           = (1 << 5);
         }
 
         static const u32 Link                   = (1 << 30);

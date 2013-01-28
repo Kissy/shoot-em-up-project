@@ -161,7 +161,7 @@ UScene::CreateObject(
     // Register the object with the scene's CCM.
     //
     m_pSceneCCM->Register(
-        pObject, System::Changes::Generic::All | System::Changes::Geometry::All, this
+        pObject, System::Changes::Generic::All /*| System::Changes::Geometry::All*/, this
     );
     return pObject;
 }
@@ -388,12 +388,13 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
         System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
 
-        if (SysObjPotentialChanges & (System::Changes::Geometry::All | System::Changes::Graphics::AABB)) {
+        // TODO find why this is there ?
+        /*if (SysObjPotentialChanges & (System::Changes::Geometry::All | System::Changes::Graphics::AABB)) {
             //
             // Have the UObject watch for all the geometry and AABB changes this system makes.
             //
             m_pObjectCCM->Register(pSystemObject, System::Changes::Geometry::All | System::Changes::Graphics::AABB, this);
-        }
+        }*/
 
         //
         // Register each object with scenes that care about the object's changes.
@@ -531,9 +532,9 @@ System::Changes::BitMask
 UObject::GetPotentialSystemChanges(
     void
 ) {
-    return System::Changes::Generic::All |
+    return System::Changes::Generic::All /*|
            System::Changes::Geometry::All |
-           System::Changes::Graphics::AABB;
+           System::Changes::Graphics::AABB*/;
 }
 
 
@@ -544,12 +545,12 @@ UObject::ChangeOccurred(
 ) {
     UNREFERENCED_PARAM(pSubject);
 
-    if (ChangeType & (System::Changes::Generic::All |
+    if (ChangeType & (System::Changes::Generic::All /*|
                       System::Changes::Geometry::All |
-                      System::Changes::Graphics::AABB)) {
-        ChangeType &= (System::Changes::Generic::All |
+                      System::Changes::Graphics::AABB*/)) {
+        ChangeType &= (System::Changes::Generic::All /*|
                        System::Changes::Geometry::All |
-                       System::Changes::Graphics::AABB);
+                       System::Changes::Graphics::AABB*/);
         //
         // Post the pertinent changes made by the extension to the scene CCM.
         //
