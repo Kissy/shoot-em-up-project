@@ -37,6 +37,10 @@ public:
         return currentValue;
     }
 
+    inline void updatePreviousValue(void) {
+        previousValue = currentValue;
+    }
+
 private:
 
     SDLKey bindKey;

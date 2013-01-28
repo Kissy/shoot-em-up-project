@@ -62,14 +62,19 @@ InputAction* InputSystem::createInputAction(SDLKey key) {
  */
 void InputSystem::pollInputEvents(void) {
     SDL_Event event;
+    std::list<InputAction*>::const_iterator inputActionIterator;
+    
+    for (inputActionIterator = m_inputActions.begin(); inputActionIterator != m_inputActions.end(); ++inputActionIterator) {
+        (*inputActionIterator)->updatePreviousValue();
+    }
+
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             g_Managers.pEnvironment->Runtime().SetStatus(IEnvironment::IRuntime::Status::Quit);
             return;
         }
 
-        std::list<InputAction*>::const_iterator inputActionIterator;
-        for (inputActionIterator =m_inputActions.begin(); inputActionIterator != m_inputActions.end(); ++inputActionIterator) {
+        for (inputActionIterator = m_inputActions.begin(); inputActionIterator != m_inputActions.end(); ++inputActionIterator) {
             (*inputActionIterator)->processEvent(event);
         }
     }
