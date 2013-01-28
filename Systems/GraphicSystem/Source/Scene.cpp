@@ -75,9 +75,6 @@ Error GraphicScene::initialize(void) {
  */
 void GraphicScene::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*> (m_pSystem)->GetScreen();
-    if (m_pObjects.empty()) {
-        m_pObjects.push_back(CreateObject("test", "Image"));
-    }
     SDL_BlitSurface(m_background, NULL, screen, NULL);
     
     ObjectsList Objects = m_pObjects;

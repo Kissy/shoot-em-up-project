@@ -25,19 +25,19 @@ class ISystemScene;
  * 
  * @sa  ISystemObject
  */
-class ImageGraphicObject : public GraphicObject {
+class PlayerInputObject : public InputObject {
     
     public:
 
         /**
          * @inheritDoc
          */
-        ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName);
+        PlayerInputObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
          * @inheritDoc
          */
-        virtual ~ImageGraphicObject(void);
+        virtual ~PlayerInputObject(void);
 
         /**
          * @inheritDoc
@@ -48,7 +48,7 @@ class ImageGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::None;
+            return System::Changes::Input::Velocity;
         };
 
         /**
@@ -70,10 +70,14 @@ class ImageGraphicObject : public GraphicObject {
          */
         virtual void Update(f32 DeltaTime);
 
-    public:
+    private:
+        
+        InputAction* m_upInputAction;
+        InputAction* m_rightInputAction;
+        InputAction* m_downInputAction;
+        InputAction* m_leftInputAction;
 
-        SDL_Surface*                        m_image;
-        SDL_Rect*                           m_position;
+        Math::Vector2 m_velocity;
 
 };
 

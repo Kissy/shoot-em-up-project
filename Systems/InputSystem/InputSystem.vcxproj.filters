@@ -45,6 +45,9 @@
     <ClCompile Include="Source\Input\InputAction.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\PlayerObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Source\Input\InputAction.h">
       <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\PlayerObject.h">
+      <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

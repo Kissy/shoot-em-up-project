@@ -56,11 +56,11 @@ Error ImageGraphicObject::initialize(void) {
 Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-
+    /*
     if (ChangeType & System::Changes::Geometry::All) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
 
-    }
+    }*/
 
     return Errors::Success;
 }

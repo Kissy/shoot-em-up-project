@@ -22,6 +22,7 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
+#include "Object/PlayerObject.h"
 
 
 extern ManagerInterfaces   g_Managers;
@@ -33,7 +34,7 @@ extern ManagerInterfaces   g_Managers;
 InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem) {
     m_TaskFactory = boost::factory<InputTask*>();
 
-    //m_ObjectFactories["Player"] = boost::factory<InputPlayerObject*>();
+    m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
 }
 
 /**

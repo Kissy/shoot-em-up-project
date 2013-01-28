@@ -70,10 +70,7 @@ class GraphicObject : public ISystemObject {
          * @inheritDoc
          */
         virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Geometry::Position |
-                   System::Changes::Geometry::Orientation |
-                   System::Changes::Geometry::Scale |
-                   System::Changes::Graphics::GUI;
+            return System::Changes::None;
         };
         
         /**

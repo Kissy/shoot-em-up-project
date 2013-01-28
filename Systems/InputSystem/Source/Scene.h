@@ -20,6 +20,7 @@
 
 class InputTask;
 class InputObject;
+class InputAction;
 
 /**
  * Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
