@@ -12,6 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#ifdef _DEBUG
+#define __DEBUG_WINDOW__
+
 #include <windows.h>
 #include <commctrl.h>
 
@@ -19,7 +22,6 @@
 #include "Interface.h"
 
 #include "Universal.h"
-#define __DEBUG_WINDOW__
 #include "DebugWindow.h"
 
 
@@ -513,3 +515,5 @@ DebugWindow::WindowProc(
 
     return 0;
 }
+
+#endif

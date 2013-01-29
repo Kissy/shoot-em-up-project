@@ -55,7 +55,7 @@ class ImageGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
+            return System::Changes::Input::Velocity;
         };
         
         /**
@@ -74,6 +74,7 @@ class ImageGraphicObject : public GraphicObject {
 
         SDL_Surface*                        m_image;
         SDL_Rect*                           m_position;
+        Math::Vector3                       m_velocity;
 
 };
 

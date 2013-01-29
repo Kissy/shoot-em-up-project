@@ -50,7 +50,7 @@ class GraphicObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
+        inline System::Type GetSystemType(void) {
             return System::Types::Graphic;
         }
 
@@ -81,7 +81,7 @@ class GraphicObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        Types GetType(void) {
+        inline Types GetType(void) {
             return m_Type;
         }
 

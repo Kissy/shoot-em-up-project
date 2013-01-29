@@ -25,7 +25,7 @@ class ISystemScene;
  * 
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject {
+class PlayerInputObject : public InputObject, public IMoveObject {
     
     public:
 
@@ -62,13 +62,18 @@ class PlayerInputObject : public InputObject {
          * @inheritDoc
          */
         virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
+        
         /**
-         * Update the system object.
-         *
-         * @param   DeltaTime   Time of the delta.
+         * @inheritDoc
          */
         virtual void Update(f32 DeltaTime);
+        
+        /**
+         * @inheritDoc
+         */
+        const Math::Vector3* GetVelocity(void) {
+            return &m_velocity;
+        }
 
     private:
         
@@ -77,7 +82,7 @@ class PlayerInputObject : public InputObject {
         InputAction* m_downInputAction;
         InputAction* m_leftInputAction;
 
-        Math::Vector2 m_velocity;
+        Math::Vector3 m_velocity;
 
 };
 

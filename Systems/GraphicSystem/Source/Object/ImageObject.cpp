@@ -24,7 +24,8 @@
 /**
  * @inheritDoc
  */
-ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName) {
+ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName)
+    , m_velocity(Math::Vector3::Zero) {
     m_position = new SDL_Rect();
     m_position->x = 100;
     m_position->y = 100;
@@ -56,16 +57,20 @@ Error ImageGraphicObject::initialize(void) {
 Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-    /*
-    if (ChangeType & System::Changes::Geometry::All) {
-        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
-
-    }*/
+    if (ChangeType & System::Changes::Input::Velocity) {
+        const Math::Vector3* velocity = dynamic_cast<IMoveObject*>(pSubject)->GetVelocity();
+        m_velocity.x = velocity->x;
+        m_velocity.y = velocity->y;
+        m_velocity.z = velocity->z;
+    }
 
     return Errors::Success;
 }
 
 void ImageGraphicObject::Update(f32 DeltaTime) {
+    m_position->x += (u16) m_velocity.x * 10;
+    m_position->y += (u16) m_velocity.y * 10;
+
     SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
     SDL_BlitSurface(m_image, NULL, screen, m_position);
 }

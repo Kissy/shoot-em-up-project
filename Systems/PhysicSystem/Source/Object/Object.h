@@ -50,7 +50,7 @@ class PhysicObject : public ISystemObject {
          * @inheritDoc
          */
         System::Type GetSystemType(void) {
-            return System::Types::Network;
+            return System::Types::Physic;
         }
 
         /**

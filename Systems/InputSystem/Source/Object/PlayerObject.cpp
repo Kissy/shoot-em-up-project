@@ -24,7 +24,7 @@
  * @inheritDoc
  */
 PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName)
-    , m_velocity(Math::Vector2::Zero) {
+    , m_velocity(Math::Vector3::Zero) {
     
 }
 
@@ -60,8 +60,11 @@ Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 
 void PlayerInputObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
+
+    u32 mModified = 0;
     
     if (m_upInputAction->hasChanged()) {
+        mModified |= System::Changes::Input::Velocity;
         if (m_upInputAction->isActive()) {
             m_velocity.y -= 1;
         } else {
@@ -69,6 +72,7 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         }
     }    
     if (m_rightInputAction->hasChanged()) {
+        mModified |= System::Changes::Input::Velocity;
         if (m_rightInputAction->isActive()) {
             m_velocity.x += 1;
         } else {
@@ -76,6 +80,7 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         }
     }    
     if (m_downInputAction->hasChanged()) {
+        mModified |= System::Changes::Input::Velocity;
         if (m_downInputAction->isActive()) {
             m_velocity.y += 1;
         } else {
@@ -83,11 +88,15 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         }
     }    
     if (m_leftInputAction->hasChanged()) {
+        mModified |= System::Changes::Input::Velocity;
         if (m_leftInputAction->isActive()) {
             m_velocity.x -= 1;
         } else {
             m_velocity.x += 1;
         }
     }
-
+    
+    if (mModified != 0) {
+        PostChanges(mModified);
+    }
 }
