@@ -15,7 +15,8 @@
 #pragma once
 
 #include "System.h"
-#include "Object/Object.h"
+#include "Object/PhysicObject.h"
+#include "Object/IGeometryObject.h"
 
 class ISystemScene;
 
@@ -25,19 +26,19 @@ class ISystemScene;
  * 
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IMoveObject {
+class MovablePhysicObject : public PhysicObject, public IGeometryObject {
     
     public:
 
         /**
          * @inheritDoc
          */
-        PlayerInputObject(ISystemScene* pSystemScene, const char* pszName);
+        MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName);
 
         /**
          * @inheritDoc
          */
-        virtual ~PlayerInputObject(void);
+        virtual ~MovablePhysicObject(void);
 
         /**
          * @inheritDoc
@@ -48,14 +49,14 @@ class PlayerInputObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+            return System::Changes::Physic::Position;
         };
 
         /**
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
+            return System::Changes::Input::Velocity;
         };
         
         /**
@@ -67,22 +68,32 @@ class PlayerInputObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         void Update(f32 DeltaTime);
+         
+        /**
+         * @inheritDoc
+         */
+        inline const Math::Vector3* GetPosition(void) {
+            return &m_position;
+        }
         
         /**
          * @inheritDoc
          */
-        const Math::Vector3* GetVelocity(void) {
-            return &m_velocity;
+        inline const Math::Quaternion* GetOrientation(void) {
+            return NULL;
+        }
+        
+        /**
+         * @inheritDoc
+         */
+        inline const Math::Vector3* GetScale(void) {
+            return NULL;
         }
 
     private:
         
-        InputAction* m_upInputAction;
-        InputAction* m_rightInputAction;
-        InputAction* m_downInputAction;
-        InputAction* m_leftInputAction;
-
-        Math::Vector3 m_velocity;
+        Math::Vector3   m_velocity;
+        Math::Vector3   m_position;
 
 };
 

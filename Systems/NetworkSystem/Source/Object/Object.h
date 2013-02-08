@@ -29,11 +29,7 @@ class NetworkScene;
 class NetworkObject : public ISystemObject {
 
     public:
-        
-        enum Types {
-            Type_Generic
-        };
-        
+
         /**
          * @inheritDoc
          */
@@ -50,20 +46,6 @@ class NetworkObject : public ISystemObject {
         System::Type GetSystemType(void) {
             return System::Types::Network;
         }
-
-        /**
-         * Gets the type.
-         * Returns the type of graphics object.
-         *
-         * @return  GuiObject::Types - Type object.
-         */
-        Types GetType(void) {
-            return m_Type;
-        }
-        
-    protected:
-        
-        Types                               m_Type;
 
 };
 

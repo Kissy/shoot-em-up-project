@@ -31,11 +31,6 @@ class InputObject : public ISystemObject {
      
     public:
 
-        enum Types {
-            Type_Controlled,
-            Type_GUI
-        };
-
         /**
          * @inheritDoc
          */
@@ -52,20 +47,6 @@ class InputObject : public ISystemObject {
         inline System::Type GetSystemType(void) {
             return System::Types::Input;
         }
-
-        /**
-         * Gets the type.
-         * Returns the type of graphics object.
-         *
-         * @return  GuiObject::Types - Type object.
-         */
-        inline Types GetType(void) {
-            return m_Type;
-        }
-
-    protected:
-        
-        Types                               m_Type;
 
 };
 

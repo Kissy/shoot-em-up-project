@@ -12,12 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #pragma once
 
 #include "System.h"
 #include "System/ISystemObject.h"
-#include "SpinMutex.h"
 
 class GraphicSystem;
 class OGREGraphicsScene;
@@ -31,11 +29,6 @@ class OGREGraphicsScene;
 class GraphicObject : public ISystemObject {
     
     public:
-
-        enum Types {
-            Type_Image,              // Object from Image
-            Type_Count,
-        };
         
         /**
          * @inheritDoc
@@ -53,43 +46,6 @@ class GraphicObject : public ISystemObject {
         inline System::Type GetSystemType(void) {
             return System::Types::Graphic;
         }
-
-        /**
-         * @inheritDoc
-         */
-        virtual Error initialize(void);
-
-        /**
-         * @inheritDoc
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::None;
-        };
-
-        /**
-         * @inheritDoc
-         */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-        /**
-         * @inheritDoc
-         */
-        inline Types GetType(void) {
-            return m_Type;
-        }
-
-    public:
-
-        Types                               m_Type;
-
-        DEFINE_SPIN_MUTEX(m_mutex);
 
 };
 

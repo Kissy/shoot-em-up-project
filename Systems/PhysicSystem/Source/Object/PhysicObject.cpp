@@ -16,12 +16,12 @@
 #include "Interface.h"
 
 #include "Scene.h"
-#include "Object/Object.h"
+#include "Object/PhysicObject.h"
 
 /**
  * @inheritDoc
  */
-PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName) : ISystemObject(pSystemScene, pszName) {
+PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
 
 }
 

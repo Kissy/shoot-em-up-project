@@ -16,7 +16,7 @@
 #include "Interface.h"
 
 #include "Scene.h"
-#include "Object/Object.h"
+#include "Object/PhysicObject.h"
 #include "Task.h"
 #include "Collision.h"
 #include "System.h"
@@ -53,5 +53,6 @@ void PhysicTask::Update(f32 DeltaTime) {
             DeltaTime = 0.04f;
         }
 
+        m_pSystemScene->Update(DeltaTime);
     }
 }

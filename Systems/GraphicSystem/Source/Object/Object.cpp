@@ -31,21 +31,3 @@ GraphicObject::GraphicObject(ISystemScene* pSystemScene, const char* pszName) : 
 GraphicObject::~GraphicObject(void) {
 
 }
-
-/**
- * @inheritDoc
- */
-Error GraphicObject::initialize(void) {
-    ASSERT(!m_bInitialized);
-
-    return Errors::Success;
-}
-
-/**
- * @inheritDoc
- */
-Error GraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    ASSERT(m_bInitialized);
-
-    return Errors::Success;
-}

@@ -21,7 +21,8 @@
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
-#include "Object/Object.h"
+#include "Object/PhysicObject.h"
+#include "Object/MovablePhysicObject.h"
 
 //
 // global variables
@@ -32,6 +33,8 @@ extern ManagerInterfaces    g_Managers;
 // HavokPhysicsScene - Default constructor
 PhysicScene::PhysicScene(ISystem* pSystem): ISystemScene(pSystem) {
     m_TaskFactory = boost::factory<PhysicTask*>();
+
+    m_ObjectFactories["Movable"] = boost::factory<MovablePhysicObject*>();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

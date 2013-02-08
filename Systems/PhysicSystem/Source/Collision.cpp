@@ -17,7 +17,7 @@
 
 #include "Collision.h"
 #include "Scene.h"
-#include "Object/Object.h"
+#include "Object/PhysicObject.h"
 
 
 //

@@ -12,60 +12,64 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <SDL_image.h>
-
 #include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Scene.h"
-#include "Object.h"
-#include "ImageObject.h"
+#include "PhysicObject.h"
+#include "Object/MovablePhysicObject.h"
 
 /**
  * @inheritDoc
  */
-ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName) {
-    m_position = new SDL_Rect();
-    m_position->x = 0;
-    m_position->y = 0;
-    m_image = IMG_Load("../../Assets/Media/Graphic/SpaceShip.png");
+MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) : PhysicObject(pSystemScene, pszName)
+    , m_position(Math::Vector3::Zero)
+    , m_velocity(Math::Vector3::Zero) {
+    
 }
 
 /**
  * @inheritDoc
  */
-ImageGraphicObject::~ImageGraphicObject(void) {
-    delete m_position;
-    if (m_bInitialized) {
-        SDL_FreeSurface(m_image);
-    }
+MovablePhysicObject::~MovablePhysicObject(void) {
+    
 }
 
 /**
  * @inheritDoc
  */
-Error ImageGraphicObject::initialize(void) {
+Error MovablePhysicObject::initialize(void) {
     ASSERT(!m_bInitialized);
-
+    
     return Errors::Success;
 }
 
 /**
  * @inheritDoc
  */
-Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-    if (ChangeType & System::Changes::Physic::Position) {
-        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_position->x = position->x - 64;
-        m_position->y = position->y - 64;
+    if (ChangeType & System::Changes::Input::Velocity) {
+        const Math::Vector3* velocity = dynamic_cast<IMoveObject*>(pSubject)->GetVelocity();
+        m_velocity.x = velocity->x;
+        m_velocity.y = velocity->y;
+        m_velocity.z = velocity->z;
     }
 
     return Errors::Success;
 }
 
-void ImageGraphicObject::Update(f32 DeltaTime) {
-    SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
-    SDL_BlitSurface(m_image, NULL, screen, m_position);
+/**
+ * @inheritDoc
+ */
+void MovablePhysicObject::Update(f32 DeltaTime) {
+    ASSERT(m_bInitialized);
+
+    if (m_velocity != Math::Vector3::Zero) {
+        m_position.x += m_velocity.x * 10;
+        m_position.y += m_velocity.y * 10;
+        m_position.z += m_velocity.z * 10;
+        PostChanges(System::Changes::Physic::Position);
+    }
 }

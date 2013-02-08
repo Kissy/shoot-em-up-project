@@ -95,7 +95,7 @@ class ISystemObject : public ISystemSubject {
          *
          * @return  The name of the object.
          */
-        virtual inline const char* GetName(void) {
+        inline const char* GetName(void) {
             return m_sName.c_str();
         }
 
@@ -104,7 +104,7 @@ class ISystemObject : public ISystemSubject {
          *
          * @param   pszName The new name of the object.
          */
-        virtual inline void SetName(const char* pszName) {
+        inline void SetName(const char* pszName) {
             m_sName = pszName;
         }
 

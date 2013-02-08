@@ -32,14 +32,10 @@ class PhysicObject : public ISystemObject {
 
     public:
         
-        enum Types {
-            Type_Generic
-        };
-        
         /**
          * @inheritDoc
          */
-        PhysicObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName);
+        PhysicObject(ISystemScene* pSystemScene, const char* pszName);
         
         /**
          * @inheritDoc
@@ -49,23 +45,9 @@ class PhysicObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
+        inline System::Type GetSystemType(void) {
             return System::Types::Physic;
         }
-
-        /**
-         * Gets the type.
-         * Returns the type of graphics object.
-         *
-         * @return  GuiObject::Types - Type object.
-         */
-        Types GetType(void) {
-            return m_Type;
-        }
-        
-    protected:
-        
-        Types                               m_Type;
 
 };
 

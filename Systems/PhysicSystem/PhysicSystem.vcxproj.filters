@@ -33,11 +33,14 @@
     <ClCompile Include="Source\Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object\Object.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\PhysicObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\MovablePhysicObject.cpp">
+      <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +56,10 @@
     <ClInclude Include="Source\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object\Object.h">
+    <ClInclude Include="Source\Object\MovablePhysicObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\PhysicObject.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

@@ -42,39 +42,36 @@ class ImageGraphicObject : public GraphicObject {
         /**
          * @inheritDoc
          */
-        virtual Error initialize(void);
+        Error initialize(void);
 
         /**
          * @inheritDoc
          */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) {
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
             return System::Changes::None;
         };
 
         /**
          * @inheritDoc
          */
-        virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Physic::Position;
         };
         
         /**
          * @inheritDoc
          */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+        
         /**
-         * Update the system object.
-         *
-         * @param   DeltaTime   Time of the delta.
+         * @inheritDoc
          */
-        virtual void Update(f32 DeltaTime);
+        void Update(f32 DeltaTime);
 
     public:
 
         SDL_Surface*                        m_image;
         SDL_Rect*                           m_position;
-        Math::Vector3                       m_velocity;
 
 };
 

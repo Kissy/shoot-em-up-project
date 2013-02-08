@@ -65,35 +65,19 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     
     if (m_upInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        if (m_upInputAction->isActive()) {
-            m_velocity.y -= 1;
-        } else {
-            m_velocity.y += 1;
-        }
+        m_velocity.y += m_upInputAction->isActive() ? -1 : 1;
     }    
     if (m_rightInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        if (m_rightInputAction->isActive()) {
-            m_velocity.x += 1;
-        } else {
-            m_velocity.x -= 1;
-        }
+        m_velocity.x += m_rightInputAction->isActive() ? 1 : -1;
     }    
     if (m_downInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        if (m_downInputAction->isActive()) {
-            m_velocity.y += 1;
-        } else {
-            m_velocity.y -= 1;
-        }
+        m_velocity.y += m_downInputAction->isActive() ? 1 : -1;
     }    
     if (m_leftInputAction->hasChanged()) {
         mModified |= System::Changes::Input::Velocity;
-        if (m_leftInputAction->isActive()) {
-            m_velocity.x -= 1;
-        } else {
-            m_velocity.x += 1;
-        }
+        m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
     }
     
     if (mModified != 0) {
