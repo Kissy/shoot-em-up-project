@@ -65,12 +65,8 @@ extern "C" ISystem* __stdcall
 CreatePhysicSystem(
     Debug::Debugger* p_Debugger
 ) {
-    // Setup debugger
     Debug::Init(p_Debugger);
-    // Create Havok system
-    PhysicSystem* System = new PhysicSystem();
-    // Return reference to new system
-    return System;
+    return new PhysicSystem();;
 }
 
 

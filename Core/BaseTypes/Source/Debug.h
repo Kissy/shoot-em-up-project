@@ -106,47 +106,30 @@ namespace Debug {
 #ifdef DEBUG_BUILD
 
     /**
-     * The debugger.
-     */
-    static Debugger* s_Debugger = NULL;
-
-    /**
      * Initialises this object.
      *
      * @param [in,out]	p_Debugger	If non-null, the debugger.
      */
-    inline void Init(Debugger* p_Debugger) {
-        s_Debugger = p_Debugger;
-    }
+    void Init(Debugger* p_Debugger);
 
     /**
      * Prepares this object for use.
      *
      * @param	bLogging	(optional) the logging.
      */
-    inline void Startup(bool bLogging = false) {
-        s_Debugger = new Debugger(bLogging);
-    }
+    void Startup(bool bLogging = false);
 
     /**
      * Shuts down this object and frees any resources it is using.
      */
-    inline void Shutdown(void) {
-        // Release s_Debugger resources
-        if (s_Debugger) {
-            delete s_Debugger;
-            s_Debugger = NULL;
-        }
-    }
+    void Shutdown(void);
 
     /**
      * Gets the debugger.
      *
      * @return	null if it fails, else the debugger.
      */
-    inline Debugger* GetDebugger(void) {
-        return s_Debugger;
-    }
+    Debugger* GetDebugger(void);
 
     /**
      * Prints the given format.

@@ -45,6 +45,8 @@ LogFile s_LogFiles[ LogType::e_LogTypeCount ] = {
 
 COMPILE_ASSERT(sizeof(s_LogFiles) / sizeof(s_LogFiles[ 0 ]) == LogType::e_LogTypeCount);
 
+static Debug::Debugger* s_Debugger = NULL;
+
 /**
  * @inheritDoc
  */
@@ -87,6 +89,38 @@ Debug::Debugger::~Debugger() {
             fclose(m_LogFiles[ Index ].FileHandle);
         }
     }
+}
+
+/**
+ * @inheritDoc
+ */
+void Debug::Init(Debugger* p_Debugger) {
+    s_Debugger = p_Debugger;
+}
+
+/**
+ * @inheritDoc
+ */
+void Debug::Startup(bool bLogging) {
+    s_Debugger = new Debugger(bLogging);
+}
+
+/**
+ * @inheritDoc
+ */
+void Debug::Shutdown(void) {
+    // Release s_Debugger resources
+    if (s_Debugger) {
+        delete s_Debugger;
+        s_Debugger = NULL;
+    }
+}
+
+/**
+ * @inheritDoc
+ */
+Debug::Debugger* Debug::GetDebugger(void) {
+    return s_Debugger;
 }
 
 /**

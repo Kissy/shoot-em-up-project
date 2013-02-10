@@ -16,6 +16,6 @@ LIBRARY	"PhysicSystem"
 
 EXPORTS
 
-    InitializeSystemLib=InitializePhysicSystem		@1
-    CreateSystem=CreatePhysicSystem					@2	
-    DestroySystem=DestroyPhysicSystem				@3
+    InitializeSystemLib=InitializePhysicSystem
+    CreateSystem=CreatePhysicSystem
+    DestroySystem=DestroyPhysicSystem

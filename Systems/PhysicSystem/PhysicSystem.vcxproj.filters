@@ -63,4 +63,9 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PhysicSystem.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
