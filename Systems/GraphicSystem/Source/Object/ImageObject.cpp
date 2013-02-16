@@ -58,8 +58,8 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 
     if (ChangeType & System::Changes::Physic::Position) {
         const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_position->x = position->x - 64;
-        m_position->y = position->y - 64;
+        m_position->x = (Sint16) position->x - 64;
+        m_position->y = (Sint16) position->y - 64;
     }
 
     return Errors::Success;

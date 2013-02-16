@@ -22,7 +22,7 @@
 #include "Service/ITaskManager.h"
 #include "Service/IEnvironment.h"
 #include "Service/IService.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
 #include "System/ISystemTask.h"

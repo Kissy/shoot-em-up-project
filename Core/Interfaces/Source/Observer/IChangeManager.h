@@ -16,7 +16,7 @@
 
 
 #include "Errors.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "Observer/IObserver.h"
 
 class ISubject;

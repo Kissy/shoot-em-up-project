@@ -50,6 +50,9 @@
     <ClInclude Include="Source\Object\Object.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Object\PlayerNetworkObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NetworkSystem.def">

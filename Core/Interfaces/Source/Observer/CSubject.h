@@ -18,7 +18,7 @@
 #include <list>
 
 #include "Errors.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "Observer/ISubject.h"
 
 class IObserver;

@@ -20,7 +20,7 @@
 #include "boost/function.hpp"
 
 #include "Errors.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "System/ISystemSubject.h"
 
 class ISystem;

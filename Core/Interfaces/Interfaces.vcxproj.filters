@@ -48,9 +48,6 @@
     <ClInclude Include="Source\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Generic\IGenericScene.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\ISystemTask.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\SystemDefinitions.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

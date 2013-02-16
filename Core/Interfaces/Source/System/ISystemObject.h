@@ -18,7 +18,7 @@
 #include <vector>
 
 #include "Errors.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "System/ISystemSubject.h"
 
 class ISystemScene;

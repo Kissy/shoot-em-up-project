@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Object\Object.h" />
+    <ClInclude Include="Source\Object\PlayerNetworkObject.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\Task.h" />

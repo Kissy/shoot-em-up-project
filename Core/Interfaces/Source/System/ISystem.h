@@ -18,7 +18,7 @@
 #include "Proto/Common/System.pb.h"
 
 #include "Errors.h"
-#include "System.h"
+#include "System/Definitions.h"
 #include "Property/IProperty.h"
 
 class ISystemScene;
