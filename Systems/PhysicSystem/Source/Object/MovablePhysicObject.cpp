@@ -70,7 +70,6 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         m_position.x += m_velocity.x * 10;
         m_position.y += m_velocity.y * 10;
         m_position.z += m_velocity.z * 10;
-        Debug::Log("New position is (%f, %f, %f)", m_position.x, m_position.y, m_position.z);
         PostChanges(System::Changes::Physic::Position);
     }
 }

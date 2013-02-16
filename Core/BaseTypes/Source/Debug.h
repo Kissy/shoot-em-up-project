@@ -15,41 +15,29 @@
 #pragma once
 
 #include <cstdarg>
-#include <cstdio>
+#include <ostream>
+
+#include <boost/thread/mutex.hpp>
 
 #include "DataTypes.h"
-
-#include "boost/thread/mutex.hpp"
 
 #define LOG_ACTUAL( x ) va_list ArgList;                                   \
                         va_start( ArgList, Format );                       \
                         Debug::GetDebugger()->Log( (x), Format, ArgList ); \
                         va_end( ArgList );
 
-/**
- * Data structure for log files
- */
-struct LogFile {
-    FILE* FileHandle;
-    char* FileName;
-    char* SystemName;
-};
 
 /**
  * Types of log files.
  */
 namespace LogType {
     enum LogType {
-        e_Debug,
+        Common,
 
-        e_AI,
-        e_Animation,
-        e_Audio,
-        e_Geometry,
-        e_Graphics,
-        e_Input,
-        e_Network,
-        e_Physics,
+        Graphic,
+        Input,
+        Network,
+        Physic,
 
         e_LogTypeCount,
 
@@ -98,9 +86,12 @@ namespace Debug {
             void Log(LogType::LogType Type, const char* Format, va_list ArgList);
 
         private:
-            boost::mutex mutex;
-            bool m_bLogging;
-            LogFile m_LogFiles[ LogType::e_LogTypeCount ];
+
+            bool            m_bLogging;
+
+            boost::mutex    m_logMutex;
+            std::ostream*   m_logFiles[LogType::e_LogTypeCount];
+
     };
 
 #ifdef DEBUG_BUILD
@@ -132,55 +123,12 @@ namespace Debug {
     Debugger* GetDebugger(void);
 
     /**
-     * Prints the given format.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    void Print(const char* Format, ...);
-
-    /**
      * Logs the given format.
      *
      * @param	Format	Describes the format to use.
      */
     inline void Log(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Debug);
-    };
-
-    /**
-     * Logs a i.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAI(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_AI);
-    };
-
-    /**
-     * Logs an animation.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAnimation(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Animation);
-    };
-
-    /**
-     * Logs an audio.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAudio(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Audio);
-    };
-
-    /**
-     * Logs a geometry.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogGeometry(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Geometry);
+        LOG_ACTUAL(LogType::Common);
     };
 
     /**
@@ -188,8 +136,8 @@ namespace Debug {
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogGraphics(const char* Format, ...)  {
-        LOG_ACTUAL(LogType::e_Graphics);
+    inline void LogGraphic(const char* Format, ...)  {
+        LOG_ACTUAL(LogType::Graphic);
     };
 
     /**
@@ -198,7 +146,7 @@ namespace Debug {
      * @param	Format	Describes the format to use.
      */
     inline void LogInput(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Input);
+        LOG_ACTUAL(LogType::Input);
     };
 
     /**
@@ -207,7 +155,7 @@ namespace Debug {
      * @param	Format	Describes the format to use.
      */
     inline void LogNetwork(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Network);
+        LOG_ACTUAL(LogType::Network);
     };
 
     /**
@@ -215,8 +163,8 @@ namespace Debug {
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogPhysics(const char* Format, ...) {
-        LOG_ACTUAL(LogType::e_Physics);
+    inline void LogPhysic(const char* Format, ...) {
+        LOG_ACTUAL(LogType::Physic);
     };
 
 #else  // Debugging disable, all functions will in inline and empty (aka removed)
@@ -253,13 +201,6 @@ namespace Debug {
     inline Debug::Debugger* GetDebugger(void) { return NULL; };
 
     /**
-     * Prints the given format.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void Print(const char* Format, ...) {};
-
-    /**
      * Logs the given format.
      *
      * @param	Format	Describes the format to use.
@@ -267,46 +208,11 @@ namespace Debug {
     inline void Log(const char* Format, ...) {};
 
     /**
-     * Logs a i.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAI(const char* Format, ...) {};
-
-    /**
-     * Logs an animation.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAnimation(const char* Format, ...) {};
-
-    /**
-     * Logs an audio.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogAudio(const char* Format, ...) {};
-
-    /**
-     * Logs a fire.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogFire(const char* Format, ...) {};
-
-    /**
-     * Logs a geometry.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogGeometry(const char* Format, ...) {};
-
-    /**
      * Logs the graphics.
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogGraphics(const char* Format, ...) {};
+    inline void LogGraphic(const char* Format, ...) {};
 
     /**
      * Logs an input.
@@ -320,21 +226,7 @@ namespace Debug {
      *
      * @param	Format	Describes the format to use.
      */
-    inline void LogPhysics(const char* Format, ...) {};
-
-    /**
-     * Logs a smoke.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogSmoke(const char* Format, ...) {};
-
-    /**
-     * Logs the trees.
-     *
-     * @param	Format	Describes the format to use.
-     */
-    inline void LogTrees(const char* Format, ...) {};
+    inline void LogPhysic(const char* Format, ...) {};
 
 #ifdef _MSC_VER
 #pragma warning( pop )

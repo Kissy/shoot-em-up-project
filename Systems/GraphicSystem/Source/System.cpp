@@ -61,7 +61,7 @@ Error GraphicSystem::initialize(void) {
 
     int flags = IMG_INIT_JPG | IMG_INIT_PNG;
     int initted = IMG_Init(flags);
-    if(initted & flags != flags) {
+    if((initted & flags) != flags) {
         return Errors::Failure;
     }
 

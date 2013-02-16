@@ -21,29 +21,25 @@
 
 #ifdef DEBUG_BUILD
 
-#include <cstdio>
-#include <ctime>
+#include <string>
 
-#include "boost/thread/locks.hpp"
+#include <boost/iostreams/device/file.hpp>
+#include <boost/iostreams/stream.hpp>
 
 #define MAX_STRING_LENGTH 2048
 
 /**
  * The log file names.
  */
-LogFile s_LogFiles[ LogType::e_LogTypeCount ] = {
-    { NULL, "Debug.log",           ""          },
-    { NULL, "Debug_AI.log",        "AI"        },
-    { NULL, "Debug_Animation.log", "Animation" },
-    { NULL, "Debug_Audio.log",     "Audio"     },
-    { NULL, "Debug_Geometry.log",  "Geometry"  },
-    { NULL, "Debug_Graphics.log",  "Graphics"  },
-    { NULL, "Debug_Input.log",     "Input"     },
-    { NULL, "Debug_Network.log",   "Network"   },
-    { NULL, "Debug_Physics.log",   "Physics"   },
+std::string s_logFileNames[ LogType::e_LogTypeCount ] = {
+    "Debug_Common.log",
+    "Debug_Graphic.log",
+    "Debug_Input.log",
+    "Debug_Network.log",
+    "Debug_Physic.log"
 };
 
-COMPILE_ASSERT(sizeof(s_LogFiles) / sizeof(s_LogFiles[ 0 ]) == LogType::e_LogTypeCount);
+COMPILE_ASSERT(sizeof(s_logFileNames) / sizeof(s_logFileNames[ 0 ]) == LogType::e_LogTypeCount);
 
 static Debug::Debugger* s_Debugger = NULL;
 
@@ -54,28 +50,10 @@ Debug::Debugger::Debugger(bool bLogging) {
     m_bLogging = bLogging;
 
     if (m_bLogging) {
-        // Copy the s_LogFiles into the instance
-        memcpy(m_LogFiles, s_LogFiles, sizeof(s_LogFiles));
-        // Create a directory with the current timestamp
-        // ( Format: Month_Day_HourMinute )
-        /*time_t Time;
-        time(&Time);
-        tm Date;
-        localtime_s(&Date, &Time);
-        char FolderName[ MAX_STRING_LENGTH ];
-        sprintf_s(FolderName, MAX_STRING_LENGTH, "..\\Logs\\%.2d%.2d%.2d%.2d\\", (Date.tm_mon + 1), Date.tm_mday, Date.tm_hour, Date.tm_min);
-        int Result = _mkdir(FolderName);
-        ASSERT(Result == 0);
-
-        if (Result == 0) {*/
-            // Open all the log files
-            for (u8 Index = 0; Index < LogType::e_LogTypeCount; Index++) {
-                char FileName[ MAX_STRING_LENGTH ];
-                strncpy_s(FileName, MAX_STRING_LENGTH, "logs", MAX_STRING_LENGTH - strlen(m_LogFiles[ Index ].FileName));
-                strcat_s(FileName, MAX_STRING_LENGTH, m_LogFiles[ Index ].FileName);
-                fopen_s(&m_LogFiles[ Index ].FileHandle, FileName, "w");
-            }
-        //}
+        for (u8 Index = 0; Index < LogType::e_LogTypeCount; Index++) {
+            std::string fileName = "logs/" + s_logFileNames[Index];
+            m_logFiles[Index] = new std::ostream(new boost::iostreams::stream_buffer<boost::iostreams::file_sink>(fileName));
+        }
     }
 }
 
@@ -83,12 +61,7 @@ Debug::Debugger::Debugger(bool bLogging) {
  * @inheritDoc
  */
 Debug::Debugger::~Debugger() {
-    if (m_bLogging) {
-        // Close all the log files
-        for (u8 Index = 0; Index < LogType::e_LogTypeCount; Index++) {
-            fclose(m_LogFiles[ Index ].FileHandle);
-        }
-    }
+
 }
 
 /**
@@ -126,47 +99,19 @@ Debug::Debugger* Debug::GetDebugger(void) {
 /**
  * @inheritDoc
  */
-void Debug::Print(const char* Format, ...) {
-    va_list ArgList;
-    va_start(ArgList, Format);
-    s_Debugger->Print(Format, ArgList);
-    va_end(ArgList);
-}
-
-/**
- * @inheritDoc
- */
-void Debug::Debugger::Print(const char* Format, va_list ArgList) {
-    boost::lock_guard<boost::mutex> lock(mutex);
-    vprintf(Format, ArgList);
-}
-
-/**
- * @inheritDoc
- */
 void Debug::Debugger::Log(LogType::LogType Type, const char* Format, va_list ArgList) {
     if (!m_bLogging) {
         return;
     }
 
-    ASSERT(m_LogFiles[ Type ].FileHandle);
-    boost::lock_guard<boost::mutex> lock(mutex);
-
-    // Write to log file
-    vfprintf(m_LogFiles[ Type ].FileHandle, Format, ArgList);
-    fflush(m_LogFiles[ Type ].FileHandle);
+    boost::lock_guard<boost::mutex> lock(m_logMutex);
     
-    // Ouput to stdout
-    vprintf(Format, ArgList);
-
-    // If this is a system specific log file, also log it to the general log
-    if (Type != LogType::e_Debug) {
-        ASSERT(m_LogFiles[ LogType::e_Debug ].FileHandle);
-        char Buffer[ MAX_STRING_LENGTH ];
-        vsprintf(Buffer, Format, ArgList);
-        fprintf(m_LogFiles[ LogType::e_Debug ].FileHandle, "[%s] %s", m_LogFiles[ Type ].SystemName, Buffer);
-        fflush(m_LogFiles[ LogType::e_Debug ].FileHandle);
-    }
+    char message[MAX_STRING_LENGTH];
+    vsnprintf(message, sizeof(message), Format, ArgList);
+    
+    // Output to file
+    (*m_logFiles[Type]) << message << std::endl;
+    m_logFiles[Type]->flush();
 }
 
 #endif
