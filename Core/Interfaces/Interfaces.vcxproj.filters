@@ -108,7 +108,7 @@
     <ClInclude Include="Source\System\ISystemTask.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\System\SystemDefinitions.h">
+    <ClInclude Include="Source\System\Definitions.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

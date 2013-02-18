@@ -436,7 +436,7 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         //
         // Set up the speed path for the geometry and graphics objects.
         //
-        if (SystemType == System::Types::Geometry) {
+        if (SystemType == System::Types::Physic) {
             m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
             ASSERT(m_pGeometryObject != NULL);
         }

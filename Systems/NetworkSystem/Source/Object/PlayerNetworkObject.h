@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -15,50 +15,62 @@
 #pragma once
 
 #include "System.h"
-#include "System/ISystemScene.h"
-#include "System/ISystemTask.h"
+#include "Object/Object.h"
 
-class PhysicScene;
+class ISystemScene;
 
-///////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>HavokPhysicsTask</c> Implementation of the ISystemTask interface for
-///   HavokPhysics.
-/// </summary>
-///////////////////////////////////////////////////////////////////////////////
-
-class PhysicTask : public ISystemTask {
-
+/**
+ * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
+ * System.h for a definition of the class and its functions.
+ * 
+ * @sa  ISystemObject
+ */
+class PlayerNetworkObject : public NetworkObject {
+    
     public:
+
+        /**
+         * @inheritDoc
+         */
+        PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName);
+
+        /**
+         * @inheritDoc
+         */
+        virtual ~PlayerNetworkObject(void);
+
+        /**
+         * @inheritDoc
+         */
+        Error initialize(void);
+
+        /**
+         * @inheritDoc
+         */
+        System::Changes::BitMask GetPotentialSystemChanges(void) {
+            return System::Changes::None;
+        };
+
+        /**
+         * @inheritDoc
+         */
+        System::Types::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::Input::Velocity;
+        };
         
         /**
          * @inheritDoc
          */
-        PhysicTask(ISystemScene* pScene);
-
-        /**
-         * @inheritDoc
-         */
-        ~PhysicTask(void);
+        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
         
         /**
          * @inheritDoc
          */
         void Update(f32 DeltaTime);
 
-        /**
-         * @inheritDoc
-         */
-        bool IsPrimaryThreadOnly(void) {
-            return false;
-        };
+    private:
         
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Physic;
-        }
+        Math::Vector3       m_velocity;
 
 };
 

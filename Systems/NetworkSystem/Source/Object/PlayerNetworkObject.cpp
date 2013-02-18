@@ -16,13 +16,13 @@
 #include "Interface.h"
 
 #include "Scene.h"
-#include "PhysicObject.h"
-#include "Object/MovablePhysicObject.h"
+#include "Object/Object.h"
+#include "Object/PlayerNetworkObject.h"
 
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) : PhysicObject(pSystemScene, pszName)
+PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
     , m_velocity(Math::Vector3::Zero) {
     
 }
@@ -30,14 +30,14 @@ MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char*
 /**
  * @inheritDoc
  */
-MovablePhysicObject::~MovablePhysicObject(void) {
+PlayerNetworkObject::~PlayerNetworkObject(void) {
     
 }
 
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::initialize(void) {
+Error PlayerNetworkObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
     return Errors::Success;
@@ -46,7 +46,7 @@ Error MovablePhysicObject::initialize(void) {
 /**
  * @inheritDoc
  */
-Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Input::Velocity) {
@@ -62,13 +62,13 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 /**
  * @inheritDoc
  */
-void MovablePhysicObject::Update(f32 DeltaTime) {
+void PlayerNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
-    if (m_velocity != Math::Vector3::Zero) {
+    /*if (m_velocity != Math::Vector3::Zero) {
         m_position.x += m_velocity.x * 10;
         m_position.y += m_velocity.y * 10;
         m_position.z += m_velocity.z * 10;
         PostChanges(System::Changes::Physic::Position);
-    }
+    }*/
 }

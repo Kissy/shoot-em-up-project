@@ -1,6 +1,6 @@
 <GlobalDefinition>
 	<Properties>
-		<Property Name="Framework::DebugWindow" Value="0"/>
+		<Property Name="Framework::DebugWindow" Value="1"/>
 		<Property Name="Scheduler::Benchmarking" Value="0"/>
 		<Property Name="TaskManager::Threads" Value="0"/>
 		<Property Name="TaskManager::TPEventsForTasks" Value="0"/>
@@ -14,8 +14,10 @@
 		</System>
 		<System Type="Input">
 		</System>
-		<!--<System Type="Network"/>-->
-		<System Type="Physic"/>
+		<System Type="Network">
+		</System>
+		<System Type="Physic">
+		</System>
 	</Systems>
 	<Scenes Startup="Main">
 		<Scene Name="Main"/>

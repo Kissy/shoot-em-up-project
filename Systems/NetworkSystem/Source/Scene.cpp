@@ -27,8 +27,9 @@
 
 #include "System.h"
 #include "Scene.h"
-#include "Object/Object.h"
 #include "Task.h"
+#include "Object/Object.h"
+#include "Object/PlayerNetworkObject.h"
 
 
 extern ManagerInterfaces   g_Managers;
@@ -38,6 +39,8 @@ extern ManagerInterfaces   g_Managers;
  */
 NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
     m_TaskFactory = boost::factory<NetworkTask*>();
+    
+    m_ObjectFactories["Player"] = boost::factory<PlayerNetworkObject*>();
 }
 
 /**

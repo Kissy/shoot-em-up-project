@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="Source\NetworkSystem.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
+    <ClCompile Include="Source\Object\PlayerNetworkObject.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\Task.cpp" />

@@ -33,7 +33,7 @@ class NetworkObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        NetworkObject(ISystemScene* pSystemScene, const char* pszType, const char* pszName);
+        NetworkObject(ISystemScene* pSystemScene, const char* pszName);
         
         /**
          * @inheritDoc

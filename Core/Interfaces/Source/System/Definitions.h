@@ -63,12 +63,7 @@ namespace System {
         // type ID.
         static const u32 Null                   = 0;
         static const u32 Generic                = (1 << SystemProto::Generic);
-        static const u32 AI                     = (1 << SystemProto::AI);
-        static const u32 Animation              = (1 << SystemProto::Animation);
-        static const u32 Audio                  = (1 << SystemProto::Audio);
-        static const u32 Geometry               = (1 << SystemProto::Geometry);
         static const u32 Graphic                = (1 << SystemProto::Graphic);
-        static const u32 Gui                    = (1 << SystemProto::Gui);
         static const u32 Input                  = (1 << SystemProto::Input);
         static const u32 Network                = (1 << SystemProto::Network);
         static const u32 Physic                 = (1 << SystemProto::Physic);

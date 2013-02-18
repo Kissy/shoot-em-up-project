@@ -152,20 +152,20 @@ Error Framework::Initialize(void) {
 
 
 void Framework::Shutdown(void) {
-    //
-    // Get rid of the scene.
-    //
-    SAFE_DELETE(m_pScene);
-#ifdef __ALLOW_DEBUG_WINDOW__
 
+#ifdef __ALLOW_DEBUG_WINDOW__
     //
     // Destroy the debug window.
     //
     if (m_hDebugWindow != NULL) {
         DestroyDebugWindow(m_hDebugWindow);
     }
-
 #endif
+
+    //
+    // Get rid of the scene.
+    //
+    SAFE_DELETE(m_pScene);
     //
     // De-register the framework as the system access provider.
     //

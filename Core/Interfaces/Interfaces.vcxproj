@@ -96,12 +96,12 @@
     <ClInclude Include="Source\Service\IPlatform.h" />
     <ClInclude Include="Source\Service\IService.h" />
     <ClInclude Include="Source\Service\ITaskManager.h" />
+    <ClInclude Include="Source\System\Definitions.h" />
     <ClInclude Include="Source\System\ISystem.h" />
     <ClInclude Include="Source\System\ISystemObject.h" />
     <ClInclude Include="Source\System\ISystemScene.h" />
     <ClInclude Include="Source\System\ISystemSubject.h" />
     <ClInclude Include="Source\System\ISystemTask.h" />
-    <ClInclude Include="Source\System\SystemDefinitions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Observer\CSubject.cpp" />

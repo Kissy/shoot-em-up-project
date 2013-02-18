@@ -26,7 +26,7 @@ class ISystemScene;
  * 
  * @sa  ISystemObject
  */
-class MovablePhysicObject : public PhysicObject, public IGeometryObject {
+class MovablePhysicObject : public PhysicObject {
     
     public:
 
@@ -68,32 +68,10 @@ class MovablePhysicObject : public PhysicObject, public IGeometryObject {
          * @inheritDoc
          */
         void Update(f32 DeltaTime);
-         
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetPosition(void) {
-            return &m_position;
-        }
-        
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Quaternion* GetOrientation(void) {
-            return NULL;
-        }
-        
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetScale(void) {
-            return NULL;
-        }
 
     private:
         
         Math::Vector3   m_velocity;
-        Math::Vector3   m_position;
 
 };
 

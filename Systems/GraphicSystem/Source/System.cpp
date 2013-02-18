@@ -40,7 +40,7 @@ GraphicSystem::GraphicSystem(void) : ISystem() {
 GraphicSystem::~GraphicSystem(void) {
     // quit listening to the RenderWindow
     if (m_bInitialized) {
-
+        SDL_Quit();
     }
 }
 

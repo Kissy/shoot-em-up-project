@@ -12,6 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "boost/bind.hpp"
+#include "boost/lexical_cast.hpp"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
@@ -21,8 +24,9 @@
 /**
  * @inheritDoc
  */
-PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
-
+PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName)
+    , m_position(Math::Vector3::Zero) {
+    m_propertySetters["Position"] = boost::bind(&PhysicObject::setPosition, this, _1);
 }
 
 /**
@@ -30,4 +34,15 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : IS
  */
 PhysicObject::~PhysicObject(void) {
 
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicObject::setPosition(ProtoStringList values) {
+    ProtoStringList::const_iterator value = values.begin();
+    m_position.x = boost::lexical_cast<f32>(*(value++));
+    m_position.y = boost::lexical_cast<f32>(*(value++));
+    m_position.z = boost::lexical_cast<f32>(*value);
+    PostChanges(System::Changes::Physic::Position);
 }
