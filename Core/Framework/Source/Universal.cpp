@@ -77,10 +77,7 @@ UScene::~UScene(
 }
 
 
-ISystemScene*
-UScene::Extend(
-    ISystem* pSystem
-) {
+ISystemScene* UScene::Extend(ISystem* pSystem) {
     ASSERT(pSystem != NULL);
     //
     // Get the system's type.
@@ -102,7 +99,7 @@ UScene::Extend(
         //
         // Add the scene to the collection.
         //
-        m_SystemScenes[ SystemType ] = pScene;
+        m_SystemScenes[SystemType] = pScene;
         //
         // Register all changes made by the scene.
         //
@@ -167,10 +164,7 @@ UScene::CreateObject(
 }
 
 
-Error
-UScene::DestroyObject(
-    UObject* pObject
-) {
+Error UScene::DestroyObject(UObject* pObject) {
     ASSERT(pObject != NULL);
     m_pSceneCCM->Unregister(pObject, this);
     m_Objects.remove(pObject);
@@ -179,10 +173,7 @@ UScene::DestroyObject(
 }
 
 
-UObject*
-UScene::FindObject(
-    const char* pszName
-) {
+UObject* UScene::FindObject(const char* pszName) {
     UObject* pObject = NULL;
 
     for (UScene::ObjectsConstIt it = m_Objects.begin(); it != m_Objects.end(); it++) {

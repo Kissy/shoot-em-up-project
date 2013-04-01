@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\DebugWindow.cpp" />
+    <ClCompile Include="Source\Debugger\DebugWindow.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\Instrumentation.cpp" />
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp" />
@@ -27,7 +27,7 @@
     <ClCompile Include="Source\Universal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DebugWindow.h" />
+    <ClInclude Include="Source\Debugger\DebugWindow.h" />
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\FrameworkAPI.h" />
     <ClInclude Include="Source\Instrumentation.h" />
@@ -99,7 +99,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\BaseTypes\Source;..\Interfaces\Source;..\Generated\Source;C:\Program Files (x86)\SDK\Protobuf\src;C:\Program Files (x86)\SDK\Boost;C:\Program Files (x86)\SDK\TBB\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\BaseTypes\Source;..\Interfaces\Source;..\Generated\Source;C:\Program Files (x86)\SDK\Protobuf\src;C:\Program Files (x86)\SDK\Boost;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

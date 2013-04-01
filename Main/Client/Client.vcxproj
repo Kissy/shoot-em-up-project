@@ -61,8 +61,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\stage\lib;C:\Program Files (x86)\SDK\TBB\build\vsproject\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\vsprojects\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\stage\lib;C:\Program Files (x86)\SDK\TBB\build\vsproject\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\vsprojects\Debug;C:\Program Files (x86)\SDK\ZeroMQ\builds\msvc\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

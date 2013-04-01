@@ -31,6 +31,21 @@ CSubject::~CSubject() {
 /**
  * @inheritDoc
  */
+u32 CSubject::GetID(IObserver* pObserver) const {
+    ObserverList::const_iterator it = m_observerList.begin();
+
+    for (; it != m_observerList.end(); ++it) {
+        if (it->m_pObserver == pObserver) {
+            return it->m_myID;
+        }
+    }
+
+    return InvalidID;
+}
+
+/**
+ * @inheritDoc
+ */
 void CSubject::PreDestruct() {
     // THREAD SAFETY NOTE
     // Currently this method is called from the destructor only (that is it is
@@ -122,21 +137,6 @@ Error CSubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
     }
 
     return curError;
-}
-
-/**
- * @inheritDoc
- */
-u32 CSubject::GetID(IObserver* pObserver) const {
-    ObserverList::const_iterator it = m_observerList.begin();
-
-    for (; it != m_observerList.end(); ++it) {
-        if (it->m_pObserver == pObserver) {
-            return it->m_myID;
-        }
-    }
-
-    return InvalidID;
 }
 
 // The following implementation could be used in case of concurrent initial attach

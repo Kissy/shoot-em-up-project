@@ -3,6 +3,7 @@ ShootEmUp
 # Proto generated
 /Core/Generated/Source/Proto/
 # Build directories
+Docs/html/
 
 #################
 ## IntelliJ

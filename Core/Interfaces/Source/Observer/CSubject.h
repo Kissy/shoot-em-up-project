@@ -65,6 +65,11 @@ class CSubject : public ISubject {
          * @inheritDoc
          */
         virtual ~CSubject(void);
+        
+        /**
+         * @inheritDoc
+         */
+        virtual u32 GetID(IObserver* pObserver) const;
 
         /**
          * @inheritDoc
@@ -80,11 +85,6 @@ class CSubject : public ISubject {
          * @inheritDoc
          */
         virtual Error UpdateInterestBits(IObserver* pInObserver, u32 uInIntrestBits);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual u32 GetID(IObserver* pObserver) const;
         
         /**
          * @inheritDoc

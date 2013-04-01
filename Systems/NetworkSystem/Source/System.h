@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <boost/asio.hpp>
+
 #include "Errors.h"
 #include "Proto.h"
 #include "System.h"
@@ -56,6 +58,8 @@ class NetworkSystem : public ISystem {
 
     private:
 
+        boost::asio::io_service         m_ioService;
+        boost::asio::ip::tcp::socket*   m_pSocket;
 
 };
 

@@ -64,124 +64,123 @@ void DefinitionParser::ParseSystems(void) {
  */
 void DefinitionParser::ParseScene(std::string sScene) {
     const ProtoSceneList& scenes = m_gdProto.scenes();
-    for (ProtoSceneList::const_iterator scenesIt = scenes.begin(); scenesIt != scenes.end(); scenesIt++) {
-        if ((*scenesIt).compare(sScene) == 0) {
-            //
-            // Create the initial scene for each system.
-            //
-            ISystem* pSystem = Singletons::SystemManager.GetFirst();
+    ProtoSceneList::const_iterator scenesIt = std::find(scenes.begin(), scenes.end(), sScene);
+    if (scenesIt == scenes.end()) {
+        return;
+    }
+    
+    //
+    // Create the initial scene for each system.
+    //
+    ISystem* pSystem = Singletons::SystemManager.GetFirst();
 
-            while (pSystem != NULL) {
-                m_pScene->Extend(pSystem);
-                pSystem = Singletons::SystemManager.GetNext();
-            }
+    while (pSystem != NULL) {
+        m_pScene->Extend(pSystem);
+        pSystem = Singletons::SystemManager.GetNext();
+    }
 
-            //
-            // Parse the SDF file
-            //
-            SceneDefinitionProto sceneDefinitionProto;
-            std::string sceneProtoFile = *scenesIt + ".sdf.bin";
-            Error result = Singletons::PlatformManager.FileSystem().LoadProto(sceneProtoFile.c_str(), &sceneDefinitionProto);
-            ASSERT(result == Errors::Success);
+    //
+    // Parse the SDF file
+    //
+    SceneDefinitionProto sceneDefinitionProto;
+    std::string sceneProtoFile = *scenesIt + ".sdf.bin";
+    Error result = Singletons::PlatformManager.FileSystem().LoadProto(sceneProtoFile.c_str(), &sceneDefinitionProto);
+    ASSERT(result == Errors::Success);
 
-            //
-            // Initialize the System scenes.
-            //
-            for (ProtoSystemPropertiesList::const_iterator systemPropertiesIt = sceneDefinitionProto.systems().begin(); systemPropertiesIt != sceneDefinitionProto.systems().end(); systemPropertiesIt++) {
-                m_pSystem = Singletons::SystemManager.Get(systemPropertiesIt->type());
-                ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
+    //
+    // Initialize the System scenes.
+    //
+    for (ProtoSystemPropertiesList::const_iterator systemPropertiesIt = sceneDefinitionProto.systems().begin(); systemPropertiesIt != sceneDefinitionProto.systems().end(); systemPropertiesIt++) {
+        m_pSystem = Singletons::SystemManager.Get(systemPropertiesIt->type());
+        ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
 
-                if (m_pSystem != NULL) {
-                    UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-                    ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
-                    m_pSystemScene = it->second;
-                    ASSERT(m_pSystemScene != NULL);
-                    // Initialize system scene properties
-                    m_pSystemScene->setProperties(systemPropertiesIt->properties());
+        if (m_pSystem != NULL) {
+            UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
+            ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", SystemProto::Type_Name(systemPropertiesIt->type()));
+            m_pSystemScene = it->second;
+            ASSERT(m_pSystemScene != NULL);
+            // Initialize system scene properties
+            m_pSystemScene->setProperties(systemPropertiesIt->properties());
+        }
+    }
+
+    //
+    // Initialize the scene objects.
+    //
+    for (ProtoObjectList::const_iterator objectsIt = sceneDefinitionProto.objects().begin(); objectsIt != sceneDefinitionProto.objects().end(); objectsIt++) {
+        //
+        // Create the object.
+        //
+        m_pUObject = m_pScene->CreateObject();
+        ASSERT(m_pUObject != NULL);
+        m_pUObject->SetName(objectsIt->name().c_str());
+
+        //
+        // Added systems extension.
+        //
+        for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectsIt->systemobjects().begin(); objectPropertiesIt != objectsIt->systemobjects().end(); objectPropertiesIt++) {
+            m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
+            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
+
+            if (m_pSystem != NULL) {
+                UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
+                ASSERTMSG1(it != m_pScene->GetSystemScenes().end(),
+                            "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
+                //
+                // Create object.
+                //
+                m_pSystemObject = m_pUObject->Extend(it->second, objectPropertiesIt->type().c_str());
+                ASSERT(m_pSystemObject != NULL);
+
+                if (m_pSystemObject != NULL) {
+                    //
+                    // Initialize the extension.
+                    //
+                    m_pSystemObject->setProperties(objectPropertiesIt->properties());
                 }
             }
+        }
+    }
 
-            //
-            // Initialize the scene objects.
-            //
-            for (ProtoObjectList::const_iterator objectsIt = sceneDefinitionProto.objects().begin(); objectsIt != sceneDefinitionProto.objects().end(); objectsIt++) {
-                //
-                // Create the object.
-                //
-                m_pUObject = m_pScene->CreateObject();
-                ASSERT(m_pUObject != NULL);
-                m_pUObject->SetName(objectsIt->name().c_str());
+    const UScene::SystemScenes Scenes = m_pScene->GetSystemScenes();
 
-                //
-                // Added systems extension.
-                //
-                for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectsIt->systemobjects().begin(); objectPropertiesIt != objectsIt->systemobjects().end(); objectPropertiesIt++) {
-                    m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
-                    ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
+    for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
+        it->second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
+    }
 
-                    if (m_pSystem != NULL) {
-                        UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-                        ASSERTMSG1(it != m_pScene->GetSystemScenes().end(),
-                                   "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-                        //
-                        // Create object.
-                        //
-                        m_pSystemObject = m_pUObject->Extend(it->second, objectPropertiesIt->type().c_str());
-                        ASSERT(m_pSystemObject != NULL);
+    //
+    // Initialize the links.
+    //
+    for (ProtoLinksList::const_iterator linksIt = sceneDefinitionProto.links().begin(); linksIt != sceneDefinitionProto.links().end(); linksIt++) {
+        UObject* pSubject = m_pScene->FindObject(linksIt->subject().c_str());
+        UObject* pObserver = m_pScene->FindObject(linksIt->observer().c_str());;
+        std::string sSystemSubject = SystemProto::Type_Name(linksIt->subjectsystemtype());
+        std::string sSystemObserver = SystemProto::Type_Name(linksIt->observersystemtype());
+        ISystemObject* pSystemSubject = NULL;
+        ISystemObject* pSystemObserver = NULL;
+        ISystem* pSystem;
 
-                        if (m_pSystemObject != NULL) {
-                            //
-                            // Initialize the extension.
-                            //
-                            m_pSystemObject->setProperties(objectPropertiesIt->properties());
-                        }
-                    }
-                }
-            }
+        //
+        // Get the extension for the subject.
+        //
+        if (!sSystemSubject.empty()) {
+            pSystem = Singletons::SystemManager.Get(sSystemSubject.c_str());
+            pSystemSubject = pSubject->GetExtension(pSystem->GetSystemType());
+        }
 
-            const UScene::SystemScenes Scenes = m_pScene->GetSystemScenes();
+        //
+        // Get the extension for the object.
+        //
+        pSystem = Singletons::SystemManager.Get(sSystemObserver.c_str());
+        pSystemObserver = pObserver->GetExtension(pSystem->GetSystemType());
 
-            for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
-                it->second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
-            }
-
-            //
-            // Initialize the links.
-            //
-            for (ProtoLinksList::const_iterator linksIt = sceneDefinitionProto.links().begin(); linksIt != sceneDefinitionProto.links().end(); linksIt++) {
-                UObject* pSubject = m_pScene->FindObject(linksIt->subject().c_str());
-                UObject* pObserver = m_pScene->FindObject(linksIt->observer().c_str());;
-                std::string sSystemSubject = SystemProto::Type_Name(linksIt->subjectsystemtype());
-                std::string sSystemObserver = SystemProto::Type_Name(linksIt->observersystemtype());
-                ISystemObject* pSystemSubject = NULL;
-                ISystemObject* pSystemObserver = NULL;
-                ISystem* pSystem;
-
-                //
-                // Get the extension for the subject.
-                //
-                if (!sSystemSubject.empty()) {
-                    pSystem = Singletons::SystemManager.Get(sSystemSubject.c_str());
-                    pSystemSubject = pSubject->GetExtension(pSystem->GetSystemType());
-                }
-
-                //
-                // Get the extension for the object.
-                //
-                pSystem = Singletons::SystemManager.Get(sSystemObserver.c_str());
-                pSystemObserver = pObserver->GetExtension(pSystem->GetSystemType());
-
-                //
-                // Call the scene to register the links.
-                //
-                if (pSystemSubject != NULL) {
-                    m_pScene->CreateObjectLink(pSystemSubject, pSystemObserver);
-                } else {
-                    m_pScene->CreateObjectLink(pSubject, pSystemObserver);
-                }
-            }
-
-            break;
+        //
+        // Call the scene to register the links.
+        //
+        if (pSystemSubject != NULL) {
+            m_pScene->CreateObjectLink(pSystemSubject, pSystemObserver);
+        } else {
+            m_pScene->CreateObjectLink(pSubject, pSystemObserver);
         }
     }
 }
@@ -189,97 +188,3 @@ void DefinitionParser::ParseScene(std::string sScene) {
 std::string DefinitionParser::StartupScene(void) {
     return m_gdProto.startupscene();
 }
-
-/*
-void DefinitionParser::ApplyProperties(
-    ProtoPropertyList& propertyList,
-    Properties::Array& getProperties,
-    Properties::Array& setProperties
-) const {
-    Properties::ConstIterator getPropIt = getProperties.end();
-    size_t iProp = 0xFFFFFFFF;
-
-    for (ProtoPropertyList::const_iterator prop = propertyList.begin();
-            prop != propertyList.end();
-            prop++) {
-        //
-        // Search for the name in the property array.
-        //
-        for (Properties::ConstIterator it = getProperties.begin();
-                it != getProperties.end();
-                it++) {
-            //
-            // If the name of the property match, it's good
-            //
-            if (strcmp(it->GetName(), prop->name().c_str()) == 0) {
-                setProperties.push_back(*it);
-                iProp = setProperties.size() - 1;
-                getPropIt = it;
-                break;
-            }
-        }
-
-        if (getPropIt == getProperties.end()) {
-            //ASSERTMSG1(getPropIt != getProperties.end(), "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
-            continue;
-        }
-
-        i32 iValue = 0;
-
-        for (ProtoStringList::const_iterator value = prop->value().begin();
-                value != prop->value().end();
-                value++) {
-            //
-            // Read in the property.
-            //
-            switch (getPropIt->GetValueType(iValue)) {
-                case Properties::Values::None:
-                    ASSERTMSG1(false, "Parser encoutered a value '%s' with no type.", prop->name());
-                    break;
-
-                case Properties::Values::Boolean:
-                case Properties::Values::Int32:
-                    setProperties[ iProp ].SetValue(iValue, Convertor::StringToInt(*value));
-                    break;
-
-                case Properties::Values::Enum: {
-                    for (i32 i = 0; getPropIt->GetEnumOption(i) != NULL; i++) {
-                        if (strcmp((*value).c_str(), getPropIt->GetEnumOption(i)) == 0) {
-                            setProperties[ iProp ].SetValue(iValue, i);
-                            break;
-                        }
-                    }
-
-                    break;
-                }
-
-                case Properties::Values::Float32:
-                case Properties::Values::Vector3& Properties::Values::Mask:
-                case Properties::Values::Vector4& Properties::Values::Mask:
-                case Properties::Values::Quaternion& Properties::Values::Mask:
-                case Properties::Values::Color3& Properties::Values::Mask:
-                case Properties::Values::Color4& Properties::Values::Mask:
-                    setProperties[ iProp ].SetValue(iValue, Convertor::StringToFloat(*value));
-                    break;
-
-                case Properties::Values::Angle:
-                    setProperties[ iProp ].SetValue(
-                        iValue, Math::Angle::Deg2Rad(Convertor::StringToFloat(*value))
-                    );
-                    break;
-
-                case Properties::Values::String:
-                case Properties::Values::Path:
-                    setProperties[ iProp ].SetValue(iValue, *value);
-                    break;
-
-                default:
-                    ASSERTMSG(false, "Parser encountered an unsupported property value.");
-                    break;
-            }
-
-            iValue++;
-        }
-    }
-}
-*/

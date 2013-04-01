@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 #include "BaseTypes.h"

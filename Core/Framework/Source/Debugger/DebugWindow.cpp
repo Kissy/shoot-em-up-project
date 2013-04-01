@@ -15,8 +15,10 @@
 #ifdef _DEBUG
 #define __DEBUG_WINDOW__
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <commctrl.h>
+#include <typeinfo>
 
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -116,6 +118,11 @@ DebugWindow::DebugWindow(
     } else {
         ASSERTMSG(false, "Failed to register window class");
     }
+
+    // ZMQ
+    context = new zmq::context_t(1);
+    socket = new zmq::socket_t(*context, ZMQ_PUSH);
+    socket->connect("tcp://localhost:5555");
 }
 
 
@@ -299,6 +306,13 @@ DebugWindow::ChangeOccurred(
 ) {
     UNREFERENCED_PARAM(pSubject);
     UNREFERENCED_PARAM(ChangeType);
+
+    ISystemScene* systemScene = dynamic_cast<ISystemScene*>(pSubject);
+    ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
+
+    zmq::message_t request(5);
+    memcpy((void *) request.data(), "Hello", 5);
+    socket->send(request);
     return Errors::Success;
 }
 

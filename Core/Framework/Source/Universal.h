@@ -27,7 +27,6 @@ class UObject;
 //   interface into the CMM.
 /// </summary>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 class UScene : public IObserver {
     public:
 
@@ -43,6 +42,13 @@ class UScene : public IObserver {
         typedef std::list<UObject*>                                         Objects;
         typedef Objects::iterator                                           ObjectsIt;
         typedef Objects::const_iterator                                     ObjectsConstIt;
+
+        struct ObjectLinkData {
+            ISubject*               pSubject;
+            IObserver*              pObserver;
+        };
+        typedef std::list<ObjectLinkData>       ObjectLinks;
+        typedef ObjectLinks::iterator           ObjectLinksIt;
 
     public:
 
@@ -92,13 +98,6 @@ class UScene : public IObserver {
         /// <returns>An error code.</returns>
         Error DestroyObject(UObject* pObject);
 
-        UObject* FindObject(const char* pszName);
-
-        void CreateObjectLink(ISystemObject* pSubject,
-                              ISystemObject* pObserver);
-
-        void CreateObjectLink(UObject* pSubject, ISystemObject* pObserver);
-
         /// <summary>
         ///   Returns a collection of system scenes.
         /// </summary>
@@ -107,12 +106,16 @@ class UScene : public IObserver {
             return m_Objects;
         }
 
+        UObject* FindObject(const char* pszName);
+
+        void CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver);
+
+        void CreateObjectLink(UObject* pSubject, ISystemObject* pObserver);
+
         /// <summary cref="IObserver::ChangeOccurred">
         ///   Implementation of the IObserver ChangeOccurred function.
         /// </summary>
-        virtual Error ChangeOccurred(ISubject* pSubject,
-                                     System::Changes::BitMask SystemChanges);
-
+        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
 
     protected:
 
@@ -121,14 +124,6 @@ class UScene : public IObserver {
 
         SystemScenes                            m_SystemScenes;
         Objects                                 m_Objects;
-
-        struct ObjectLinkData {
-            ISubject*               pSubject;
-            IObserver*              pObserver;
-        };
-        typedef std::list<ObjectLinkData>       ObjectLinks;
-        typedef ObjectLinks::iterator           ObjectLinksIt;
-
         ObjectLinks                             m_ObjectLinks;
 };
 
@@ -155,7 +150,6 @@ class UObject : public CSubject, public IObserver, public IGeometryObject {
         // Destructor.
         //
         ~UObject(void);
-
 
     public:
 

@@ -18,7 +18,7 @@
 
 #include "Proto.h"
 #include "Universal.h"
-#include "DebugWindow.h"
+#include "Debugger/DebugWindow.h"
 #include "Manager/MemoryManager.h"
 #include "Manager/SystemManager.h"
 #include "Manager/PlatformManager.h"

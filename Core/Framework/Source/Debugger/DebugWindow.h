@@ -25,6 +25,9 @@ extern void SetDebugWindowUScene(Handle hDebugWindow, UScene* pUScene);
 
 
 #ifdef __DEBUG_WINDOW__
+
+#include <zmq.hpp>
+
 class DebugWindow : public IObserver {
     public:
 
@@ -74,6 +77,9 @@ class DebugWindow : public IObserver {
 
         HTREEITEM               m_hSceneRoot;
         HTREEITEM               m_hObjectsRoot;
+        
+        zmq::context_t*         context;
+        zmq::socket_t*          socket;
 };
 #endif
 #endif

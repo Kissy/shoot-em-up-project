@@ -39,6 +39,14 @@ class ISubject {
         virtual ~ISubject() {}
 
         /**
+         * Returns the ID assigned by pObserver to this subject.
+         *
+         * @param [in,out]  pObserver   If non-null, the observer.
+         * @return  The identifier.
+         */
+        virtual u32 GetID(IObserver* pObserver) const = 0;
+
+        /**
          * Associates the provided IObserver with the given ISubject aspects of interest.
          * This method is typically called from @e ChangeManager::Register()
          *  or the IObserver, if used without a ChangeManager.
@@ -75,12 +83,11 @@ class ISubject {
         virtual Error UpdateInterestBits(IObserver* pInObserver, u32 uInIntrestBits) = 0;
 
         /**
-         * Returns the ID assigned by pObserver to this subject.
+         * Identifies the system changes that this subject could possibly make.
          *
-         * @param [in,out]  pObserver   If non-null, the observer.
-         * @return  The identifier.
+         * @return  A bitmask of the possible system changes.
          */
-        virtual u32 GetID(IObserver* pObserver) const = 0;
+        virtual System::Changes::BitMask GetPotentialSystemChanges(void) = 0;
 
         /**
          * Publishes to attached Observers and ChanageManager that changes have occurred.
@@ -93,13 +100,6 @@ class ISubject {
          *              pInObserver and/or pInSubject was NULL.
          */
         virtual void PostChanges(System::Changes::BitMask uInChangedBits) = 0;
-
-        /**
-         * Identifies the system changes that this subject could possibly make.
-         *
-         * @return  A bitmask of the possible system changes.
-         */
-        virtual System::Changes::BitMask GetPotentialSystemChanges(void) = 0;
 
     protected:
 

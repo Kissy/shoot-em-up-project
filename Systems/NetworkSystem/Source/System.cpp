@@ -28,7 +28,7 @@
  */
 NetworkSystem::NetworkSystem(void) : ISystem() {
     m_SceneFactory = boost::factory<NetworkScene*>();
-
+    m_pSocket = new boost::asio::ip::tcp::socket(m_ioService);
 }
 
 /**
@@ -43,5 +43,11 @@ NetworkSystem::~NetworkSystem(void) {
  */
 Error NetworkSystem::initialize(void) {
     ASSERT(!m_bInitialized);
+    
+    boost::asio::ip::tcp::resolver resolver(m_ioService);
+    boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "localhost", "9999");
+    boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
+    //boost::asio::connect(*m_pSocket, iterator);
+
     return Errors::Success;
 }

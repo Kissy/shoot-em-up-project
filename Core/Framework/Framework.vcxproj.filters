@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Parser">
       <UniqueIdentifier>{b40ef2f4-0ec7-4d3f-88ae-58e1fc4c1eff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Debugger">
+      <UniqueIdentifier>{91f5170a-4931-46cf-af29-e6556651217d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Debugger">
+      <UniqueIdentifier>{40f6c610-b5c1-47a2-ae22-6d39184e1674}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
@@ -66,14 +72,11 @@
     <ClCompile Include="Source\Framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DebugWindow.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Debugger\DebugWindow.cpp">
+      <Filter>Source Files\Debugger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DebugWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Source\Parser\DefinitionParser.h">
       <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Debugger\DebugWindow.h">
+      <Filter>Header Files\Debugger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

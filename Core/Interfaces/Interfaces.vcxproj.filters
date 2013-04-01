@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Generic">
-      <UniqueIdentifier>{6118dffe-7d88-485d-a1a2-919417206f7f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{3f3b6416-06f5-4163-981c-ef739780561c}</UniqueIdentifier>
     </Filter>
@@ -43,13 +40,16 @@
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{c224030a-2a1e-42ec-9425-f9c54f27911f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{6118dffe-7d88-485d-a1a2-919417206f7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Generic\IGenericScene.h">
-      <Filter>Header Files\Generic</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Property\IProperty.h">
       <Filter>Header Files\Property</Filter>
