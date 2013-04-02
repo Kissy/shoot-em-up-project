@@ -54,9 +54,6 @@
     <ClInclude Include="Source\Property\IProperty.h">
       <Filter>Header Files\Property</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Observer\CSubject.h">
-      <Filter>Header Files\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Observer\IChangeManager.h">
       <Filter>Header Files\Observer</Filter>
     </ClInclude>
@@ -125,7 +122,7 @@
     <ClCompile Include="Source\Property\IProperty.cpp">
       <Filter>Source Files\Property</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Observer\CSubject.cpp">
+    <ClCompile Include="Source\Observer\ISubject.cpp">
       <Filter>Source Files\Observer</Filter>
     </ClCompile>
   </ItemGroup>

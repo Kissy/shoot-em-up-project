@@ -18,7 +18,6 @@
 #include "Observer/IObserver.h"
 #include "Observer/ISubject.h"
 #include "Observer/IChangeManager.h"
-#include "Observer/CSubject.h"
 #include "Service/ITaskManager.h"
 #include "Service/IEnvironment.h"
 #include "Service/IService.h"

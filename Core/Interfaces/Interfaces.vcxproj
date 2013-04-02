@@ -86,7 +86,6 @@
     <ClInclude Include="Source\Object\IKeyboardObject.h" />
     <ClInclude Include="Source\Object\IMouseObject.h" />
     <ClInclude Include="Source\Object\IMoveObject.h" />
-    <ClInclude Include="Source\Observer\CSubject.h" />
     <ClInclude Include="Source\Observer\IChangeManager.h" />
     <ClInclude Include="Source\Observer\IObserver.h" />
     <ClInclude Include="Source\Observer\ISubject.h" />
@@ -104,7 +103,7 @@
     <ClInclude Include="Source\System\ISystemTask.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Observer\CSubject.cpp" />
+    <ClCompile Include="Source\Observer\ISubject.cpp" />
     <ClCompile Include="Source\Property\IProperty.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />

@@ -94,7 +94,7 @@ Error ChangeManager::Register(ISubject* pInSubject, System::Changes::BitMask obs
     if (pInSubject && pInObserver) {
         // Lock out updates while we register a subjext
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pInSubject->GetID(this);
+        u32 uID = pInSubject->getObserverId(this);
 
         if (uID != ISubject::InvalidID) {
             // Subject has already been registered. Add new observer to the list
@@ -143,7 +143,7 @@ ChangeManager::Unregister(
 
     if (pInSubject && pInObserver) {
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pInSubject->GetID(this);
+        u32 uID = pInSubject->getObserverId(this);
 
         if (m_subjectsList.size() <= uID  ||  m_subjectsList[uID].m_pSubject != pInSubject) {
             return Errors::Failure;
@@ -180,7 +180,7 @@ ChangeManager::RemoveSubject(
     ObserversList observersList;
     {
         SCOPED_SPIN_LOCK(m_swUpdate);
-        u32 uID = pSubject->GetID(this);
+        u32 uID = pSubject->getObserverId(this);
         ASSERT(uID != ISubject::InvalidID);
         ASSERT(m_subjectsList[uID].m_pSubject == pSubject);
 
@@ -278,7 +278,7 @@ ChangeManager::DistributeQueuedChanges(
                 // Get notification
                 Notification& notif = pList->at(i);
                 // Get subject for notification
-                u32 uID = notif.m_pSubject->GetID(this);
+                u32 uID = notif.m_pSubject->getObserverId(this);
                 ASSERT(uID != ISubject::InvalidID);
 
                 if (uID != ISubject::InvalidID) {

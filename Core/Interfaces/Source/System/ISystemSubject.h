@@ -16,7 +16,7 @@
 
 #include "Errors.h"
 #include "Property/IProperty.h"
-#include "Observer/CSubject.h"
+#include "Observer/ISubject.h"
 #include "Observer/IObserver.h"
 
 /**
@@ -24,7 +24,7 @@
  * 
  * @sa  ISubject
  */
-class ISystemSubject : public CSubject, public IProperty, public IObserver {
+class ISystemSubject : public ISubject, public IProperty, public IObserver {
 
     public :
         

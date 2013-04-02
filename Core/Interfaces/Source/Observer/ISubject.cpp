@@ -18,20 +18,20 @@
 /**
  * @inheritDoc
  */
-CSubject::CSubject() {
+ISubject::ISubject() {
 }
 
 /**
  * @inheritDoc
  */
-CSubject::~CSubject() {
+ISubject::~ISubject() {
     PreDestruct();
 }
 
 /**
  * @inheritDoc
  */
-u32 CSubject::GetID(IObserver* pObserver) const {
+u32 ISubject::getObserverId(IObserver* pObserver) const {
     ObserverList::const_iterator it = m_observerList.begin();
 
     for (; it != m_observerList.end(); ++it) {
@@ -46,12 +46,12 @@ u32 CSubject::GetID(IObserver* pObserver) const {
 /**
  * @inheritDoc
  */
-void CSubject::PreDestruct() {
+void ISubject::PreDestruct() {
     // THREAD SAFETY NOTE
     // Currently this method is called from the destructor only (that is it is
     // never called concurrently). Thus it does not lock the list. If ever in
     // the future it is called concurrently, then locking similar to that
-    // in the CSubject::Detach method will have to be added.
+    // in the ISubject::Detach method will have to be added.
     ObserverList::iterator it = m_observerList.begin();
 
     for (; it != m_observerList.end(); ++it) {
@@ -64,24 +64,24 @@ void CSubject::PreDestruct() {
 /**
  * @inheritDoc
  */
-Error CSubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, u32 uID, u32 shift) {
+Error ISubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, u32 uID, u32 shift) {
     // To make compiler happy in release builds while keeping the next assertion
     UNREFERENCED_PARAM(shift);
     // If the following assertion fails, it means that Change Control Manager (CCM)
     // was modified to start using "shifts". Please update the code of this class
     // appropriately (original version did not have any meaningful support except
     // shifting inInterest on entry)
-    ASSERT(!shift && "CSubject::Attach: Interest bits are shifted. Read the comment to this assertion");
+    ASSERT(!shift && "ISubject::Attach: Interest bits are shifted. Read the comment to this assertion");
     // Since the intended usage model is to use this method from CCMs only, and
     // their implementation provided by this framework ensures that pObs in nonzero
     // the following assertion should suffice.
-    ASSERT(pObserver && "CSubject::Attach: Valid pointer to observer object must be specified");
+    ASSERT(pObserver && "ISubject::Attach: Valid pointer to observer object must be specified");
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
     SCOPED_SPIN_LOCK(m_observerListMutex);
 #endif
     // Framework's CCM implementation ensures that the following assertion always holds
     ASSERT(std::find(m_observerList.begin(), m_observerList.end(), pObserver) == m_observerList.end() &&
-           "CSubject::Attach: Observer has already been attached. Use CSubject::UpdateInterestBits instead.");
+           "ISubject::Attach: Observer has already been attached. Use ISubject::UpdateInterestBits instead.");
     // Add the observer to our list of observers
     m_observerList.push_back(ObserverRequest(pObserver, inInterest, uID));
     return Errors::Success;
@@ -90,7 +90,7 @@ Error CSubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, 
 /**
  * @inheritDoc
  */
-Error CSubject::Detach(IObserver* pObserver) {
+Error ISubject::Detach(IObserver* pObserver) {
     // No need to check for pObs being nonzero since the find below guarantees correct work in any case
     Error curError = Errors::Failure;
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
@@ -105,12 +105,12 @@ Error CSubject::Detach(IObserver* pObserver) {
     }
 
     return curError;
-} // CSubject::Detach
+} // ISubject::Detach
 
 /**
  * @inheritDoc
  */
-Error CSubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
+Error ISubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
     // No need to check for pObs being nonzero since the find below guarantees correct work in any case
     Error curError = Errors::Failure;
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
@@ -148,7 +148,7 @@ Error CSubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
 /**
  * @inheritDoc
  */
-void CSubject::PostChanges(System::Changes::BitMask changedBits) {
+void ISubject::PostChanges(System::Changes::BitMask changedBits) {
     if (!m_observerList.empty()) {
         typedef std::pair<IObserver*, u32> PostData;
         PostData* aPostData = NULL;
@@ -174,14 +174,14 @@ void CSubject::PostChanges(System::Changes::BitMask changedBits) {
             aPostData[i].first->ChangeOccurred(this, aPostData[i].second);
         }
     }
-} // CSubject::PostChanges
+} // ISubject::PostChanges
 
 #else
 
 /**
  * @inheritDoc
  */
-void CSubject::PostChanges(System::Changes::BitMask changedBits) {
+void ISubject::PostChanges(System::Changes::BitMask changedBits) {
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
     SCOPED_SPIN_LOCK(m_observerListMutex);
 #endif
@@ -201,7 +201,7 @@ void CSubject::PostChanges(System::Changes::BitMask changedBits) {
 /**
  * @inheritDoc
  */
-long CSubject::AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits) {
+long ISubject::AtomicCompareAndSwap(long* interestBits, long newBits, long prevBits) {
 #if defined(_MSC_VER)
     return _InterlockedCompareExchange(interestBits, newBits, prevBits);
 #elif defined(__GNUC__)
