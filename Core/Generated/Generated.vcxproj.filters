@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Proto\Server">
       <UniqueIdentifier>{f8441e37-62b8-4b6e-b6c0-afbcbe4ab5fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Proto\Debug">
+      <UniqueIdentifier>{6bfda894-f1e3-4230-adce-b90e759073a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Proto\Debug">
+      <UniqueIdentifier>{5da671f6-bf5f-42eb-8b20-fccee11b61ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Proto\Server\DownstreamMessage.pb.cc">
@@ -75,6 +81,9 @@
     <ClCompile Include="Source\Proto\Common\System.pb.cc">
       <Filter>Source Files\Proto\Common</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Proto\Debug\DebugHolderDTO.pb.cc">
+      <Filter>Source Files\Proto\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Proto\Common\Object.pb.h">
@@ -106,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Source\Proto\Server\UpstreamMessage.pb.h">
       <Filter>Header Files\Proto\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Debug\DebugHolderDTO.pb.h">
+      <Filter>Header Files\Proto\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

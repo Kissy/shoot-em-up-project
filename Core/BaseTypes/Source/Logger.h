@@ -15,15 +15,13 @@
 #pragma once
 
 #include <cstdarg>
-#include <ostream>
-
 #include <boost/thread/mutex.hpp>
 
 #include "DataTypes.h"
 
 #define LOG_ACTUAL( x ) va_list ArgList;                                   \
                         va_start( ArgList, Format );                       \
-                        Debug::GetDebugger()->Log( (x), Format, ArgList ); \
+                        Log::GetLogger()->Log( (x), Format, ArgList ); \
                         va_end( ArgList );
 
 
@@ -48,25 +46,23 @@ namespace LogType {
 /**
  * Debugging Functionality.
  */
-namespace Debug {
+namespace Log {
 
     /**
      * Debugger class.
      */
-    class Debugger {
+    class Logger {
         public:
 
             /**
              * Constructor.
-             *
-             * @param	bLogging	true to logging.
              */
-            Debugger(bool bLogging);
+            Logger(bool bLogging);
 
             /**
              * Destructor.
              */
-            ~Debugger();
+            ~Logger();
 
             /**
              * Prints.
@@ -94,14 +90,14 @@ namespace Debug {
 
     };
 
-#ifdef DEBUG_BUILD
+#ifdef LOGGING_BUILD
 
     /**
      * Initialises this object.
      *
-     * @param [in,out]	p_Debugger	If non-null, the debugger.
+     * @param [in,out]	p_logger	If non-null, the logger.
      */
-    void Init(Debugger* p_Debugger);
+    void Init(Logger* p_logger);
 
     /**
      * Prepares this object for use.
@@ -120,7 +116,7 @@ namespace Debug {
      *
      * @return	null if it fails, else the debugger.
      */
-    Debugger* GetDebugger(void);
+    Logger* GetLogger(void);
 
     /**
      * Logs the given format.
@@ -177,9 +173,9 @@ namespace Debug {
     /**
      * Initialises this object.
      *
-     * @param [in,out]	p_Debugger	If non-null, the debugger.
+     * @param [in,out]	p_logger	If non-null, the debugger.
      */
-    inline void Init(Debug::Debugger* p_Debugger) {};
+    inline void Init(Log::Logger* p_logger) {};
 
     /**
      * Prepares this object for use.
@@ -198,7 +194,7 @@ namespace Debug {
      *
      * @return	null if it fails, else the debugger.
      */
-    inline Debug::Debugger* GetDebugger(void) { return NULL; };
+    inline Log::Logger* GetLogger(void) { return NULL; };
 
     /**
      * Logs the given format.

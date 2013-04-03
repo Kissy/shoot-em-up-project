@@ -55,7 +55,7 @@ _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pszCmdLine, int 
     //
     // NOTE: checking the environment will never work, because the Environment hasn't been read yet
     //bool bLogging = Singletons::EnvironmentManager.Variables().GetAsBool( "Debug::Logging", false );
-    Debug::Startup(bLogging);
+    Log::Startup(bLogging);
     //
     // Call the engine to start execution.
     //
@@ -63,6 +63,6 @@ _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pszCmdLine, int 
     //
     // Shutdown debug functionality.
     //
-    Debug::Shutdown();
+    Log::Shutdown();
     return 0;
 }

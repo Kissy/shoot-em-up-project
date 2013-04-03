@@ -110,7 +110,7 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  IS
             //
             // Create the system.
             //
-            ISystem* pSystem = fnCreateSystem(Debug::GetDebugger());
+            ISystem* pSystem = fnCreateSystem(Log::GetLogger());
 
             if (pSystem != NULL) {
                 //

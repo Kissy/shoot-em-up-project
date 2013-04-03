@@ -58,8 +58,8 @@ InitializeGraphicSystem(
 
 
 extern "C" ISystem* __stdcall
-CreateGraphicSystem(Debug::Debugger* p_Debugger) {
-    Debug::Init(p_Debugger);
+CreateGraphicSystem(Log::Logger* p_logger) {
+    Log::Init(p_logger);
     return new GraphicSystem();
 }
 

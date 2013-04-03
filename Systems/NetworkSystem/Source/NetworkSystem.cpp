@@ -47,8 +47,8 @@ InitializeNetworkSystem(ManagerInterfaces* pManagers) {
 }
 
 extern "C" ISystem* __stdcall
-CreateNetworkSystem(Debug::Debugger* p_Debugger) {
-    Debug::Init(p_Debugger);
+CreateNetworkSystem(Log::Logger* p_logger) {
+    Log::Init(p_logger);
     return new NetworkSystem();
 }
 

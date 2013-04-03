@@ -27,7 +27,7 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Debug.h"
+#include "Logger.h"
 #include "Errors.h"
 #include "Assert.h"
 #include "MathUtils.h"

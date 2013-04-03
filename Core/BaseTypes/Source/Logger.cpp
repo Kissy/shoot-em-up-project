@@ -17,9 +17,9 @@
 #endif
 
 #include "Assert.h"
-#include "Debug.h"
+#include "Logger.h"
 
-#ifdef DEBUG_BUILD
+#ifdef LOGGING_BUILD
 
 #include <string>
 
@@ -41,12 +41,12 @@ std::string s_logFileNames[ LogType::e_LogTypeCount ] = {
 
 COMPILE_ASSERT(sizeof(s_logFileNames) / sizeof(s_logFileNames[ 0 ]) == LogType::e_LogTypeCount);
 
-static Debug::Debugger* s_Debugger = NULL;
+static Log::Logger* s_logger = NULL;
 
 /**
  * @inheritDoc
  */
-Debug::Debugger::Debugger(bool bLogging) {
+Log::Logger::Logger(bool bLogging) {
     m_bLogging = bLogging;
 
     if (m_bLogging) {
@@ -60,46 +60,46 @@ Debug::Debugger::Debugger(bool bLogging) {
 /**
  * @inheritDoc
  */
-Debug::Debugger::~Debugger() {
-
+Log::Logger::~Logger() {
+    
 }
 
 /**
  * @inheritDoc
  */
-void Debug::Init(Debugger* p_Debugger) {
-    s_Debugger = p_Debugger;
+void Log::Init(Logger* p_logger) {
+    s_logger = p_logger;
 }
 
 /**
  * @inheritDoc
  */
-void Debug::Startup(bool bLogging) {
-    s_Debugger = new Debugger(bLogging);
+void Log::Startup(bool bLogging) {
+    s_logger = new Logger(bLogging);
 }
 
 /**
  * @inheritDoc
  */
-void Debug::Shutdown(void) {
+void Log::Shutdown(void) {
     // Release s_Debugger resources
-    if (s_Debugger) {
-        delete s_Debugger;
-        s_Debugger = NULL;
+    if (s_logger) {
+        delete s_logger;
+        s_logger = NULL;
     }
 }
 
 /**
  * @inheritDoc
  */
-Debug::Debugger* Debug::GetDebugger(void) {
-    return s_Debugger;
+Log::Logger* Log::GetLogger(void) {
+    return s_logger;
 }
 
 /**
  * @inheritDoc
  */
-void Debug::Debugger::Log(LogType::LogType Type, const char* Format, va_list ArgList) {
+void Log::Logger::Log(LogType::LogType Type, const char* Format, va_list ArgList) {
     if (!m_bLogging) {
         return;
     }

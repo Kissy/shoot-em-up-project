@@ -15,7 +15,7 @@
 #ifdef _DEBUG
 #define __DEBUG_WINDOW__
 
-#define WIN32_LEAN_AND_MEAN
+#include "Defines.h"
 #include <windows.h>
 #include <commctrl.h>
 #include <typeinfo>

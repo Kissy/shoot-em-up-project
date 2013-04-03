@@ -84,7 +84,7 @@
     <ClInclude Include="Source\BaseTypes.h" />
     <ClInclude Include="Source\Convertor.h" />
     <ClInclude Include="Source\DataTypes.h" />
-    <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Defines.h" />
     <ClInclude Include="Source\Errors.h" />
     <ClInclude Include="Source\MathUtils.h" />
@@ -93,7 +93,7 @@
     <ClInclude Include="Source\SpinMutex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\MathUtils.cpp" />
     <ClCompile Include="Source\Singleton.cpp" />
   </ItemGroup>

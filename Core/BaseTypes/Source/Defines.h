@@ -20,25 +20,26 @@
 // Build options
 //
 #if defined( _DEBUG )
-	#define DEBUG_BUILD
+    #define DEBUG_BUILD
+    #define LOGGING_BUILD
 #endif
 
 //
 // Compiler options
 //
 #if defined( _MSC_VER )
-	#define MSC_COMPILER
+    #define MSC_COMPILER
 #elif defined( __GNUC__ )
-	#define GCC_COMPILER
+    #define GCC_COMPILER
 #else
-	#pragma error "Unkown compiler"
+    #pragma error "Unkown compiler"
 #endif
 
 //
 // Custom values
 //
 #ifndef NULL
-	#define NULL                            0
+    #define NULL                            0
 #endif
 
 //
@@ -52,14 +53,14 @@
 // In Out InOut Inline
 //
 #ifdef MSC_COMPILER
-	#define In                              __in const
-	#define Out                             __out
-	#define InOut                           __inout
+    #define In                              __in const
+    #define Out                             __out
+    #define InOut                           __inout
 #else
-	#define In                              const
-	#define Out
-	#define InOut
-	#define __forceinline                   inline __attribute__((always_inline))
+    #define In                              const
+    #define Out
+    #define InOut
+    #define __forceinline                   inline __attribute__((always_inline))
 #endif
 
 //

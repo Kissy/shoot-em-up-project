@@ -22,47 +22,46 @@
  * Interface defining methods to Initialize & Set properties to an object.
  */
 class IProperty {
+public:
 
-    public:
+    typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
+    typedef std::map<std::string, PropertySetter> PropertySetters;
 
-        /**
-         * Constructor.
-         */
-        IProperty(void);
+    /**
+        * Constructor.
+        */
+    IProperty(void);
 
-        /**
-         * Virtual Destructor.
-         */
-        virtual ~IProperty(void);
+    /**
+        * Virtual Destructor.
+        */
+    virtual ~IProperty(void);
 
-        /**
-         * Sets the properties for this system.
-         *
-         * @param   properties  Property structure array to get values from.
-         * @return  An error code.
-         */
-        Error setProperties(const ProtoPropertyList &properties);
+    /**
+        * Sets the properties for this system.
+        *
+        * @param   properties  Property structure array to get values from.
+        * @return  An error code.
+        */
+    Error setProperties(const ProtoPropertyList &properties);
         
-        /**
-         * Sets the property for this system.
-         *
-         * @param   property Property to get values from.
-         */
-        void setProperty(const PropertyProto &property); 
+    /**
+        * Sets the property for this system.
+        *
+        * @param   property Property to get values from.
+        */
+    void setProperty(const PropertyProto &property); 
 
-    protected:
+protected:
 
-        /**
-         * One time initialization function for the system.
-         * 
-         * @return  An error code.
-         */
-        virtual Error initialize(void); 
-
-        typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
-        typedef std::map<std::string, PropertySetter> PropertySetters;
-
-        PropertySetters         m_propertySetters;
-        bool                    m_bInitialized;
+    /**
+        * One time initialization function for the system.
+        * 
+        * @return  An error code.
+        */
+    virtual Error initialize(void);
+    
+    bool                    m_bInitialized;
+    PropertySetters         m_propertySetters;
 
 };

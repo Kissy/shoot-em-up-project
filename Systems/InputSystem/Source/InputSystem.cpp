@@ -62,10 +62,8 @@ InitializeInputSystem(
 
 
 extern "C" ISystem* __stdcall
-CreateInputSystem(
-    Debug::Debugger* p_Debugger
-) {
-    Debug::Init(p_Debugger);
+CreateInputSystem(Log::Logger* p_logger) {
+    Log::Init(p_logger);
     return new InputSystem();
 }
 

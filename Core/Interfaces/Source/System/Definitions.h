@@ -16,7 +16,7 @@
 
 #include "Proto/Common/System.pb.h"
 #include "Defines.h"
-#include "Debug.h"
+#include "Logger.h"
 
 
 #if defined( MSC_COMPILER )
@@ -186,7 +186,7 @@ extern "C"
      * @return   The newly created system.
      */
     typedef ISystem* (__stdcall* CreateSystemFunction)(
-        Debug::Debugger* p_Debugger
+        Log::Logger* p_logger
     );
 
     /**
