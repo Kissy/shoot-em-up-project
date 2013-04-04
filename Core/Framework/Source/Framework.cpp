@@ -18,7 +18,7 @@
 
 #include "Proto.h"
 #include "Universal.h"
-#include "Debugger/DebugWindow.h"
+#include "Debugger/Debugger.h"
 #include "Manager/MemoryManager.h"
 #include "Manager/SystemManager.h"
 #include "Manager/PlatformManager.h"
@@ -30,6 +30,10 @@
 #include "Scheduler.h"
 #include "Instrumentation.h"
 #include "Framework.h"
+
+#ifdef DEBUG_BUILD
+CreateSingleton(Debugger);
+#endif
 
 CreateSingleton(MemoryManager);
 CreateSingleton(EnvironmentManager);
@@ -67,9 +71,6 @@ Framework::Framework(void) :
     , m_pScheduler(NULL)
     , m_pSceneCCM(NULL)
     , m_pObjectCCM(NULL)
-#ifdef __ALLOW_DEBUG_WINDOW__
-    , m_hDebugWindow(NULL)
-#endif
 {
     //
     // g_pTaskManager and m_pScheduler are instantiated after the environment variables
@@ -147,21 +148,28 @@ Error Framework::Initialize(void) {
     // Set the initial scene for the scheduler.
     //
     m_pScheduler->SetScene(m_pScene);
+    
+    //
+    // Init debugger
+    // 
+#ifdef DEBUG_BUILD
+    bool debuggerActive = Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false);
+    Singletons::Debugger.init(debuggerActive);
+    Singletons::Debugger.setCCM(m_pSceneCCM, m_pObjectCCM);
+    Singletons::Debugger.setUScene(m_pScene);
+#endif
+
     return Errors::Success;
 }
 
 
 void Framework::Shutdown(void) {
-
-#ifdef __ALLOW_DEBUG_WINDOW__
     //
-    // Destroy the debug window.
+    // Clean debugger
     //
-    if (m_hDebugWindow != NULL) {
-        DestroyDebugWindow(m_hDebugWindow);
-    }
+#ifdef DEBUG_BUILD
+    Singletons::Debugger.clean();
 #endif
-
     //
     // Get rid of the scene.
     //
@@ -189,15 +197,6 @@ void Framework::Shutdown(void) {
 
 Error Framework::Execute(void) {
     //
-    // Create the debug window.
-    //
-#ifdef __ALLOW_DEBUG_WINDOW__
-    if (Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false)) {
-        m_hDebugWindow = CreateDebugWindow();
-    }
-#endif
-
-    //
     // Process the link messages in the CCMs first, for both the object and scene CCMs.
     // The link needs to be established before any other messages come through.
     //
@@ -210,16 +209,6 @@ Error Framework::Execute(void) {
     //
     m_pObjectCCM->DistributeQueuedChanges();
     m_pSceneCCM->DistributeQueuedChanges();
-
-#ifdef __ALLOW_DEBUG_WINDOW__
-    if (m_hDebugWindow != NULL) {
-        //
-        // Initialize the debug window.
-        //
-        SetDebugWindowCCM(m_hDebugWindow, m_pSceneCCM, m_pObjectCCM);
-        SetDebugWindowUScene(m_hDebugWindow, m_pScene);
-    }
-#endif
 
     //
     // Set the runtime status to running.

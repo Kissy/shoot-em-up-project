@@ -19,7 +19,7 @@
 #include "Assert.h"
 #include "Logger.h"
 
-#ifdef LOGGING_BUILD
+#ifdef LOGGER_ENABLED
 
 #include <string>
 

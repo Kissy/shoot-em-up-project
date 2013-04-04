@@ -90,7 +90,7 @@ namespace Log {
 
     };
 
-#ifdef LOGGING_BUILD
+#ifdef LOGGER_ENABLED
 
     /**
      * Initialises this object.

@@ -26,10 +26,10 @@
       <UniqueIdentifier>{b40ef2f4-0ec7-4d3f-88ae-58e1fc4c1eff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Debugger">
-      <UniqueIdentifier>{91f5170a-4931-46cf-af29-e6556651217d}</UniqueIdentifier>
+      <UniqueIdentifier>{f50a1b9e-a143-4b8e-9bed-83ff019dc5ab}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Debugger">
-      <UniqueIdentifier>{40f6c610-b5c1-47a2-ae22-6d39184e1674}</UniqueIdentifier>
+      <UniqueIdentifier>{58bec1b6-27b4-4439-8a85-3d00f2c0141e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +72,7 @@
     <ClCompile Include="Source\Framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Debugger\DebugWindow.cpp">
+    <ClCompile Include="Source\Debugger\Debugger.cpp">
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,7 +122,7 @@
     <ClInclude Include="Source\Parser\DefinitionParser.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Debugger\DebugWindow.h">
+    <ClInclude Include="Source\Debugger\Debugger.h">
       <Filter>Header Files\Debugger</Filter>
     </ClInclude>
   </ItemGroup>

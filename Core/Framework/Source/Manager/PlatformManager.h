@@ -363,5 +363,4 @@ class PlatformManager : public IPlatform, public Singleton {
 
 };
 
-
 DeclareSingleton(PlatformManager);

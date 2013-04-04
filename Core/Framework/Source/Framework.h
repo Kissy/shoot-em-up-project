@@ -136,10 +136,6 @@ class Framework : public IService::ISystemAccess {
 
         bool                                    m_bExecuteLoop;
 
-#ifdef __ALLOW_DEBUG_WINDOW__
-        Handle                                  m_hDebugWindow;
-#endif
-
     private:
 
         std::string                             m_sNextScene;

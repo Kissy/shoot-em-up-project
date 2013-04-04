@@ -21,8 +21,8 @@
 //
 #if defined( _DEBUG )
     #define DEBUG_BUILD
-    #define LOGGING_BUILD
 #endif
+#define LOGGER_ENABLED
 
 //
 // Compiler options
