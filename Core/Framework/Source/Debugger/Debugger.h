@@ -16,6 +16,8 @@
 
 #include "Defines.h"
 #include "Singleton.h"
+#include "ObjectChangesDebugger.h"
+#include "Proto/Debug/DebugHolderDTO.pb.h"
 
 #if defined DEBUG_BUILD
 
@@ -34,11 +36,14 @@ public:
     void setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
     void setUScene(UScene* pUScene);
     void clean(void);
+    void send(DebugHolderProto* debugHolderProto);
 
 private:
 
     IChangeManager*         m_pSceneCCM;
     IChangeManager*         m_pObjectCCM;
+    
+    ObjectChangesDebugger*  m_pObjectChangesDebugger;
 
     UScene*                 m_pUScene;
     

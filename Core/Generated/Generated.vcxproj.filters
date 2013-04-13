@@ -84,6 +84,12 @@
     <ClCompile Include="Source\Proto\Debug\DebugHolderDTO.pb.cc">
       <Filter>Source Files\Proto\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Proto\Debug\DebugObjectDTO.pb.cc">
+      <Filter>Source Files\Proto\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Debug\DebugPropertyDTO.pb.cc">
+      <Filter>Source Files\Proto\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Proto\Common\Object.pb.h">
@@ -117,6 +123,12 @@
       <Filter>Header Files\Proto\Server</Filter>
     </ClInclude>
     <ClInclude Include="Source\Proto\Debug\DebugHolderDTO.pb.h">
+      <Filter>Header Files\Proto\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Debug\DebugObjectDTO.pb.h">
+      <Filter>Header Files\Proto\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Debug\DebugPropertyDTO.pb.h">
       <Filter>Header Files\Proto\Debug</Filter>
     </ClInclude>
   </ItemGroup>

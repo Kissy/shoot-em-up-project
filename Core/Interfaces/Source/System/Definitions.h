@@ -44,7 +44,24 @@ namespace System {
     enum Components {
         System, Scene, Object, Task
     };
-    
+
+#ifdef DEBUG_BUILD
+    __forceinline std::string getComponentName(const System::Components component) {
+        switch (component) {
+        case Components::System:
+            return "System";
+        case Components::Scene:
+            return "Scene";
+        case Components::Object:
+            return "Object";
+        case Components::Task:
+            return "Task";
+        default:
+            return "Default";
+        }
+    }
+#endif
+
     typedef u32 Type;
 
     /**
@@ -111,6 +128,25 @@ namespace System {
             return (1 << SystemType);
         }
 
+#ifdef DEBUG_BUILD
+        __forceinline std::string getName(const System::Type systemType) {
+            switch (systemType) {
+            case System::Types::Generic:
+                return "Generic";
+            case System::Types::Graphic:
+                return "Graphic";
+            case System::Types::Input:
+                return "Input";
+            case System::Types::Network:
+                return "Network";
+            case System::Types::Physic:
+                return "Physic";
+            default:
+                return "Default";
+            }
+        }
+#endif
+
         typedef u32 BitMask;
     }
 
@@ -159,8 +195,7 @@ namespace System {
 /**
  * Function type definitions for communicating with the system DLL.
  */
-extern "C"
-{
+extern "C" {
     /**
      * The list of managers interfaces.
      */

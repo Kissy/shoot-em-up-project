@@ -84,6 +84,8 @@
     <ClCompile Include="Source\Proto\Common\Property.pb.cc" />
     <ClCompile Include="Source\Proto\Common\System.pb.cc" />
     <ClCompile Include="Source\Proto\Debug\DebugHolderDTO.pb.cc" />
+    <ClCompile Include="Source\Proto\Debug\DebugObjectDTO.pb.cc" />
+    <ClCompile Include="Source\Proto\Debug\DebugPropertyDTO.pb.cc" />
     <ClCompile Include="Source\Proto\Definition\GlobalDefinition.pb.cc" />
     <ClCompile Include="Source\Proto\Definition\SceneDefinition.pb.cc" />
     <ClCompile Include="Source\Proto\Message\Authenticated.pb.cc" />
@@ -97,6 +99,8 @@
     <ClInclude Include="Source\Proto\Common\Property.pb.h" />
     <ClInclude Include="Source\Proto\Common\System.pb.h" />
     <ClInclude Include="Source\Proto\Debug\DebugHolderDTO.pb.h" />
+    <ClInclude Include="Source\Proto\Debug\DebugObjectDTO.pb.h" />
+    <ClInclude Include="Source\Proto\Debug\DebugPropertyDTO.pb.h" />
     <ClInclude Include="Source\Proto\Definition\GlobalDefinition.pb.h" />
     <ClInclude Include="Source\Proto\Definition\SceneDefinition.pb.h" />
     <ClInclude Include="Source\Proto\Message\Authenticated.pb.h" />

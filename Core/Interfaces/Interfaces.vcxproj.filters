@@ -16,9 +16,6 @@
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{3f3b6416-06f5-4163-981c-ef739780561c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Observer">
-      <UniqueIdentifier>{0af1f723-686e-49ca-9bb4-43f6ae6b8f29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Property">
       <UniqueIdentifier>{39035409-d10b-428f-8c34-402f670919a4}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Header Files\Scene">
       <UniqueIdentifier>{6118dffe-7d88-485d-a1a2-919417206f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{0af1f723-686e-49ca-9bb4-43f6ae6b8f29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

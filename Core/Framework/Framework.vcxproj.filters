@@ -75,6 +75,9 @@
     <ClCompile Include="Source\Debugger\Debugger.cpp">
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Debugger\ObjectChangesDebugger.cpp">
+      <Filter>Source Files\Debugger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
     <ClInclude Include="Source\Debugger\Debugger.h">
+      <Filter>Header Files\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Debugger\ObjectChangesDebugger.h">
       <Filter>Header Files\Debugger</Filter>
     </ClInclude>
   </ItemGroup>

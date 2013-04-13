@@ -16,8 +16,6 @@
 
 #ifdef DEBUG_BUILD
 
-#include <Proto/Debug/DebugHolderDTO.pb.h>
-
 #include "BaseTypes.h"
 #include "Interface.h"
 #include "Universal.h"
@@ -27,8 +25,7 @@ void protobuf_uint8_free(void* data, void* hint) {
 }
 
 Debugger::Debugger(void) 
-    : m_bDebuggerActive(false) {
-
+    : m_bDebuggerActive(false) {    
 }
 
 Debugger::~Debugger(void) {
@@ -37,6 +34,7 @@ Debugger::~Debugger(void) {
     }
 
     SAFE_DELETE(m_pSocket);
+    SAFE_DELETE(m_pObjectChangesDebugger);
 }
 
 void Debugger::init(bool debuggerActive) {
@@ -45,6 +43,7 @@ void Debugger::init(bool debuggerActive) {
     }
 
     m_bDebuggerActive = debuggerActive;
+    m_pObjectChangesDebugger = new ObjectChangesDebugger(this);    
 
     m_pContext = new zmq::context_t(1);
     m_pSocket = new zmq::socket_t(*m_pContext, ZMQ_PUSH);
@@ -67,10 +66,10 @@ void Debugger::setUScene(UScene* pUScene) {
     UScene::SystemScenes Scenes = m_pUScene->GetSystemScenes();
     for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
-        DebugHolderProto_DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
-        debugObjectProto->set_id("test");
-        debugObjectProto->set_name("name");
-        debugObjectProto->set_category("category");
+        DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
+        debugObjectProto->set_id(System::Types::getName(pScene->GetSystemType()));
+        debugObjectProto->set_name(System::Types::getName(pScene->GetSystemType()));
+        debugObjectProto->set_category(System::getComponentName(System::Components::Scene));
         //m_pSceneCCM->Register(pScene, System::Changes::All, this);
     }
 
@@ -78,18 +77,22 @@ void Debugger::setUScene(UScene* pUScene) {
     for (UScene::ObjectsConstIt it = Objects.begin(); it != Objects.end(); it++) {
         UObject* pUObject = *it;
         UObject::SystemObjects SystemObjects = pUObject->GetExtensions();
+        
+        DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
+        debugObjectProto->set_id(pUObject->GetName());
+        debugObjectProto->set_name(pUObject->GetName());
+        debugObjectProto->set_category(System::getComponentName(System::Components::Object));
         for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
             ISystemObject* pObject = it->second;
-            //m_pObjectCCM->Register(pObject, System::Changes::All, this);
+            DebugPropertyProto* debugPropertyProto = debugObjectProto->add_properties();
+            debugPropertyProto->set_category(System::Types::getName(pObject->GetSystemType()));
+            debugPropertyProto->set_key("TestProperty");
+            debugPropertyProto->set_value("TestValue");
+            m_pObjectCCM->Register(pObject, System::Changes::All, m_pObjectChangesDebugger);
         }
     }
 
-    int size = debugHolderProto.ByteSize(); 
-    google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
-    debugHolderProto.SerializeWithCachedSizesToArray(buffer);
-
-    zmq::message_t* message = new zmq::message_t(buffer, size, protobuf_uint8_free);
-    m_pSocket->send(*message);
+    send(&debugHolderProto);
 }
 
 
@@ -116,19 +119,14 @@ void Debugger::clean(void) {
     }
 }
 
-/*
-Error DebugWindow::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    UNREFERENCED_PARAM(pSubject);
-    UNREFERENCED_PARAM(ChangeType);
+void Debugger::send(DebugHolderProto* debugHolderProto) {
+    int size = debugHolderProto->ByteSize(); 
+    google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
+    debugHolderProto->SerializeWithCachedSizesToArray(buffer);
 
-    ISystemScene* systemScene = dynamic_cast<ISystemScene*>(pSubject);
-    ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
-
-    zmq::message_t request(5);
-    memcpy((void *) request.data(), "Hello", 5);
-    socket->send(request);
-    return Errors::Success;
+    zmq::message_t* message = new zmq::message_t(buffer, size, protobuf_uint8_free);
+    m_pSocket->send(*message);
 }
-*/
+
 
 #endif
