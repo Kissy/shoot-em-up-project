@@ -47,7 +47,7 @@ Error NetworkSystem::initialize(void) {
     boost::asio::ip::tcp::resolver resolver(m_ioService);
     boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), "localhost", "9999");
     boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
-    //boost::asio::connect(*m_pSocket, iterator);
+    boost::asio::connect(*m_pSocket, iterator);
     
     m_bInitialized = true;
     return Errors::Success;

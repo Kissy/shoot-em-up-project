@@ -30,7 +30,7 @@
 #include "Task.h"
 #include "Object/Object.h"
 #include "Object/PlayerNetworkObject.h"
-
+#include "Proto/Server/DownstreamMessage.pb.h"
 
 extern ManagerInterfaces   g_Managers;
 
@@ -56,6 +56,11 @@ NetworkScene::~NetworkScene(void) {
 Error NetworkScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
+    DownstreamMessageProto* downstreamMessageProto = new DownstreamMessageProto();
+    downstreamMessageProto->set_type(DownstreamMessageProto::AUTHENTICATE);
+    downstreamMessageProto->set_data("Username");
+    reinterpret_cast<NetworkTask*>(GetSystemTask())->queueMessage(downstreamMessageProto);
+
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -65,11 +70,6 @@ Error NetworkScene::initialize(void) {
  */
 void NetworkScene::Update(f32 DeltaTime) {
     ObjectsList Objects = m_pObjects;
-
-    //
-    // Cycle through all of our objects and apply the changes.
-    // Also post our change notifications to the CCM.
-    //
     for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
         NetworkObject* pObject = static_cast<NetworkObject*>(*it);
         pObject->Update(DeltaTime);

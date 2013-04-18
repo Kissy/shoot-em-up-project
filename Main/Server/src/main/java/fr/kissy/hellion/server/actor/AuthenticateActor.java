@@ -25,6 +25,9 @@ public class AuthenticateActor extends UntypedActor {
     @Autowired
     private WorldService world;
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void onReceive(Object o) throws Exception {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;

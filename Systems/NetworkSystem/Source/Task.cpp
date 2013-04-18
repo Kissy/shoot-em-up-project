@@ -12,13 +12,15 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <iomanip>
 
 #include "BaseTypes.h"
 #include "Interface.h"
 
+#include "Task.h"
 #include "Scene.h"
 #include "Object/Object.h"
-#include "Task.h"
+#include "Proto/Server/DownstreamMessage.pb.h"
 
 
 /**
@@ -39,6 +41,36 @@ NetworkTask::~NetworkTask(void) {
  * @inheritDoc
  */
 void NetworkTask::Update(f32 DeltaTime) {
+    while (!m_pMessageList.empty()) {
+        send(m_pMessageList.front());
+        m_pMessageList.pop_front();
+    }
+
     m_pSystemScene->Update(DeltaTime);
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkTask::queueMessage(const DownstreamMessageProto* downstreamMessageProto) {
+    m_pMessageList.push_back(downstreamMessageProto);
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkTask::send(const DownstreamMessageProto* downstreamMessageProto) {
+    boost::asio::ip::tcp::socket* socket = dynamic_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getSocket();
+
+    boost::asio::streambuf streambuf;
+    std::ostream ostream(&streambuf);
+
+    int size = downstreamMessageProto->ByteSize();
+    ostream << std::setw(sizeof(size)) << std::setfill('\0') 
+       << reinterpret_cast<const char *>(&size); 
+    downstreamMessageProto->SerializeToOstream(&ostream);
+    boost::asio::write(*socket, streambuf);
+
+    delete downstreamMessageProto;
 }
 

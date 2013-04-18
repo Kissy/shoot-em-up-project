@@ -52,8 +52,15 @@ class NetworkSystem : public ISystem {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
+        inline System::Type GetSystemType(void) {
             return System::Types::Network;
+        }
+
+        /**
+         * Get the socket
+         */
+        inline boost::asio::ip::tcp::socket* getSocket() {
+            return m_pSocket;
         }
 
     private:

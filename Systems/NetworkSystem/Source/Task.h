@@ -14,11 +14,14 @@
 
 #pragma once
 
+#include <list>
+
 #include "System.h"
 #include "System/ISystemScene.h"
 #include "System/ISystemTask.h"
 
 class NetworkScene;
+class DownstreamMessageProto;
 
 /**
  * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
@@ -28,36 +31,54 @@ class NetworkScene;
  */
 class NetworkTask : public ISystemTask {
 
-    public:
+public:
         
-        /**
-         * @inheritDoc
-         */
-        NetworkTask(ISystemScene* pScene);
+    /**
+     * @inheritDoc
+     */
+    NetworkTask(ISystemScene* pScene);
 
-        /**
-         * @inheritDoc
-         */
-        ~NetworkTask(void);
+    /**
+     * @inheritDoc
+     */
+    ~NetworkTask(void);
         
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-        /**
-         * @inheritDoc
-         */
-        bool IsPrimaryThreadOnly(void) {
-            return false;
-        };
+    /**
+     * @inheritDoc
+     */
+    bool IsPrimaryThreadOnly(void) {
+        return false;
+    };
         
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Network;
-        }
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Network;
+    }
+
+    /**
+     * Add the given DownstreamMessageProto to the queue and send them on next update.
+     * 
+     * @param downstreamMessageProto The message to add to queue.
+     */
+    void queueMessage(const DownstreamMessageProto* downstreamMessageProto);
+
+private:
+
+    /**
+     * Send the given message to the server.
+     * 
+     * @param downstreamMessageProto The message to add to queue.
+     */
+    void send(const DownstreamMessageProto*);
+
+    std::list<const DownstreamMessageProto*>          m_pMessageList;
 
 };
 
