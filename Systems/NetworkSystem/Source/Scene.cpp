@@ -55,6 +55,8 @@ NetworkScene::~NetworkScene(void) {
  */
 Error NetworkScene::initialize(void) {
     ASSERT(!m_bInitialized);
+
+    m_bInitialized = true;
     return Errors::Success;
 }
 

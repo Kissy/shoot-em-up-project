@@ -64,6 +64,7 @@ Error GraphicSystem::initialize(void) {
     if((initted & flags) != flags) {
         return Errors::Failure;
     }
-
+    
+    m_bInitialized = true; 
     return Errors::Success;
 }

@@ -46,7 +46,8 @@ ImageGraphicObject::~ImageGraphicObject(void) {
  */
 Error ImageGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 

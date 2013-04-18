@@ -44,7 +44,8 @@ InputSystem::~InputSystem(void) {
  */
 Error InputSystem::initialize(void) {
     ASSERT(!m_bInitialized);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 

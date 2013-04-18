@@ -51,7 +51,8 @@ Error InputScene::initialize(void) {
     ASSERT(!m_bInitialized);
     
     quitInputAction = static_cast<InputSystem*>(m_pSystem)->createInputAction(SDLK_ESCAPE);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 

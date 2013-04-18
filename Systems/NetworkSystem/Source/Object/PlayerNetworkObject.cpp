@@ -40,6 +40,7 @@ PlayerNetworkObject::~PlayerNetworkObject(void) {
 Error PlayerNetworkObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
+    m_bInitialized = true;
     return Errors::Success;
 }
 

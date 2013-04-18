@@ -33,20 +33,15 @@ IProperty::~IProperty(void) {
 /**
  * @inheritDoc
  */
-Error IProperty::setProperties(const ProtoPropertyList &properties) {
+void IProperty::setProperties(const ProtoPropertyList &properties) {
     for (ProtoPropertyList::const_iterator property = properties.begin(); property != properties.end(); property++) {
         setProperty(*property);
     }
-    
-    if (m_bInitialized) {
-        return Errors::Success;
-    } 
-
-    Error status = initialize();
-    m_bInitialized = true; 
-    return status; 
 };
 
+/**
+ * @inheritDoc
+ */
 void IProperty::setProperty(const PropertyProto &property) {
     PropertySetters::iterator propertySetterIterator = m_propertySetters.find(property.name());
     if (propertySetterIterator == m_propertySetters.end()) {
@@ -54,14 +49,14 @@ void IProperty::setProperty(const PropertyProto &property) {
         return;
     }
 
-    PropertySetter setter = m_propertySetters.find(property.name())->second;
-    setter(property.value());
-}
+    propertySetterIterator->second(property.value());
+};
 
 /**
  * @inheritDoc
  */
 Error IProperty::initialize(void) {
-    m_bInitialized = true; 
+    ASSERT(!m_bInitialized);
+    m_bInitialized = true;
     return Errors::Success;
 };

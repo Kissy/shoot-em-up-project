@@ -28,38 +28,39 @@ public:
     typedef std::map<std::string, PropertySetter> PropertySetters;
 
     /**
-        * Constructor.
-        */
+     * Constructor.
+     */
     IProperty(void);
 
     /**
-        * Virtual Destructor.
-        */
+     * Virtual Destructor.
+     */
     virtual ~IProperty(void);
 
     /**
-        * Sets the properties for this system.
-        *
-        * @param   properties  Property structure array to get values from.
-        * @return  An error code.
-        */
-    Error setProperties(const ProtoPropertyList &properties);
+     * Sets the properties for this system.
+     *
+     * @param   properties  Property structure array to get values from.
+     * @return  An error code.
+     */
+    void setProperties(const ProtoPropertyList &properties);
         
     /**
-        * Sets the property for this system.
-        *
-        * @param   property Property to get values from.
-        */
+     * Sets the property for this system.
+     *
+     * @param   property Property to get values from.
+     * @return  An error code.
+     */
     void setProperty(const PropertyProto &property); 
 
-protected:
-
     /**
-        * One time initialization function for the system.
-        * 
-        * @return  An error code.
-        */
+     * One time initialization function for the system.
+     * 
+     * @return  An error code.
+     */
     virtual Error initialize(void);
+
+protected:
     
     bool                    m_bInitialized;
     PropertySetters         m_propertySetters;

@@ -47,7 +47,8 @@ PhysicScene::~PhysicScene(void) {
 // Initialize - Initializes this Scene with the given properties
 Error PhysicScene::initialize(void) {
     ASSERT(!m_bInitialized);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 

@@ -54,6 +54,7 @@ void DefinitionParser::ParseSystems(void) {
 
         // Get the default properties from system, then Initialize it
         m_pSystem->setProperties(systemsIt->properties());
+        m_pSystem->initialize();
         ASSERTMSG1(strcmp(SystemProto::Type_Name(systemsIt->type()).c_str(), m_pSystem->GetName()) == 0,
                    "Parser identified an incorrect system type. It should be %s.", m_pSystem->GetName());
     }
@@ -101,6 +102,7 @@ void DefinitionParser::ParseScene(std::string sScene) {
             ASSERT(m_pSystemScene != NULL);
             // Initialize system scene properties
             m_pSystemScene->setProperties(systemPropertiesIt->properties());
+            m_pSystemScene->initialize();
         }
     }
 
@@ -133,10 +135,8 @@ void DefinitionParser::ParseScene(std::string sScene) {
                 ASSERT(m_pSystemObject != NULL);
 
                 if (m_pSystemObject != NULL) {
-                    //
-                    // Initialize the extension.
-                    //
                     m_pSystemObject->setProperties(objectPropertiesIt->properties());
+                    m_pSystemObject->initialize();
                 }
             }
         }

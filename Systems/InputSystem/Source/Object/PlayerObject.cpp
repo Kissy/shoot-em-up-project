@@ -45,7 +45,8 @@ Error PlayerInputObject::initialize(void) {
     m_rightInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_RIGHT);
     m_downInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_DOWN);
     m_leftInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_LEFT);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 

@@ -47,6 +47,7 @@ PhysicSystem::~PhysicSystem(void) {
  */
 Error PhysicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
-
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
