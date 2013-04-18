@@ -58,7 +58,7 @@ Error NetworkScene::initialize(void) {
 
     DownstreamMessageProto* downstreamMessageProto = new DownstreamMessageProto();
     downstreamMessageProto->set_type(DownstreamMessageProto::AUTHENTICATE);
-    downstreamMessageProto->set_data("Username");
+    downstreamMessageProto->set_data("1");
     reinterpret_cast<NetworkTask*>(GetSystemTask())->queueMessage(downstreamMessageProto);
 
     m_bInitialized = true;

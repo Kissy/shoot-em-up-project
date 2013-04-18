@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <boost/timer/timer.hpp>
+
 #include "System.h"
 #include "Object/Object.h"
 
@@ -70,7 +72,9 @@ class PlayerNetworkObject : public NetworkObject {
 
     private:
         
-        Math::Vector3       m_velocity;
+        Math::Vector3                   m_velocity;
+        boost::timer::cpu_timer         m_heartbeat;
+        boost::timer::nanosecond_type   m_heartbeat_delay;
 
 };
 

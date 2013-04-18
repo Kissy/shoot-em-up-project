@@ -12,19 +12,24 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/lexical_cast.hpp>
+
 #include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Scene.h"
 #include "Object/Object.h"
 #include "Object/PlayerNetworkObject.h"
+#include "Proto/Server/DownstreamMessage.pb.h"
+#include "Proto/Message/ObjectUpdated.pb.h"
 
 /**
  * @inheritDoc
  */
 PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
-    , m_velocity(Math::Vector3::Zero) {
-    
+    , m_velocity(Math::Vector3::Zero)
+    , m_heartbeat_delay(1000000000LL) /* 1s */ {
+    m_heartbeat.stop();
 }
 
 /**
@@ -66,10 +71,35 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 void PlayerNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
-    /*if (m_velocity != Math::Vector3::Zero) {
-        m_position.x += m_velocity.x * 10;
-        m_position.y += m_velocity.y * 10;
-        m_position.z += m_velocity.z * 10;
-        PostChanges(System::Changes::Physic::Position);
-    }*/
+    if (m_velocity != Math::Vector3::Zero) {
+        if (m_heartbeat.is_stopped() || m_heartbeat.elapsed().wall >= m_heartbeat_delay) {
+            m_heartbeat.stop();
+            m_heartbeat.start();
+
+            ObjectUpdatedProto objectUpdatedProto;
+            ObjectProto* object = objectUpdatedProto.add_objects();
+            object->set_name(GetName());
+            ObjectProto_SystemObjectProto* systemObject = object->add_systemobjects();
+            systemObject->set_systemtype(SystemProto_Type_Geometry);
+            PropertyProto* velocityProperty = systemObject->add_properties();
+            velocityProperty->set_name("Velocity");
+            velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.x));
+            velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.y));
+            velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.z));
+            /*PropertyProto* positionProperty = systemObject->add_properties();
+            positionProperty->set_name("Position");
+            positionProperty->add_value(boost::lexical_cast<char*>(position.x));
+            positionProperty->add_value(boost::lexical_cast<char*>(position.y));
+            positionProperty->add_value(boost::lexical_cast<char*>(position.z));*/
+
+            std::string data;
+            objectUpdatedProto.AppendToString(&data);
+            DownstreamMessageProto* downstreamMessageProto = new DownstreamMessageProto();
+            downstreamMessageProto->set_type(DownstreamMessageProto::PLAYER_MOVE);
+            downstreamMessageProto->set_data(data);
+            reinterpret_cast<NetworkTask*>(GetSystemScene()->GetSystemTask())->queueMessage(downstreamMessageProto);
+        }
+    } else if (!m_heartbeat.is_stopped()) {
+        m_heartbeat.stop();
+    }
 }
