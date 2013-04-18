@@ -46,6 +46,11 @@ class PhysicObject : public ISystemObject, public IGeometryObject {
          * @inheritDoc
          */
         void setPosition(ProtoStringList values);
+        
+        /**
+         * @inheritDoc
+         */
+        void getPosition(PropertiesValues& propertiesValues);
 
         /**
          * @inheritDoc

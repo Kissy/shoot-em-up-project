@@ -23,9 +23,14 @@
  */
 class IProperty {
 public:
-
+    
     typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
     typedef std::map<std::string, PropertySetter> PropertySetters;
+
+    typedef std::map<std::string, std::string> PropertiesValues;
+    typedef std::pair<std::string, std::string> PropertiesValuesPair;
+    typedef boost::function<void (PropertiesValues& propertiesValue)> PropertyGetter;
+    typedef std::map<std::string, PropertyGetter> PropertyGetters;
 
     /**
      * Constructor.
@@ -51,7 +56,14 @@ public:
      * @param   property Property to get values from.
      * @return  An error code.
      */
-    void setProperty(const PropertyProto &property); 
+    void setProperty(const PropertyProto &property);
+
+    /**
+     * Get the properties and their values for this system.
+     * 
+     * @return The map of properties associated with their values.
+     */
+    PropertiesValues getProperties(void);
 
     /**
      * One time initialization function for the system.
@@ -64,5 +76,6 @@ protected:
     
     bool                    m_bInitialized;
     PropertySetters         m_propertySetters;
+    PropertyGetters         m_propertyGetters;
 
 };

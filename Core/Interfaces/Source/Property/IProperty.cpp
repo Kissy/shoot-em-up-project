@@ -55,6 +55,17 @@ void IProperty::setProperty(const PropertyProto &property) {
 /**
  * @inheritDoc
  */
+IProperty::PropertiesValues IProperty::getProperties(void) {
+    PropertiesValues propertiesValues;
+    for (PropertyGetters::const_iterator getters = m_propertyGetters.begin(); getters != m_propertyGetters.end(); getters++) {
+        getters->second(propertiesValues);
+    }
+    return propertiesValues;
+};
+
+/**
+ * @inheritDoc
+ */
 Error IProperty::initialize(void) {
     ASSERT(!m_bInitialized);
     m_bInitialized = true;

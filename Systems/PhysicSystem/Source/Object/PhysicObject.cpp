@@ -27,6 +27,7 @@
 PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName)
     , m_position(Math::Vector3::Zero) {
     m_propertySetters["Position"] = boost::bind(&PhysicObject::setPosition, this, _1);
+    m_propertyGetters["Position"] = boost::bind(&PhysicObject::getPosition, this, _1);
 }
 
 /**
@@ -46,3 +47,13 @@ void PhysicObject::setPosition(ProtoStringList values) {
     m_position.z = boost::lexical_cast<f32>(*value);
     PostChanges(System::Changes::Physic::Position);
 }
+
+/**
+ * @inheritDoc
+ */
+void PhysicObject::getPosition(PropertiesValues& propertiesValues) {
+    propertiesValues.insert(PropertiesValuesPair("Position.x", boost::lexical_cast<std::string>(m_position.x)));
+    propertiesValues.insert(PropertiesValuesPair("Position.y", boost::lexical_cast<std::string>(m_position.y)));
+    propertiesValues.insert(PropertiesValuesPair("Position.z", boost::lexical_cast<std::string>(m_position.z)));
+}
+
