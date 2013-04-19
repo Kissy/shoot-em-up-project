@@ -57,7 +57,7 @@ class PlayerNetworkObject : public NetworkObject {
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Input::Velocity & System::Changes::Physic::Position;
+            return System::Changes::Input::Velocity | System::Changes::Physic::Position;
         };
         
         /**

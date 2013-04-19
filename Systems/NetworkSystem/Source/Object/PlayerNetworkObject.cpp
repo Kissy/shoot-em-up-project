@@ -96,9 +96,9 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
             velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.z));
             PropertyProto* positionProperty = systemObject->add_properties();
             positionProperty->set_name("Position");
-            positionProperty->add_value(boost::lexical_cast<char*>(m_position.x));
-            positionProperty->add_value(boost::lexical_cast<char*>(m_position.y));
-            positionProperty->add_value(boost::lexical_cast<char*>(m_position.z));
+            positionProperty->add_value(boost::lexical_cast<std::string>(m_position.x));
+            positionProperty->add_value(boost::lexical_cast<std::string>(m_position.y));
+            positionProperty->add_value(boost::lexical_cast<std::string>(m_position.z));
 
             std::string data;
             objectUpdatedProto.AppendToString(&data);
