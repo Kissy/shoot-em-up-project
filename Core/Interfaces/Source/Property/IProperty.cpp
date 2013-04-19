@@ -33,7 +33,7 @@ IProperty::~IProperty(void) {
 /**
  * @inheritDoc
  */
-void IProperty::setProperties(const ProtoPropertyList &properties) {
+void IProperty::setProperties(const ProtoPropertyList& properties) {
     for (ProtoPropertyList::const_iterator property = properties.begin(); property != properties.end(); property++) {
         setProperty(*property);
     }
@@ -42,25 +42,27 @@ void IProperty::setProperties(const ProtoPropertyList &properties) {
 /**
  * @inheritDoc
  */
-void IProperty::setProperty(const PropertyProto &property) {
-    PropertySetters::iterator propertySetterIterator = m_propertySetters.find(property.name());
-    if (propertySetterIterator == m_propertySetters.end()) {
+void IProperty::setProperty(const PropertyProto& property) {
+    PropertySetters::iterator setter = m_propertySetters.find(property.name());
+    if (setter == m_propertySetters.end()) {
         //ASSERTMSG1(false, "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
         return;
     }
 
-    propertySetterIterator->second(property.value());
+    setter->second(property.value());
 };
 
 /**
  * @inheritDoc
  */
-IProperty::PropertiesValues IProperty::getProperties(void) {
-    PropertiesValues propertiesValues;
-    for (PropertyGetters::const_iterator getters = m_propertyGetters.begin(); getters != m_propertyGetters.end(); getters++) {
-        getters->second(propertiesValues);
+ProtoPropertyList IProperty::getProperties(void) {
+    ProtoPropertyList propertyList;
+    for (PropertyGetters::const_iterator getter = m_propertyGetters.begin(); getter != m_propertyGetters.end(); getter++) {
+        PropertyProto* property = propertyList.Add();
+        property->set_name(getter->first);
+        getter->second(property->mutable_value());
     }
-    return propertiesValues;
+    return propertyList;
 };
 
 /**

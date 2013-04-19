@@ -51,9 +51,13 @@ void PhysicObject::setPosition(ProtoStringList values) {
 /**
  * @inheritDoc
  */
-void PhysicObject::getPosition(PropertiesValues& propertiesValues) {
-    propertiesValues.insert(PropertiesValuesPair("Position.x", boost::lexical_cast<std::string>(m_position.x)));
-    propertiesValues.insert(PropertiesValuesPair("Position.y", boost::lexical_cast<std::string>(m_position.y)));
-    propertiesValues.insert(PropertiesValuesPair("Position.z", boost::lexical_cast<std::string>(m_position.z)));
+void PhysicObject::getPosition(ProtoStringList* values) {
+    std::string* value = nullptr;
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_position.x));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_position.y));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_position.z));
 }
 

@@ -10,153 +10,366 @@ public final class GlobalDefinitionDto {
   }
   public interface GlobalDefinitionProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required string startupScene = 1;
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
     boolean hasStartupScene();
-    String getStartupScene();
-    
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
+    java.lang.String getStartupScene();
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getStartupSceneBytes();
+
     // repeated .PropertyProto properties = 2;
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> 
         getPropertiesList();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index);
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     int getPropertiesCount();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
         getPropertiesOrBuilderList();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
         int index);
-    
+
     // repeated .SystemProto systems = 3;
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto> 
         getSystemsList();
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     fr.kissy.hellion.proto.common.SystemDto.SystemProto getSystems(int index);
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     int getSystemsCount();
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     java.util.List<? extends fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder> 
         getSystemsOrBuilderList();
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder getSystemsOrBuilder(
         int index);
-    
+
     // repeated string scenes = 4;
-    java.util.List<String> getScenesList();
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    java.util.List<java.lang.String>
+    getScenesList();
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
     int getScenesCount();
-    String getScenes(int index);
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    java.lang.String getScenes(int index);
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getScenesBytes(int index);
   }
+  /**
+   * Protobuf type {@code GlobalDefinitionProto}
+   */
   public static final class GlobalDefinitionProto extends
       com.google.protobuf.GeneratedMessage
       implements GlobalDefinitionProtoOrBuilder {
     // Use GlobalDefinitionProto.newBuilder() to construct.
-    private GlobalDefinitionProto(Builder builder) {
+    private GlobalDefinitionProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GlobalDefinitionProto(boolean noInit) {}
-    
+    private GlobalDefinitionProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final GlobalDefinitionProto defaultInstance;
     public static GlobalDefinitionProto getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public GlobalDefinitionProto getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GlobalDefinitionProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              startupScene_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                properties_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              properties_.add(input.readMessage(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.PARSER, extensionRegistry));
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                systems_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.SystemDto.SystemProto>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              systems_.add(input.readMessage(fr.kissy.hellion.proto.common.SystemDto.SystemProto.PARSER, extensionRegistry));
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                scenes_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              scenes_.add(input.readBytes());
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          properties_ = java.util.Collections.unmodifiableList(properties_);
+        }
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          systems_ = java.util.Collections.unmodifiableList(systems_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          scenes_ = new com.google.protobuf.UnmodifiableLazyStringList(scenes_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_fieldAccessorTable;
+      return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.class, fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<GlobalDefinitionProto> PARSER =
+        new com.google.protobuf.AbstractParser<GlobalDefinitionProto>() {
+      public GlobalDefinitionProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GlobalDefinitionProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GlobalDefinitionProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
     // required string startupScene = 1;
     public static final int STARTUPSCENE_FIELD_NUMBER = 1;
     private java.lang.Object startupScene_;
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
     public boolean hasStartupScene() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getStartupScene() {
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
+    public java.lang.String getStartupScene() {
       java.lang.Object ref = startupScene_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           startupScene_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getStartupSceneBytes() {
+    /**
+     * <code>required string startupScene = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStartupSceneBytes() {
       java.lang.Object ref = startupScene_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         startupScene_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     // repeated .PropertyProto properties = 2;
     public static final int PROPERTIES_FIELD_NUMBER = 2;
     private java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> properties_;
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> getPropertiesList() {
       return properties_;
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
         getPropertiesOrBuilderList() {
       return properties_;
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public int getPropertiesCount() {
       return properties_.size();
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index) {
       return properties_.get(index);
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
         int index) {
       return properties_.get(index);
     }
-    
+
     // repeated .SystemProto systems = 3;
     public static final int SYSTEMS_FIELD_NUMBER = 3;
     private java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto> systems_;
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     public java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto> getSystemsList() {
       return systems_;
     }
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     public java.util.List<? extends fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder> 
         getSystemsOrBuilderList() {
       return systems_;
     }
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     public int getSystemsCount() {
       return systems_.size();
     }
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     public fr.kissy.hellion.proto.common.SystemDto.SystemProto getSystems(int index) {
       return systems_.get(index);
     }
+    /**
+     * <code>repeated .SystemProto systems = 3;</code>
+     */
     public fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder getSystemsOrBuilder(
         int index) {
       return systems_.get(index);
     }
-    
+
     // repeated string scenes = 4;
     public static final int SCENES_FIELD_NUMBER = 4;
     private com.google.protobuf.LazyStringList scenes_;
-    public java.util.List<String>
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    public java.util.List<java.lang.String>
         getScenesList() {
       return scenes_;
     }
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
     public int getScenesCount() {
       return scenes_.size();
     }
-    public String getScenes(int index) {
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    public java.lang.String getScenes(int index) {
       return scenes_.get(index);
     }
-    
+    /**
+     * <code>repeated string scenes = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getScenesBytes(int index) {
+      return scenes_.getByteString(index);
+    }
+
     private void initFields() {
       startupScene_ = "";
       properties_ = java.util.Collections.emptyList();
@@ -167,7 +380,7 @@ public final class GlobalDefinitionDto {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasStartupScene()) {
         memoizedIsInitialized = 0;
         return false;
@@ -187,7 +400,7 @@ public final class GlobalDefinitionDto {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -205,12 +418,12 @@ public final class GlobalDefinitionDto {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -237,94 +450,83 @@ public final class GlobalDefinitionDto {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code GlobalDefinitionProto}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProtoOrBuilder {
@@ -332,18 +534,21 @@ public final class GlobalDefinitionDto {
           getDescriptor() {
         return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_fieldAccessorTable;
+        return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.class, fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.Builder.class);
       }
-      
+
       // Construct using fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -356,7 +561,7 @@ public final class GlobalDefinitionDto {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         startupScene_ = "";
@@ -377,20 +582,20 @@ public final class GlobalDefinitionDto {
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.getDescriptor();
+        return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.internal_static_GlobalDefinitionProto_descriptor;
       }
-      
+
       public fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto getDefaultInstanceForType() {
         return fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.getDefaultInstance();
       }
-      
+
       public fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto build() {
         fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -398,17 +603,7 @@ public final class GlobalDefinitionDto {
         }
         return result;
       }
-      
-      private fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto buildPartial() {
         fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto result = new fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto(this);
         int from_bitField0_ = bitField0_;
@@ -445,7 +640,7 @@ public final class GlobalDefinitionDto {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto) {
           return mergeFrom((fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto)other);
@@ -454,11 +649,13 @@ public final class GlobalDefinitionDto {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto other) {
         if (other == fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.getDefaultInstance()) return this;
         if (other.hasStartupScene()) {
-          setStartupScene(other.getStartupScene());
+          bitField0_ |= 0x00000001;
+          startupScene_ = other.startupScene_;
+          onChanged();
         }
         if (propertiesBuilder_ == null) {
           if (!other.properties_.isEmpty()) {
@@ -525,7 +722,7 @@ public final class GlobalDefinitionDto {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasStartupScene()) {
           
@@ -545,74 +742,69 @@ public final class GlobalDefinitionDto {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              startupScene_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder subBuilder = fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addProperties(subBuilder.buildPartial());
-              break;
-            }
-            case 26: {
-              fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder subBuilder = fr.kissy.hellion.proto.common.SystemDto.SystemProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addSystems(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              ensureScenesIsMutable();
-              scenes_.add(input.readBytes());
-              break;
-            }
+        fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required string startupScene = 1;
       private java.lang.Object startupScene_ = "";
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
       public boolean hasStartupScene() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getStartupScene() {
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
+      public java.lang.String getStartupScene() {
         java.lang.Object ref = startupScene_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           startupScene_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setStartupScene(String value) {
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStartupSceneBytes() {
+        java.lang.Object ref = startupScene_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          startupScene_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
+      public Builder setStartupScene(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -621,18 +813,29 @@ public final class GlobalDefinitionDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
       public Builder clearStartupScene() {
         bitField0_ = (bitField0_ & ~0x00000001);
         startupScene_ = getDefaultInstance().getStartupScene();
         onChanged();
         return this;
       }
-      void setStartupScene(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string startupScene = 1;</code>
+       */
+      public Builder setStartupSceneBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         startupScene_ = value;
         onChanged();
+        return this;
       }
-      
+
       // repeated .PropertyProto properties = 2;
       private java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> properties_ =
         java.util.Collections.emptyList();
@@ -642,10 +845,13 @@ public final class GlobalDefinitionDto {
           bitField0_ |= 0x00000002;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.PropertyDto.PropertyProto, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder, fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> propertiesBuilder_;
-      
+
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> getPropertiesList() {
         if (propertiesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(properties_);
@@ -653,6 +859,9 @@ public final class GlobalDefinitionDto {
           return propertiesBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public int getPropertiesCount() {
         if (propertiesBuilder_ == null) {
           return properties_.size();
@@ -660,6 +869,9 @@ public final class GlobalDefinitionDto {
           return propertiesBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index) {
         if (propertiesBuilder_ == null) {
           return properties_.get(index);
@@ -667,6 +879,9 @@ public final class GlobalDefinitionDto {
           return propertiesBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
@@ -681,6 +896,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -692,6 +910,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
           if (value == null) {
@@ -705,6 +926,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
@@ -719,6 +943,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -730,6 +957,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -741,6 +971,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addAllProperties(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> values) {
         if (propertiesBuilder_ == null) {
@@ -752,6 +985,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder clearProperties() {
         if (propertiesBuilder_ == null) {
           properties_ = java.util.Collections.emptyList();
@@ -762,6 +998,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder removeProperties(int index) {
         if (propertiesBuilder_ == null) {
           ensurePropertiesIsMutable();
@@ -772,10 +1011,16 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder getPropertiesBuilder(
           int index) {
         return getPropertiesFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
           int index) {
         if (propertiesBuilder_ == null) {
@@ -783,6 +1028,9 @@ public final class GlobalDefinitionDto {
           return propertiesBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
            getPropertiesOrBuilderList() {
         if (propertiesBuilder_ != null) {
@@ -791,15 +1039,24 @@ public final class GlobalDefinitionDto {
           return java.util.Collections.unmodifiableList(properties_);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder addPropertiesBuilder() {
         return getPropertiesFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder addPropertiesBuilder(
           int index) {
         return getPropertiesFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder> 
            getPropertiesBuilderList() {
         return getPropertiesFieldBuilder().getBuilderList();
@@ -818,7 +1075,7 @@ public final class GlobalDefinitionDto {
         }
         return propertiesBuilder_;
       }
-      
+
       // repeated .SystemProto systems = 3;
       private java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto> systems_ =
         java.util.Collections.emptyList();
@@ -828,10 +1085,13 @@ public final class GlobalDefinitionDto {
           bitField0_ |= 0x00000004;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.SystemDto.SystemProto, fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder, fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder> systemsBuilder_;
-      
+
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto> getSystemsList() {
         if (systemsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(systems_);
@@ -839,6 +1099,9 @@ public final class GlobalDefinitionDto {
           return systemsBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public int getSystemsCount() {
         if (systemsBuilder_ == null) {
           return systems_.size();
@@ -846,6 +1109,9 @@ public final class GlobalDefinitionDto {
           return systemsBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto getSystems(int index) {
         if (systemsBuilder_ == null) {
           return systems_.get(index);
@@ -853,6 +1119,9 @@ public final class GlobalDefinitionDto {
           return systemsBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.common.SystemDto.SystemProto value) {
         if (systemsBuilder_ == null) {
@@ -867,6 +1136,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder builderForValue) {
         if (systemsBuilder_ == null) {
@@ -878,6 +1150,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder addSystems(fr.kissy.hellion.proto.common.SystemDto.SystemProto value) {
         if (systemsBuilder_ == null) {
           if (value == null) {
@@ -891,6 +1166,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.common.SystemDto.SystemProto value) {
         if (systemsBuilder_ == null) {
@@ -905,6 +1183,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder addSystems(
           fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder builderForValue) {
         if (systemsBuilder_ == null) {
@@ -916,6 +1197,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder builderForValue) {
         if (systemsBuilder_ == null) {
@@ -927,6 +1211,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder addAllSystems(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.SystemDto.SystemProto> values) {
         if (systemsBuilder_ == null) {
@@ -938,6 +1225,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder clearSystems() {
         if (systemsBuilder_ == null) {
           systems_ = java.util.Collections.emptyList();
@@ -948,6 +1238,9 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public Builder removeSystems(int index) {
         if (systemsBuilder_ == null) {
           ensureSystemsIsMutable();
@@ -958,10 +1251,16 @@ public final class GlobalDefinitionDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder getSystemsBuilder(
           int index) {
         return getSystemsFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder getSystemsOrBuilder(
           int index) {
         if (systemsBuilder_ == null) {
@@ -969,6 +1268,9 @@ public final class GlobalDefinitionDto {
           return systemsBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public java.util.List<? extends fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder> 
            getSystemsOrBuilderList() {
         if (systemsBuilder_ != null) {
@@ -977,15 +1279,24 @@ public final class GlobalDefinitionDto {
           return java.util.Collections.unmodifiableList(systems_);
         }
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder addSystemsBuilder() {
         return getSystemsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder addSystemsBuilder(
           int index) {
         return getSystemsFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .SystemProto systems = 3;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder> 
            getSystemsBuilderList() {
         return getSystemsFieldBuilder().getBuilderList();
@@ -1004,7 +1315,7 @@ public final class GlobalDefinitionDto {
         }
         return systemsBuilder_;
       }
-      
+
       // repeated string scenes = 4;
       private com.google.protobuf.LazyStringList scenes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureScenesIsMutable() {
@@ -1013,18 +1324,37 @@ public final class GlobalDefinitionDto {
           bitField0_ |= 0x00000008;
          }
       }
-      public java.util.List<String>
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
+      public java.util.List<java.lang.String>
           getScenesList() {
         return java.util.Collections.unmodifiableList(scenes_);
       }
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
       public int getScenesCount() {
         return scenes_.size();
       }
-      public String getScenes(int index) {
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
+      public java.lang.String getScenes(int index) {
         return scenes_.get(index);
       }
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getScenesBytes(int index) {
+        return scenes_.getByteString(index);
+      }
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
       public Builder setScenes(
-          int index, String value) {
+          int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1033,7 +1363,11 @@ public final class GlobalDefinitionDto {
         onChanged();
         return this;
       }
-      public Builder addScenes(String value) {
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
+      public Builder addScenes(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1042,42 +1376,56 @@ public final class GlobalDefinitionDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
       public Builder addAllScenes(
-          java.lang.Iterable<String> values) {
+          java.lang.Iterable<java.lang.String> values) {
         ensureScenesIsMutable();
         super.addAll(values, scenes_);
         onChanged();
         return this;
       }
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
       public Builder clearScenes() {
         scenes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
         onChanged();
         return this;
       }
-      void addScenes(com.google.protobuf.ByteString value) {
-        ensureScenesIsMutable();
+      /**
+       * <code>repeated string scenes = 4;</code>
+       */
+      public Builder addScenesBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureScenesIsMutable();
         scenes_.add(value);
         onChanged();
+        return this;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:GlobalDefinitionProto)
     }
-    
+
     static {
       defaultInstance = new GlobalDefinitionProto(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:GlobalDefinitionProto)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_GlobalDefinitionProto_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_GlobalDefinitionProto_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -1105,9 +1453,7 @@ public final class GlobalDefinitionDto {
           internal_static_GlobalDefinitionProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_GlobalDefinitionProto_descriptor,
-              new java.lang.String[] { "StartupScene", "Properties", "Systems", "Scenes", },
-              fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.class,
-              fr.kissy.hellion.proto.definition.GlobalDefinitionDto.GlobalDefinitionProto.Builder.class);
+              new java.lang.String[] { "StartupScene", "Properties", "Systems", "Scenes", });
           return null;
         }
       };
@@ -1118,6 +1464,6 @@ public final class GlobalDefinitionDto {
           fr.kissy.hellion.proto.common.PropertyDto.getDescriptor(),
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

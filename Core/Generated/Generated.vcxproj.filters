@@ -69,9 +69,6 @@
     <ClCompile Include="Source\Proto\Message\ObjectUpdated.pb.cc">
       <Filter>Source Files\Proto\Message</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\Message\Spawned.pb.cc">
-      <Filter>Source Files\Proto\Message</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Proto\Common\Object.pb.cc">
       <Filter>Source Files\Proto\Common</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
       <Filter>Header Files\Proto\Message</Filter>
     </ClInclude>
     <ClInclude Include="Source\Proto\Message\ObjectUpdated.pb.h">
-      <Filter>Header Files\Proto\Message</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\Message\Spawned.pb.h">
       <Filter>Header Files\Proto\Message</Filter>
     </ClInclude>
     <ClInclude Include="Source\Proto\Server\DownstreamMessage.pb.h">

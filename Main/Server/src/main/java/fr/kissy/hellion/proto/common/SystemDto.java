@@ -10,79 +10,253 @@ public final class SystemDto {
   }
   public interface SystemProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required .SystemProto.Type type = 1;
+    /**
+     * <code>required .SystemProto.Type type = 1;</code>
+     */
     boolean hasType();
+    /**
+     * <code>required .SystemProto.Type type = 1;</code>
+     */
     fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type getType();
-    
+
     // repeated .PropertyProto properties = 2;
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> 
         getPropertiesList();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index);
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     int getPropertiesCount();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
         getPropertiesOrBuilderList();
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
         int index);
   }
+  /**
+   * Protobuf type {@code SystemProto}
+   */
   public static final class SystemProto extends
       com.google.protobuf.GeneratedMessage
       implements SystemProtoOrBuilder {
     // Use SystemProto.newBuilder() to construct.
-    private SystemProto(Builder builder) {
+    private SystemProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private SystemProto(boolean noInit) {}
-    
+    private SystemProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final SystemProto defaultInstance;
     public static SystemProto getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public SystemProto getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SystemProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type value = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                bitField0_ |= 0x00000001;
+                type_ = value;
+              }
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                properties_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              properties_.add(input.readMessage(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          properties_ = java.util.Collections.unmodifiableList(properties_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_fieldAccessorTable;
+      return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              fr.kissy.hellion.proto.common.SystemDto.SystemProto.class, fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<SystemProto> PARSER =
+        new com.google.protobuf.AbstractParser<SystemProto>() {
+      public SystemProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SystemProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SystemProto> getParserForType() {
+      return PARSER;
+    }
+
+    /**
+     * Protobuf enum {@code SystemProto.Type}
+     */
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>None = 0;</code>
+       */
       None(0, 0),
+      /**
+       * <code>Generic = 1;</code>
+       */
       Generic(1, 1),
+      /**
+       * <code>AI = 2;</code>
+       */
       AI(2, 2),
+      /**
+       * <code>Animation = 3;</code>
+       */
       Animation(3, 3),
+      /**
+       * <code>Audio = 4;</code>
+       */
       Audio(4, 4),
+      /**
+       * <code>Geometry = 5;</code>
+       */
       Geometry(5, 5),
+      /**
+       * <code>Graphic = 6;</code>
+       */
       Graphic(6, 6),
+      /**
+       * <code>Gui = 7;</code>
+       */
       Gui(7, 7),
+      /**
+       * <code>Input = 8;</code>
+       */
       Input(8, 8),
+      /**
+       * <code>Network = 9;</code>
+       */
       Network(9, 9),
+      /**
+       * <code>Physic = 10;</code>
+       */
       Physic(10, 10),
       ;
-      
+
+      /**
+       * <code>None = 0;</code>
+       */
       public static final int None_VALUE = 0;
+      /**
+       * <code>Generic = 1;</code>
+       */
       public static final int Generic_VALUE = 1;
+      /**
+       * <code>AI = 2;</code>
+       */
       public static final int AI_VALUE = 2;
+      /**
+       * <code>Animation = 3;</code>
+       */
       public static final int Animation_VALUE = 3;
+      /**
+       * <code>Audio = 4;</code>
+       */
       public static final int Audio_VALUE = 4;
+      /**
+       * <code>Geometry = 5;</code>
+       */
       public static final int Geometry_VALUE = 5;
+      /**
+       * <code>Graphic = 6;</code>
+       */
       public static final int Graphic_VALUE = 6;
+      /**
+       * <code>Gui = 7;</code>
+       */
       public static final int Gui_VALUE = 7;
+      /**
+       * <code>Input = 8;</code>
+       */
       public static final int Input_VALUE = 8;
+      /**
+       * <code>Network = 9;</code>
+       */
       public static final int Network_VALUE = 9;
+      /**
+       * <code>Physic = 10;</code>
+       */
       public static final int Physic_VALUE = 10;
-      
-      
+
+
       public final int getNumber() { return value; }
-      
+
       public static Type valueOf(int value) {
         switch (value) {
           case 0: return None;
@@ -99,7 +273,7 @@ public final class SystemDto {
           default: return null;
         }
       }
-      
+
       public static com.google.protobuf.Internal.EnumLiteMap<Type>
           internalGetValueMap() {
         return internalValueMap;
@@ -111,7 +285,7 @@ public final class SystemDto {
                 return Type.valueOf(number);
               }
             };
-      
+
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
         return getDescriptor().getValues().get(index);
@@ -124,11 +298,9 @@ public final class SystemDto {
           getDescriptor() {
         return fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDescriptor().getEnumTypes().get(0);
       }
-      
-      private static final Type[] VALUES = {
-        None, Generic, AI, Animation, Audio, Geometry, Graphic, Gui, Input, Network, Physic, 
-      };
-      
+
+      private static final Type[] VALUES = values();
+
       public static Type valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
@@ -137,50 +309,71 @@ public final class SystemDto {
         }
         return VALUES[desc.getIndex()];
       }
-      
+
       private final int index;
       private final int value;
-      
+
       private Type(int index, int value) {
         this.index = index;
         this.value = value;
       }
-      
+
       // @@protoc_insertion_point(enum_scope:SystemProto.Type)
     }
-    
+
     private int bitField0_;
     // required .SystemProto.Type type = 1;
     public static final int TYPE_FIELD_NUMBER = 1;
     private fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type type_;
+    /**
+     * <code>required .SystemProto.Type type = 1;</code>
+     */
     public boolean hasType() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
+    /**
+     * <code>required .SystemProto.Type type = 1;</code>
+     */
     public fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type getType() {
       return type_;
     }
-    
+
     // repeated .PropertyProto properties = 2;
     public static final int PROPERTIES_FIELD_NUMBER = 2;
     private java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> properties_;
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> getPropertiesList() {
       return properties_;
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
         getPropertiesOrBuilderList() {
       return properties_;
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public int getPropertiesCount() {
       return properties_.size();
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index) {
       return properties_.get(index);
     }
+    /**
+     * <code>repeated .PropertyProto properties = 2;</code>
+     */
     public fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
         int index) {
       return properties_.get(index);
     }
-    
+
     private void initFields() {
       type_ = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.None;
       properties_ = java.util.Collections.emptyList();
@@ -189,7 +382,7 @@ public final class SystemDto {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasType()) {
         memoizedIsInitialized = 0;
         return false;
@@ -203,7 +396,7 @@ public final class SystemDto {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -215,12 +408,12 @@ public final class SystemDto {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -234,94 +427,83 @@ public final class SystemDto {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.common.SystemDto.SystemProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(fr.kissy.hellion.proto.common.SystemDto.SystemProto prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code SystemProto}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.common.SystemDto.SystemProtoOrBuilder {
@@ -329,18 +511,21 @@ public final class SystemDto {
           getDescriptor() {
         return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_fieldAccessorTable;
+        return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                fr.kissy.hellion.proto.common.SystemDto.SystemProto.class, fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder.class);
       }
-      
+
       // Construct using fr.kissy.hellion.proto.common.SystemDto.SystemProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -352,7 +537,7 @@ public final class SystemDto {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         type_ = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.None;
@@ -365,20 +550,20 @@ public final class SystemDto {
         }
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDescriptor();
+        return fr.kissy.hellion.proto.common.SystemDto.internal_static_SystemProto_descriptor;
       }
-      
+
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto getDefaultInstanceForType() {
         return fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDefaultInstance();
       }
-      
+
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto build() {
         fr.kissy.hellion.proto.common.SystemDto.SystemProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -386,17 +571,7 @@ public final class SystemDto {
         }
         return result;
       }
-      
-      private fr.kissy.hellion.proto.common.SystemDto.SystemProto buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        fr.kissy.hellion.proto.common.SystemDto.SystemProto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto buildPartial() {
         fr.kissy.hellion.proto.common.SystemDto.SystemProto result = new fr.kissy.hellion.proto.common.SystemDto.SystemProto(this);
         int from_bitField0_ = bitField0_;
@@ -418,7 +593,7 @@ public final class SystemDto {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof fr.kissy.hellion.proto.common.SystemDto.SystemProto) {
           return mergeFrom((fr.kissy.hellion.proto.common.SystemDto.SystemProto)other);
@@ -427,7 +602,7 @@ public final class SystemDto {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(fr.kissy.hellion.proto.common.SystemDto.SystemProto other) {
         if (other == fr.kissy.hellion.proto.common.SystemDto.SystemProto.getDefaultInstance()) return this;
         if (other.hasType()) {
@@ -462,7 +637,7 @@ public final class SystemDto {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasType()) {
           
@@ -476,61 +651,43 @@ public final class SystemDto {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              int rawValue = input.readEnum();
-              fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type value = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(1, rawValue);
-              } else {
-                bitField0_ |= 0x00000001;
-                type_ = value;
-              }
-              break;
-            }
-            case 18: {
-              fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder subBuilder = fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addProperties(subBuilder.buildPartial());
-              break;
-            }
+        fr.kissy.hellion.proto.common.SystemDto.SystemProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (fr.kissy.hellion.proto.common.SystemDto.SystemProto) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required .SystemProto.Type type = 1;
       private fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type type_ = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.None;
+      /**
+       * <code>required .SystemProto.Type type = 1;</code>
+       */
       public boolean hasType() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
+      /**
+       * <code>required .SystemProto.Type type = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type getType() {
         return type_;
       }
+      /**
+       * <code>required .SystemProto.Type type = 1;</code>
+       */
       public Builder setType(fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type value) {
         if (value == null) {
           throw new NullPointerException();
@@ -540,13 +697,16 @@ public final class SystemDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>required .SystemProto.Type type = 1;</code>
+       */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = fr.kissy.hellion.proto.common.SystemDto.SystemProto.Type.None;
         onChanged();
         return this;
       }
-      
+
       // repeated .PropertyProto properties = 2;
       private java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> properties_ =
         java.util.Collections.emptyList();
@@ -556,10 +716,13 @@ public final class SystemDto {
           bitField0_ |= 0x00000002;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.PropertyDto.PropertyProto, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder, fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> propertiesBuilder_;
-      
+
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> getPropertiesList() {
         if (propertiesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(properties_);
@@ -567,6 +730,9 @@ public final class SystemDto {
           return propertiesBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public int getPropertiesCount() {
         if (propertiesBuilder_ == null) {
           return properties_.size();
@@ -574,6 +740,9 @@ public final class SystemDto {
           return propertiesBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getProperties(int index) {
         if (propertiesBuilder_ == null) {
           return properties_.get(index);
@@ -581,6 +750,9 @@ public final class SystemDto {
           return propertiesBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
@@ -595,6 +767,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -606,6 +781,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
           if (value == null) {
@@ -619,6 +797,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto value) {
         if (propertiesBuilder_ == null) {
@@ -633,6 +814,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -644,6 +828,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder builderForValue) {
         if (propertiesBuilder_ == null) {
@@ -655,6 +842,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder addAllProperties(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProto> values) {
         if (propertiesBuilder_ == null) {
@@ -666,6 +856,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder clearProperties() {
         if (propertiesBuilder_ == null) {
           properties_ = java.util.Collections.emptyList();
@@ -676,6 +869,9 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public Builder removeProperties(int index) {
         if (propertiesBuilder_ == null) {
           ensurePropertiesIsMutable();
@@ -686,10 +882,16 @@ public final class SystemDto {
         }
         return this;
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder getPropertiesBuilder(
           int index) {
         return getPropertiesFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder getPropertiesOrBuilder(
           int index) {
         if (propertiesBuilder_ == null) {
@@ -697,6 +899,9 @@ public final class SystemDto {
           return propertiesBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<? extends fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder> 
            getPropertiesOrBuilderList() {
         if (propertiesBuilder_ != null) {
@@ -705,15 +910,24 @@ public final class SystemDto {
           return java.util.Collections.unmodifiableList(properties_);
         }
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder addPropertiesBuilder() {
         return getPropertiesFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder addPropertiesBuilder(
           int index) {
         return getPropertiesFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .PropertyProto properties = 2;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder> 
            getPropertiesBuilderList() {
         return getPropertiesFieldBuilder().getBuilderList();
@@ -732,24 +946,24 @@ public final class SystemDto {
         }
         return propertiesBuilder_;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:SystemProto)
     }
-    
+
     static {
       defaultInstance = new SystemProto(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:SystemProto)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_SystemProto_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_SystemProto_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -778,9 +992,7 @@ public final class SystemDto {
           internal_static_SystemProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_SystemProto_descriptor,
-              new java.lang.String[] { "Type", "Properties", },
-              fr.kissy.hellion.proto.common.SystemDto.SystemProto.class,
-              fr.kissy.hellion.proto.common.SystemDto.SystemProto.Builder.class);
+              new java.lang.String[] { "Type", "Properties", });
           return null;
         }
       };
@@ -790,6 +1002,6 @@ public final class SystemDto {
           fr.kissy.hellion.proto.common.PropertyDto.getDescriptor(),
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

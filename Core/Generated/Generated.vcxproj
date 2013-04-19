@@ -55,6 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;C:\Program Files (x86)\SDK\Protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,7 +91,6 @@
     <ClCompile Include="Source\Proto\Definition\SceneDefinition.pb.cc" />
     <ClCompile Include="Source\Proto\Message\Authenticated.pb.cc" />
     <ClCompile Include="Source\Proto\Message\ObjectUpdated.pb.cc" />
-    <ClCompile Include="Source\Proto\Message\Spawned.pb.cc" />
     <ClCompile Include="Source\Proto\Server\DownstreamMessage.pb.cc" />
     <ClCompile Include="Source\Proto\Server\UpstreamMessage.pb.cc" />
   </ItemGroup>
@@ -105,7 +105,6 @@
     <ClInclude Include="Source\Proto\Definition\SceneDefinition.pb.h" />
     <ClInclude Include="Source\Proto\Message\Authenticated.pb.h" />
     <ClInclude Include="Source\Proto\Message\ObjectUpdated.pb.h" />
-    <ClInclude Include="Source\Proto\Message\Spawned.pb.h" />
     <ClInclude Include="Source\Proto\Server\DownstreamMessage.pb.h" />
     <ClInclude Include="Source\Proto\Server\UpstreamMessage.pb.h" />
   </ItemGroup>

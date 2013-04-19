@@ -10,66 +10,169 @@ public final class Authenticated {
   }
   public interface AuthenticatedProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // repeated .ObjectProto players = 1;
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> 
         getPlayersList();
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index);
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     int getPlayersCount();
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
         getPlayersOrBuilderList();
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
         int index);
   }
+  /**
+   * Protobuf type {@code AuthenticatedProto}
+   */
   public static final class AuthenticatedProto extends
       com.google.protobuf.GeneratedMessage
       implements AuthenticatedProtoOrBuilder {
     // Use AuthenticatedProto.newBuilder() to construct.
-    private AuthenticatedProto(Builder builder) {
+    private AuthenticatedProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private AuthenticatedProto(boolean noInit) {}
-    
+    private AuthenticatedProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final AuthenticatedProto defaultInstance;
     public static AuthenticatedProto getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public AuthenticatedProto getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AuthenticatedProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                players_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              players_.add(input.readMessage(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          players_ = java.util.Collections.unmodifiableList(players_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable;
+      return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.class, fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<AuthenticatedProto> PARSER =
+        new com.google.protobuf.AbstractParser<AuthenticatedProto>() {
+      public AuthenticatedProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AuthenticatedProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AuthenticatedProto> getParserForType() {
+      return PARSER;
+    }
+
     // repeated .ObjectProto players = 1;
     public static final int PLAYERS_FIELD_NUMBER = 1;
     private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> players_;
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getPlayersList() {
       return players_;
     }
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
         getPlayersOrBuilderList() {
       return players_;
     }
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     public int getPlayersCount() {
       return players_.size();
     }
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index) {
       return players_.get(index);
     }
+    /**
+     * <code>repeated .ObjectProto players = 1;</code>
+     */
     public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
         int index) {
       return players_.get(index);
     }
-    
+
     private void initFields() {
       players_ = java.util.Collections.emptyList();
     }
@@ -77,7 +180,7 @@ public final class Authenticated {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       for (int i = 0; i < getPlayersCount(); i++) {
         if (!getPlayers(i).isInitialized()) {
           memoizedIsInitialized = 0;
@@ -87,7 +190,7 @@ public final class Authenticated {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -96,12 +199,12 @@ public final class Authenticated {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       for (int i = 0; i < players_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -111,94 +214,83 @@ public final class Authenticated {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code AuthenticatedProto}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProtoOrBuilder {
@@ -206,18 +298,21 @@ public final class Authenticated {
           getDescriptor() {
         return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable;
+        return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.class, fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.Builder.class);
       }
-      
+
       // Construct using fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -229,7 +324,7 @@ public final class Authenticated {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (playersBuilder_ == null) {
@@ -240,20 +335,20 @@ public final class Authenticated {
         }
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.getDescriptor();
+        return fr.kissy.hellion.proto.message.Authenticated.internal_static_AuthenticatedProto_descriptor;
       }
-      
+
       public fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto getDefaultInstanceForType() {
         return fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.getDefaultInstance();
       }
-      
+
       public fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto build() {
         fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -261,17 +356,7 @@ public final class Authenticated {
         }
         return result;
       }
-      
-      private fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto buildPartial() {
         fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto result = new fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto(this);
         int from_bitField0_ = bitField0_;
@@ -287,7 +372,7 @@ public final class Authenticated {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto) {
           return mergeFrom((fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto)other);
@@ -296,7 +381,7 @@ public final class Authenticated {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto other) {
         if (other == fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.getDefaultInstance()) return this;
         if (playersBuilder_ == null) {
@@ -328,7 +413,7 @@ public final class Authenticated {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         for (int i = 0; i < getPlayersCount(); i++) {
           if (!getPlayers(i).isInitialized()) {
@@ -338,42 +423,26 @@ public final class Authenticated {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder subBuilder = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addPlayers(subBuilder.buildPartial());
-              break;
-            }
+        fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // repeated .ObjectProto players = 1;
       private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> players_ =
         java.util.Collections.emptyList();
@@ -383,10 +452,13 @@ public final class Authenticated {
           bitField0_ |= 0x00000001;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> playersBuilder_;
-      
+
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getPlayersList() {
         if (playersBuilder_ == null) {
           return java.util.Collections.unmodifiableList(players_);
@@ -394,6 +466,9 @@ public final class Authenticated {
           return playersBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public int getPlayersCount() {
         if (playersBuilder_ == null) {
           return players_.size();
@@ -401,6 +476,9 @@ public final class Authenticated {
           return playersBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getPlayers(int index) {
         if (playersBuilder_ == null) {
           return players_.get(index);
@@ -408,6 +486,9 @@ public final class Authenticated {
           return playersBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder setPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (playersBuilder_ == null) {
@@ -422,6 +503,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder setPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (playersBuilder_ == null) {
@@ -433,6 +517,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder addPlayers(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (playersBuilder_ == null) {
           if (value == null) {
@@ -446,6 +533,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder addPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (playersBuilder_ == null) {
@@ -460,6 +550,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder addPlayers(
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (playersBuilder_ == null) {
@@ -471,6 +564,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder addPlayers(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (playersBuilder_ == null) {
@@ -482,6 +578,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder addAllPlayers(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> values) {
         if (playersBuilder_ == null) {
@@ -493,6 +592,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder clearPlayers() {
         if (playersBuilder_ == null) {
           players_ = java.util.Collections.emptyList();
@@ -503,6 +605,9 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public Builder removePlayers(int index) {
         if (playersBuilder_ == null) {
           ensurePlayersIsMutable();
@@ -513,10 +618,16 @@ public final class Authenticated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder getPlayersBuilder(
           int index) {
         return getPlayersFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getPlayersOrBuilder(
           int index) {
         if (playersBuilder_ == null) {
@@ -524,6 +635,9 @@ public final class Authenticated {
           return playersBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
            getPlayersOrBuilderList() {
         if (playersBuilder_ != null) {
@@ -532,15 +646,24 @@ public final class Authenticated {
           return java.util.Collections.unmodifiableList(players_);
         }
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addPlayersBuilder() {
         return getPlayersFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addPlayersBuilder(
           int index) {
         return getPlayersFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .ObjectProto players = 1;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder> 
            getPlayersBuilderList() {
         return getPlayersFieldBuilder().getBuilderList();
@@ -559,24 +682,24 @@ public final class Authenticated {
         }
         return playersBuilder_;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:AuthenticatedProto)
     }
-    
+
     static {
       defaultInstance = new AuthenticatedProto(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:AuthenticatedProto)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_AuthenticatedProto_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AuthenticatedProto_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -601,9 +724,7 @@ public final class Authenticated {
           internal_static_AuthenticatedProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_AuthenticatedProto_descriptor,
-              new java.lang.String[] { "Players", },
-              fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.class,
-              fr.kissy.hellion.proto.message.Authenticated.AuthenticatedProto.Builder.class);
+              new java.lang.String[] { "Players", });
           return null;
         }
       };
@@ -614,6 +735,6 @@ public final class Authenticated {
           fr.kissy.hellion.proto.common.PropertyDto.getDescriptor(),
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

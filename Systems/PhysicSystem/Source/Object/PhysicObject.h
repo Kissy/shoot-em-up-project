@@ -50,7 +50,7 @@ class PhysicObject : public ISystemObject, public IGeometryObject {
         /**
          * @inheritDoc
          */
-        void getPosition(PropertiesValues& propertiesValues);
+        void getPosition(ProtoStringList* propertiesValues);
 
         /**
          * @inheritDoc

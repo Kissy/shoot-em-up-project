@@ -10,100 +10,218 @@ public final class PropertyDto {
   }
   public interface PropertyProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // required string name = 1;
+    /**
+     * <code>required string name = 1;</code>
+     */
     boolean hasName();
-    String getName();
-    
+    /**
+     * <code>required string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>required string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
     // repeated bytes value = 2;
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     java.util.List<com.google.protobuf.ByteString> getValueList();
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     int getValueCount();
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     com.google.protobuf.ByteString getValue(int index);
   }
+  /**
+   * Protobuf type {@code PropertyProto}
+   */
   public static final class PropertyProto extends
       com.google.protobuf.GeneratedMessage
       implements PropertyProtoOrBuilder {
     // Use PropertyProto.newBuilder() to construct.
-    private PropertyProto(Builder builder) {
+    private PropertyProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private PropertyProto(boolean noInit) {}
-    
+    private PropertyProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final PropertyProto defaultInstance;
     public static PropertyProto getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public PropertyProto getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PropertyProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              name_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                value_ = new java.util.ArrayList<com.google.protobuf.ByteString>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              value_.add(input.readBytes());
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          value_ = java.util.Collections.unmodifiableList(value_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_fieldAccessorTable;
+      return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.class, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<PropertyProto> PARSER =
+        new com.google.protobuf.AbstractParser<PropertyProto>() {
+      public PropertyProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PropertyProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PropertyProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
     // required string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
     private java.lang.Object name_;
+    /**
+     * <code>required string name = 1;</code>
+     */
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
-    public String getName() {
+    /**
+     * <code>required string name = 1;</code>
+     */
+    public java.lang.String getName() {
       java.lang.Object ref = name_;
-      if (ref instanceof String) {
-        return (String) ref;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        if (com.google.protobuf.Internal.isValidUtf8(bs)) {
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
           name_ = s;
         }
         return s;
       }
     }
-    private com.google.protobuf.ByteString getNameBytes() {
+    /**
+     * <code>required string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
       java.lang.Object ref = name_;
-      if (ref instanceof String) {
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
-    
+
     // repeated bytes value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
     private java.util.List<com.google.protobuf.ByteString> value_;
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     public java.util.List<com.google.protobuf.ByteString>
         getValueList() {
       return value_;
     }
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     public int getValueCount() {
       return value_.size();
     }
+    /**
+     * <code>repeated bytes value = 2;</code>
+     */
     public com.google.protobuf.ByteString getValue(int index) {
       return value_.get(index);
     }
-    
+
     private void initFields() {
       name_ = "";
-      value_ = java.util.Collections.emptyList();;
+      value_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       if (!hasName()) {
         memoizedIsInitialized = 0;
         return false;
@@ -111,7 +229,7 @@ public final class PropertyDto {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -123,12 +241,12 @@ public final class PropertyDto {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
@@ -147,94 +265,83 @@ public final class PropertyDto {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code PropertyProto}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.common.PropertyDto.PropertyProtoOrBuilder {
@@ -242,18 +349,21 @@ public final class PropertyDto {
           getDescriptor() {
         return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_fieldAccessorTable;
+        return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.class, fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder.class);
       }
-      
+
       // Construct using fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -264,29 +374,29 @@ public final class PropertyDto {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        value_ = java.util.Collections.emptyList();;
+        value_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDescriptor();
+        return fr.kissy.hellion.proto.common.PropertyDto.internal_static_PropertyProto_descriptor;
       }
-      
+
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto getDefaultInstanceForType() {
         return fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance();
       }
-      
+
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto build() {
         fr.kissy.hellion.proto.common.PropertyDto.PropertyProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -294,17 +404,7 @@ public final class PropertyDto {
         }
         return result;
       }
-      
-      private fr.kissy.hellion.proto.common.PropertyDto.PropertyProto buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        fr.kissy.hellion.proto.common.PropertyDto.PropertyProto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public fr.kissy.hellion.proto.common.PropertyDto.PropertyProto buildPartial() {
         fr.kissy.hellion.proto.common.PropertyDto.PropertyProto result = new fr.kissy.hellion.proto.common.PropertyDto.PropertyProto(this);
         int from_bitField0_ = bitField0_;
@@ -322,7 +422,7 @@ public final class PropertyDto {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof fr.kissy.hellion.proto.common.PropertyDto.PropertyProto) {
           return mergeFrom((fr.kissy.hellion.proto.common.PropertyDto.PropertyProto)other);
@@ -331,11 +431,13 @@ public final class PropertyDto {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(fr.kissy.hellion.proto.common.PropertyDto.PropertyProto other) {
         if (other == fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.getDefaultInstance()) return this;
         if (other.hasName()) {
-          setName(other.getName());
+          bitField0_ |= 0x00000001;
+          name_ = other.name_;
+          onChanged();
         }
         if (!other.value_.isEmpty()) {
           if (value_.isEmpty()) {
@@ -350,7 +452,7 @@ public final class PropertyDto {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         if (!hasName()) {
           
@@ -358,62 +460,69 @@ public final class PropertyDto {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              bitField0_ |= 0x00000001;
-              name_ = input.readBytes();
-              break;
-            }
-            case 18: {
-              ensureValueIsMutable();
-              value_.add(input.readBytes());
-              break;
-            }
+        fr.kissy.hellion.proto.common.PropertyDto.PropertyProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (fr.kissy.hellion.proto.common.PropertyDto.PropertyProto) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // required string name = 1;
       private java.lang.Object name_ = "";
+      /**
+       * <code>required string name = 1;</code>
+       */
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
-      public String getName() {
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public java.lang.String getName() {
         java.lang.Object ref = name_;
-        if (!(ref instanceof String)) {
-          String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
           name_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-      public Builder setName(String value) {
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -422,36 +531,59 @@ public final class PropertyDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>required string name = 1;</code>
+       */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000001);
         name_ = getDefaultInstance().getName();
         onChanged();
         return this;
       }
-      void setName(com.google.protobuf.ByteString value) {
-        bitField0_ |= 0x00000001;
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
         name_ = value;
         onChanged();
+        return this;
       }
-      
+
       // repeated bytes value = 2;
-      private java.util.List<com.google.protobuf.ByteString> value_ = java.util.Collections.emptyList();;
+      private java.util.List<com.google.protobuf.ByteString> value_ = java.util.Collections.emptyList();
       private void ensureValueIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           value_ = new java.util.ArrayList<com.google.protobuf.ByteString>(value_);
           bitField0_ |= 0x00000002;
          }
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public java.util.List<com.google.protobuf.ByteString>
           getValueList() {
         return java.util.Collections.unmodifiableList(value_);
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public int getValueCount() {
         return value_.size();
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public com.google.protobuf.ByteString getValue(int index) {
         return value_.get(index);
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public Builder setValue(
           int index, com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -462,6 +594,9 @@ public final class PropertyDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public Builder addValue(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
@@ -471,6 +606,9 @@ public final class PropertyDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public Builder addAllValue(
           java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
         ensureValueIsMutable();
@@ -478,30 +616,33 @@ public final class PropertyDto {
         onChanged();
         return this;
       }
+      /**
+       * <code>repeated bytes value = 2;</code>
+       */
       public Builder clearValue() {
-        value_ = java.util.Collections.emptyList();;
+        value_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:PropertyProto)
     }
-    
+
     static {
       defaultInstance = new PropertyProto(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:PropertyProto)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_PropertyProto_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_PropertyProto_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -525,9 +666,7 @@ public final class PropertyDto {
           internal_static_PropertyProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_PropertyProto_descriptor,
-              new java.lang.String[] { "Name", "Value", },
-              fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.class,
-              fr.kissy.hellion.proto.common.PropertyDto.PropertyProto.Builder.class);
+              new java.lang.String[] { "Name", "Value", });
           return null;
         }
       };
@@ -536,6 +675,6 @@ public final class PropertyDto {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }

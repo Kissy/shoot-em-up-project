@@ -26,10 +26,8 @@ public:
     
     typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
     typedef std::map<std::string, PropertySetter> PropertySetters;
-
-    typedef std::map<std::string, std::string> PropertiesValues;
-    typedef std::pair<std::string, std::string> PropertiesValuesPair;
-    typedef boost::function<void (PropertiesValues& propertiesValue)> PropertyGetter;
+    
+    typedef boost::function<void (ProtoStringList* propertiesValue)> PropertyGetter;
     typedef std::map<std::string, PropertyGetter> PropertyGetters;
 
     /**
@@ -45,25 +43,23 @@ public:
     /**
      * Sets the properties for this system.
      *
-     * @param   properties  Property structure array to get values from.
-     * @return  An error code.
+     * @param   properties Property structure array to get values from.
      */
-    void setProperties(const ProtoPropertyList &properties);
+    void setProperties(const ProtoPropertyList& properties);
         
     /**
      * Sets the property for this system.
      *
      * @param   property Property to get values from.
-     * @return  An error code.
      */
-    void setProperty(const PropertyProto &property);
+    void setProperty(const PropertyProto& property);
 
     /**
      * Get the properties and their values for this system.
      * 
      * @return The map of properties associated with their values.
      */
-    PropertiesValues getProperties(void);
+    ProtoPropertyList getProperties(void);
 
     /**
      * One time initialization function for the system.

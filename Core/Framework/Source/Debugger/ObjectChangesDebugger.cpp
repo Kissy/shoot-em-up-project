@@ -28,12 +28,9 @@ Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes:
     std::string category = System::Types::getName(systemObject->GetSystemType());
     DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
     debugPropertyProto->set_category(category);
-
-    /*IProperty::PropertiesValues properties = systemObject->getProperties();
-    for (auto iter = properties.begin(); iter != properties.end(); iter++) {
-        debugPropertyProto->set_key(iter->first);
-        debugPropertyProto->set_value(iter->second);
-    }*/
+    
+    const ProtoPropertyList properties = systemObject->getProperties();
+    debugPropertyProto->mutable_properties()->CopyFrom(properties);
 
     m_pDebugger->send(&debugProto);
     return Errors::Success;

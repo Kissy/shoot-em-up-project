@@ -10,66 +10,169 @@ public final class ObjectUpdated {
   }
   public interface ObjectUpdatedProtoOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
-    
+
     // repeated .ObjectProto objects = 1;
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> 
         getObjectsList();
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index);
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     int getObjectsCount();
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
         getObjectsOrBuilderList();
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
         int index);
   }
+  /**
+   * Protobuf type {@code ObjectUpdatedProto}
+   */
   public static final class ObjectUpdatedProto extends
       com.google.protobuf.GeneratedMessage
       implements ObjectUpdatedProtoOrBuilder {
     // Use ObjectUpdatedProto.newBuilder() to construct.
-    private ObjectUpdatedProto(Builder builder) {
+    private ObjectUpdatedProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ObjectUpdatedProto(boolean noInit) {}
-    
+    private ObjectUpdatedProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
     private static final ObjectUpdatedProto defaultInstance;
     public static ObjectUpdatedProto getDefaultInstance() {
       return defaultInstance;
     }
-    
+
     public ObjectUpdatedProto getDefaultInstanceForType() {
       return defaultInstance;
     }
-    
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ObjectUpdatedProto(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                objects_ = new java.util.ArrayList<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              objects_.add(input.readMessage(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          objects_ = java.util.Collections.unmodifiableList(objects_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_descriptor;
     }
-    
+
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_fieldAccessorTable;
+      return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.class, fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.Builder.class);
     }
-    
+
+    public static com.google.protobuf.Parser<ObjectUpdatedProto> PARSER =
+        new com.google.protobuf.AbstractParser<ObjectUpdatedProto>() {
+      public ObjectUpdatedProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ObjectUpdatedProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ObjectUpdatedProto> getParserForType() {
+      return PARSER;
+    }
+
     // repeated .ObjectProto objects = 1;
     public static final int OBJECTS_FIELD_NUMBER = 1;
     private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> objects_;
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getObjectsList() {
       return objects_;
     }
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
         getObjectsOrBuilderList() {
       return objects_;
     }
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     public int getObjectsCount() {
       return objects_.size();
     }
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index) {
       return objects_.get(index);
     }
+    /**
+     * <code>repeated .ObjectProto objects = 1;</code>
+     */
     public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
         int index) {
       return objects_.get(index);
     }
-    
+
     private void initFields() {
       objects_ = java.util.Collections.emptyList();
     }
@@ -77,7 +180,7 @@ public final class ObjectUpdated {
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
-      
+
       for (int i = 0; i < getObjectsCount(); i++) {
         if (!getObjects(i).isInitialized()) {
           memoizedIsInitialized = 0;
@@ -87,7 +190,7 @@ public final class ObjectUpdated {
       memoizedIsInitialized = 1;
       return true;
     }
-    
+
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
@@ -96,12 +199,12 @@ public final class ObjectUpdated {
       }
       getUnknownFields().writeTo(output);
     }
-    
+
     private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
       int size = memoizedSerializedSize;
       if (size != -1) return size;
-    
+
       size = 0;
       for (int i = 0; i < objects_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -111,94 +214,83 @@ public final class ObjectUpdated {
       memoizedSerializedSize = size;
       return size;
     }
-    
+
     private static final long serialVersionUID = 0L;
     @java.lang.Override
     protected java.lang.Object writeReplace()
         throws java.io.ObjectStreamException {
       return super.writeReplace();
     }
-    
+
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
+      return PARSER.parseFrom(data);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(data, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      Builder builder = newBuilder();
-      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
-        return builder.buildParsed();
-      } else {
-        return null;
-      }
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
+      return PARSER.parseFrom(input);
     }
     public static fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
+      return PARSER.parseFrom(input, extensionRegistry);
     }
-    
+
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder(fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
-    
+
     @java.lang.Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
+    /**
+     * Protobuf type {@code ObjectUpdatedProto}
+     */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProtoOrBuilder {
@@ -206,18 +298,21 @@ public final class ObjectUpdated {
           getDescriptor() {
         return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_descriptor;
       }
-      
+
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_fieldAccessorTable;
+        return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.class, fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.Builder.class);
       }
-      
+
       // Construct using fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
-      
-      private Builder(BuilderParent parent) {
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -229,7 +324,7 @@ public final class ObjectUpdated {
       private static Builder create() {
         return new Builder();
       }
-      
+
       public Builder clear() {
         super.clear();
         if (objectsBuilder_ == null) {
@@ -240,20 +335,20 @@ public final class ObjectUpdated {
         }
         return this;
       }
-      
+
       public Builder clone() {
         return create().mergeFrom(buildPartial());
       }
-      
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.getDescriptor();
+        return fr.kissy.hellion.proto.message.ObjectUpdated.internal_static_ObjectUpdatedProto_descriptor;
       }
-      
+
       public fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto getDefaultInstanceForType() {
         return fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.getDefaultInstance();
       }
-      
+
       public fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto build() {
         fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -261,17 +356,7 @@ public final class ObjectUpdated {
         }
         return result;
       }
-      
-      private fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return result;
-      }
-      
+
       public fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto buildPartial() {
         fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto result = new fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto(this);
         int from_bitField0_ = bitField0_;
@@ -287,7 +372,7 @@ public final class ObjectUpdated {
         onBuilt();
         return result;
       }
-      
+
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto) {
           return mergeFrom((fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto)other);
@@ -296,7 +381,7 @@ public final class ObjectUpdated {
           return this;
         }
       }
-      
+
       public Builder mergeFrom(fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto other) {
         if (other == fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.getDefaultInstance()) return this;
         if (objectsBuilder_ == null) {
@@ -328,7 +413,7 @@ public final class ObjectUpdated {
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
-      
+
       public final boolean isInitialized() {
         for (int i = 0; i < getObjectsCount(); i++) {
           if (!getObjects(i).isInitialized()) {
@@ -338,42 +423,26 @@ public final class ObjectUpdated {
         }
         return true;
       }
-      
+
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              onChanged();
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                onChanged();
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder subBuilder = fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addObjects(subBuilder.buildPartial());
-              break;
-            }
+        fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
           }
         }
+        return this;
       }
-      
       private int bitField0_;
-      
+
       // repeated .ObjectProto objects = 1;
       private java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> objects_ =
         java.util.Collections.emptyList();
@@ -383,10 +452,13 @@ public final class ObjectUpdated {
           bitField0_ |= 0x00000001;
          }
       }
-      
+
       private com.google.protobuf.RepeatedFieldBuilder<
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder, fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> objectsBuilder_;
-      
+
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> getObjectsList() {
         if (objectsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(objects_);
@@ -394,6 +466,9 @@ public final class ObjectUpdated {
           return objectsBuilder_.getMessageList();
         }
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public int getObjectsCount() {
         if (objectsBuilder_ == null) {
           return objects_.size();
@@ -401,6 +476,9 @@ public final class ObjectUpdated {
           return objectsBuilder_.getCount();
         }
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto getObjects(int index) {
         if (objectsBuilder_ == null) {
           return objects_.get(index);
@@ -408,6 +486,9 @@ public final class ObjectUpdated {
           return objectsBuilder_.getMessage(index);
         }
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder setObjects(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (objectsBuilder_ == null) {
@@ -422,6 +503,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder setObjects(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (objectsBuilder_ == null) {
@@ -433,6 +517,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder addObjects(fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (objectsBuilder_ == null) {
           if (value == null) {
@@ -446,6 +533,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder addObjects(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto value) {
         if (objectsBuilder_ == null) {
@@ -460,6 +550,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder addObjects(
           fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (objectsBuilder_ == null) {
@@ -471,6 +564,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder addObjects(
           int index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder builderForValue) {
         if (objectsBuilder_ == null) {
@@ -482,6 +578,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder addAllObjects(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProto> values) {
         if (objectsBuilder_ == null) {
@@ -493,6 +592,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder clearObjects() {
         if (objectsBuilder_ == null) {
           objects_ = java.util.Collections.emptyList();
@@ -503,6 +605,9 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public Builder removeObjects(int index) {
         if (objectsBuilder_ == null) {
           ensureObjectsIsMutable();
@@ -513,10 +618,16 @@ public final class ObjectUpdated {
         }
         return this;
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder getObjectsBuilder(
           int index) {
         return getObjectsFieldBuilder().getBuilder(index);
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder getObjectsOrBuilder(
           int index) {
         if (objectsBuilder_ == null) {
@@ -524,6 +635,9 @@ public final class ObjectUpdated {
           return objectsBuilder_.getMessageOrBuilder(index);
         }
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public java.util.List<? extends fr.kissy.hellion.proto.common.ObjectDto.ObjectProtoOrBuilder> 
            getObjectsOrBuilderList() {
         if (objectsBuilder_ != null) {
@@ -532,15 +646,24 @@ public final class ObjectUpdated {
           return java.util.Collections.unmodifiableList(objects_);
         }
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addObjectsBuilder() {
         return getObjectsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder addObjectsBuilder(
           int index) {
         return getObjectsFieldBuilder().addBuilder(
             index, fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.getDefaultInstance());
       }
+      /**
+       * <code>repeated .ObjectProto objects = 1;</code>
+       */
       public java.util.List<fr.kissy.hellion.proto.common.ObjectDto.ObjectProto.Builder> 
            getObjectsBuilderList() {
         return getObjectsFieldBuilder().getBuilderList();
@@ -559,24 +682,24 @@ public final class ObjectUpdated {
         }
         return objectsBuilder_;
       }
-      
+
       // @@protoc_insertion_point(builder_scope:ObjectUpdatedProto)
     }
-    
+
     static {
       defaultInstance = new ObjectUpdatedProto(true);
       defaultInstance.initFields();
     }
-    
+
     // @@protoc_insertion_point(class_scope:ObjectUpdatedProto)
   }
-  
+
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_ObjectUpdatedProto_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_ObjectUpdatedProto_fieldAccessorTable;
-  
+
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
@@ -601,9 +724,7 @@ public final class ObjectUpdated {
           internal_static_ObjectUpdatedProto_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ObjectUpdatedProto_descriptor,
-              new java.lang.String[] { "Objects", },
-              fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.class,
-              fr.kissy.hellion.proto.message.ObjectUpdated.ObjectUpdatedProto.Builder.class);
+              new java.lang.String[] { "Objects", });
           return null;
         }
       };
@@ -614,6 +735,6 @@ public final class ObjectUpdated {
           fr.kissy.hellion.proto.common.PropertyDto.getDescriptor(),
         }, assigner);
   }
-  
+
   // @@protoc_insertion_point(outer_class_scope)
 }
