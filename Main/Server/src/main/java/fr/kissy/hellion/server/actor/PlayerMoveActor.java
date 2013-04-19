@@ -2,6 +2,7 @@ package fr.kissy.hellion.server.actor;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
+import fr.kissy.hellion.proto.common.PropertyDto;
 import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
@@ -34,8 +35,12 @@ public class PlayerMoveActor extends UntypedActor {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
+        ObjectUpdated.ObjectUpdatedProto updatedProto = ObjectUpdated.ObjectUpdatedProto.parseFrom(messageEvent.getMessage().getData());
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
-        player.setX(player.getX() + 1);
+        for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
+            //if (propertyProto.getName())
+            //player.setX();
+        }
 
         synchronizeActorRef.tell(o, getSelf());
     }

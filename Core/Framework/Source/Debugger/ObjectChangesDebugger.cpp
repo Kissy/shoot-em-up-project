@@ -1,5 +1,8 @@
+
+#include "Proto/Debug/Debug.pb.h"
+#include "Proto/Debug/DebugEntity.pb.h"
+
 #include "ObjectChangesDebugger.h"
-#include "Proto/Debug/DebugHolderDTO.pb.h"
 #include "Debugger.h"
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -16,21 +19,22 @@ ObjectChangesDebugger::~ObjectChangesDebugger(void) {
 Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
 
-    DebugHolderProto debugHolderProto;
-    DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
-    debugObjectProto->set_id(systemObject->GetName());
-    debugObjectProto->set_name(systemObject->GetName());
-    debugObjectProto->set_category(System::getComponentName(System::Components::Object));
+    DebugProto debugProto;
+    DebugEntityProto* debugEntityProto = debugProto.add_entities();
+    debugEntityProto->set_id(systemObject->GetName());
+    debugEntityProto->set_name(systemObject->GetName());
+    debugEntityProto->set_category(System::getComponentName(System::Components::Object));
 
     std::string category = System::Types::getName(systemObject->GetSystemType());
-    IProperty::PropertiesValues properties = systemObject->getProperties();
+    DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
+    debugPropertyProto->set_category(category);
+
+    /*IProperty::PropertiesValues properties = systemObject->getProperties();
     for (auto iter = properties.begin(); iter != properties.end(); iter++) {
-        DebugPropertyProto* debugPropertyProto = debugObjectProto->add_properties();
-        debugPropertyProto->set_category(category);
         debugPropertyProto->set_key(iter->first);
         debugPropertyProto->set_value(iter->second);
-    }
+    }*/
 
-    m_pDebugger->send(&debugHolderProto);
+    m_pDebugger->send(&debugProto);
     return Errors::Success;
 }

@@ -27,6 +27,7 @@
  * @inheritDoc
  */
 PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
+    , m_position(Math::Vector3::Zero)
     , m_velocity(Math::Vector3::Zero)
     , m_heartbeat_delay(1000000000LL) /* 1s */ {
     m_heartbeat.stop();
@@ -62,6 +63,13 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
         m_velocity.z = velocity->z;
     }
 
+    if (ChangeType & System::Changes::Physic::Position) {
+        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
+        m_position.x = position->x;
+        m_position.y = position->y;
+        m_position.z = position->z;
+    }
+
     return Errors::Success;
 }
 
@@ -86,11 +94,11 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
             velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.x));
             velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.y));
             velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.z));
-            /*PropertyProto* positionProperty = systemObject->add_properties();
+            PropertyProto* positionProperty = systemObject->add_properties();
             positionProperty->set_name("Position");
-            positionProperty->add_value(boost::lexical_cast<char*>(position.x));
-            positionProperty->add_value(boost::lexical_cast<char*>(position.y));
-            positionProperty->add_value(boost::lexical_cast<char*>(position.z));*/
+            positionProperty->add_value(boost::lexical_cast<char*>(m_position.x));
+            positionProperty->add_value(boost::lexical_cast<char*>(m_position.y));
+            positionProperty->add_value(boost::lexical_cast<char*>(m_position.z));
 
             std::string data;
             objectUpdatedProto.AppendToString(&data);

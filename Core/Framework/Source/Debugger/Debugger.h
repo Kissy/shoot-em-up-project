@@ -14,10 +14,11 @@
 
 #pragma once
 
+#include "Proto/Debug/Debug.pb.h"
+
 #include "Defines.h"
 #include "Singleton.h"
 #include "ObjectChangesDebugger.h"
-#include "Proto/Debug/DebugHolderDTO.pb.h"
 
 #if defined DEBUG_BUILD
 
@@ -36,7 +37,7 @@ public:
     void setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
     void setUScene(UScene* pUScene);
     void clean(void);
-    void send(DebugHolderProto* debugHolderProto);
+    void send(DebugProto* debugHolderProto);
 
 private:
 

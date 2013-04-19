@@ -57,7 +57,7 @@ class PlayerNetworkObject : public NetworkObject {
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+            return System::Changes::Input::Velocity & System::Changes::Physic::Position;
         };
         
         /**
@@ -72,6 +72,7 @@ class PlayerNetworkObject : public NetworkObject {
 
     private:
         
+        Math::Vector3                   m_position;
         Math::Vector3                   m_velocity;
         boost::timer::cpu_timer         m_heartbeat;
         boost::timer::nanosecond_type   m_heartbeat_delay;

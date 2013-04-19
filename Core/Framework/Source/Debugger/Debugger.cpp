@@ -16,6 +16,8 @@
 
 #ifdef DEBUG_BUILD
 
+#include "Proto/Debug/DebugEntity.pb.h"
+
 #include "BaseTypes.h"
 #include "Interface.h"
 #include "Universal.h"
@@ -62,14 +64,14 @@ void Debugger::setUScene(UScene* pUScene) {
         return;
     }
 
-    DebugHolderProto debugHolderProto;
+    DebugProto debugProto;
     UScene::SystemScenes Scenes = m_pUScene->GetSystemScenes();
     for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
-        DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
-        debugObjectProto->set_id(System::Types::getName(pScene->GetSystemType()));
-        debugObjectProto->set_name(System::Types::getName(pScene->GetSystemType()));
-        debugObjectProto->set_category(System::getComponentName(System::Components::Scene));
+        DebugEntityProto* debugEntityProto = debugProto.add_entities();
+        debugEntityProto->set_id(System::Types::getName(pScene->GetSystemType()));
+        debugEntityProto->set_name(System::Types::getName(pScene->GetSystemType()));
+        debugEntityProto->set_category(System::getComponentName(System::Components::Scene));
         //m_pSceneCCM->Register(pScene, System::Changes::All, this);
     }
 
@@ -78,21 +80,19 @@ void Debugger::setUScene(UScene* pUScene) {
         UObject* pUObject = *it;
         UObject::SystemObjects SystemObjects = pUObject->GetExtensions();
         
-        DebugObjectProto* debugObjectProto = debugHolderProto.add_objects();
-        debugObjectProto->set_id(pUObject->GetName());
-        debugObjectProto->set_name(pUObject->GetName());
-        debugObjectProto->set_category(System::getComponentName(System::Components::Object));
+        DebugEntityProto* debugEntityProto = debugProto.add_entities();
+        debugEntityProto->set_id(pUObject->GetName());
+        debugEntityProto->set_name(pUObject->GetName());
+        debugEntityProto->set_category(System::getComponentName(System::Components::Object));
         for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
             ISystemObject* pObject = it->second;
-            DebugPropertyProto* debugPropertyProto = debugObjectProto->add_properties();
+            DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
             debugPropertyProto->set_category(System::Types::getName(pObject->GetSystemType()));
-            debugPropertyProto->set_key("TestProperty");
-            debugPropertyProto->set_value("TestValue");
             m_pObjectCCM->Register(pObject, System::Changes::All, m_pObjectChangesDebugger);
         }
     }
 
-    send(&debugHolderProto);
+    send(&debugProto);
 }
 
 
@@ -119,11 +119,10 @@ void Debugger::clean(void) {
     }
 }
 
-void Debugger::send(DebugHolderProto* debugHolderProto) {
-    int size = debugHolderProto->ByteSize(); 
+void Debugger::send(DebugProto* debugProto) {
+    int size = debugProto->ByteSize(); 
     google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
-    debugHolderProto->SerializeWithCachedSizesToArray(buffer);
-
+    debugProto->SerializeWithCachedSizesToArray(buffer);
     zmq::message_t* message = new zmq::message_t(buffer, size, protobuf_uint8_free);
     m_pSocket->send(*message);
 }
