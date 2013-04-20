@@ -31,7 +31,7 @@ class IObserver;
 class ISubject {
 public:
 
-    static const u32 InvalidID = u32(-1);
+    static const u32 InvalidObserverID = u32(-1);
 
     /**
     * Default constructor.

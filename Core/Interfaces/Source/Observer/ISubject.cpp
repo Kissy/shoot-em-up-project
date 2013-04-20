@@ -40,7 +40,7 @@ u32 ISubject::getObserverId(IObserver* pObserver) const {
         }
     }
 
-    return InvalidID;
+    return InvalidObserverID;
 }
 
 /**
