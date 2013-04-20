@@ -32,41 +32,74 @@ class NetworkTask;
  */
 class NetworkSystem : public ISystem {
 
-    public:
-
-        /**
-         * @inheritDoc
-         */
-        NetworkSystem(void);
+public:
+    
+    /**
+     * @inheritDoc
+     */
+    NetworkSystem(void);
         
-        /**
-         * @inheritDoc
-         */
-        ~NetworkSystem(void);
+    /**
+     * @inheritDoc
+     */
+    ~NetworkSystem(void);
         
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-        /**
-         * @inheritDoc
-         */
-        inline System::Type GetSystemType(void) {
-            return System::Types::Network;
-        }
+    /**
+     * @inheritDoc
+     */
+    inline System::Type GetSystemType(void) {
+        return System::Types::Network;
+    }
 
-        /**
-         * Get the socket
-         */
-        inline boost::asio::ip::tcp::socket* getSocket() {
-            return m_pSocket;
-        }
+    /**
+     * Get the socket
+     */
+    inline boost::asio::ip::tcp::socket* getSocket() {
+        return m_pSocket;
+    }
 
-    private:
+    /**
+     * Get the IO Service
+     */
+    inline boost::asio::io_service* getIoService() {
+        return &m_ioService;
+    }
 
-        boost::asio::io_service         m_ioService;
-        boost::asio::ip::tcp::socket*   m_pSocket;
+    /**
+     * Handle the connection result to the server.
+     *
+     * @param error The error if the connection failed.
+     */
+    void handleConnect(const boost::system::error_code& error);
+
+    /**
+     * Handle the received header from the server.
+     *
+     * @param error The error if the connection failed.
+     */
+    void handleReadHeader(const boost::system::error_code& error);
+
+    /**
+     * Handle the received header from the server.
+     *
+     * @param error The error if the connection failed.
+     */
+    void handleReadBody(const boost::system::error_code& error);
+
+private:
+
+    boost::asio::io_service         m_ioService;
+    boost::asio::ip::tcp::socket*   m_pSocket;
+
+        
+    const static int                m_lenghtFieldSize = sizeof(int);
+    char                            m_messageHeader[m_lenghtFieldSize];
+    boost::asio::streambuf          m_messageBody;
 
 };
 

@@ -21,6 +21,7 @@
 #include "System/ISystemTask.h"
 
 class NetworkScene;
+class UpstreamMessageProto;
 class DownstreamMessageProto;
 
 /**
@@ -76,9 +77,17 @@ private:
      * 
      * @param downstreamMessageProto The message to add to queue.
      */
-    void send(const DownstreamMessageProto*);
+    void send(const DownstreamMessageProto* downstreamMessageProto);
 
-    std::list<const DownstreamMessageProto*>          m_pMessageList;
+    /**
+     * Process a received message from the server.
+     *
+     * @param upstreamMessageProto The message to process.
+     */
+    void receive(const UpstreamMessageProto* upstreamMessageProto);
+    
+    std::list<const UpstreamMessageProto*>            m_pUpstreamMessageList;
+    std::list<const DownstreamMessageProto*>          m_pDownstreamMessageList;
 
 };
 
