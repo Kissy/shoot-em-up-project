@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Object">
       <UniqueIdentifier>{deb7c46b-a9db-444f-8eff-7b071116c9c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Service">
+      <UniqueIdentifier>{73216990-ea6b-4452-a685-791ab1b1349b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Scene.cpp">

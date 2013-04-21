@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <iomanip>
+#include <google/protobuf/io/coded_stream.h>
 
 #include "Proto/Server/UpstreamMessage.pb.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
@@ -70,15 +70,16 @@ void NetworkTask::queueMessage(const DownstreamMessageProto* downstreamMessagePr
 void NetworkTask::send(const DownstreamMessageProto* downstreamMessageProto) {
     boost::asio::ip::tcp::socket* socket = static_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getSocket();
 
-    boost::asio::streambuf streambuf;
-    std::ostream ostream(&streambuf);
+    int serializedSize = downstreamMessageProto->ByteSize();
+    size_t totalOutputSize = google::protobuf::io::CodedOutputStream::VarintSize32(serializedSize) + serializedSize;
 
-    int size = downstreamMessageProto->ByteSize();
-    ostream << std::setw(sizeof(size)) << std::setfill('\0') 
-       << reinterpret_cast<const char *>(&size); 
-    downstreamMessageProto->SerializeToOstream(&ostream);
-    boost::asio::write(*socket, streambuf);
+    std::vector<char> writeBuffer = std::vector<char>(totalOutputSize);
+    google::protobuf::uint8* offset = (google::protobuf::uint8*) &writeBuffer[0];
+    offset = google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(serializedSize, offset);
+    ASSERT(((char *) offset - (char *) &writeBuffer[0]) == google::protobuf::io::CodedOutputStream::VarintSize32(serializedSize));
 
+    downstreamMessageProto->SerializeToArray((void *)offset, serializedSize);
+    boost::asio::write(*socket, boost::asio::buffer(writeBuffer));
     delete downstreamMessageProto;
 }
 
