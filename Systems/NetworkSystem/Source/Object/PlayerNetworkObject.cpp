@@ -102,10 +102,10 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
 
             std::string data;
             objectUpdatedProto.AppendToString(&data);
-            DownstreamMessageProto* downstreamMessageProto = new DownstreamMessageProto();
-            downstreamMessageProto->set_type(DownstreamMessageProto::PLAYER_MOVE);
-            downstreamMessageProto->set_data(data);
-            reinterpret_cast<NetworkTask*>(GetSystemScene()->GetSystemTask())->queueMessage(downstreamMessageProto);
+            DownstreamMessageProto downstreamMessageProto;
+            downstreamMessageProto.set_type(DownstreamMessageProto::PLAYER_MOVE);
+            downstreamMessageProto.set_data(data);
+            reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessageProto);
         }
     } else if (!m_heartbeat.is_stopped()) {
         m_heartbeat.stop();

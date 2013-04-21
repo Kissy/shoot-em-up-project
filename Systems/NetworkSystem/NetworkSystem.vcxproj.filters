@@ -22,6 +22,9 @@
     <Filter Include="Header Files\Service">
       <UniqueIdentifier>{73216990-ea6b-4452-a685-791ab1b1349b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Service">
+      <UniqueIdentifier>{06513fbf-4b6f-49f1-a443-5158571807d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Scene.cpp">
@@ -42,6 +45,9 @@
     <ClCompile Include="Source\Object\PlayerNetworkObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Service\NetworkService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -58,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Source\Object\PlayerNetworkObject.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\NetworkService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\MatchingVarintPrefix.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

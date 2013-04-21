@@ -14,12 +14,11 @@
 
 #pragma once
 
-#include <boost/asio.hpp>
-
 #include "Errors.h"
 #include "Proto.h"
 #include "System.h"
 #include "System/ISystem.h"
+#include "Service/NetworkService.h"
 
 class NetworkScene;
 class NetworkTask;
@@ -57,49 +56,15 @@ public:
     }
 
     /**
-     * Get the socket
+     * @inheritDoc
      */
-    inline boost::asio::ip::tcp::socket* getSocket() {
-        return m_pSocket;
+    inline NetworkService* getNetworkService(void) {
+        return m_networkService;
     }
-
-    /**
-     * Get the IO Service
-     */
-    inline boost::asio::io_service* getIoService() {
-        return &m_ioService;
-    }
-
-    /**
-     * Handle the connection result to the server.
-     *
-     * @param error The error if the connection failed.
-     */
-    void handleConnect(const boost::system::error_code& error);
-
-    /**
-     * Handle the received header from the server.
-     *
-     * @param error The error if the connection failed.
-     */
-    void handleReadHeader(const boost::system::error_code& error);
-
-    /**
-     * Handle the received header from the server.
-     *
-     * @param error The error if the connection failed.
-     */
-    void handleReadBody(const boost::system::error_code& error);
 
 private:
 
-    boost::asio::io_service         m_ioService;
-    boost::asio::ip::tcp::socket*   m_pSocket;
-
-        
-    const static int                m_lenghtFieldSize = sizeof(int);
-    char                            m_messageHeader[m_lenghtFieldSize];
-    boost::asio::streambuf          m_messageBody;
+    NetworkService*     m_networkService;
 
 };
 

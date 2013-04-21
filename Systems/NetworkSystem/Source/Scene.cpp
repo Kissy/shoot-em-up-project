@@ -56,10 +56,10 @@ NetworkScene::~NetworkScene(void) {
 Error NetworkScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    DownstreamMessageProto* downstreamMessageProto = new DownstreamMessageProto();
-    downstreamMessageProto->set_type(DownstreamMessageProto::AUTHENTICATE);
-    downstreamMessageProto->set_data("1");
-    reinterpret_cast<NetworkTask*>(GetSystemTask())->queueMessage(downstreamMessageProto);
+    DownstreamMessageProto downstreamMessageProto;
+    downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);
+    downstreamMessageProto.set_data("1");
+    reinterpret_cast<NetworkSystem*>(GetSystem())->getNetworkService()->send(downstreamMessageProto);
 
     m_bInitialized = true;
     return Errors::Success;

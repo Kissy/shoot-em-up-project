@@ -63,31 +63,5 @@ public:
         return System::Types::Network;
     }
 
-    /**
-     * Add the given DownstreamMessageProto to the queue and send them on next update.
-     * 
-     * @param downstreamMessageProto The message to add to queue.
-     */
-    void queueMessage(const DownstreamMessageProto* downstreamMessageProto);
-
-private:
-
-    /**
-     * Send the given message to the server.
-     * 
-     * @param downstreamMessageProto The message to add to queue.
-     */
-    void send(const DownstreamMessageProto* downstreamMessageProto);
-
-    /**
-     * Process a received message from the server.
-     *
-     * @param upstreamMessageProto The message to process.
-     */
-    void receive(const UpstreamMessageProto* upstreamMessageProto);
-    
-    std::list<const UpstreamMessageProto*>            m_pUpstreamMessageList;
-    std::list<const DownstreamMessageProto*>          m_pDownstreamMessageList;
-
 };
 
