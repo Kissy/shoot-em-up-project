@@ -45,7 +45,7 @@ public:
      * 
      * @param downstreamMessageProto The message to add to queue.
      */
-    void send(const DownstreamMessageProto downstreamMessageProto);
+    void send(const DownstreamMessageProto& downstreamMessageProto);
 
     /**
      * Receive the messages from the server.
@@ -68,10 +68,21 @@ private:
      */
     void onRead(const boost::system::error_code& error);
 
+    /**
+     * Handle the authentication success.
+     *
+     * @param upstreamMessageProto The authenticated message proto to parse.
+     */
+    void onAuthenticated(const UpstreamMessageProto& upstreamMessageProto);
+
     boost::asio::io_service         m_ioService;
     boost::asio::ip::tcp::socket*   m_pSocket;
     boost::asio::streambuf          m_readBuffer;
     std::vector<char>               m_writeBuffer;
+    
+    typedef boost::function<void (const UpstreamMessageProto& upstreamMessageProto)> MessageHandler;
+    typedef std::map<UpstreamMessageProto::Type, MessageHandler> MessageHandlerMap;
+    MessageHandlerMap               m_messageHandlers;
 
 };
 

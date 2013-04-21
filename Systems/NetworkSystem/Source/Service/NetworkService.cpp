@@ -15,15 +15,19 @@
 #include <boost/bind.hpp>
 #include <google/protobuf/io/coded_stream.h>
 
+#include "Logger.h"
 #include "NetworkService.h"
-
 #include "MatchingVarintPrefix.h"
+
+#include "Proto/Message/Authenticated.pb.h"
 
 /**
  * @inheritDoc
  */
 NetworkService::NetworkService(void) {
     m_pSocket = new boost::asio::ip::tcp::socket(m_ioService);
+    m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = 
+        boost::bind(&NetworkService::onAuthenticated, this, _1);
 }
 
 /**
@@ -43,7 +47,7 @@ void NetworkService::connect(std::string host, std::string port) {
 /**
  * @inheritDoc
  */
-void NetworkService::send(const DownstreamMessageProto downstreamMessageProto) {
+void NetworkService::send(const DownstreamMessageProto& downstreamMessageProto) {
     int serializedSize = downstreamMessageProto.ByteSize();
     size_t totalOutputSize = google::protobuf::io::CodedOutputStream::VarintSize32(serializedSize) + serializedSize;
 
@@ -94,9 +98,22 @@ void NetworkService::onRead(const boost::system::error_code& error) {
     
     UpstreamMessageProto upstreamMessageProto;
     upstreamMessageProto.ParseFromArray(data + startIndex, m_readBuffer.size() - startIndex);
-    
+    MessageHandlerMap::const_iterator handler = m_messageHandlers.find(upstreamMessageProto.type());
+    if (handler != m_messageHandlers.end()) {
+        handler->second(upstreamMessageProto);
+    }
+
     // Get next message
     m_readBuffer.consume(m_readBuffer.size());
     onConnected(error);
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessageProto) {
+    AuthenticatedProto authenticatedProto;
+    authenticatedProto.ParseFromString(upstreamMessageProto.data());
+    Log::Log("received %u", authenticatedProto.players().size());
 }
 
