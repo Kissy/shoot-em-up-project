@@ -55,11 +55,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..\BaseTypes\Source;..\Generated\Source;C:\Program Files %28x86%29\SDK\Boost;C:\Program Files %28x86%29\SDK\Protobuf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,12 +84,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Generic\IGenericScene.h" />
     <ClInclude Include="Source\Interface.h" />
     <ClInclude Include="Source\Object\IGeometryObject.h" />
     <ClInclude Include="Source\Object\IKeyboardObject.h" />
     <ClInclude Include="Source\Object\IMouseObject.h" />
     <ClInclude Include="Source\Object\IMoveObject.h" />
+    <ClInclude Include="Source\Object\ISceneObject.h" />
     <ClInclude Include="Source\Observer\IChangeManager.h" />
     <ClInclude Include="Source\Observer\IObserver.h" />
     <ClInclude Include="Source\Observer\ISubject.h" />

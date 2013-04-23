@@ -26,6 +26,6 @@
 #include "System/ISystemScene.h"
 #include "System/ISystemTask.h"
 #include "System/ISystemObject.h"
-#include "Generic/IGenericScene.h"
+#include "Object/ISceneObject.h"
 #include "Object/IGeometryObject.h"
 #include "Object/IMoveObject.h"

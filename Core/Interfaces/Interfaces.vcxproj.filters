@@ -37,9 +37,6 @@
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{c224030a-2a1e-42ec-9425-f9c54f27911f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{6118dffe-7d88-485d-a1a2-919417206f7f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Observer">
       <UniqueIdentifier>{0af1f723-686e-49ca-9bb4-43f6ae6b8f29}</UniqueIdentifier>
     </Filter>
@@ -47,9 +44,6 @@
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Generic\IGenericScene.h">
-      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Property\IProperty.h">
       <Filter>Header Files\Property</Filter>
@@ -107,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="Source\System\Definitions.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ISceneObject.h">
+      <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
