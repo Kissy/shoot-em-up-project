@@ -21,9 +21,6 @@
     <ClInclude Include="Source\BaseTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Convertor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DataTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>

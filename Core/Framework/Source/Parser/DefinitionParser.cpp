@@ -74,7 +74,6 @@ void DefinitionParser::ParseScene(std::string sScene) {
     // Create the initial scene for each system.
     //
     ISystem* pSystem = Singletons::SystemManager.GetFirst();
-
     while (pSystem != NULL) {
         m_pScene->Extend(pSystem);
         pSystem = Singletons::SystemManager.GetNext();
@@ -113,9 +112,8 @@ void DefinitionParser::ParseScene(std::string sScene) {
         //
         // Create the object.
         //
-        m_pUObject = m_pScene->CreateObject();
+        m_pUObject = m_pScene->CreateObject(objectsIt->name().c_str());
         ASSERT(m_pUObject != NULL);
-        m_pUObject->SetName(objectsIt->name().c_str());
 
         //
         // Added systems extension.
