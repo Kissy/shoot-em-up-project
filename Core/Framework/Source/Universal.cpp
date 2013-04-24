@@ -242,11 +242,11 @@ UScene::CreateObjectLink(
 Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
-            IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
-            IGenericScene::CreateObjectDataArray aObjectsToCreate;
+            ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
+            /*ISceneObject::CreateObjectDataArray aObjectsToCreate;
             pScene->GetCreateObjects(aObjectsToCreate);
 
-            for (IGenericScene::CreateObjectDataArrayConstIt it = aObjectsToCreate.begin(); it != aObjectsToCreate.end(); it++) {
+            for (ISceneObject::CreateObjectDataArrayConstIt it = aObjectsToCreate.begin(); it != aObjectsToCreate.end(); it++) {
                 ASSERT(FindObject(it->pszName) == NULL);
                 UObject* pObject = CreateObject(it->pszName);
                 ASSERT(pObject != NULL);
@@ -268,53 +268,19 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
                         Type <<= 1;
                     }
                 }
-            }
-
+            }*/
             break;
         }
 
         case System::Changes::Generic::DeleteObject: {
-            IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
-            IGenericScene::DestroyObjectDataArray aObjectsToDestroy;
+            ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
+            /*ISceneObject::DestroyObjectDataArray aObjectsToDestroy;
             pScene->GetDestroyObjects(aObjectsToDestroy);
 
-            for (IGenericScene::DestroyObjectDataArrayConstIt it = aObjectsToDestroy.begin(); it != aObjectsToDestroy.end(); it++) {
+            for (ISceneObject::DestroyObjectDataArrayConstIt it = aObjectsToDestroy.begin(); it != aObjectsToDestroy.end(); it++) {
                 UObject* pObject = FindObject(*it);
                 DestroyObject(pObject);
-            }
-
-            break;
-        }
-
-        case System::Changes::Generic::ExtendObject: {
-            IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
-            IGenericScene::ExtendObjectDataArray aObjectsToExtend;
-            pScene->GetExtendObjects(aObjectsToExtend);
-
-            for (IGenericScene::ExtendObjectDataArrayConstIt it = aObjectsToExtend.begin(); it != aObjectsToExtend.end(); it++) {
-                UObject* pObject = FindObject(it->pszName);
-
-                if (pObject != NULL) {
-                    pObject->Extend(pScene->ExtendObject(it->pszName, it->pUserData));
-                }
-            }
-
-            break;
-        }
-
-        case System::Changes::Generic::UnextendObject: {
-            IGenericScene* pScene = dynamic_cast<IGenericScene*>(pSubject);
-            std::vector<const char*> aObjectsToUnextend;
-            pScene->GetUnextendObjects(aObjectsToUnextend);
-
-            for (std::vector<const char*>::const_iterator it = aObjectsToUnextend.begin(); it != aObjectsToUnextend.end(); it++) {
-                UObject* pObject = FindObject(*it);
-
-                if (pObject != NULL) {
-                    pObject->Unextend(pScene->UnextendObject(*it)->GetSystemScene());
-                }
-            }
-
+            }*/
             break;
         }
     }

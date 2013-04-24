@@ -162,9 +162,7 @@ namespace System {
         namespace Generic {
             static const u32 CreateObject       = (1 <<  0);
             static const u32 DeleteObject       = (1 <<  1);
-            static const u32 ExtendObject       = (1 <<  2);
-            static const u32 UnextendObject     = (1 <<  3);
-            static const u32 All                = CreateObject | DeleteObject | ExtendObject | UnextendObject;
+            static const u32 All                = CreateObject | DeleteObject;
         }
 
         namespace Graphic {
@@ -172,7 +170,7 @@ namespace System {
         }
 
         namespace Input {
-            static const u32 Velocity           = (1 << 4);
+            static const u32 Velocity           = (1 << 2);
         }
 
         namespace Network {
@@ -180,7 +178,7 @@ namespace System {
         }
 
         namespace Physic {
-            static const u32 Position           = (1 << 5);
+            static const u32 Position           = (1 << 3);
         }
 
         static const u32 Link                   = (1 << 30);
