@@ -21,7 +21,7 @@
 /// </summary>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ServiceManager : public IService, public Singleton {
+class ServiceManager : public IServiceManager, public Singleton {
     public:
 
         /// <summary>
@@ -41,7 +41,7 @@ class ServiceManager : public IService, public Singleton {
         /// <summary cref="IService::SystemAccess">
         ///   Implementation of IService::SystemAccess.
         /// </summary>
-        virtual IService::ISystemAccess& SystemAccess(void);
+        virtual IServiceManager::ISystemAccess& SystemAccess(void);
 
         /// <summary cref="IService::RegisterSystemAccessProvider">
         ///   Implementation of IService::RegisterSystemAccessProvider.
@@ -56,7 +56,7 @@ class ServiceManager : public IService, public Singleton {
         /// <summary cref="IService::Collision">
         ///   Implementation of IService::Collision.
         /// </summary>
-        virtual IService::ICollision& Collision(void);
+        virtual IServiceManager::ICollision& Collision(void);
 
         /// <summary cref="IService::RegisterCollisionProvider">
         ///   Implementation of IService::RegisterCollisionProvider.
@@ -71,7 +71,7 @@ class ServiceManager : public IService, public Singleton {
         /// <summary cref="IService::IInstrumentation">
         ///   Implementation of IService::IInstrumentation.
         /// </summary>
-        virtual IService::IInstrumentation& Instrumentation(void);
+        virtual IServiceManager::IInstrumentation& Instrumentation(void);
 
         /// <summary cref="IService::RegisterInstrumentationProvider">
         ///   Implementation of IService::RegisterInstrumentationProvider.
@@ -86,9 +86,9 @@ class ServiceManager : public IService, public Singleton {
 
     protected:
 
-        IService::ISystemAccess*            m_pSystemAccess;
-        IService::ICollision*               m_pCollision;
-        IService::IInstrumentation*         m_pInstrumentation;
+        IServiceManager::ISystemAccess*            m_pSystemAccess;
+        IServiceManager::ICollision*               m_pCollision;
+        IServiceManager::IInstrumentation*         m_pInstrumentation;
 };
 
 

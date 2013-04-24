@@ -28,7 +28,7 @@
 EnvironmentManager::EnvironmentManager(
     void
 )
-    : m_RuntimeStatus(IEnvironment::IRuntime::Status::Unknown) {
+    : m_RuntimeStatus(IEnvironmentManager::IRuntime::Status::Unknown) {
 }
 
 
@@ -171,7 +171,7 @@ EnvironmentManager::Variables::GetValue(
 }
 
 
-IEnvironment::IRuntime::Status
+IEnvironmentManager::IRuntime::Status
 EnvironmentManager::GetStatus(
     void
 ) {
@@ -179,7 +179,7 @@ EnvironmentManager::GetStatus(
 }
 
 
-void EnvironmentManager::SetStatus(IEnvironment::IRuntime::Status Status) {
+void EnvironmentManager::SetStatus(IEnvironmentManager::IRuntime::Status Status) {
 #if defined(MSC_COMPILER)
     ::InterlockedExchange((LONG*)&m_RuntimeStatus, Status);
 #endif

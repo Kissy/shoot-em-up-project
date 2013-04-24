@@ -33,7 +33,7 @@ struct CollData {
 /// </summary>
 ///////////////////////////////////////////////////////////////////////////////
 
-class HavokCollisionService : public IService::ICollision {
+class HavokCollisionService : public IServiceManager::ICollision {
     public:
 
         HavokCollisionService(void);

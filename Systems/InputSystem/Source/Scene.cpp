@@ -61,7 +61,7 @@ Error InputScene::initialize(void) {
  */
 void InputScene::Update(f32 DeltaTime) {
     if (quitInputAction->isActive()) {
-        g_Managers.pEnvironment->Runtime().SetStatus(IEnvironment::IRuntime::Status::Quit);
+        g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
         return;
     }
 

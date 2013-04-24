@@ -213,7 +213,7 @@ Error Framework::Execute(void) {
     //
     // Set the runtime status to running.
     //
-    Singletons::EnvironmentManager.Runtime().SetStatus(IEnvironment::IRuntime::Status::Running);
+    Singletons::EnvironmentManager.Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Running);
 
     //
     // Initialize resources necessary for parallel change distribution.
@@ -240,7 +240,7 @@ Error Framework::Execute(void) {
         //
         // Check with the environment manager if there is a change in the runtime status to quit.
         //
-        if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironment::IRuntime::Status::Quit) {
+        if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironmentManager::IRuntime::Status::Quit) {
             //
             // Time to quit looping.
             //

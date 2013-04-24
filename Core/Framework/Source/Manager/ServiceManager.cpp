@@ -36,7 +36,7 @@ ServiceManager::~ServiceManager(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // IService Implementations.
 
-IService::ISystemAccess&
+IServiceManager::ISystemAccess&
 ServiceManager::SystemAccess(
     void
 ) {
@@ -67,7 +67,7 @@ ServiceManager::UnregisterSystemAccessProvider(
 }
 
 
-IService::ICollision&
+IServiceManager::ICollision&
 ServiceManager::Collision(
     void
 ) {
@@ -98,7 +98,7 @@ ServiceManager::UnregisterCollisionProvider(
 
 
 // Get the Instrumentation interface.
-IService::IInstrumentation&
+IServiceManager::IInstrumentation&
 ServiceManager::Instrumentation(
     void
 ) {

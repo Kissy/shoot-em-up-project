@@ -22,8 +22,8 @@
 #include "Defines.h"
 #include "DataTypes.h"
 #include "Errors.h"
-#include "Service/IPlatform.h"
 #include "Singleton.h"
+#include "Manager/IPlatformManager.h"
 
 class ISystem;
 
@@ -33,7 +33,7 @@ class ISystem;
  * @sa  IPlatform
  * @sa  Singleton
  */
-class PlatformManager : public IPlatform, public Singleton {
+class PlatformManager : public IPlatformManager, public Singleton {
     public:
 
         /**
@@ -126,7 +126,7 @@ class PlatformManager : public IPlatform, public Singleton {
          * 
          * @sa  IPlatform::IWindow
          */
-        class WindowSystem : public IPlatform::IWindow {
+        class WindowSystem : public IPlatformManager::IWindow {
                 friend class PlatformManager;
 
             protected:
@@ -258,7 +258,7 @@ class PlatformManager : public IPlatform, public Singleton {
          * @sa  IPlatform::IProcessor
          * @sa  IPlatform::IProcessor
          */
-        class Processor : public IPlatform::IProcessor {
+        class Processor : public IPlatformManager::IProcessor {
                 friend class PlatformManager;
 
             protected:

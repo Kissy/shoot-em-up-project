@@ -19,8 +19,8 @@
 
 #include "Defines.h"
 #include "DataTypes.h"
-#include "Service/IEnvironment.h"
 #include "Singleton.h"
+#include "Manager/IEnvironmentManager.h"
 
 /**
  * A singleton for getting and setting information about the environment.
@@ -29,7 +29,7 @@
  * @sa  IEnvironment::IRuntime
  * @sa  Singleton
  */
-class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, public Singleton {
+class EnvironmentManager : public IEnvironmentManager, public IEnvironmentManager::IRuntime, public Singleton {
     public:
 
         /// <summary>
@@ -51,7 +51,7 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
         /// </summary>
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        class Variables : public IEnvironment::IVariables {
+        class Variables : public IEnvironmentManager::IVariables {
                 friend class EnvironmentManager;
 
             public:
@@ -133,19 +133,19 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
         /// <summary cref="IEnvironment::IRuntime::GetStatus">
         ///   Implementation of IEnvironment::IRuntime::GetStatus.
         /// </summary>
-        virtual IEnvironment::IRuntime::Status GetStatus(void);
+        virtual IEnvironmentManager::IRuntime::Status GetStatus(void);
 
         /// <summary cref="IEnvironment::IRuntime::SetStatus">
         ///   Implementation of IEnvironment::IRuntime::SetStatus.
         /// </summary>
-        virtual void SetStatus(IEnvironment::IRuntime::Status Status);
+        virtual void SetStatus(IEnvironmentManager::IRuntime::Status Status);
 
 
     protected:
 
         Variables                                       m_Variables;
 
-        IEnvironment::IRuntime::Status                  m_RuntimeStatus;
+        IEnvironmentManager::IRuntime::Status           m_RuntimeStatus;
 
 
     public:
@@ -160,7 +160,7 @@ class EnvironmentManager : public IEnvironment, public IEnvironment::IRuntime, p
         /// <summary cref="IEnvironment::Runtime">
         ///   Implementation of IEnvironment::Runtime.
         /// </summary>
-        virtual IEnvironment::IRuntime& Runtime(void) {
+        virtual IEnvironmentManager::IRuntime& Runtime(void) {
             return *this;
         }
 };

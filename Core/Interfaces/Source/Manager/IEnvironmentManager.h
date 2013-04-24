@@ -19,7 +19,7 @@
 /**
  * An interface for getting and setting information about the environment.
  */
-class IEnvironment {
+class IEnvironmentManager {
     public:
 
         /**
@@ -118,6 +118,6 @@ class IEnvironment {
          *
          * @return  A reference to the runtime class.
          */
-        virtual IEnvironment::IRuntime& Runtime(void) = 0;
+        virtual IEnvironmentManager::IRuntime& Runtime(void) = 0;
 
 };

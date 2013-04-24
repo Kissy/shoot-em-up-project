@@ -26,7 +26,7 @@
  * @sa Singleton
  * @sa IService::Instrumentation
  */
-class Instrumentation : public IService::IInstrumentation, public Singleton {
+class Instrumentation : public IServiceManager::IInstrumentation, public Singleton {
     public:
 
         /**

@@ -14,13 +14,13 @@
 
 #pragma once
 
-#include "Service/IPlatform.h"
 #include "Observer/IObserver.h"
 #include "Observer/ISubject.h"
-#include "Observer/IChangeManager.h"
-#include "Service/ITaskManager.h"
-#include "Service/IEnvironment.h"
-#include "Service/IService.h"
+#include "Manager/IChangeManager.h"
+#include "Manager/IPlatformManager.h"
+#include "Manager/IEnvironmentManager.h"
+#include "Manager/IServiceManager.h"
+#include "Manager/ITaskManager.h"
 #include "System/Definitions.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"

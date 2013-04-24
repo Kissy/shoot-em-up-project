@@ -95,7 +95,7 @@ void Scheduler::Execute(void) {
     //
     // Check if the execution is paused, and set delta time to 0 if so.
     //
-    if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironment::IRuntime::Status::Paused) {
+    if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironmentManager::IRuntime::Status::Paused) {
         DeltaTime = 0.0f;
     }
 

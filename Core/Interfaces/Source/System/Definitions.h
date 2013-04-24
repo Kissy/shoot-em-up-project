@@ -26,9 +26,9 @@
 
 
 class ISystem;
-class IPlatform;
-class IEnvironment;
-class IService;
+class IPlatformManager;
+class IEnvironmentManager;
+class IServiceManager;
 class ITaskManager;
 
 
@@ -200,10 +200,10 @@ extern "C" {
      * The list of managers interfaces.
      */
     struct ManagerInterfaces {
-        IPlatform*          pPlatform;
-        IEnvironment*       pEnvironment;
-        IService*           pService;
-        ITaskManager*       pTask;
+        IPlatformManager*       pPlatform;
+        IEnvironmentManager*    pEnvironment;
+        IServiceManager*        pService;
+        ITaskManager*           pTask;
     };
 
 #if defined( MSC_COMPILER )

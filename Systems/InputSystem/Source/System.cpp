@@ -71,7 +71,7 @@ void InputSystem::pollInputEvents(void) {
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            g_Managers.pEnvironment->Runtime().SetStatus(IEnvironment::IRuntime::Status::Quit);
+            g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
             return;
         }
 

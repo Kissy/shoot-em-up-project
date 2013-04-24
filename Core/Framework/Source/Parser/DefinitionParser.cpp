@@ -13,7 +13,6 @@
 // responsibility to update it.
 
 #include "Proto.h"
-#include "Convertor.h"
 #include "Manager/PlatformManager.h"
 #include "Manager/EnvironmentManager.h"
 #include "Manager/SystemManager.h"

@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Observer">
       <UniqueIdentifier>{0af1f723-686e-49ca-9bb4-43f6ae6b8f29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Manager">
+      <UniqueIdentifier>{fb887a80-f980-4c27-8f48-933b89832c88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
@@ -48,26 +51,11 @@
     <ClInclude Include="Source\Property\IProperty.h">
       <Filter>Header Files\Property</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Observer\IChangeManager.h">
-      <Filter>Header Files\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Observer\IObserver.h">
       <Filter>Header Files\Observer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Observer\ISubject.h">
       <Filter>Header Files\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\IEnvironment.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\IPlatform.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\IService.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\ITaskManager.h">
-      <Filter>Header Files\Service</Filter>
     </ClInclude>
     <ClInclude Include="Source\Service\API\Collision.h">
       <Filter>Header Files\Service\API</Filter>
@@ -104,6 +92,21 @@
     </ClInclude>
     <ClInclude Include="Source\Object\ISceneObject.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\ITaskManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\IServiceManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\IPlatformManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\IEnvironmentManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\IChangeManager.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

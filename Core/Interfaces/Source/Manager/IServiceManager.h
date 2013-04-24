@@ -28,7 +28,7 @@ class ISystemObject;
 /**
  * Interface class for providing services to the systems.
  */
-class IService {
+class IServiceManager {
     public:
 
         /**

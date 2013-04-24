@@ -31,7 +31,7 @@ class Gdf;
  * @sa  IService::ISystemAccess
  * @sa  IService::ISystemAccess
  */
-class Framework : public IService::ISystemAccess {
+class Framework : public IServiceManager::ISystemAccess {
     public:
 
         /**
