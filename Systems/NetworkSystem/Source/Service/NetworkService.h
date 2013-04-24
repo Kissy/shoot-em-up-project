@@ -74,7 +74,8 @@ private:
      * @param upstreamMessageProto The authenticated message proto to parse.
      */
     void onAuthenticated(const UpstreamMessageProto& upstreamMessageProto);
-
+    
+    bool                            m_connected;
     boost::asio::io_service         m_ioService;
     boost::asio::ip::tcp::socket*   m_pSocket;
     boost::asio::streambuf          m_readBuffer;

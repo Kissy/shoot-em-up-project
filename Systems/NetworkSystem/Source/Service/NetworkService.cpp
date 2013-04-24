@@ -24,8 +24,9 @@
 /**
  * @inheritDoc
  */
-NetworkService::NetworkService(void) {
-    m_pSocket = new boost::asio::ip::tcp::socket(m_ioService);
+NetworkService::NetworkService(void) 
+    : m_connected(false)
+    , m_pSocket(new boost::asio::ip::tcp::socket(m_ioService)) {
     m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = 
         boost::bind(&NetworkService::onAuthenticated, this, _1);
 }
@@ -34,7 +35,7 @@ NetworkService::NetworkService(void) {
  * @inheritDoc
  */
 NetworkService::~NetworkService(void) {
-    SAFE_DELETE(m_pSocket);
+    delete m_pSocket;
 }
 
 void NetworkService::connect(std::string host, std::string port) {
@@ -48,6 +49,10 @@ void NetworkService::connect(std::string host, std::string port) {
  * @inheritDoc
  */
 void NetworkService::send(const DownstreamMessageProto& downstreamMessageProto) {
+    if (!m_connected) {
+        return;
+    }
+
     int serializedSize = downstreamMessageProto.ByteSize();
     size_t totalOutputSize = google::protobuf::io::CodedOutputStream::VarintSize32(serializedSize) + serializedSize;
 
@@ -77,6 +82,7 @@ void NetworkService::onConnected(const boost::system::error_code& error) {
         return;
     }
 
+    m_connected = true;
     boost::asio::async_read_until(*m_pSocket, m_readBuffer, MatchingVarintPrefix(), boost::bind(&NetworkService::onRead, this, _1)); 
 }
 
