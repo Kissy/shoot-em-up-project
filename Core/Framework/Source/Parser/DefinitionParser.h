@@ -78,7 +78,4 @@ class DefinitionParser {
         ISystem*                                        m_pSystem;
         ISystemScene*                                   m_pSystemScene;
 
-        UObject*                                        m_pUObject;
-        ISystemObject*                                  m_pSystemObject;
-
 };

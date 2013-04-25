@@ -108,35 +108,7 @@ void DefinitionParser::ParseScene(std::string sScene) {
     // Initialize the scene objects.
     //
     for (ProtoObjectList::const_iterator objectsIt = sceneDefinitionProto.objects().begin(); objectsIt != sceneDefinitionProto.objects().end(); objectsIt++) {
-        //
-        // Create the object.
-        //
-        m_pUObject = m_pScene->CreateObject(objectsIt->name().c_str());
-        ASSERT(m_pUObject != NULL);
-
-        //
-        // Added systems extension.
-        //
-        for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectsIt->systemobjects().begin(); objectPropertiesIt != objectsIt->systemobjects().end(); objectPropertiesIt++) {
-            m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
-            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
-
-            if (m_pSystem != NULL) {
-                UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
-                ASSERTMSG1(it != m_pScene->GetSystemScenes().end(),
-                            "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-                //
-                // Create object.
-                //
-                m_pSystemObject = m_pUObject->Extend(it->second, objectPropertiesIt->type().c_str());
-                ASSERT(m_pSystemObject != NULL);
-
-                if (m_pSystemObject != NULL) {
-                    m_pSystemObject->setProperties(objectPropertiesIt->properties());
-                    m_pSystemObject->initialize();
-                }
-            }
-        }
+        m_pScene->createObject(&(*objectsIt));
     }
 
     const UScene::SystemScenes Scenes = m_pScene->GetSystemScenes();

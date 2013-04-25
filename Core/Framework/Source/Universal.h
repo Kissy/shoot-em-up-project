@@ -85,12 +85,15 @@ public:
         return m_SystemScenes;
     }
 
-    /// <summary>
-    ///   Creates a new UObject that gets attached to this scene.
-    /// </summary>
-    /// <param name="pszName">The name for the object to use. (default = "")</param>
-    /// <returns>The newly created object that has consequently been added to the scene.</returns>
-    UObject* CreateObject(const char* pszName = "");
+    /**
+     * Creates a new UObject that gets attached to this scene.
+     * The object will be extended for each systems.
+     *
+     * @param   objectProto The object definition to create.
+     *
+     * @return  The newly created object that has consequently been added to the scene.
+     */
+    UObject* createObject(const ObjectProto* objectProto);
 
     /// <summary>
     ///   Destroys a UObject removing it from the scene.  It also deletes it's CCM.

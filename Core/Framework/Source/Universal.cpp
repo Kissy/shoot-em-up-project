@@ -16,6 +16,8 @@
 #include "Interface.h"
 
 #include "Universal.h"
+#include "Object/ISceneObject.h"
+#include "Manager/SystemManager.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,14 +142,11 @@ Error UScene::Unextend(ISystemScene* pScene) {
 }
 
 
-UObject*
-UScene::CreateObject(
-    const char* pszName
-) {
+UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, pszName);
+    UObject* pObject = new UObject(this, objectProto->name().c_str());
     ASSERT(pObject != NULL);
     pObject->m_pObjectCCM = m_pObjectCCM;
     //
@@ -160,6 +159,28 @@ UScene::CreateObject(
     m_pSceneCCM->Register(
         pObject, System::Changes::Generic::All /*| System::Changes::Geometry::All*/, this
     );
+    //
+    // Added systems extension.
+    //
+    for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectProto->systemobjects().begin(); objectPropertiesIt != objectProto->systemobjects().end(); objectPropertiesIt++) {
+        ISystem* m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
+        ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
+
+        if (m_pSystem != NULL) {
+            UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
+            ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
+            //
+            // Create object.
+            //
+            ISystemObject* pSystemObject = pObject->Extend(it->second, objectPropertiesIt->type().c_str());
+            ASSERT(pSystemObject != NULL);
+
+            if (pSystemObject != NULL) {
+                pSystemObject->setProperties(objectPropertiesIt->properties());
+                pSystemObject->initialize();
+            }
+        }
+    }
     return pObject;
 }
 
@@ -243,44 +264,27 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
     switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            /*ISceneObject::CreateObjectDataArray aObjectsToCreate;
-            pScene->GetCreateObjects(aObjectsToCreate);
-
-            for (ISceneObject::CreateObjectDataArrayConstIt it = aObjectsToCreate.begin(); it != aObjectsToCreate.end(); it++) {
-                ASSERT(FindObject(it->pszName) == NULL);
-                UObject* pObject = CreateObject(it->pszName);
+            ISceneObject::ObjectProtoQueue objectsToCreate = pScene->getCreateObjects();
+            while (!objectsToCreate->empty()) {
+                const ObjectProto objectProto = objectsToCreate->back();
+                ASSERT(FindObject(objectProto.name().c_str()) == NULL);
+                UObject* pObject = createObject(&objectProto);
                 ASSERT(pObject != NULL);
-
-                if (pObject != NULL) {
-                    System::Types::BitMask Type = 1;
-
-                    for (u32 i = 0; i < System::Types::MAX; i++) {
-                        if (it->Types & Type) {
-                            SystemScenesIt ssIt = m_SystemScenes.find(System::Types::Generic);
-
-                            if (ssIt != m_SystemScenes.end()) {
-                                pObject->Extend(ssIt->second, NULL);
-                            } else {
-                                ASSERT(false);
-                            }
-                        }
-
-                        Type <<= 1;
-                    }
-                }
-            }*/
+                objectsToCreate->pop();
+            }
             break;
         }
 
         case System::Changes::Generic::DeleteObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            /*ISceneObject::DestroyObjectDataArray aObjectsToDestroy;
-            pScene->GetDestroyObjects(aObjectsToDestroy);
-
-            for (ISceneObject::DestroyObjectDataArrayConstIt it = aObjectsToDestroy.begin(); it != aObjectsToDestroy.end(); it++) {
-                UObject* pObject = FindObject(*it);
+            ISceneObject::ObjectProtoQueue objectsToDestroy = pScene->getDestroyObjects();
+            while (!objectsToDestroy->empty()) {
+                const ObjectProto objectProto = objectsToDestroy->back();
+                UObject* pObject = FindObject(objectProto.name().c_str());
+                ASSERT(pObject != NULL);
                 DestroyObject(pObject);
-            }*/
+                objectsToDestroy->pop();
+            }
             break;
         }
     }
