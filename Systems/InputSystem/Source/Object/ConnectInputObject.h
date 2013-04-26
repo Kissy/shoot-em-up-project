@@ -14,31 +14,21 @@
 
 #pragma once
 
-#include <boost/timer/timer.hpp>
+#include "object.h"
+#include "Object/IKeyboardObject.h"
 
-#include "System.h"
-#include "Object/Object.h"
-
-class ISystemScene;
-
-/**
-* Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
-* System.h for a definition of the class and its functions.
-*
-* @sa  ISystemObject
-*/
-class PlayerNetworkObject : public NetworkObject {
+class ConnectInputObject : public InputObject, public IKeyboardObject {
 public:
 
     /**
-     * @inheritDoc
+     * Default constructor.
      */
-    PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName);
+    ConnectInputObject(ISystemScene* pSystemScene, const char* pszName);
 
     /**
-     * @inheritDoc
+     * Destructor.
      */
-    ~PlayerNetworkObject(void);
+    ~ConnectInputObject(void);
 
     /**
      * @inheritDoc
@@ -49,30 +39,36 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::None;
+        return System::Changes::Input::Keyboard;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Input::Velocity | System::Changes::Physic::Position;
+        return System::Changes::None;
     };
-
+        
     /**
      * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
+    
     /**
      * @inheritDoc
      */
     void Update(f32 DeltaTime);
+    
+    /**
+     * @inheritDoc
+     */
+    const KeyboardButtonData* getKeyboardButtonData(void) {
+        return &m_keyboardButtonData;
+    }
 
 private:
+    
+    InputAction*                    m_connectInputAction;
+    KeyboardButtonData              m_keyboardButtonData;
 
-    Math::Vector3                   m_position;
-    Math::Vector3                   m_velocity;
-    boost::timer::cpu_timer         m_heartbeat;
-    boost::timer::nanosecond_type   m_heartbeat_delay;
 };

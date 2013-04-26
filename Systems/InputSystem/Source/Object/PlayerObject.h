@@ -37,7 +37,7 @@ class PlayerInputObject : public InputObject, public IMoveObject {
         /**
          * @inheritDoc
          */
-        virtual ~PlayerInputObject(void);
+        ~PlayerInputObject(void);
 
         /**
          * @inheritDoc

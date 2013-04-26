@@ -27,6 +27,8 @@ class ISystemScene;
  * <c>ISystem</c> is an interface class designed to be a method for adding functionality to the
  *  framework.  By default the framework does not have functionality for things like graphics,
  *  physics, etc.
+ *
+ * @sa  IProperty
  */
 class ISystem : public IProperty {
 
@@ -50,22 +52,30 @@ class ISystem : public IProperty {
          * @return  The type of the system.
          */
         virtual System::Type GetSystemType(void) = 0;
-        
+
         /**
          * Creates a system scene for containing system objects.
-         *
-         * @return  The newly create system scene.
          */
-        ISystemScene* CreateScene(void);
+        void createScene(void);
 
         /**
          * Destroys a system scene.
          *
-         * @param   pSystemScene    The scene to destroy. Any objects within are destroyed.
+         * @param [in,out]  pSystemScene    The scene to destroy. Any objects within are destroyed.
+         *
          * @return  An error code.
          */
         Error DestroyScene(ISystemScene* pSystemScene);
-        
+
+        /**
+         * Gets system scene.
+         *
+         * @return  null if it fails, else the system scene.
+         */
+        inline ISystemScene* getSystemScene(void) {
+            return m_pSystemScene;
+        }
+
         /**
          * Gets the name of the system.
          *
@@ -87,5 +97,6 @@ class ISystem : public IProperty {
         typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
 
         SceneFactory                            m_SceneFactory;
+        ISystemScene*                           m_pSystemScene;
 
 };

@@ -90,7 +90,8 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     //
     // Have the system create it's scene.
     //
-    ISystemScene* pScene = pSystem->CreateScene();
+    pSystem->createScene();
+    ISystemScene* pScene = pSystem->getSystemScene();
     ASSERT(pScene != NULL);
 
     if (pScene != NULL) {
@@ -208,11 +209,7 @@ UObject* UScene::FindObject(const char* pszName) {
 }
 
 
-void
-UScene::CreateObjectLink(
-    ISystemObject* pSubject,
-    ISystemObject* pObserver
-) {
+void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver) {
     //
     // Register objects with the CCM.
     //
@@ -230,15 +227,12 @@ UScene::CreateObjectLink(
         // Inform the link requester that the link has been established.
         //
         pSubject->PostChanges(System::Changes::Link);
+        
     }
 }
 
 
-void
-UScene::CreateObjectLink(
-    UObject* pSubject,
-    ISystemObject* pObserver
-) {
+void UScene::CreateObjectLink(UObject* pSubject, ISystemObject* pObserver) {
     //
     // Register objects with the CCM.
     //
@@ -277,7 +271,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
 
         case System::Changes::Generic::DeleteObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            ISceneObject::ObjectProtoQueue objectsToDestroy = pScene->getDestroyObjects();
+            ISceneObject::ObjectProtoQueue objectsToDestroy = pScene->getDeleteObjects();
             while (!objectsToDestroy->empty()) {
                 const ObjectProto objectProto = objectsToDestroy->back();
                 UObject* pObject = FindObject(objectProto.name().c_str());

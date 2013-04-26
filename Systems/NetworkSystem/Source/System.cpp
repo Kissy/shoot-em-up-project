@@ -26,14 +26,14 @@
  */
 NetworkSystem::NetworkSystem(void) : ISystem() {
     m_SceneFactory = boost::factory<NetworkScene*>();
-    m_networkService = new NetworkService();
+    m_networkService = new NetworkService(static_cast<NetworkSystem*>(this));
 }
 
 /**
  * @inheritDoc
  */
 NetworkSystem::~NetworkSystem(void) {
-    SAFE_DELETE(m_networkService);
+    boost::checked_delete(m_networkService);
 }
 
 /**

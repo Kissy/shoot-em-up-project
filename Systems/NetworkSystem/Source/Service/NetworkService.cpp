@@ -18,14 +18,16 @@
 #include "Logger.h"
 #include "NetworkService.h"
 #include "MatchingVarintPrefix.h"
+#include "Scene.h"
 
 #include "Proto/Message/Authenticated.pb.h"
 
 /**
  * @inheritDoc
  */
-NetworkService::NetworkService(void) 
+NetworkService::NetworkService(NetworkSystem* networkSystem) 
     : m_connected(false)
+    , m_pSystem(networkSystem)
     , m_pSocket(new boost::asio::ip::tcp::socket(m_ioService)) {
     m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = 
         boost::bind(&NetworkService::onAuthenticated, this, _1);
@@ -120,6 +122,6 @@ void NetworkService::onRead(const boost::system::error_code& error) {
 void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessageProto) {
     AuthenticatedProto authenticatedProto;
     authenticatedProto.ParseFromString(upstreamMessageProto.data());
-    Log::Log("received %u", authenticatedProto.players().size());
+    static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticatedProto.players());
 }
 

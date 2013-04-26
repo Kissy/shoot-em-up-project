@@ -19,13 +19,15 @@
 #include "Proto/Server/UpstreamMessage.pb.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 
+class NetworkSystem;
+
 class NetworkService {
 public:
     
     /**
      * Default constructor.
      */
-    NetworkService(void);
+    NetworkService(NetworkSystem* networkSystem);
     
     /**
      * Default destructor.
@@ -75,6 +77,7 @@ private:
      */
     void onAuthenticated(const UpstreamMessageProto& upstreamMessageProto);
     
+    NetworkSystem*                  m_pSystem;
     bool                            m_connected;
     boost::asio::io_service         m_ioService;
     boost::asio::ip::tcp::socket*   m_pSocket;

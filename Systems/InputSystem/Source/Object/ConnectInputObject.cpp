@@ -12,47 +12,47 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "DataTypes.h"
-#include "Assert.h"
-#include "Errors.h"
-#include "System/ISystem.h"
-#include "System/ISystemScene.h"
+#include "ConnectInputObject.h"
 
 /**
  * @inheritDoc
  */
-ISystem::ISystem(void) : IProperty() {
+ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName) {
+}
 
+
+/**
+ * @inheritDoc
+ */
+ConnectInputObject::~ConnectInputObject(void) {
 }
 
 /**
  * @inheritDoc
  */
-ISystem::~ISystem(void) {
-
-}
-
-/**
- * @inheritDoc
- */
-const char* ISystem::GetName(void) {
-    u32 index = System::Types::GetIndex(GetSystemType());
-    SystemProto::Type systemType = static_cast<SystemProto::Type>(index);
-    return SystemProto::Type_Name(systemType).c_str();
-}
-
-/**
- * @inheritDoc
- */
-void ISystem::createScene(void) {
-    m_pSystemScene = m_SceneFactory(this);
-}
-
-/**
- * @inheritDoc
- */
-Error ISystem::DestroyScene(ISystemScene* pSystemScene) {
-    boost::checked_delete(pSystemScene);
+Error ConnectInputObject::initialize(void) {
+    ASSERT(!m_bInitialized);
+    
+    m_connectInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_F1);
+    
+    m_bInitialized = true;
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
+Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+    ASSERT(m_bInitialized);
+
+    return Errors::Success;
+}
+
+void ConnectInputObject::Update(f32 DeltaTime) {
+    ASSERT(m_bInitialized);
+
+    if (m_connectInputAction->hasChanged()) {
+        m_keyboardButtonData.down = m_connectInputAction->isActive();
+        PostChanges(System::Changes::Input::Keyboard);
+    }
+}

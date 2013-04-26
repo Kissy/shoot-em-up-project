@@ -48,6 +48,9 @@
     <ClCompile Include="Source\Service\NetworkService.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\ConnectNetworkObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Source\Service\MatchingVarintPrefix.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ConnectNetworkObject.h">
+      <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

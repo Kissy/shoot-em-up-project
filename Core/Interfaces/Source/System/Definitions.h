@@ -170,7 +170,8 @@ namespace System {
         }
 
         namespace Input {
-            static const u32 Velocity           = (1 << 2);
+            static const u32 Keyboard           = (1 << 2);
+            static const u32 Velocity           = (1 << 3);
         }
 
         namespace Network {
@@ -178,7 +179,7 @@ namespace System {
         }
 
         namespace Physic {
-            static const u32 Position           = (1 << 3);
+            static const u32 Position           = (1 << 4);
         }
 
         static const u32 Link                   = (1 << 30);

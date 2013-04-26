@@ -29,6 +29,7 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
+#include "Object/ConnectNetworkObject.h"
 #include "Object/PlayerNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 
@@ -38,16 +39,19 @@ extern ManagerInterfaces   g_Managers;
  * @inheritDoc
  */
 NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
+    m_createObjectQueue = new std::queue<ObjectProto>();
+    m_deleteObjectQueue = new std::queue<ObjectProto>();
     m_TaskFactory = boost::factory<NetworkTask*>();
     
     m_ObjectFactories["Player"] = boost::factory<PlayerNetworkObject*>();
+    m_ObjectFactories["Connect"] = boost::factory<ConnectNetworkObject*>();
 }
 
 /**
  * @inheritDoc
  */
 NetworkScene::~NetworkScene(void) {
-
+    delete m_createObjectQueue;
 }
 
 /**
@@ -55,11 +59,6 @@ NetworkScene::~NetworkScene(void) {
  */
 Error NetworkScene::initialize(void) {
     ASSERT(!m_bInitialized);
-
-    DownstreamMessageProto downstreamMessageProto;
-    downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);
-    downstreamMessageProto.set_data("1");
-    reinterpret_cast<NetworkSystem*>(GetSystem())->getNetworkService()->send(downstreamMessageProto);
 
     m_bInitialized = true;
     return Errors::Success;
@@ -69,9 +68,18 @@ Error NetworkScene::initialize(void) {
  * @inheritDoc
  */
 void NetworkScene::Update(f32 DeltaTime) {
-    ObjectsList Objects = m_pObjects;
-    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        NetworkObject* pObject = static_cast<NetworkObject*>(*it);
+    for (auto object : m_pObjects) {
+        NetworkObject* pObject = static_cast<NetworkObject*>(object);
         pObject->Update(DeltaTime);
     }
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
+    for (auto object : objectProtoList) {
+        m_createObjectQueue->push(object);
+    }
+    PostChanges(System::Changes::Generic::CreateObject);
 }

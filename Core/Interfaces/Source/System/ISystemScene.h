@@ -29,9 +29,8 @@ class ISystemObject;
 
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
- * 
- * @sa  CSubject
- * @sa  IObserver
+ *
+ * @sa  ISystemSubject
  */
 class ISystemScene : public ISystemSubject {
 

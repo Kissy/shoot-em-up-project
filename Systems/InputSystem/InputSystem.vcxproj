@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="Source\InputSystem.cpp" />
     <ClCompile Include="Source\Input\InputAction.cpp" />
+    <ClCompile Include="Source\Object\ConnectInputObject.cpp" />
     <ClCompile Include="Source\Object\PlayerObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Input\InputAction.h" />
+    <ClInclude Include="Source\Object\ConnectInputObject.h" />
     <ClInclude Include="Source\Object\PlayerObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Scene.h" />

@@ -24,22 +24,16 @@
 /// </summary>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 class IKeyboardObject {
-    public:
+public:
 
-		struct KeyboardButtonData {
-            bool down;
-		};
+    struct KeyboardButtonData {
+        bool down;
+    };
 
-        /// <summary>
-        /// Gets the keyboard button data.
-        /// </summary>
-        /// <returns>A constant to the keyboard button data.</returns>
-        virtual const KeyboardButtonData GetKeyboardButtonData(void) = 0;
-
-        /// <summary>
-        /// Gets the mouse position data.
-        /// </summary>
-        /// <returns>A constant pointer to the mouse position data.</returns>
-        virtual const Math::Vector3* GetMousePosition(void) = 0;
-
+    /**
+     * Gets the keyboard button data.
+     *
+     * @return  A constant to the keyboard button data.
+     */
+    virtual const KeyboardButtonData* getKeyboardButtonData(void) = 0;
 };

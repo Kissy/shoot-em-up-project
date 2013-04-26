@@ -22,6 +22,7 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
+#include "Object/ConnectInputObject.h"
 #include "Object/PlayerObject.h"
 
 
@@ -35,6 +36,7 @@ InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem) {
     m_TaskFactory = boost::factory<InputTask*>();
 
     m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
+    m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
 }
 
 /**

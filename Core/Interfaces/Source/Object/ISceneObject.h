@@ -35,13 +35,13 @@ public:
      *
      * @return  null if it fails, else the create objects.
      */
-    virtual ObjectProtoQueue getCreateObjects(void) = 0;
+    virtual const ObjectProtoQueue getCreateObjects(void) = 0;
 
     /**
      * Gets destroy objects.
      *
      * @return  null if it fails, else the destroy objects.
      */
-    virtual ObjectProtoQueue getDestroyObjects(void) = 0;
+    virtual const ObjectProtoQueue getDeleteObjects(void) = 0;
 
 };

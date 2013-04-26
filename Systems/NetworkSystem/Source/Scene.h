@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Object/ISceneObject.h"
 #include "System/ISystemScene.h"
 #include "System/ISystem.h"
 #include "System.h"
@@ -23,56 +24,81 @@ class NetworkSystem;
 class NetworkObject;
 
 /**
- * Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
- * class and its functions.
- * 
- * @sa  ISystemScene
- */
-class NetworkScene : public ISystemScene {
+* Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
+* class and its functions.
+*
+* @sa  ISystemScene
+*/
+class NetworkScene : public ISystemScene, public ISceneObject {
+public:
 
-    public:
-        
-        /**
-         * @inheritDoc
-         */
-        NetworkScene(ISystem* pSystem);
-        
-        /**
-         * @inheritDoc
-         */
-        ~NetworkScene(void);
-                
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
-        
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::None;
-        };
+    /**
+     * @inheritDoc
+     */
+    NetworkScene(ISystem* pSystem);
 
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Network;
-        };
+    /**
+     * @inheritDoc
+     */
+    ~NetworkScene(void);
 
-    protected:
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
+
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::Generic::CreateObject;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::None;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Network;
+    };
+
+    /**
+     * Queue create objects.
+     *
+     * @param   objectProtoList List of object prototypes.
+     */
+    void queueCreateObjects(ProtoObjectList objectProtoList);
+
+    /**
+     * Gets create objects.
+     *
+     * @return  The create objects.
+     */
+    inline const ObjectProtoQueue getCreateObjects(void) {
+        return m_createObjectQueue;
+    };
+
+    /**
+     * Gets delete objects.
+     *
+     * @return  The delete objects.
+     */
+    inline const ObjectProtoQueue getDeleteObjects(void) {
+        return m_deleteObjectQueue;
+    };
+
+protected:
+    ISceneObject::ObjectProtoQueue          m_createObjectQueue;
+    ISceneObject::ObjectProtoQueue          m_deleteObjectQueue;
 };

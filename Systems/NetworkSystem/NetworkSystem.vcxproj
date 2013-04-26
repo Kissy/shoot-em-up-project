@@ -93,6 +93,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\NetworkSystem.cpp" />
+    <ClCompile Include="Source\Object\ConnectNetworkObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Object\PlayerNetworkObject.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="Source\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Object\ConnectNetworkObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Object\PlayerNetworkObject.h" />
     <ClInclude Include="Source\Scene.h" />

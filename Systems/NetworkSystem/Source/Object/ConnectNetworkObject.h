@@ -12,47 +12,54 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "DataTypes.h"
-#include "Assert.h"
-#include "Errors.h"
-#include "System/ISystem.h"
-#include "System/ISystemScene.h"
+#pragma once
 
-/**
- * @inheritDoc
- */
-ISystem::ISystem(void) : IProperty() {
+#include "object.h"
 
-}
+class ConnectNetworkObject : public NetworkObject {
+public:
 
-/**
- * @inheritDoc
- */
-ISystem::~ISystem(void) {
+    /**
+     * Default constructor.
+     */
+    ConnectNetworkObject(ISystemScene* pSystemScene, const char* pszName);
 
-}
+    /**
+     * Destructor.
+     */
+    ~ConnectNetworkObject(void);
 
-/**
- * @inheritDoc
- */
-const char* ISystem::GetName(void) {
-    u32 index = System::Types::GetIndex(GetSystemType());
-    SystemProto::Type systemType = static_cast<SystemProto::Type>(index);
-    return SystemProto::Type_Name(systemType).c_str();
-}
+    
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-/**
- * @inheritDoc
- */
-void ISystem::createScene(void) {
-    m_pSystemScene = m_SceneFactory(this);
-}
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::None;
+    };
 
-/**
- * @inheritDoc
- */
-Error ISystem::DestroyScene(ISystemScene* pSystemScene) {
-    boost::checked_delete(pSystemScene);
-    return Errors::Success;
-}
+    /**
+     * @inheritDoc
+     */
+    System::Types::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::Input::Keyboard;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
+
+private:
+
+};
 
