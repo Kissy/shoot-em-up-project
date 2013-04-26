@@ -30,20 +30,25 @@ public class Player implements BoxObject {
     private List<String> localInstanceIds = Lists.newArrayList();
 
     // Protobuf Builder //
-    private PropertyDto.PropertyProto.Builder positionProperty = PropertyDto.PropertyProto.newBuilder();
-    private ObjectDto.ObjectProto.SystemObjectProto.Builder geometrySystemObject = ObjectDto.ObjectProto.SystemObjectProto.newBuilder();
+    private PropertyDto.PropertyProto.Builder positionProperty;
+    private ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject;
+    private ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject;
     private ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
 
     public Player() {
+        physicSystemObject = player.addSystemObjectsBuilder();
+        physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
+        physicSystemObject.setType("Movable");
+
+        positionProperty = physicSystemObject.addPropertiesBuilder();
         positionProperty.setName("Position");
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
 
-        geometrySystemObject.setSystemType(SystemDto.SystemProto.Type.Geometry);
-        geometrySystemObject.addProperties(0, positionProperty);
-
-        player.addSystemObjects(0, geometrySystemObject);
+        graphicSystemObject = player.addSystemObjectsBuilder();
+        graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
+        graphicSystemObject.setType("Image");
     }
 
     public String getId() {
@@ -121,8 +126,7 @@ public class Player implements BoxObject {
 
     @Transient
     public ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
-        geometrySystemObject.setProperties(0, positionProperty);
-        player.setSystemObjects(0, geometrySystemObject);
+        //physicSystemObject.setProperties(0, positionProperty);
         return player;
     }
 

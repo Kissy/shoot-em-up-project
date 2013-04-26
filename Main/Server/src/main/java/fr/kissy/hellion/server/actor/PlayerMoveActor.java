@@ -38,8 +38,10 @@ public class PlayerMoveActor extends UntypedActor {
         ObjectUpdated.ObjectUpdatedProto updatedProto = ObjectUpdated.ObjectUpdatedProto.parseFrom(messageEvent.getMessage().getData());
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
         for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
-            //if (propertyProto.getName())
-            //player.setX();
+            if (propertyProto.getName().equals("Position")) {
+                player.setX(Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())));
+
+            }
         }
 
         synchronizeActorRef.tell(o, getSelf());
