@@ -40,7 +40,8 @@ public class PlayerMoveActor extends UntypedActor {
         for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
             if (propertyProto.getName().equals("Position")) {
                 player.setX(Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())));
-
+                player.setY(Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())));
+                player.setZ(Integer.valueOf(new String(propertyProto.getValue(2).toByteArray())));
             }
         }
 
