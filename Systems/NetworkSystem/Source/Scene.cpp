@@ -40,6 +40,7 @@ extern ManagerInterfaces   g_Managers;
  */
 NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
     m_createObjectQueue = new std::queue<ObjectProto>();
+    m_updateObjectQueue = new std::queue<ObjectProto>();
     m_deleteObjectQueue = new std::queue<ObjectProto>();
     m_TaskFactory = boost::factory<NetworkTask*>();
     
@@ -89,7 +90,7 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
  */
 void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
-        
-        m_createObjectQueue->push(object);
+        m_updateObjectQueue->push(object);
     }
+    PostChanges(System::Changes::Generic::UpdateObject);
 }

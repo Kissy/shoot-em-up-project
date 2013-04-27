@@ -267,6 +267,19 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             break;
         }
 
+        case System::Changes::Generic::UpdateObject: {
+            ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
+            ISceneObject::ObjectProtoQueue* objectsToUpdate = pScene->getUpdateObjects();
+            while (!objectsToUpdate->empty()) {
+                const ObjectProto objectProto = objectsToUpdate->back();
+                UObject* pObject = FindObject(objectProto.name().c_str());
+                ASSERT(pObject != NULL);
+                pObject->update(&objectProto);
+                objectsToUpdate->pop();
+            }
+            break;
+        }
+
         case System::Changes::Generic::DeleteObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             ISceneObject::ObjectProtoQueue* objectsToDestroy = pScene->getDeleteObjects();
@@ -465,9 +478,9 @@ const UObject::SystemObjects& UObject::GetExtensions(void) {
 
 
 ISystemObject* UObject::GetExtension(System::Type SystemType) {
-    ISystemObject* pSystemObject = NULL;
-    SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
+    ISystemObject* pSystemObject = nullptr;
 
+    SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
     if (it != m_ObjectExtensions.end()) {
         pSystemObject = it->second;
     }
@@ -475,6 +488,24 @@ ISystemObject* UObject::GetExtension(System::Type SystemType) {
     return pSystemObject;
 }
 
+/**
+ * @inheritDoc
+ */
+void UObject::update(const ObjectProto* objectProto) {
+    //
+    // Update systems extension.
+    //
+    for (auto objectProto : objectProto->systemobjects()) {
+        ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+        ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());
+
+        if (m_pSystem != NULL) {
+            ISystemObject* systemObject = GetExtension(m_pSystem->GetSystemType());
+            ASSERTMSG1(systemObject != nullptr, "Unable to find a scene for the system %s.", m_pSystem->GetSystemType());
+            systemObject->setProperties(objectProto.properties());
+        }
+    }
+}
 
 System::Changes::BitMask UObject::GetPotentialSystemChanges(void) {
     return System::Changes::Generic::All | System::Changes::Physic::Position;

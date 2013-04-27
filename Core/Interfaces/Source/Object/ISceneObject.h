@@ -38,6 +38,13 @@ public:
     virtual ObjectProtoQueue* getCreateObjects(void) = 0;
 
     /**
+     * Gets update objects.
+     *
+     * @return  null if it fails, else the update objects.
+     */
+    virtual ObjectProtoQueue* getUpdateObjects(void) = 0;
+
+    /**
      * Gets destroy objects.
      *
      * @return  null if it fails, else the destroy objects.

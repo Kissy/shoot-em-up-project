@@ -56,7 +56,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Generic::CreateObject;
+        return System::Changes::Generic::All;
     };
 
     /**
@@ -74,30 +74,33 @@ public:
     };
 
     /**
-     * Queue create objects.
-     *
-     * @param   objectProtoList List of object prototypes.
-     */
-    void queueCreateObjects(ProtoObjectList objectProtoList);
-
-    /**
-     * Gets create objects.
-     *
-     * @return  The create objects.
+     * @inheritDoc
      */
     inline ObjectProtoQueue* getCreateObjects(void) {
         return m_createObjectQueue;
     };
-
+    
     /**
-     * Gets delete objects.
-     *
-     * @return  The delete objects.
+     * @inheritDoc
+     */
+    inline ObjectProtoQueue* getUpdateObjects(void) {
+        return m_updateObjectQueue;
+    };
+    
+    /**
+     * @inheritDoc
      */
     inline ObjectProtoQueue* getDeleteObjects(void) {
         return m_deleteObjectQueue;
     };
 
+    /**
+     * Queue create objects.
+     *
+     * @param   objectProtoList List of object prototypes.
+     */
+    void queueCreateObjects(ProtoObjectList objectProtoList);
+    
     /**
      * Updates the objects described by objectProtoList.
      *
@@ -107,5 +110,7 @@ public:
 
 protected:
     ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
+    ISceneObject::ObjectProtoQueue*          m_updateObjectQueue;
     ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;
+
 };

@@ -207,6 +207,14 @@ public:
     //
     ISystemObject* GetExtension(System::Type System);
 
+    /**
+     * Updates the object using an object proto.
+     *
+     * @param   objectProto The object prototype.
+     */
+    // TODO maybe move it to system scene instead ?
+    void update(const ObjectProto* objectProto);
+
     /// <summary cref="IObserver::ChangeOccurred">
     ///   Implementation of the IObserver ChangeOccurred function.
     /// </summary>

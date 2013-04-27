@@ -154,5 +154,5 @@ void NetworkService::onObjectCreated(const UpstreamMessageProto& upstreamMessage
 void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessageProto) {
     ObjectUpdatedProto objectUpdatedProto;
     objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
-    //static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdatedProto.objects());
+    static_cast<NetworkScene*>(m_pSystem->getSystemScene())->updateObjects(objectUpdatedProto.objects());
 }
