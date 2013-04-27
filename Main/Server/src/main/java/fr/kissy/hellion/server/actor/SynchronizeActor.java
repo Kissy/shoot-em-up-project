@@ -44,7 +44,7 @@ public class SynchronizeActor extends UntypedActor {
         objectDeleted.setData(deletedObjects.build().toByteString());
 
         ObjectUpdated.ObjectUpdatedProto.Builder updateObject = ObjectUpdated.ObjectUpdatedProto.newBuilder();
-        updateObject.addObjects(player.toObjectProtoBuilder());
+        updateObject.addObjects(player.getBuilder());
         UpstreamMessageDto.UpstreamMessageProto.Builder objectUpdated = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         objectUpdated.setType(UpstreamMessageDto.UpstreamMessageProto.Type.OBJECT_UPDATED);
         objectUpdated.setData(updateObject.build().toByteString());
@@ -57,7 +57,7 @@ public class SynchronizeActor extends UntypedActor {
             if (player.hasLocalInstanceId(nearPlayer.getId())) {
                 continue;
             }
-            createdObjects.addObjects(nearPlayer.toObjectProtoBuilder());
+            createdObjects.addObjects(nearPlayer.getBuilder());
             nearPlayer.getChannel().write(upstreamMessageProto);
         }
 

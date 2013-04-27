@@ -111,10 +111,11 @@ void DefinitionParser::ParseScene(std::string sScene) {
         m_pScene->createObject(&(*objectsIt));
     }
 
-    const UScene::SystemScenes Scenes = m_pScene->GetSystemScenes();
-
-    for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
-        it->second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
+    //
+    // Refresh all scenes
+    // 
+    for (auto scene : m_pScene->GetSystemScenes()) {
+        scene.second->GlobalSceneStatusChanged(ISystemScene::PostLoadingObjects);
     }
 
     //

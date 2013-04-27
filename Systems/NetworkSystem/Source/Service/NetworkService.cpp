@@ -122,6 +122,18 @@ void NetworkService::onRead(const boost::system::error_code& error) {
 void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessageProto) {
     AuthenticatedProto authenticatedProto;
     authenticatedProto.ParseFromString(upstreamMessageProto.data());
+
+    // We need to add Input & Network to be able to control this player
+    ProtoObjectList* players = authenticatedProto.mutable_players();
+    for (ProtoObjectList::iterator player = players->begin(); player != players->end(); player ++) {
+        ObjectProto_SystemObjectProto* inputSystemObject = player->add_systemobjects();
+        inputSystemObject->set_systemtype(SystemProto_Type_Input);
+        inputSystemObject->set_type("Player");
+        ObjectProto_SystemObjectProto* networkSystemObject = player->add_systemobjects();
+        networkSystemObject->set_systemtype(SystemProto_Type_Network);
+        networkSystemObject->set_type("Player");
+    }
+
     static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticatedProto.players());
 }
 

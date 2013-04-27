@@ -157,15 +157,13 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     // Register the object with the scene's CCM.
     //
-    m_pSceneCCM->Register(
-        pObject, System::Changes::Generic::All /*| System::Changes::Geometry::All*/, this
-    );
+    m_pSceneCCM->Register(pObject, System::Changes::Generic::All | System::Changes::Physic::Position, this);
     //
     // Added systems extension.
     //
-    for (ProtoObjectPropertiesList::const_iterator objectPropertiesIt = objectProto->systemobjects().begin(); objectPropertiesIt != objectProto->systemobjects().end(); objectPropertiesIt++) {
-        ISystem* m_pSystem = Singletons::SystemManager.Get(objectPropertiesIt->systemtype());
-        ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectPropertiesIt->systemtype());
+    for (ObjectProto_SystemObjectProto objectProto : objectProto->systemobjects()) {
+        ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+        ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());
 
         if (m_pSystem != NULL) {
             UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
@@ -173,11 +171,11 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
             //
             // Create object.
             //
-            ISystemObject* pSystemObject = pObject->Extend(it->second, objectPropertiesIt->type().c_str());
+            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
             ASSERT(pSystemObject != NULL);
 
             if (pSystemObject != NULL) {
-                pSystemObject->setProperties(objectPropertiesIt->properties());
+                pSystemObject->setProperties(objectProto.properties());
                 pSystemObject->initialize();
             }
         }
@@ -343,13 +341,15 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
         System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
 
-        // TODO find why this is there ?
-        /*if (SysObjPotentialChanges & (System::Changes::Geometry::All | System::Changes::Graphics::AABB)) {
+        //
+        // Register the object to update the position when object is created
+        // 
+        if (SysObjPotentialChanges & (System::Changes::Physic::Position)) {
             //
-            // Have the UObject watch for all the geometry and AABB changes this system makes.
+            // Have the UObject watch for all the position this system makes.
             //
-            m_pObjectCCM->Register(pSystemObject, System::Changes::Geometry::All | System::Changes::Graphics::AABB, this);
-        }*/
+            m_pObjectCCM->Register(pSystemObject, System::Changes::Physic::Position, this);
+        }
 
         //
         // Register each object with scenes that care about the object's changes.
@@ -403,10 +403,7 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
 }
 
 
-void
-UObject::Unextend(
-    ISystemScene* pSystemScene
-) {
+void UObject::Unextend(ISystemScene* pSystemScene) {
     ASSERT(pSystemScene != NULL);
     //
     // Get the iterator for the object.
@@ -462,16 +459,12 @@ UObject::Unextend(
 }
 
 
-const UObject::SystemObjects&
-UObject::GetExtensions(
-    void
-) {
+const UObject::SystemObjects& UObject::GetExtensions(void) {
     return m_ObjectExtensions;
 }
 
 
-ISystemObject*
-UObject::GetExtension(System::Type SystemType) {
+ISystemObject* UObject::GetExtension(System::Type SystemType) {
     ISystemObject* pSystemObject = NULL;
     SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
 
@@ -483,29 +476,16 @@ UObject::GetExtension(System::Type SystemType) {
 }
 
 
-System::Changes::BitMask
-UObject::GetPotentialSystemChanges(
-    void
-) {
-    return System::Changes::Generic::All /*|
-           System::Changes::Geometry::All |
-           System::Changes::Graphics::AABB*/;
+System::Changes::BitMask UObject::GetPotentialSystemChanges(void) {
+    return System::Changes::Generic::All | System::Changes::Physic::Position;
 }
 
 
-Error
-UObject::ChangeOccurred(
-    ISubject* pSubject,
-    System::Changes::BitMask ChangeType
-) {
+Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     UNREFERENCED_PARAM(pSubject);
 
-    if (ChangeType & (System::Changes::Generic::All /*|
-                      System::Changes::Geometry::All |
-                      System::Changes::Graphics::AABB*/)) {
-        ChangeType &= (System::Changes::Generic::All /*|
-                       System::Changes::Geometry::All |
-                       System::Changes::Graphics::AABB*/);
+    if (ChangeType & (System::Changes::Generic::All | System::Changes::Physic::Position)) {
+        ChangeType &= (System::Changes::Generic::All | System::Changes::Physic::Position);
         //
         // Post the pertinent changes made by the extension to the scene CCM.
         //

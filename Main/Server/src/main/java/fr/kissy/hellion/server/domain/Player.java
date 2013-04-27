@@ -31,12 +31,10 @@ public class Player implements BoxObject {
 
     // Protobuf Builder //
     private PropertyDto.PropertyProto.Builder positionProperty;
-    private ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject;
-    private ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject;
     private ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
 
     public Player() {
-        physicSystemObject = player.addSystemObjectsBuilder();
+        ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject = player.addSystemObjectsBuilder();
         physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
         physicSystemObject.setType("Movable");
 
@@ -46,7 +44,7 @@ public class Player implements BoxObject {
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
 
-        graphicSystemObject = player.addSystemObjectsBuilder();
+        ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = player.addSystemObjectsBuilder();
         graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
         graphicSystemObject.setType("Image");
     }
@@ -125,8 +123,7 @@ public class Player implements BoxObject {
     }
 
     @Transient
-    public ObjectDto.ObjectProto.Builder toObjectProtoBuilder() {
-        //physicSystemObject.setProperties(0, positionProperty);
+    public ObjectDto.ObjectProto.Builder getBuilder() {
         return player;
     }
 

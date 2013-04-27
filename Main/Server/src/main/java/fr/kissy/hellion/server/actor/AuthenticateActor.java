@@ -60,13 +60,14 @@ public class AuthenticateActor extends UntypedActor {
         Player player = new Player();
         player.setId((String) subject.getPrincipal());
         player.setChannel(messageEvent.getChannel());
+        player.setPosition(200, 200, 200);
         subject.getSession().setAttribute(Player.class.getSimpleName(), player);
         world.addPlayer(player);
 
         LOGGER.info("Adding new player to World {}", player.getId());
 
         Authenticated.AuthenticatedProto.Builder authenticatedData = Authenticated.AuthenticatedProto.newBuilder();
-        authenticatedData.addPlayers(player.toObjectProtoBuilder());
+        authenticatedData.addPlayers(player.getBuilder());
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);
