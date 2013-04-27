@@ -78,9 +78,8 @@ void GraphicScene::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*> (m_pSystem)->GetScreen();
     SDL_BlitSurface(m_background, NULL, screen, NULL);
     
-    ObjectsList Objects = m_pObjects;
-    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        GraphicObject* pObject = static_cast<GraphicObject*>(*it);
+    for (auto object : m_pObjects) {
+        GraphicObject* pObject = static_cast<GraphicObject*>(object.second);
         pObject->Update(DeltaTime);
     }
     

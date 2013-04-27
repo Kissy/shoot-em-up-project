@@ -67,10 +67,8 @@ void InputScene::Update(f32 DeltaTime) {
         return;
     }
 
-    ObjectsList Objects = m_pObjects;
-
-    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        InputObject* pObject = static_cast<InputObject*>(*it);
+    for (auto object : m_pObjects) {
+        InputObject* pObject = static_cast<InputObject*>(object.second);
         pObject->Update(DeltaTime);
     }
 }

@@ -69,7 +69,7 @@ Error NetworkScene::initialize(void) {
  */
 void NetworkScene::Update(f32 DeltaTime) {
     for (auto object : m_pObjects) {
-        NetworkObject* pObject = static_cast<NetworkObject*>(object);
+        NetworkObject* pObject = static_cast<NetworkObject*>(object.second);
         pObject->Update(DeltaTime);
     }
 }

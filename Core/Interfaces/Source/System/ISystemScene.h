@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 #include "boost/function.hpp"
+#include "boost/container/flat_map.hpp"
 
 #include "Errors.h"
 #include "System/Definitions.h"
@@ -115,14 +116,15 @@ public:
 
 protected:
     
-    typedef std::vector<ISystemObject*> ObjectsList;
+    typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
     typedef boost::function<ISystemTask*(ISystemScene* pSystemScene)> TaskFactory;
     typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, const char* pszName)> ObjectFactory;
 
-    ISystem*                                m_pSystem;
-    ISystemTask*							m_pSystemTask;
-    ObjectsList                             m_pObjects;
-    TaskFactory                             m_TaskFactory;
-    std::map<std::string, ObjectFactory>    m_ObjectFactories;
+    ISystem*                                        m_pSystem;
+    ISystemTask*							        m_pSystemTask;
+    ObjectsList                                     m_pObjects;
+
+    TaskFactory                                     m_TaskFactory;
+    std::map<std::string, ObjectFactory>            m_ObjectFactories;
 
 };

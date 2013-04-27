@@ -56,14 +56,8 @@ Error PhysicScene::initialize(void) {
  * @inheritDoc
  */
 void PhysicScene::Update(f32 DeltaTime) {
-    ObjectsList Objects = m_pObjects;
-
-    //
-    // Cycle through all of our objects and apply the changes.
-    // Also post our change notifications to the CCM.
-    //
-    for (ObjectsList::iterator it = Objects.begin(); it != Objects.end(); it++) {
-        PhysicObject* pObject = static_cast<PhysicObject*>(*it);
+    for (auto object : m_pObjects) {
+        PhysicObject* pObject = static_cast<PhysicObject*>(object.second);
         pObject->Update(DeltaTime);
     }
 }

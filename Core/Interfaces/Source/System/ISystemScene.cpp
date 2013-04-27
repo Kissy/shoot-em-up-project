@@ -62,15 +62,15 @@ void ISystemScene::createTask(void) {
 ISystemObject* ISystemScene::CreateObject(const char* pszName, const char* pszType) {
     ASSERT(m_bInitialized);
 
-    ISystemObject* pObject = m_ObjectFactories[pszType](this, pszName);
+    ISystemObject* systemObject = m_ObjectFactories[pszType](this, pszName);
 
-    if (pObject != NULL) {
-        m_pObjects.push_back(pObject);
+    if (systemObject != NULL) {
+        m_pObjects[systemObject->GetName()] = systemObject;
     } else {
         ASSERTMSG1(false, "Impossible to find the object type %s", pszName);
     }
 
-    return pObject;
+    return systemObject;
 }
 
 /**
@@ -81,10 +81,7 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(pSystemObject != NULL);
 
     if (pSystemObject != NULL) {
-        //
-        // Remove the object from the list and delete it.
-        //
-        m_pObjects.erase(std::find(m_pObjects.begin(), m_pObjects.end(), pSystemObject));
+        m_pObjects.erase(pSystemObject->GetName());
         delete pSystemObject;
     }
 
