@@ -36,16 +36,16 @@ public:
 
     /**
      * Connect to the remote server.
-     * 
-     * @param host The hostname to connect to.
-     * @param port The port to connect to.
+     *
+     * @param   host    The hostname to connect to.
+     * @param   port    The port to connect to.
      */
     void connect(std::string host, std::string port);
-    
+
     /**
      * Send the given message to the server.
-     * 
-     * @param downstreamMessageProto The message to add to queue.
+     *
+     * @param   downstreamMessageProto  The message to add to queue.
      */
     void send(const DownstreamMessageProto& downstreamMessageProto);
 
@@ -59,23 +59,37 @@ private:
     /**
      * Handle the connection result to the server.
      *
-     * @param error The error if the connection failed.
+     * @param   error   The error if the connection failed.
      */
     void onConnected(const boost::system::error_code& error);
 
     /**
      * Handle the read from the server.
      *
-     * @param error The error if the read failed.
+     * @param   error   The error if the read failed.
      */
     void onRead(const boost::system::error_code& error);
 
     /**
      * Handle the authentication success.
      *
-     * @param upstreamMessageProto The authenticated message proto to parse.
+     * @param   upstreamMessageProto    The authenticated message proto to parse.
      */
     void onAuthenticated(const UpstreamMessageProto& upstreamMessageProto);
+
+    /**
+     * Handle the object created.
+     *
+     * @param   upstreamMessageProto    The object updated message proto to parse.
+     */
+    void onObjectCreated(const UpstreamMessageProto& upstreamMessageProto);
+
+    /**
+     * Handle the object updated.
+     *
+     * @param   upstreamMessageProto    The object updated message proto to parse.
+     */
+    void onObjectUpdated(const UpstreamMessageProto& upstreamMessageProto);
     
     NetworkSystem*                  m_pSystem;
     bool                            m_connected;

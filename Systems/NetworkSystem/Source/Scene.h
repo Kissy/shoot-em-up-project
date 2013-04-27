@@ -85,7 +85,7 @@ public:
      *
      * @return  The create objects.
      */
-    inline const ObjectProtoQueue getCreateObjects(void) {
+    inline ObjectProtoQueue* getCreateObjects(void) {
         return m_createObjectQueue;
     };
 
@@ -94,11 +94,18 @@ public:
      *
      * @return  The delete objects.
      */
-    inline const ObjectProtoQueue getDeleteObjects(void) {
+    inline ObjectProtoQueue* getDeleteObjects(void) {
         return m_deleteObjectQueue;
     };
 
+    /**
+     * Updates the objects described by objectProtoList.
+     *
+     * @param   objectProtoList List of object prototypes.
+     */
+    void updateObjects(ProtoObjectList objectProtoList);
+
 protected:
-    ISceneObject::ObjectProtoQueue          m_createObjectQueue;
-    ISceneObject::ObjectProtoQueue          m_deleteObjectQueue;
+    ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
+    ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;
 };

@@ -83,3 +83,13 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
     }
     PostChanges(System::Changes::Generic::CreateObject);
 }
+
+/**
+ * @inheritDoc
+ */
+void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
+    for (auto object : objectProtoList) {
+        
+        m_createObjectQueue->push(object);
+    }
+}

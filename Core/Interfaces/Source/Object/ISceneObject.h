@@ -28,20 +28,20 @@
 class ISceneObject {
 public:
 
-    typedef std::queue<ObjectProto>* ObjectProtoQueue;
+    typedef std::queue<ObjectProto> ObjectProtoQueue;
 
     /**
      * Gets create objects.
      *
      * @return  null if it fails, else the create objects.
      */
-    virtual const ObjectProtoQueue getCreateObjects(void) = 0;
+    virtual ObjectProtoQueue* getCreateObjects(void) = 0;
 
     /**
      * Gets destroy objects.
      *
      * @return  null if it fails, else the destroy objects.
      */
-    virtual const ObjectProtoQueue getDeleteObjects(void) = 0;
+    virtual ObjectProtoQueue* getDeleteObjects(void) = 0;
 
 };

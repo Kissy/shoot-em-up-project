@@ -21,6 +21,7 @@
 #include "Scene.h"
 
 #include "Proto/Message/Authenticated.pb.h"
+#include "Proto/Message/ObjectUpdated.pb.h"
 
 /**
  * @inheritDoc
@@ -29,8 +30,9 @@ NetworkService::NetworkService(NetworkSystem* networkSystem)
     : m_connected(false)
     , m_pSystem(networkSystem)
     , m_pSocket(new boost::asio::ip::tcp::socket(m_ioService)) {
-    m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = 
-        boost::bind(&NetworkService::onAuthenticated, this, _1);
+    m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = boost::bind(&NetworkService::onAuthenticated, this, _1);
+    m_messageHandlers[UpstreamMessageProto_Type_OBJECT_CREATED] = boost::bind(&NetworkService::onObjectCreated, this, _1);
+    m_messageHandlers[UpstreamMessageProto_Type_OBJECT_UPDATED] = boost::bind(&NetworkService::onObjectUpdated, this, _1);
 }
 
 /**
@@ -137,3 +139,20 @@ void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessage
     static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticatedProto.players());
 }
 
+/**
+ * @inheritDoc
+ */
+void NetworkService::onObjectCreated(const UpstreamMessageProto& upstreamMessageProto) {
+    ObjectUpdatedProto objectUpdatedProto;
+    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
+    static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdatedProto.objects());
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessageProto) {
+    ObjectUpdatedProto objectUpdatedProto;
+    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
+    //static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdatedProto.objects());
+}
