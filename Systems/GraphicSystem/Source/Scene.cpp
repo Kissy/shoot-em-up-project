@@ -65,7 +65,7 @@ GraphicScene::~GraphicScene(void) {
 Error GraphicScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    m_background = IMG_Load("../../Assets/Media/Graphic/Background.png");
+    m_background = IMG_Load("../../Assets/Media/Graphic/Background.jpg");
     
     m_bInitialized = true; 
     return Errors::Success;

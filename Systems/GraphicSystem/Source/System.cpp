@@ -50,11 +50,11 @@ GraphicSystem::~GraphicSystem(void) {
 Error GraphicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
+    if (SDL_Init(SDL_INIT_VIDEO) == -1) {
         return Errors::Failure;
     }
 
-    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE);
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
     if ( screen == NULL ) {
         return Errors::Failure;
     }
