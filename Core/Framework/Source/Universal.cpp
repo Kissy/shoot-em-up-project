@@ -261,19 +261,6 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             break;
         }
 
-        case System::Changes::Generic::UpdateObject: {
-            ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            ISceneObject::ObjectProtoQueue* objectsToUpdate = pScene->getUpdateObjects();
-            while (!objectsToUpdate->empty()) {
-                const ObjectProto objectProto = objectsToUpdate->back();
-                UObject* pObject = FindObject(objectProto.name().c_str());
-                ASSERT(pObject != NULL);
-                pObject->update(&objectProto);
-                objectsToUpdate->pop();
-            }
-            break;
-        }
-
         case System::Changes::Generic::DeleteObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             ISceneObject::ObjectProtoQueue* objectsToDestroy = pScene->getDeleteObjects();

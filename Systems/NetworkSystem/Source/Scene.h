@@ -83,13 +83,6 @@ public:
     /**
      * @inheritDoc
      */
-    inline ObjectProtoQueue* getUpdateObjects(void) {
-        return m_updateObjectQueue;
-    };
-    
-    /**
-     * @inheritDoc
-     */
     inline ObjectProtoQueue* getDeleteObjects(void) {
         return m_deleteObjectQueue;
     };
@@ -110,7 +103,6 @@ public:
 
 protected:
     ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
-    ISceneObject::ObjectProtoQueue*          m_updateObjectQueue;
     ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;
 
 };
