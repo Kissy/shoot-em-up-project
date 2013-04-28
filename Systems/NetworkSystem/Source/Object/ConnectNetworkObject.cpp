@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/lexical_cast.hpp>
+
 #include "System/ISystemScene.h"
 #include "ConnectNetworkObject.h"
 #include "Object/IKeyboardObject.h"
@@ -49,7 +51,7 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
         if (keyboardButtonData->down) {
             DownstreamMessageProto downstreamMessageProto;
             downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);
-            downstreamMessageProto.set_data("1");
+            downstreamMessageProto.set_data(boost::lexical_cast<std::string>(keyboardButtonData->type));
             reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessageProto);
         }
     }

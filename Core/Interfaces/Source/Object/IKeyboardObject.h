@@ -27,6 +27,7 @@ class IKeyboardObject {
 public:
 
     struct KeyboardButtonData {
+        int type;
         bool down;
     };
 

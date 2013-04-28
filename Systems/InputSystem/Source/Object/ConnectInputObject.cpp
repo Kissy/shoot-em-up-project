@@ -33,7 +33,8 @@ ConnectInputObject::~ConnectInputObject(void) {
 Error ConnectInputObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    m_connectInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_F1);
+    m_connectInputActionF1 = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_F1);
+    m_connectInputActionF2 = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_F2);
     
     m_bInitialized = true;
     return Errors::Success;
@@ -50,9 +51,18 @@ Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 
 void ConnectInputObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
+    int modified = 0;
 
-    if (m_connectInputAction->hasChanged()) {
-        m_keyboardButtonData.down = m_connectInputAction->isActive();
-        PostChanges(System::Changes::Input::Keyboard);
+    if (m_connectInputActionF1->hasChanged()) {
+        m_keyboardButtonData.type = 1;
+        m_keyboardButtonData.down = m_connectInputActionF1->isActive();
+        modified |= System::Changes::Input::Keyboard;
     }
+    if (m_connectInputActionF2->hasChanged()) {
+        m_keyboardButtonData.type = 2;
+        m_keyboardButtonData.down = m_connectInputActionF2->isActive();
+        modified |= System::Changes::Input::Keyboard;
+    }
+    
+    PostChanges(modified);
 }

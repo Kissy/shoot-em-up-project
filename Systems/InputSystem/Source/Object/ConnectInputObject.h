@@ -68,7 +68,8 @@ public:
 
 private:
     
-    InputAction*                    m_connectInputAction;
+    InputAction*                    m_connectInputActionF1;
+    InputAction*                    m_connectInputActionF2;
     KeyboardButtonData              m_keyboardButtonData;
 
 };
