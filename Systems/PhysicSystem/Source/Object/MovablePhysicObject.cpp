@@ -56,6 +56,12 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
         m_velocity.y = velocity->y;
         m_velocity.z = velocity->z;
     }
+    if (ChangeType & System::Changes::Physic::Position) {
+        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
+        m_position.x = position->x;
+        m_position.y = position->y;
+        m_position.z = position->z;
+    }
 
     return Errors::Success;
 }

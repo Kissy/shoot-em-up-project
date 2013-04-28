@@ -12,14 +12,11 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #pragma once
-
 
 class HavokPhysicsSystem;
 class HavokPhysicsScene;
 class HavokPhysicsTask;
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// <summary>
@@ -29,60 +26,57 @@ class HavokPhysicsTask;
 ///////////////////////////////////////////////////////////////////////////////
 
 class PhysicObject : public ISystemObject, public IGeometryObject {
+public:
 
-    public:
-        
-        /**
-         * @inheritDoc
-         */
-        PhysicObject(ISystemScene* pSystemScene, const char* pszName);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual ~PhysicObject(void);
+    /**
+     * @inheritDoc
+     */
+    PhysicObject(ISystemScene* pSystemScene, const char* pszName);
 
-        /**
-         * @inheritDoc
-         */
-        void setPosition(ProtoStringList values);
-        
-        /**
-         * @inheritDoc
-         */
-        void getPosition(ProtoStringList* propertiesValues);
+    /**
+     * @inheritDoc
+     */
+    virtual ~PhysicObject(void);
 
-        /**
-         * @inheritDoc
-         */
-        inline System::Type GetSystemType(void) {
-            return System::Types::Physic;
-        }
-         
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetPosition(void) {
-            return &m_position;
-        }
-        
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Quaternion* GetOrientation(void) {
-            return NULL;
-        }
-        
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetScale(void) {
-            return NULL;
-        }
-        
-    protected:
-        
-        Math::Vector3   m_position;
+    /**
+     * @inheritDoc
+     */
+    void setPosition(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getPosition(ProtoStringList* values);
+
+    /**
+     * @inheritDoc
+     */
+    inline System::Type GetSystemType(void) {
+        return System::Types::Physic;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetPosition(void) {
+        return &m_position;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Quaternion* GetOrientation(void) {
+        return NULL;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetScale(void) {
+        return NULL;
+    }
+
+protected:
+    Math::Vector3   m_position;
 
 };
-

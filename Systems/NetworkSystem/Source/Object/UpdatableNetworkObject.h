@@ -14,9 +14,11 @@
 
 #pragma once
 
+#include <boost/timer/timer.hpp>
+
+#include "MathUtils.h"
 #include "System.h"
-#include "Object/PhysicObject.h"
-#include "Object/IGeometryObject.h"
+#include "Object/Object.h"
 
 class ISystemScene;
 
@@ -26,18 +28,18 @@ class ISystemScene;
 *
 * @sa  ISystemObject
 */
-class MovablePhysicObject : public PhysicObject {
+class UpdatableNetworkObject : public NetworkObject, public IGeometryObject, public IMoveObject {
 public:
 
     /**
      * @inheritDoc
      */
-    MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName);
+    UpdatableNetworkObject(ISystemScene* pSystemScene, const char* pszName);
 
     /**
      * @inheritDoc
      */
-    virtual ~MovablePhysicObject(void);
+    ~UpdatableNetworkObject(void);
 
     /**
      * @inheritDoc
@@ -48,14 +50,14 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Position;
+        return System::Changes::Input::Velocity | System::Changes::Physic::Position;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Input::Velocity | System::Changes::Physic::Position;
+        return System::Changes::None;
     };
 
     /**
@@ -68,7 +70,56 @@ public:
      */
     void Update(f32 DeltaTime);
 
+    /**
+     * @inheritDoc
+     */
+    void setVelocity(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getVelocity(ProtoStringList* values);
+
+    /**
+     * @inheritDoc
+     */
+    void setPosition(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getPosition(ProtoStringList* values);
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetPosition(void) {
+        return &m_position;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Quaternion* GetOrientation(void) {
+        return NULL;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetScale(void) {
+        return NULL;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetVelocity(void) {
+        return &m_velocity;
+    }
+
 private:
-    Math::Vector3   m_velocity;
+    Math::Vector3                   m_position;
+    Math::Vector3                   m_velocity;
 
 };

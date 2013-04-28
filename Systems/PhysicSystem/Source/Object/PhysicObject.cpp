@@ -12,8 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "boost/bind.hpp"
-#include "boost/lexical_cast.hpp"
+#include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "BaseTypes.h"
 #include "Interface.h"

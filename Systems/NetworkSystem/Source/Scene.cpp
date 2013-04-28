@@ -31,6 +31,7 @@
 #include "Object/Object.h"
 #include "Object/ConnectNetworkObject.h"
 #include "Object/PlayerNetworkObject.h"
+#include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 
 extern ManagerInterfaces   g_Managers;
@@ -44,8 +45,9 @@ NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
     m_deleteObjectQueue = new std::queue<ObjectProto>();
     m_TaskFactory = boost::factory<NetworkTask*>();
     
-    m_ObjectFactories["Player"] = boost::factory<PlayerNetworkObject*>();
     m_ObjectFactories["Connect"] = boost::factory<ConnectNetworkObject*>();
+    m_ObjectFactories["Player"] = boost::factory<PlayerNetworkObject*>();
+    m_ObjectFactories["Updatable"] = boost::factory<UpdatableNetworkObject*>();
 }
 
 /**
@@ -90,7 +92,10 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
  */
 void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
-        m_updateObjectQueue->push(object);
+        //m_updateObjectQueue->push(object);
+        auto systemObjectIterator = m_pObjects.find(object.name());
+        ASSERTMSG1(systemObjectIterator != m_pObjects.end(), "Object with name %s not found in this system", object.name());
+        systemObjectIterator->second->setProperties(object.systemobjects().Get(0).properties());
     }
-    PostChanges(System::Changes::Generic::UpdateObject);
+    //PostChanges(System::Changes::Generic::UpdateObject);
 }
