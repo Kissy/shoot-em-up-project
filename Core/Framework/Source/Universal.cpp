@@ -99,14 +99,13 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
         // Create the associated task.
         pScene->createTask();
         //
+        // Register all changes made by the scene.
+        //
+        m_pSceneCCM->Register(pScene, System::Changes::Generic::All, this);
         //
         // Add the scene to the collection.
         //
         m_SystemScenes[SystemType] = pScene;
-        //
-        // Register all changes made by the scene.
-        //
-        m_pSceneCCM->Register(pScene, System::Changes::Generic::All, this);
     }
 
     return pScene;
@@ -155,10 +154,6 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     m_Objects.push_back(pObject);
     //
-    // Register the object with the scene's CCM.
-    //
-    m_pSceneCCM->Register(pObject, System::Changes::Generic::All | System::Changes::Physic::Position, this);
-    //
     // Added systems extension.
     //
     for (ObjectProto_SystemObjectProto objectProto : objectProto->systemobjects()) {
@@ -186,7 +181,6 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
 
 Error UScene::DestroyObject(UObject* pObject) {
     ASSERT(pObject != NULL);
-    m_pSceneCCM->Unregister(pObject, this);
     m_Objects.remove(pObject);
     delete pObject;
     return Errors::Success;
@@ -341,78 +335,68 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const char* pszSystem
 
 
 bool UObject::Extend(ISystemObject* pSystemObject) {
-    bool bSuccess = false;
-
-    if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) == m_ObjectExtensions.end()) {
-        //
-        // Set this as the parent.
-        //
-        pSystemObject->SetParentObject(this);
-        //
-        // Get the changes this object will make and is looking for.
-        //
-        System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
-        System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
-
-        //
-        // Register the object to update the position when object is created
-        // 
-        if (SysObjPotentialChanges & (System::Changes::Physic::Position)) {
-            //
-            // Have the UObject watch for all the position this system makes.
-            //
-            m_pObjectCCM->Register(pSystemObject, System::Changes::Physic::Position, this);
-        }
-
-        //
-        // Register each object with scenes that care about the object's changes.
-        //
-        UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-
-        for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
-            ISystemScene* pScene = it->second;
-
-            if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-                m_pObjectCCM->Register(pSystemObject, pScene->GetDesiredSystemChanges(), pScene);
-            }
-        }
-
-        //
-        // Register each of the systems with each other.
-        //
-        System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
-
-        for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
-                it != m_ObjectExtensions.end(); it++) {
-            ISystemObject* pObj = it->second;
-
-            if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
-                m_pObjectCCM->Register(pObj, Changes, pSystemObject);
-            }
-
-            if (SysObjPotentialChanges & pObj->GetDesiredSystemChanges()) {
-                m_pObjectCCM->Register(pSystemObject, pObj->GetDesiredSystemChanges(), pObj);
-            }
-        }
-
-        //
-        // Add the system object to the list.
-        //
-        System::Type SystemType = pSystemObject->GetSystemType();
-        m_ObjectExtensions[ SystemType ] = pSystemObject;
-
-        //
-        // Set up the speed path for the geometry and graphics objects.
-        //
-        if (SystemType == System::Types::Physic) {
-            m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
-            ASSERT(m_pGeometryObject != NULL);
-        }
-
-        bSuccess = true;
+    // 
+    // If the object is already extended, do nothing
+    // 
+    if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) != m_ObjectExtensions.end()) {
+        return false;
     }
 
-    return bSuccess;
+    //
+    // Set this as the parent.
+    //
+    pSystemObject->SetParentObject(this);
+
+    //
+    // Get the changes this object will make and is looking for.
+    //
+    System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
+    System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
+
+    //
+    // Register each object with scenes that care about the object's changes.
+    //
+    UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
+    for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
+        ISystemScene* pScene = it->second;
+
+        if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
+            m_pObjectCCM->Register(pSystemObject, pScene->GetDesiredSystemChanges(), pScene);
+        }
+    }
+
+    //
+    // Register each of the systems with each other.
+    //
+    System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
+    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
+            it != m_ObjectExtensions.end(); it++) {
+        ISystemObject* pObj = it->second;
+
+        if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
+            m_pObjectCCM->Register(pObj, Changes, pSystemObject);
+        }
+
+        if (SysObjPotentialChanges & pObj->GetDesiredSystemChanges()) {
+            m_pObjectCCM->Register(pSystemObject, pObj->GetDesiredSystemChanges(), pObj);
+        }
+    }
+
+    //
+    // Add the system object to the list.
+    //
+    System::Type SystemType = pSystemObject->GetSystemType();
+    m_ObjectExtensions[ SystemType ] = pSystemObject;
+
+    //
+    // Set up the speed path for the geometry and graphics objects.
+    //
+    if (SystemType == System::Types::Physic) {
+        m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
+        ASSERT(m_pGeometryObject != NULL);
+    }
+
+    return true;
 }
 
 
@@ -448,7 +432,6 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     // Unregister each object with scenes that cared about the object's changes.
     //
     UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-
     for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
         ISystemScene* pScene = it->second;
 
@@ -457,10 +440,6 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
         }
     }
 
-    //
-    // Unregister the UObject as an observer of this system object.
-    //
-    m_pObjectCCM->Unregister(pSystemObject, this);
     //
     // Destroy the object.
     //

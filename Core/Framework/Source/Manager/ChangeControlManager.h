@@ -43,8 +43,7 @@ class ChangeManager : public IChangeManager {
                        IObserver* pInObserver,
                        System::Types::BitMask observerIdBits = System::Types::All);
         Error Unregister(ISubject* pSubject, IObserver* pObserver);
-        Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified = System::Types::All,
-                                      System::Changes::BitMask ChangesToDist = System::Changes::All);
+        Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
 
         // IObserver Functionality
         Error ChangeOccurred(ISubject* pInChangedSubject,

@@ -207,8 +207,8 @@ Error Framework::Execute(void) {
     // Distribute changes for object and scene CCMs.
     // The UObject propagates some object messages up to the scene so it needs to go first.
     //
-    m_pObjectCCM->DistributeQueuedChanges();
-    m_pSceneCCM->DistributeQueuedChanges();
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
 
     //
     // Set the runtime status to running.
@@ -232,10 +232,13 @@ Error Framework::Execute(void) {
         m_pScheduler->Execute();
         //
         // Distribute changes for object and scene CCMs.  The UObject propagates some object
-        //  messages up to the scene CCM so it needs to go first.
+        // messages up to the scene CCM so it needs to go first.
+        // Process first the object creation & object deletion messages alone since it will 
+        // generate some object messages that need to be processed by the object CCM.
         //
-        m_pObjectCCM->DistributeQueuedChanges();
-        m_pSceneCCM->DistributeQueuedChanges();
+        m_pSceneCCM->DistributeQueuedChanges(System::Types::Generic, System::Changes::Generic::All);
+        m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
 
         //
         // Check with the environment manager if there is a change in the runtime status to quit.

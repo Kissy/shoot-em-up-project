@@ -249,11 +249,7 @@ ChangeManager::ChangeOccurred(
 
 ///////////////////////////////////////////////////////////////////////////////
 // DistributeQueuedChanges - Distribute all queued notifications to the proper observers
-Error
-ChangeManager::DistributeQueuedChanges(
-    System::Types::BitMask systems2BeNotified,
-    System::Changes::BitMask ChangesToDist
-) {
+Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNotified, System::Changes::BitMask ChangesToDist) {
     // Start ThredProfiler event
     __ITT_EVENT_START(m_ChangeDistributionTpEvent, PROFILE_CHANGECONTROL);
     // Store the parameters so they can be used by multiple threads later
