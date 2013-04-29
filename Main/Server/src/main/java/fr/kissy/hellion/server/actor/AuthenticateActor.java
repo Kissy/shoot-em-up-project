@@ -1,7 +1,10 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
+import fr.kissy.hellion.proto.common.ObjectDto;
+import fr.kissy.hellion.proto.common.SystemDto;
 import fr.kissy.hellion.proto.message.Authenticated;
+import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
@@ -9,9 +12,16 @@ import fr.kissy.hellion.server.service.WorldService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -58,7 +68,7 @@ public class AuthenticateActor extends UntypedActor {
         // TODO save a player to the database & load it
         // Fetch player & add it to world
         Player player = new Player();
-        player.setId((String) subject.getPrincipal());
+        player.setId(new ObjectId());
         player.setChannel(messageEvent.getChannel());
         player.setPosition(200, 200, 200);
         subject.getSession().setAttribute(Player.class.getSimpleName(), player);
@@ -67,11 +77,11 @@ public class AuthenticateActor extends UntypedActor {
         LOGGER.info("Adding new player to World {}", player.getId());
 
         Authenticated.AuthenticatedProto.Builder authenticatedData = Authenticated.AuthenticatedProto.newBuilder();
-        authenticatedData.addPlayers(player.getBuilder());
+        authenticatedData.addPlayers(player.getBuilder(true));
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
         builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);
         builder.setData(authenticatedData.build().toByteString());
-        messageEvent.getChannel().write(builder.build());
+        player.getChannel().write(builder.build());
     }
 }

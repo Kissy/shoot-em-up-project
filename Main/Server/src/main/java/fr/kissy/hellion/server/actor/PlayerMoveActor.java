@@ -39,9 +39,17 @@ public class PlayerMoveActor extends UntypedActor {
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
         for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
             if (propertyProto.getName().equals("Position")) {
-                player.setX(Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())));
-                player.setY(Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())));
-                player.setZ(Integer.valueOf(new String(propertyProto.getValue(2).toByteArray())));
+                player.setPosition(
+                    Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())),
+                    Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())),
+                    Integer.valueOf(new String(propertyProto.getValue(2).toByteArray()))
+                );
+            } else if (propertyProto.getName().equals("Velocity")) {
+                player.setVelocity(
+                    Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())),
+                    Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())),
+                    Integer.valueOf(new String(propertyProto.getValue(2).toByteArray()))
+                );
             }
         }
 

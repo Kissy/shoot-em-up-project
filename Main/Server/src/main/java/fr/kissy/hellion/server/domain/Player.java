@@ -1,17 +1,20 @@
 package fr.kissy.hellion.server.domain;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.common.PropertyDto;
 import fr.kissy.hellion.proto.common.SystemDto;
 import fr.kissy.hellion.server.core.rtree.model.Box;
 import fr.kissy.hellion.server.core.rtree.model.BoxObject;
+import org.bson.types.ObjectId;
 import org.jboss.netty.channel.Channel;
 import org.springframework.data.annotation.Id;
 
 import java.beans.Transient;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
@@ -20,68 +23,74 @@ import java.util.List;
 public class Player implements BoxObject {
 
     @Id
-    private String id;
-    private int x;
-    private int y;
-    private int z;
+    private ObjectId id;
+    private ObjectDto.ObjectProto.Builder player;
+    private PropertyDto.PropertyProto.Builder positionProperty;
+    private PropertyDto.PropertyProto.Builder velocityProperty;
 
     // Local Instance //
     private Channel channel;
-    private List<String> localInstanceIds = Lists.newArrayList();
-
-    // Protobuf Builder //
-    private PropertyDto.PropertyProto.Builder positionProperty;
-    private ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
+    private Set<ObjectId> localInstanceIds = Sets.newHashSet();
 
     public Player() {
-        ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject = player.addSystemObjectsBuilder();
-        physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
-        physicSystemObject.setType("Movable");
+        player = ObjectDto.ObjectProto.newBuilder();
+        player.setName("newObject");
 
-        positionProperty = physicSystemObject.addPropertiesBuilder();
+        positionProperty = PropertyDto.PropertyProto.newBuilder();
         positionProperty.setName("Position");
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
 
-        ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = player.addSystemObjectsBuilder();
-        graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
-        graphicSystemObject.setType("Image");
+        velocityProperty = PropertyDto.PropertyProto.newBuilder();
+        velocityProperty.setName("Velocity");
+        velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
-        player.setName(String.valueOf(id));
+        player.setName(id.toString());
+    }
+
+    public ObjectDto.ObjectProto.Builder getPlayer() {
+        return player;
+    }
+
+    public PropertyDto.PropertyProto.Builder getPositionProperty() {
+        return positionProperty;
+    }
+
+    public PropertyDto.PropertyProto.Builder getVelocityProperty() {
+        return velocityProperty;
     }
 
     public int getX() {
-        return x;
+        return Integer.valueOf(new String(positionProperty.getValue(0).toByteArray()));
     }
 
     public void setX(int x) {
-        this.x = x;
         positionProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
     }
 
     public int getY() {
-        return y;
+        return Integer.valueOf(new String(positionProperty.getValue(1).toByteArray()));
     }
 
     public void setY(int y) {
-        this.y = y;
         positionProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
     }
 
     public int getZ() {
-        return z;
+        return Integer.valueOf(new String(positionProperty.getValue(2).toByteArray()));
     }
 
     public void setZ(int z) {
-        this.z = z;
         positionProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
     }
 
@@ -91,26 +100,10 @@ public class Player implements BoxObject {
         setZ(z);
     }
 
-    @Override
-    public Box getBox() {
-        return new Box(x, y, z);
-    }
-
-    @Transient
-    public Box getNearestBounds() {
-        Box nearest = getBox();
-        nearest.expand(10, 10, 10);
-        return nearest;
-    }
-
-    @Transient
-    public boolean hasLocalInstanceId(String objectId) {
-        return localInstanceIds.contains(objectId);
-    }
-
-    @Transient
-    public List<String> getLocalInstanceIds() {
-        return localInstanceIds;
+    public void setVelocity(float x, float y, float z) {
+        velocityProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
+        velocityProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
+        velocityProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
     }
 
     @Transient
@@ -123,7 +116,56 @@ public class Player implements BoxObject {
     }
 
     @Transient
+    public boolean hasLocalInstanceId(ObjectId objectId) {
+        return localInstanceIds.contains(objectId);
+    }
+
+    @Transient
+    public Set<ObjectId> getLocalInstanceIds() {
+        return localInstanceIds;
+    }
+
+    @Override
+    public Box getBox() {
+        return new Box(getX(), getY(), getZ());
+    }
+
+    @Transient
+    public Box getNearestBounds() {
+        Box nearest = getBox();
+        nearest.expand(400, 300, 200);
+        return nearest;
+    }
+
+    @Transient
     public ObjectDto.ObjectProto.Builder getBuilder() {
+        return getBuilder(false);
+    }
+
+    @Transient
+    public ObjectDto.ObjectProto.Builder getBuilder(boolean isControllable) {
+        ObjectDto.ObjectProto.Builder player = this.player.clone();
+
+        ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = player.addSystemObjectsBuilder();
+        graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
+        graphicSystemObject.setType("Image");
+
+        if (isControllable) {
+            ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = player.addSystemObjectsBuilder();
+            inputSystemObject.setSystemType(SystemDto.SystemProto.Type.Input);
+            inputSystemObject.setType("Player");
+            inputSystemObject.addProperties(velocityProperty.build());
+        }
+
+        ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = player.addSystemObjectsBuilder();
+        networkSystemObject.setSystemType(SystemDto.SystemProto.Type.Network);
+        networkSystemObject.setType(isControllable ? "Player" : "Updatable");
+
+        ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject = player.addSystemObjectsBuilder();
+        physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
+        physicSystemObject.setType("Movable");
+        physicSystemObject.addProperties(positionProperty.build());
+
         return player;
     }
 
