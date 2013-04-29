@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @ImportResource("classpath:/fr/kissy/hellion/server/properties-config.xml")
-@Import({DatabaseConfig.class, SecurityConfig.class, ServerConfig.class, HandlerConfig.class, ActorConfig.class, ServiceConfig.class})
+@Import({DatabaseConfig.class, SecurityConfig.class, ServerConfig.class, HandlerConfig.class, ActorConfig.class, ServiceConfig.class, TransformConfig.class})
 public class AppConfig {
 
     @Bean

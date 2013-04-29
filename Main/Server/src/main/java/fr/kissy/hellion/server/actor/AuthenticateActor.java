@@ -8,6 +8,8 @@ import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
+import fr.kissy.hellion.server.service.ObjectService;
+import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -34,6 +36,8 @@ public class AuthenticateActor extends UntypedActor {
 
     @Autowired
     private WorldService world;
+    @Autowired
+    private UpstreamMessageService upstreamMessageService;
 
     /**
      * @inheritDoc
@@ -75,13 +79,6 @@ public class AuthenticateActor extends UntypedActor {
         world.addPlayer(player);
 
         LOGGER.info("Adding new player to World {}", player.getId());
-
-        Authenticated.AuthenticatedProto.Builder authenticatedData = Authenticated.AuthenticatedProto.newBuilder();
-        authenticatedData.addPlayers(player.getBuilder(true));
-
-        UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
-        builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.AUTHENTICATED);
-        builder.setData(authenticatedData.build().toByteString());
-        player.getChannel().write(builder.build());
+        player.getChannel().write(upstreamMessageService.getAuthenticatedMessage(player));
     }
 }

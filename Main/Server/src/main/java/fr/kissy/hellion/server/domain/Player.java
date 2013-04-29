@@ -101,38 +101,6 @@ public class Player implements BoxObject {
         return nearest;
     }
 
-    @Transient
-    public ObjectDto.ObjectProto.Builder getBuilder() {
-        return getBuilder(false);
-    }
-
-    @Transient
-    public ObjectDto.ObjectProto.Builder getBuilder(boolean isControllable) {
-        ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
-
-        ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = player.addSystemObjectsBuilder();
-        graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
-        graphicSystemObject.setType("Image");
-
-        if (isControllable) {
-            ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = player.addSystemObjectsBuilder();
-            inputSystemObject.setSystemType(SystemDto.SystemProto.Type.Input);
-            inputSystemObject.setType("Player");
-            inputSystemObject.addProperties(velocityProperty.build());
-        }
-
-        ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = player.addSystemObjectsBuilder();
-        networkSystemObject.setSystemType(SystemDto.SystemProto.Type.Network);
-        networkSystemObject.setType(isControllable ? "Player" : "Updatable");
-
-        ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject = player.addSystemObjectsBuilder();
-        physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
-        physicSystemObject.setType("Movable");
-        physicSystemObject.addProperties(positionProperty.build());
-
-        return player;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
