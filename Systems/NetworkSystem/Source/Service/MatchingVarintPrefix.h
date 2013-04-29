@@ -13,10 +13,10 @@ public:
         while (i != end) {
             // header
             if (messageSize == 0) {
-                unsigned char c = *i;
-                decodedVarint = ((c & 127) << bitsRead) + decodedVarint;
+                char c = *i;
+                decodedVarint = ((c & 0x7F) << bitsRead) + decodedVarint;
                 if ((c & 0x80) == 0)  {
-                    messageSize = decodedVarint + bitsRead;
+                    messageSize = decodedVarint;
                     decodedVarint = 0;
                     bitsRead = 0;
                 } else {
