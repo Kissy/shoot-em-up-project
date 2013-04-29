@@ -89,6 +89,17 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
 /**
  * @inheritDoc
  */
+void NetworkScene::queueDeleteObjects(ProtoObjectList objectProtoList) {
+    for (auto object : objectProtoList) {
+        m_deleteObjectQueue->push(object);
+    }
+    PostChanges(System::Changes::Generic::DeleteObject);
+}
+
+
+/**
+ * @inheritDoc
+ */
 void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
         auto systemObjectIterator = m_pObjects.find(object.name());

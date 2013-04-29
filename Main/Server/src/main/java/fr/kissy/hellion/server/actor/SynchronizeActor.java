@@ -1,6 +1,7 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
+import com.google.common.collect.Sets;
 import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.common.SystemDto;
 import fr.kissy.hellion.proto.message.ObjectUpdated;
@@ -8,11 +9,13 @@ import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import fr.kissy.hellion.server.service.WorldService;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -68,26 +71,30 @@ public class SynchronizeActor extends UntypedActor {
         List<Player> nearPlayers = worldService.getNearPlayers(player);
         LOGGER.debug("Number of near players for user {} is {}", player.getId(), nearPlayers.size());
 
+        Set<ObjectId> playerLocalInstanceIds = Sets.newHashSet(player.getLocalInstanceIds());
         for (Player nearPlayer : nearPlayers) {
             // Send the update message to all players
-            if (!nearPlayer.hasLocalInstanceId(player.getId())) {
-                nearPlayer.getLocalInstanceIds().add(player.getId());
+            if (nearPlayer.getLocalInstanceIds().add(player.getId())) {
                 nearPlayer.getChannel().write(nearPlayerObjectCreated.build());
             } else {
                 nearPlayer.getChannel().write(updatePlayerBuilder.build());
             }
 
             // Add the object to creation
-            if (!player.hasLocalInstanceId(nearPlayer.getId())) {
+            if (!playerLocalInstanceIds.remove(nearPlayer.getId())) {
                 player.getLocalInstanceIds().add(nearPlayer.getId());
                 createdObjects.addObjects(nearPlayer.getBuilder());
             }
         }
 
-        // TODO build the delete list
-        /*for (String id : player.getLocalInstanceIds()) {
-            if (nearPlayers.contains(id))
-        }*/
+        LOGGER.debug("Number of player to delete {}", playerLocalInstanceIds.size());
+        for (ObjectId id : playerLocalInstanceIds) {
+            // TODO use a simple list of ID ?
+            player.getLocalInstanceIds().remove(id);
+            ObjectDto.ObjectProto.Builder playerToDelete = ObjectDto.ObjectProto.newBuilder();
+            playerToDelete.setName(id.toString());
+            deletedObjects.addObjects(playerToDelete.build());
+        }
 
         if (createdObjects.getObjectsCount() > 0) {
             UpstreamMessageDto.UpstreamMessageProto.Builder objectCreated = UpstreamMessageDto.UpstreamMessageProto.newBuilder();

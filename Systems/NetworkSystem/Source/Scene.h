@@ -93,6 +93,13 @@ public:
      * @param   objectProtoList List of object prototypes.
      */
     void queueCreateObjects(ProtoObjectList objectProtoList);
+
+    /**
+     * Queue delete objects.
+     *
+     * @param   objectProtoList List of object prototypes.
+     */
+    void queueDeleteObjects(ProtoObjectList objectProtoList);
     
     /**
      * Updates the objects described by objectProtoList.

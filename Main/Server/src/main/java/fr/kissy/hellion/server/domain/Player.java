@@ -116,11 +116,6 @@ public class Player implements BoxObject {
     }
 
     @Transient
-    public boolean hasLocalInstanceId(ObjectId objectId) {
-        return localInstanceIds.contains(objectId);
-    }
-
-    @Transient
     public Set<ObjectId> getLocalInstanceIds() {
         return localInstanceIds;
     }

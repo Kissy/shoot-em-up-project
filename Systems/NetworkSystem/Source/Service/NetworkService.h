@@ -90,6 +90,13 @@ private:
      * @param   upstreamMessageProto    The object updated message proto to parse.
      */
     void onObjectUpdated(const UpstreamMessageProto& upstreamMessageProto);
+
+    /**
+     * Handle the object deleted.
+     *
+     * @param   upstreamMessageProto    The object updated message proto to parse.
+     */
+    void onObjectDeleted(const UpstreamMessageProto& upstreamMessageProto);
     
     NetworkSystem*                  m_pSystem;
     bool                            m_connected;

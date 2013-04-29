@@ -33,6 +33,7 @@ NetworkService::NetworkService(NetworkSystem* networkSystem)
     m_messageHandlers[UpstreamMessageProto_Type_AUTHENTICATED] = boost::bind(&NetworkService::onAuthenticated, this, _1);
     m_messageHandlers[UpstreamMessageProto_Type_OBJECT_CREATED] = boost::bind(&NetworkService::onObjectCreated, this, _1);
     m_messageHandlers[UpstreamMessageProto_Type_OBJECT_UPDATED] = boost::bind(&NetworkService::onObjectUpdated, this, _1);
+    m_messageHandlers[UpstreamMessageProto_Type_OBJECT_DELETED] = boost::bind(&NetworkService::onObjectDeleted, this, _1);
 }
 
 /**
@@ -148,5 +149,16 @@ void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessage
     objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
     if (objectUpdatedProto.objects().size() > 0) {
         static_cast<NetworkScene*>(m_pSystem->getSystemScene())->updateObjects(objectUpdatedProto.objects());
+    }
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkService::onObjectDeleted(const UpstreamMessageProto& upstreamMessageProto) {
+    ObjectUpdatedProto objectUpdatedProto;
+    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
+    if (objectUpdatedProto.objects().size() > 0) {
+        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueDeleteObjects(objectUpdatedProto.objects());
     }
 }
