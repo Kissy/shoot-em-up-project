@@ -45,7 +45,8 @@ public class SynchronizeActor extends UntypedActor {
 
         // Create the update message
         // TODO make a function or use the update info from the PlayerMoveActor
-        ObjectDto.ObjectProto.Builder playerBuilder = player.getPlayer().clone();
+        ObjectDto.ObjectProto.Builder playerBuilder = ObjectDto.ObjectProto.newBuilder();
+        playerBuilder.setName(player.getId().toString());
         ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = playerBuilder.addSystemObjectsBuilder();
         networkSystemObject.setSystemType(SystemDto.SystemProto.Type.Network);
         networkSystemObject.setType("Network");
@@ -68,32 +69,40 @@ public class SynchronizeActor extends UntypedActor {
         nearPlayerObjectCreated.setType(UpstreamMessageDto.UpstreamMessageProto.Type.OBJECT_CREATED);
         nearPlayerObjectCreated.setData(nearPlayerCreated.build().toByteString());
 
+        Set<Player> oldNearPlayers = Sets.newHashSet(player.getNearPlayers());
         List<Player> nearPlayers = worldService.getNearPlayers(player);
-        LOGGER.debug("Number of near players for user {} is {}", player.getId(), nearPlayers.size());
 
-        Set<ObjectId> playerLocalInstanceIds = Sets.newHashSet(player.getLocalInstanceIds());
+        LOGGER.debug("Number of near players for user {} is {}", player.getId(), nearPlayers.size());
         for (Player nearPlayer : nearPlayers) {
             // Send the update message to all players
-            if (nearPlayer.getLocalInstanceIds().add(player.getId())) {
+            if (nearPlayer.getNearPlayers().add(player)) {
                 nearPlayer.getChannel().write(nearPlayerObjectCreated.build());
             } else {
                 nearPlayer.getChannel().write(updatePlayerBuilder.build());
             }
 
             // Add the object to creation
-            if (!playerLocalInstanceIds.remove(nearPlayer.getId())) {
-                player.getLocalInstanceIds().add(nearPlayer.getId());
+            if (!oldNearPlayers.remove(nearPlayer)) {
+                player.getNearPlayers().add(nearPlayer);
                 createdObjects.addObjects(nearPlayer.getBuilder());
             }
         }
 
-        LOGGER.debug("Number of player to delete {}", playerLocalInstanceIds.size());
-        for (ObjectId id : playerLocalInstanceIds) {
+        LOGGER.debug("Number of player to delete for user {} is {}", player.getId(), oldNearPlayers.size());
+        for (Player playerToRemove : oldNearPlayers) {
             // TODO use a simple list of ID ?
-            player.getLocalInstanceIds().remove(id);
+            player.getNearPlayers().remove(playerToRemove);
             ObjectDto.ObjectProto.Builder playerToDelete = ObjectDto.ObjectProto.newBuilder();
-            playerToDelete.setName(id.toString());
+            playerToDelete.setName(playerToRemove.getId().toString());
             deletedObjects.addObjects(playerToDelete.build());
+
+            // Update deleted player
+            playerToDelete.setName(player.getId().toString());
+            UpstreamMessageDto.UpstreamMessageProto.Builder objectDeleted = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
+            objectDeleted.setType(UpstreamMessageDto.UpstreamMessageProto.Type.OBJECT_DELETED);
+            objectDeleted.setData(deletedObjects.build().toByteString());
+            player.getChannel().write(objectDeleted.build());
+            playerToRemove.getChannel().write(playerToDelete.build());
         }
 
         if (createdObjects.getObjectsCount() > 0) {

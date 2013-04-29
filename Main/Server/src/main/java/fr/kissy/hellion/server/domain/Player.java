@@ -1,6 +1,5 @@
 package fr.kissy.hellion.server.domain;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.common.ObjectDto;
@@ -13,7 +12,6 @@ import org.jboss.netty.channel.Channel;
 import org.springframework.data.annotation.Id;
 
 import java.beans.Transient;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,18 +22,14 @@ public class Player implements BoxObject {
 
     @Id
     private ObjectId id;
-    private ObjectDto.ObjectProto.Builder player;
     private PropertyDto.PropertyProto.Builder positionProperty;
     private PropertyDto.PropertyProto.Builder velocityProperty;
 
-    // Local Instance //
+    // Local Instance
     private Channel channel;
-    private Set<ObjectId> localInstanceIds = Sets.newHashSet();
+    private Set<Player> nearPlayers = Sets.newHashSet();
 
     public Player() {
-        player = ObjectDto.ObjectProto.newBuilder();
-        player.setName("newObject");
-
         positionProperty = PropertyDto.PropertyProto.newBuilder();
         positionProperty.setName("Position");
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
@@ -55,11 +49,6 @@ public class Player implements BoxObject {
 
     public void setId(ObjectId id) {
         this.id = id;
-        player.setName(id.toString());
-    }
-
-    public ObjectDto.ObjectProto.Builder getPlayer() {
-        return player;
     }
 
     public PropertyDto.PropertyProto.Builder getPositionProperty() {
@@ -70,34 +59,10 @@ public class Player implements BoxObject {
         return velocityProperty;
     }
 
-    public int getX() {
-        return Integer.valueOf(new String(positionProperty.getValue(0).toByteArray()));
-    }
-
-    public void setX(int x) {
-        positionProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
-    }
-
-    public int getY() {
-        return Integer.valueOf(new String(positionProperty.getValue(1).toByteArray()));
-    }
-
-    public void setY(int y) {
-        positionProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
-    }
-
-    public int getZ() {
-        return Integer.valueOf(new String(positionProperty.getValue(2).toByteArray()));
-    }
-
-    public void setZ(int z) {
-        positionProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
-    }
-
     public void setPosition(int x, int y, int z) {
-        setX(x);
-        setY(y);
-        setZ(z);
+        positionProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
+        positionProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
+        positionProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
     }
 
     public void setVelocity(float x, float y, float z) {
@@ -116,13 +81,17 @@ public class Player implements BoxObject {
     }
 
     @Transient
-    public Set<ObjectId> getLocalInstanceIds() {
-        return localInstanceIds;
+    public Set<Player> getNearPlayers() {
+        return nearPlayers;
     }
 
     @Override
     public Box getBox() {
-        return new Box(getX(), getY(), getZ());
+        return new Box(
+                Integer.valueOf(new String(positionProperty.getValue(0).toByteArray())),
+                Integer.valueOf(new String(positionProperty.getValue(1).toByteArray())),
+                Integer.valueOf(new String(positionProperty.getValue(2).toByteArray()))
+        );
     }
 
     @Transient
@@ -139,7 +108,7 @@ public class Player implements BoxObject {
 
     @Transient
     public ObjectDto.ObjectProto.Builder getBuilder(boolean isControllable) {
-        ObjectDto.ObjectProto.Builder player = this.player.clone();
+        ObjectDto.ObjectProto.Builder player = ObjectDto.ObjectProto.newBuilder();
 
         ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = player.addSystemObjectsBuilder();
         graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
@@ -170,13 +139,12 @@ public class Player implements BoxObject {
         if (o == null || getClass() != o.getClass()) return false;
 
         Player player = (Player) o;
-        return !(id != null ? !id.equals(player.id) : player.id != null);
-
+        return id.equals(player.id);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return id.hashCode();
     }
 
 }
