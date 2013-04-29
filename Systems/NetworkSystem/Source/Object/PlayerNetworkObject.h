@@ -70,6 +70,9 @@ public:
     void Update(f32 DeltaTime);
 
 private:
+
+    
+    bool                            m_dirty;
     Math::Vector3                   m_position;
     Math::Vector3                   m_velocity;
     boost::timer::cpu_timer         m_heartbeat;
