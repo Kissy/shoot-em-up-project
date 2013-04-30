@@ -1,6 +1,8 @@
 -A2 #--style=java
 -s4 #--indent=spaces=4
+-S #--indent-switches
 -N #--indent-namespaces
+-L #--indent-labels
 -w #--indent-preprocessor
 -Y #--indent-col1-comments
 -m0 #--min-conditional-indent=0

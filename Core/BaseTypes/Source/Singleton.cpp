@@ -20,14 +20,12 @@
  *  @inheritDoc
  */
 Singleton::Singleton(void) {
-
 }
 
 /**
  *  @inheritDoc
  */
 Singleton::~Singleton(void) {
-
 }
 
 #ifdef DEBUG_BUILD

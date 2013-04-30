@@ -20,9 +20,9 @@
 #include "DataTypes.h"
 
 #define LOG_ACTUAL( x ) va_list ArgList;                                   \
-                        va_start( ArgList, Format );                       \
-                        Log::GetLogger()->Log( (x), Format, ArgList ); \
-                        va_end( ArgList );
+    va_start( ArgList, Format );                       \
+    Log::GetLogger()->Log( (x), Format, ArgList ); \
+    va_end( ArgList );
 
 
 /**
@@ -52,41 +52,41 @@ namespace Log {
      * Debugger class.
      */
     class Logger {
-        public:
+    public:
 
-            /**
-             * Constructor.
-             */
-            Logger(bool bLogging);
+        /**
+         * Constructor.
+         */
+        Logger(bool bLogging);
 
-            /**
-             * Destructor.
-             */
-            ~Logger();
+        /**
+         * Destructor.
+         */
+        ~Logger();
 
-            /**
-             * Prints.
-             *
-             * @param	Format 	Describes the format to use.
-             * @param	ArgList	List of arguments.
-             */
-            void Print(const char* Format, va_list ArgList);
+        /**
+         * Prints.
+         *
+         * @param   Format  Describes the format to use.
+         * @param   ArgList List of arguments.
+         */
+        void Print(const char* Format, va_list ArgList);
 
-            /**
-             * Logs.
-             *
-             * @param	Type   	The type.
-             * @param	Format 	Describes the format to use.
-             * @param	ArgList	List of arguments.
-             */
-            void Log(LogType::LogType Type, const char* Format, va_list ArgList);
+        /**
+         * Logs.
+         *
+         * @param   Type    The type.
+         * @param   Format  Describes the format to use.
+         * @param   ArgList List of arguments.
+         */
+        void Log(LogType::LogType Type, const char* Format, va_list ArgList);
 
-        private:
+    private:
 
-            bool            m_bLogging;
+        bool            m_bLogging;
 
-            boost::mutex    m_logMutex;
-            std::ostream*   m_logFiles[LogType::e_LogTypeCount];
+        boost::mutex    m_logMutex;
+        std::ostream*   m_logFiles[LogType::e_LogTypeCount];
 
     };
 
@@ -95,14 +95,14 @@ namespace Log {
     /**
      * Initialises this object.
      *
-     * @param [in,out]	p_logger	If non-null, the logger.
+     * @param [in,out]  p_logger    If non-null, the logger.
      */
     void Init(Logger* p_logger);
 
     /**
      * Prepares this object for use.
      *
-     * @param	bLogging	(optional) the logging.
+     * @param   bLogging    (optional) the logging.
      */
     void Startup(bool bLogging = false);
 
@@ -114,14 +114,14 @@ namespace Log {
     /**
      * Gets the debugger.
      *
-     * @return	null if it fails, else the debugger.
+     * @return  null if it fails, else the debugger.
      */
     Logger* GetLogger(void);
 
     /**
      * Logs the given format.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void Log(const char* Format, ...) {
         LOG_ACTUAL(LogType::Common);
@@ -130,7 +130,7 @@ namespace Log {
     /**
      * Logs the graphics.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogGraphic(const char* Format, ...)  {
         LOG_ACTUAL(LogType::Graphic);
@@ -139,7 +139,7 @@ namespace Log {
     /**
      * Logs an input.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogInput(const char* Format, ...) {
         LOG_ACTUAL(LogType::Input);
@@ -148,7 +148,7 @@ namespace Log {
     /**
      * Logs a network.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogNetwork(const char* Format, ...) {
         LOG_ACTUAL(LogType::Network);
@@ -157,7 +157,7 @@ namespace Log {
     /**
      * Logs the physics.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogPhysic(const char* Format, ...) {
         LOG_ACTUAL(LogType::Physic);
@@ -173,14 +173,14 @@ namespace Log {
     /**
      * Initialises this object.
      *
-     * @param [in,out]	p_logger	If non-null, the debugger.
+     * @param [in,out]  p_logger    If non-null, the debugger.
      */
     inline void Init(Log::Logger* p_logger) {};
 
     /**
      * Prepares this object for use.
      *
-     * @param	bLogging	(optional) the logging.
+     * @param   bLogging    (optional) the logging.
      */
     inline void Startup(bool bLogging = false) {};
 
@@ -192,35 +192,35 @@ namespace Log {
     /**
      * Gets the debugger.
      *
-     * @return	null if it fails, else the debugger.
+     * @return  null if it fails, else the debugger.
      */
     inline Log::Logger* GetLogger(void) { return NULL; };
 
     /**
      * Logs the given format.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void Log(const char* Format, ...) {};
 
     /**
      * Logs the graphics.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogGraphic(const char* Format, ...) {};
 
     /**
      * Logs an input.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogInput(const char* Format, ...) {};
 
     /**
      * Logs the physics.
      *
-     * @param	Format	Describes the format to use.
+     * @param   Format  Describes the format to use.
      */
     inline void LogPhysic(const char* Format, ...) {};
 

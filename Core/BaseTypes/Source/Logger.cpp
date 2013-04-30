@@ -61,7 +61,6 @@ Log::Logger::Logger(bool bLogging) {
  * @inheritDoc
  */
 Log::Logger::~Logger() {
-    
 }
 
 /**
@@ -105,10 +104,8 @@ void Log::Logger::Log(LogType::LogType Type, const char* Format, va_list ArgList
     }
 
     boost::lock_guard<boost::mutex> lock(m_logMutex);
-    
     char message[MAX_STRING_LENGTH];
     vsnprintf(message, sizeof(message), Format, ArgList);
-    
     // Output to file
     (*m_logFiles[Type]) << message << std::endl;
     m_logFiles[Type]->flush();

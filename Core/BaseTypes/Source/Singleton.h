@@ -20,49 +20,49 @@
  * Base case for all singleton classes.
  */
 class Singleton {
-    public:
-        
-        /**
-         * Default constructor.
-         */
-        Singleton(void);
-        
-        /**
-         * Destructor.
-         */
-        ~Singleton(void);
+public:
+
+    /**
+     * Default constructor.
+     */
+    Singleton(void);
+
+    /**
+     * Destructor.
+     */
+    ~Singleton(void);
 
 #ifdef DEBUG_BUILD
-        
-        /**
-         * Overrid new operator.
-         *
-         * @param	The object size.
-         * @return	void*.
-         */
-        void* operator new(size_t);
 
-        /**
-         * Overrid new[] operator.
-         *
-         * @param	The object size.
-         * @return	void*.
-         */
-        void* operator new[](size_t);
-        
-        /**
-         * Overrid delete operator.
-         *
-         * @param [in,out]	void*.
-         */
-        void operator delete(void*);
-        
-        /**
-         * Overrid delete[] operator.
-         *
-         * @param [in,out]	void*.
-         */
-        void operator delete[](void*);
+    /**
+     * Overrid new operator.
+     *
+     * @param   The object size.
+     * @return  void*.
+     */
+    void* operator new(size_t);
+
+    /**
+     * Overrid new[] operator.
+     *
+     * @param   The object size.
+     * @return  void*.
+     */
+    void* operator new[](size_t);
+
+    /**
+     * Overrid delete operator.
+     *
+     * @param [in,out]  void*.
+     */
+    void operator delete(void*);
+
+    /**
+     * Overrid delete[] operator.
+     *
+     * @param [in,out]  void*.
+     */
+    void operator delete[](void*);
 #endif
 
 };
