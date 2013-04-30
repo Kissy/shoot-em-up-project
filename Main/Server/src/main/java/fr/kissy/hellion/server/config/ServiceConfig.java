@@ -4,11 +4,13 @@ import fr.kissy.hellion.server.service.ObjectService;
 import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
  * @version $Id$
  */
+@Configuration
 public class ServiceConfig {
 
     @Bean
