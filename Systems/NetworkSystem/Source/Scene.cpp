@@ -103,7 +103,9 @@ void NetworkScene::queueDeleteObjects(ProtoObjectList objectProtoList) {
 void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
         auto systemObjectIterator = m_pObjects.find(object.name());
-        ASSERTMSG1(systemObjectIterator != m_pObjects.end(), "Object with name %s not found in this system", object.name());
-        systemObjectIterator->second->setProperties(object.systemobjects().Get(0).properties());
+        // ignore updates if the object is not found
+        if (systemObjectIterator != m_pObjects.end()) {
+            systemObjectIterator->second->setProperties(object.systemobjects().Get(0).properties());
+        }
     }
 }
