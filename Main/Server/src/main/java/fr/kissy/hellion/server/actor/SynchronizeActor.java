@@ -48,14 +48,20 @@ public class SynchronizeActor extends UntypedActor {
         for (Player nearPlayer : nearPlayers) {
             // If the player doesn't have it already in it's list
             // then add the object to creation set.
-            if (player.getNearPlayers().add(nearPlayer)) {
+            boolean create = player.getNearPlayers().add(nearPlayer);
+            create &= nearPlayer.getNearPlayers().add(player);
+            if (create) {
                 createdPlayers.add(nearPlayer);
             } else {
                 updatedPlayers.add(nearPlayer);
             }
         }
 
-        Set<Player> deletedPlayers = Sets.difference(player.getNearPlayers(), Sets.newHashSet(nearPlayers));
+        Set<Player> deletedPlayers = Sets.difference(player.getNearPlayers(), Sets.newHashSet(nearPlayers)).immutableCopy();
+        player.getNearPlayers().removeAll(deletedPlayers);
+        for (Player nearPlayer : deletedPlayers) {
+            nearPlayer.getNearPlayers().remove(player);
+        }
 
         // Current player can have either created or deleted object
         LOGGER.debug("Number of player to create for user {} is {}", player.getId(), createdPlayers.size());
@@ -63,7 +69,6 @@ public class SynchronizeActor extends UntypedActor {
             player.getChannel().write(upstreamMessageService.getObjectCreatedMessage(createdPlayers));
             UpstreamMessageDto.UpstreamMessageProto playerCreateMessage = upstreamMessageService.getObjectCreatedMessage(player);
             for (Player nearPlayer : createdPlayers) {
-                nearPlayer.getNearPlayers().add(player);
                 nearPlayer.getChannel().write(playerCreateMessage);
             }
         }
@@ -80,8 +85,6 @@ public class SynchronizeActor extends UntypedActor {
             player.getChannel().write(upstreamMessageService.getObjectDeletedMessage(deletedPlayers));
             UpstreamMessageDto.UpstreamMessageProto playerDeleteMessage = upstreamMessageService.getObjectDeletedMessage(player);
             for (Player nearPlayer : deletedPlayers) {
-                player.getNearPlayers().remove(nearPlayer);
-                nearPlayer.getNearPlayers().remove(player);
                 nearPlayer.getChannel().write(playerDeleteMessage);
             }
         }
