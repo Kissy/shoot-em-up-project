@@ -30,7 +30,7 @@ PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char*
     , m_dirty(false)
     , m_position(Math::Vector3::Zero)
     , m_velocity(Math::Vector3::Zero)
-    , m_heartbeat_delay(1000000000LL) /* 1s */ {
+    , m_heartbeat_delay(500000000LL) /* 500ms */ {
     m_heartbeat.stop();
 }
 
