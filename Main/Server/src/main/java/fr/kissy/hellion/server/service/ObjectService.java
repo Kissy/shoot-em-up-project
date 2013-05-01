@@ -29,6 +29,7 @@ public class ObjectService {
         ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
         graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
         graphicSystemObject.setType(IMAGE);
+        graphicSystemObject.addProperties(player.getImageProperty().build());
 
         if (isControllable) {
             ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = builder.addSystemObjectsBuilder();

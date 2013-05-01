@@ -26,53 +26,63 @@ class ISystemScene;
  * @sa  ISystemObject
  */
 class ImageGraphicObject : public GraphicObject {
+public:
+    /**
+     * @inheritDoc
+     */
+    ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName);
     
-    public:
-
-        /**
-         * @inheritDoc
-         */
-        ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName);
-
-        /**
-         * @inheritDoc
-         */
-        virtual ~ImageGraphicObject(void);
-
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
-
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::None;
-        };
-
-        /**
-         * @inheritDoc
-         */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
-        };
+    /**
+     * @inheritDoc
+     */
+    virtual ~ImageGraphicObject(void);
+    
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
+    
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::None;
+    };
+    
+    /**
+     * @inheritDoc
+     */
+    System::Types::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+    };
         
-        /**
-         * @inheritDoc
-         */
-        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    /**
+     * @inheritDoc
+     */
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
         
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-    public:
+    /**
+     * @inheritDoc
+     */
+    void setImage(ProtoStringList values);
 
-        SDL_Surface*                        m_image;
-        SDL_Surface*                        m_DisplayImage;
-        SDL_Rect*                           m_position;
+    /**
+     * @inheritDoc
+     */
+    void getImage(ProtoStringList* values);
+
+public:
+    static const std::string IMAGE_BASE_PATH;
+
+    std::string                         m_image;
+    SDL_Surface*                        m_sourceImage;
+    SDL_Surface*                        m_displayImage;
+    SDL_Rect*                           m_position;
 
 };
 

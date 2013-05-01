@@ -22,6 +22,7 @@ public class Player implements BoxObject {
 
     @Id
     private ObjectId id;
+    private PropertyDto.PropertyProto.Builder imageProperty;
     private PropertyDto.PropertyProto.Builder positionProperty;
     private PropertyDto.PropertyProto.Builder velocityProperty;
     private PropertyDto.PropertyProto.Builder orientationProperty;
@@ -30,7 +31,11 @@ public class Player implements BoxObject {
     private Channel channel;
     private Set<Player> nearPlayers = Sets.newHashSet();
 
-    public Player() {
+    public Player(String image) {
+        imageProperty = PropertyDto.PropertyProto.newBuilder();
+        imageProperty.setName("Image");
+        imageProperty.addValue(ByteString.copyFrom(image.getBytes()));
+
         positionProperty = PropertyDto.PropertyProto.newBuilder();
         positionProperty.setName("Position");
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
@@ -61,6 +66,10 @@ public class Player implements BoxObject {
 
     public PropertyDto.PropertyProto.Builder getPositionProperty() {
         return positionProperty;
+    }
+
+    public PropertyDto.PropertyProto.Builder getImageProperty() {
+        return imageProperty;
     }
 
     public void setPosition(ByteString x, ByteString y, ByteString z) {

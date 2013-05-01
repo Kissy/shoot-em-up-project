@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/bind.hpp>
 #include <SDL_image.h>
 #pragma warning( push )
 #pragma warning( disable : 4244 )
@@ -25,6 +26,8 @@
 #include "Object.h"
 #include "ImageObject.h"
 
+const std::string ImageGraphicObject::IMAGE_BASE_PATH = "../../Assets/Media/Graphic/";
+
 /**
  * @inheritDoc
  */
@@ -32,8 +35,9 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* p
     m_position = new SDL_Rect();
     m_position->x = 0;
     m_position->y = 0;
-    m_image = IMG_Load("../../Assets/Media/Graphic/SpaceShip.png");
-    m_DisplayImage = SDL_ConvertSurface(m_image, m_image->format, m_image->flags);
+    
+    m_propertySetters["Image"] = boost::bind(&ImageGraphicObject::setImage, this, _1);
+    m_propertyGetters["Image"] = boost::bind(&ImageGraphicObject::getImage, this, _1);
 }
 
 /**
@@ -42,8 +46,8 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* p
 ImageGraphicObject::~ImageGraphicObject(void) {
     delete m_position;
     if (m_bInitialized) {
-        SDL_FreeSurface(m_image);
-        SDL_FreeSurface(m_DisplayImage);
+        SDL_FreeSurface(m_sourceImage);
+        SDL_FreeSurface(m_displayImage);
     }
 }
 
@@ -52,6 +56,10 @@ ImageGraphicObject::~ImageGraphicObject(void) {
  */
 Error ImageGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
+    
+    std::string image = IMAGE_BASE_PATH + m_image;
+    m_sourceImage = IMG_Load(image.c_str());
+    m_displayImage = SDL_ConvertSurface(m_sourceImage, m_sourceImage->format, m_sourceImage->flags);
     
     m_bInitialized = true;
     return Errors::Success;
@@ -70,13 +78,33 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
         const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_DisplayImage = SPG_Rotate(m_image, orientation->x);
+        m_displayImage = SPG_Rotate(m_sourceImage, orientation->x);
     }
 
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
 void ImageGraphicObject::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
-    SDL_BlitSurface(m_DisplayImage, NULL, screen, m_position);
+    SDL_BlitSurface(m_displayImage, NULL, screen, m_position);
+}
+
+/**
+ * @inheritDoc
+ */
+void ImageGraphicObject::setImage(ProtoStringList values) {
+    ProtoStringList::const_iterator value = values.begin();
+    m_image = *value;
+}
+
+/**
+ * @inheritDoc
+ */
+void ImageGraphicObject::getImage(ProtoStringList* values) {
+    std::string* value = nullptr;
+    value = values->Add();
+    value->append(m_image);
 }
