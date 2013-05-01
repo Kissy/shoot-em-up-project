@@ -43,11 +43,11 @@ Error PlayerInputObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
     m_upInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_UP);
-    m_rightInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_RIGHT);
+    m_rightInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_r);
     m_downInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_DOWN);
-    m_leftInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_LEFT);
-    m_rightRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_t);
-    m_leftRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_r);
+    m_leftInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_e);
+    m_rightRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_RIGHT);
+    m_leftRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_LEFT);
     
     m_bInitialized = true;
     return Errors::Success;
@@ -85,11 +85,11 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     }
     if (m_rightRotateInputAction->isActive()) {
         mModified |= System::Changes::Physic::Orientation;
-        m_orientation.x += 2;
+        m_orientation.x += 3;
     }
     if (m_leftRotateInputAction->isActive()) {
         mModified |= System::Changes::Physic::Orientation;
-        m_orientation.x -= 2;
+        m_orientation.x -= 3;
     }
     
     if (mModified != 0) {
