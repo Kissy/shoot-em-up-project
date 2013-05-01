@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Guillaume Le Biller <lebiller@ekino.com>
  * @version $Id$
  */
-public class DisconnectActor extends UntypedActor {
+public class  DisconnectActor extends UntypedActor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateActor.class);
 

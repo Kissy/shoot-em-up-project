@@ -54,6 +54,11 @@ public:
      */
     void receive(void);
 
+    /**
+     * If we are connected, then disconnect.
+     */
+    void disconnect(void);
+
 private:
 
     /**

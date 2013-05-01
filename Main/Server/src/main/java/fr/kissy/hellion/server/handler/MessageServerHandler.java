@@ -51,17 +51,7 @@ public class MessageServerHandler extends SimpleChannelUpstreamHandler {
      * @inheritDoc
      */
     @Override
-    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent event) throws Exception {
+    public void channelDisconnected(ChannelHandlerContext context, ChannelStateEvent event) throws Exception {
         stateEventBus.publish(event);
     }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    public void exceptionCaught(ChannelHandlerContext context, ExceptionEvent event) {
-        LOGGER.warn("Unexpected exception from downstream.", event.getCause());
-        event.getChannel().close();
-    }
-
 }

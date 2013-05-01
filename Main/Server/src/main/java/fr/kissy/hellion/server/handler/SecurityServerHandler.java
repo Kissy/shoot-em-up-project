@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServerHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServerHandler.class);
 
     /**
      * @inheritDoc
@@ -66,8 +66,7 @@ public class SecurityServerHandler extends SimpleChannelUpstreamHandler {
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext context, ExceptionEvent event) {
-        logger.warn("Unexpected exception from upstream.", event);
-        event.getChannel().close();
+        LOGGER.warn("Unexpected exception from upstream.", event);
     }
 
 }

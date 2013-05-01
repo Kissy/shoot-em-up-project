@@ -40,9 +40,13 @@ NetworkService::NetworkService(NetworkSystem* networkSystem)
  * @inheritDoc
  */
 NetworkService::~NetworkService(void) {
+    disconnect();
     delete m_pSocket;
 }
 
+/**
+ * @inheritDoc
+ */
 void NetworkService::connect(std::string host, std::string port) {
     boost::asio::ip::tcp::resolver resolver(m_ioService);
     boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), host, port);
@@ -76,6 +80,17 @@ void NetworkService::send(const DownstreamMessageProto& downstreamMessageProto) 
  */
 void NetworkService::receive(void) {
     m_ioService.poll();
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkService::disconnect(void) {
+    if (!m_connected) {
+        return;
+    }
+
+    m_pSocket->close();
 }
 
 /**
