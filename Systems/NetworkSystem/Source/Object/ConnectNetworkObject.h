@@ -59,7 +59,19 @@ public:
      */
     void Update(f32 DeltaTime);
 
+    /**
+     * @inheritDoc
+     */
+    void setUsername(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getUsername(ProtoStringList* values);
+
 private:
+
+    std::string     m_username;
 
 };
 

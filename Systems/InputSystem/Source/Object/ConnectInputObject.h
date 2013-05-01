@@ -66,10 +66,19 @@ public:
         return &m_keyboardButtonData;
     }
 
+    /**
+     * @inheritDoc
+     */
+    void setKey(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getKey(ProtoStringList* values);
+
 private:
-    
-    InputAction*                    m_connectInputActionF1;
-    InputAction*                    m_connectInputActionF2;
+    SDLKey                          m_key;
+    InputAction*                    m_connectInputAction;
     KeyboardButtonData              m_keyboardButtonData;
 
 };

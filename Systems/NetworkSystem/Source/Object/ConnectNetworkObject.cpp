@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "System/ISystemScene.h"
@@ -22,6 +23,8 @@
  * @inheritDoc
  */
 ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName) {
+    m_propertySetters["Username"] = boost::bind(&ConnectNetworkObject::setUsername, this, _1);
+    m_propertyGetters["Username"] = boost::bind(&ConnectNetworkObject::getUsername, this, _1);
 }
 
 /**
@@ -51,7 +54,7 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
         if (keyboardButtonData->down) {
             DownstreamMessageProto downstreamMessageProto;
             downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);
-            downstreamMessageProto.set_data(boost::lexical_cast<std::string>(keyboardButtonData->type));
+            downstreamMessageProto.set_data(boost::lexical_cast<std::string>(m_username));
             reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessageProto);
         }
     }
@@ -65,4 +68,21 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
 void ConnectNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
+}
+
+/**
+ * @inheritDoc
+ */
+void ConnectNetworkObject::setUsername(ProtoStringList values) {
+    ProtoStringList::const_iterator value = values.begin();
+    m_username = *value;
+}
+
+/**
+ * @inheritDoc
+ */
+void ConnectNetworkObject::getUsername(ProtoStringList* values) {
+    std::string* value = nullptr;
+    value = values->Add();
+    value->append(m_username);
 }
