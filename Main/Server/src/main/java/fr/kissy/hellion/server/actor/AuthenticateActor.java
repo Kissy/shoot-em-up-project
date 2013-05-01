@@ -1,14 +1,9 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
-import fr.kissy.hellion.proto.common.ObjectDto;
-import fr.kissy.hellion.proto.common.SystemDto;
-import fr.kissy.hellion.proto.message.Authenticated;
-import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
-import fr.kissy.hellion.server.service.ObjectService;
 import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import org.apache.shiro.authc.AuthenticationException;
@@ -18,12 +13,6 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 
 /**

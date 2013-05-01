@@ -26,6 +26,7 @@ public class PlayerMoveActor extends UntypedActor {
 
     @Autowired
     private WorldService worldService;
+
     @Autowired
     @Qualifier("synchronizeActorRef")
     private ActorRef synchronizeActorRef;
