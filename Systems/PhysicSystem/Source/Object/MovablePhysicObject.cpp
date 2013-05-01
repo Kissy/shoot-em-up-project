@@ -51,7 +51,7 @@ Error MovablePhysicObject::initialize(void) {
 Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-    if (ChangeType & System::Changes::Input::Velocity) {
+    if (ChangeType & System::Changes::Physic::Velocity) {
         const Math::Vector3* velocity = dynamic_cast<IMoveObject*>(pSubject)->GetVelocity();
         m_velocity.x = velocity->x;
         m_velocity.y = velocity->y;

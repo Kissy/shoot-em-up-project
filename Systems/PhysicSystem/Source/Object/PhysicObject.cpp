@@ -32,6 +32,9 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : IS
     
     m_propertySetters["Position"] = boost::bind(&PhysicObject::setPosition, this, _1);
     m_propertyGetters["Position"] = boost::bind(&PhysicObject::getPosition, this, _1);
+    
+    m_propertySetters["Orientation"] = boost::bind(&PhysicObject::setPosition, this, _1);
+    m_propertyGetters["Orientation"] = boost::bind(&PhysicObject::getPosition, this, _1);
 }
 
 /**
@@ -49,7 +52,7 @@ void PhysicObject::setVelocity(ProtoStringList values) {
     m_velocity.x = boost::lexical_cast<f32>(*(value++));
     m_velocity.y = boost::lexical_cast<f32>(*(value++));
     m_velocity.z = boost::lexical_cast<f32>(*value);
-    PostChanges(System::Changes::Input::Velocity);
+    PostChanges(System::Changes::Physic::Velocity);
 }
 
 /**

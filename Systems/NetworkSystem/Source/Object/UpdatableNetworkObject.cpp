@@ -79,7 +79,7 @@ void UpdatableNetworkObject::setVelocity(ProtoStringList values) {
     m_velocity.x = boost::lexical_cast<f32>(*(value++));
     m_velocity.y = boost::lexical_cast<f32>(*(value++));
     m_velocity.z = boost::lexical_cast<f32>(*value);
-    PostChanges(System::Changes::Input::Velocity);
+    PostChanges(System::Changes::Physic::Velocity);
 }
 
 /**

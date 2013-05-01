@@ -48,7 +48,7 @@ class PlayerInputObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+            return System::Changes::Physic::Velocity;
         };
 
         /**

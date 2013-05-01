@@ -56,7 +56,7 @@ class InputScene : public ISystemScene {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Input::Velocity;
+            return System::Changes::Physic::Velocity;
         };
 
         /**

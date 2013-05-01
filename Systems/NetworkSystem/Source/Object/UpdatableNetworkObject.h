@@ -50,7 +50,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Input::Velocity | System::Changes::Physic::Position;
+        return System::Changes::Physic::Velocity | System::Changes::Physic::Position;
     };
 
     /**
