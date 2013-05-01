@@ -230,15 +230,15 @@ Error Framework::Execute(void) {
         // Call the scheduler to have the systems internally update themselves.
         //
         m_pScheduler->Execute();
+        
+        // Process first the object creation messages alone since it will 
+        // generate some object messages that need to be processed by the object CCM.
+        m_pSceneCCM->DistributeQueuedChanges(System::Types::Generic, System::Changes::Generic::CreateObject);
         //
         // Distribute changes for object and scene CCMs.  The UObject propagates some object
         // messages up to the scene CCM so it needs to go first.
-        // Process first the object creation & object deletion messages alone since it will 
-        // generate some object messages that need to be processed by the object CCM.
-        //
-        m_pSceneCCM->DistributeQueuedChanges(System::Types::Generic, System::Changes::Generic::All);
         m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All ^ System::Changes::Generic::CreateObject);
 
         //
         // Check with the environment manager if there is a change in the runtime status to quit.
