@@ -25,7 +25,11 @@
  * @inheritDoc
  */
 PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName)
+    , m_velocity(Math::Vector3::Zero)
     , m_position(Math::Vector3::Zero) {
+    m_propertySetters["Velocity"] = boost::bind(&PhysicObject::setVelocity, this, _1);
+    m_propertyGetters["Velocity"] = boost::bind(&PhysicObject::getVelocity, this, _1);
+    
     m_propertySetters["Position"] = boost::bind(&PhysicObject::setPosition, this, _1);
     m_propertyGetters["Position"] = boost::bind(&PhysicObject::getPosition, this, _1);
 }
@@ -35,6 +39,30 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : IS
  */
 PhysicObject::~PhysicObject(void) {
 
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicObject::setVelocity(ProtoStringList values) {
+    ProtoStringList::const_iterator value = values.begin();
+    m_velocity.x = boost::lexical_cast<f32>(*(value++));
+    m_velocity.y = boost::lexical_cast<f32>(*(value++));
+    m_velocity.z = boost::lexical_cast<f32>(*value);
+    PostChanges(System::Changes::Input::Velocity);
+}
+
+/**
+ * @inheritDoc
+ */
+void PhysicObject::getVelocity(ProtoStringList* values) {
+    std::string* value = nullptr;
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_velocity.x));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_velocity.y));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(m_velocity.z));
 }
 
 /**

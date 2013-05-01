@@ -25,7 +25,7 @@ class HavokPhysicsTask;
 /// </summary>
 ///////////////////////////////////////////////////////////////////////////////
 
-class PhysicObject : public ISystemObject, public IGeometryObject {
+class PhysicObject : public ISystemObject, public IGeometryObject, public IMoveObject {
 public:
 
     /**
@@ -37,6 +37,16 @@ public:
      * @inheritDoc
      */
     virtual ~PhysicObject(void);
+
+    /**
+     * @inheritDoc
+     */
+    void setVelocity(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getVelocity(ProtoStringList* values);
 
     /**
      * @inheritDoc
@@ -53,6 +63,13 @@ public:
      */
     inline System::Type GetSystemType(void) {
         return System::Types::Physic;
+    }
+        
+    /**
+     * @inheritDoc
+     */
+    const Math::Vector3* GetVelocity(void) {
+        return &m_velocity;
     }
 
     /**
@@ -77,6 +94,7 @@ public:
     }
 
 protected:
-    Math::Vector3   m_position;
+    Math::Vector3       m_velocity;
+    Math::Vector3       m_position;
 
 };

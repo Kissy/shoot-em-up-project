@@ -48,7 +48,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Position;
+        return System::Changes::Input::Velocity | System::Changes::Physic::Position;
     };
 
     /**
@@ -70,6 +70,5 @@ public:
 
 private:
     static const int     m_speed_multiplier;
-    Math::Vector3        m_velocity;
 
 };

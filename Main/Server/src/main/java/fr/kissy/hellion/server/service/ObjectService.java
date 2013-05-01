@@ -34,7 +34,6 @@ public class ObjectService {
             ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = builder.addSystemObjectsBuilder();
             inputSystemObject.setSystemType(SystemDto.SystemProto.Type.Input);
             inputSystemObject.setType(PLAYER);
-            inputSystemObject.addProperties(player.getVelocityProperty().build());
         }
 
         ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = builder.addSystemObjectsBuilder();
@@ -45,6 +44,7 @@ public class ObjectService {
         physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
         physicSystemObject.setType(MOVABLE);
         physicSystemObject.addProperties(player.getPositionProperty().build());
+        physicSystemObject.addProperties(player.getVelocityProperty().build());
 
         return builder.build();
     }

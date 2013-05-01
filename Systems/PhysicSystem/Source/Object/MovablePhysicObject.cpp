@@ -24,8 +24,7 @@ const int MovablePhysicObject::m_speed_multiplier = 4;
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) : PhysicObject(pSystemScene, pszName)
-    , m_velocity(Math::Vector3::Zero) {
+MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) : PhysicObject(pSystemScene, pszName) {
     
 }
 
