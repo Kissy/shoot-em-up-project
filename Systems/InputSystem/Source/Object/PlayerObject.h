@@ -25,7 +25,7 @@ class ISystemScene;
  * 
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IMoveObject {
+class PlayerInputObject : public InputObject, public IGeometryObject, public IMoveObject {
     
     public:
 
@@ -48,7 +48,7 @@ class PlayerInputObject : public InputObject, public IMoveObject {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Physic::Velocity;
+            return System::Changes::Physic::Velocity | System::Changes::Physic::Orientation;
         };
 
         /**
@@ -75,14 +75,38 @@ class PlayerInputObject : public InputObject, public IMoveObject {
             return &m_velocity;
         }
 
+        /**
+         * @inheritDoc
+         */
+        inline const Math::Vector3* GetPosition(void) {
+            return NULL;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        inline const Math::Quaternion* GetOrientation(void) {
+            return &m_orientation;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        inline const Math::Vector3* GetScale(void) {
+            return NULL;
+        }
+
     private:
         
         InputAction* m_upInputAction;
         InputAction* m_rightInputAction;
         InputAction* m_downInputAction;
         InputAction* m_leftInputAction;
+        InputAction* m_rightRotateInputAction;
+        InputAction* m_leftRotateInputAction;
 
-        Math::Vector3 m_velocity;
+        Math::Vector3       m_velocity;
+        Math::Quaternion    m_orientation;
 
 };
 

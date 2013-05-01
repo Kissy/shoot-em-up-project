@@ -48,14 +48,14 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Physic::Position;
+        return System::Changes::Physic::Velocity | System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Physic::Position;
+        return System::Changes::Physic::Velocity | System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**

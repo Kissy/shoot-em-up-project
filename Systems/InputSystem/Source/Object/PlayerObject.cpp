@@ -24,7 +24,8 @@
  * @inheritDoc
  */
 PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName)
-    , m_velocity(Math::Vector3::Zero) {
+    , m_velocity(Math::Vector3::Zero)
+    , m_orientation(Math::Quaternion::Zero) {
     
 }
 
@@ -45,6 +46,8 @@ Error PlayerInputObject::initialize(void) {
     m_rightInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_RIGHT);
     m_downInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_DOWN);
     m_leftInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_LEFT);
+    m_rightRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_t);
+    m_leftRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_r);
     
     m_bInitialized = true;
     return Errors::Success;
@@ -79,6 +82,14 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     if (m_leftInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
+    }
+    if (m_rightRotateInputAction->isActive()) {
+        mModified |= System::Changes::Physic::Orientation;
+        m_orientation.x += 2;
+    }
+    if (m_leftRotateInputAction->isActive()) {
+        mModified |= System::Changes::Physic::Orientation;
+        m_orientation.x -= 2;
     }
     
     if (mModified != 0) {

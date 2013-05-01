@@ -55,7 +55,7 @@ class ImageGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Physic::Position;
+            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
         };
         
         /**
@@ -71,6 +71,7 @@ class ImageGraphicObject : public GraphicObject {
     public:
 
         SDL_Surface*                        m_image;
+        SDL_Surface*                        m_DisplayImage;
         SDL_Rect*                           m_position;
 
 };

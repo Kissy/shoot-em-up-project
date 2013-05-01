@@ -56,7 +56,7 @@ public:
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Physic::Position;
+        return System::Changes::Physic::Velocity | System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
@@ -70,11 +70,10 @@ public:
     void Update(f32 DeltaTime);
 
 private:
-
-    
     bool                            m_dirty;
     Math::Vector3                   m_position;
     Math::Vector3                   m_velocity;
+    Math::Quaternion                m_orientation;
     boost::timer::cpu_timer         m_heartbeat;
     boost::timer::nanosecond_type   m_heartbeat_delay;
 

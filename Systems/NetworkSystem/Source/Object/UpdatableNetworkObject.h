@@ -83,6 +83,16 @@ public:
     /**
      * @inheritDoc
      */
+    void setOrientation(ProtoStringList values);
+
+    /**
+     * @inheritDoc
+     */
+    void getOrientation(ProtoStringList* values);
+
+    /**
+     * @inheritDoc
+     */
     void setPosition(ProtoStringList values);
 
     /**
@@ -101,7 +111,7 @@ public:
      * @inheritDoc
      */
     inline const Math::Quaternion* GetOrientation(void) {
-        return NULL;
+        return &m_orientation;
     }
 
     /**
@@ -119,6 +129,7 @@ public:
     }
 
 private:
+    Math::Quaternion                m_orientation;
     Math::Vector3                   m_position;
     Math::Vector3                   m_velocity;
 

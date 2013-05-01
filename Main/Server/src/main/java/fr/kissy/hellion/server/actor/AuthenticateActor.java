@@ -1,6 +1,7 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
+import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
@@ -63,7 +64,11 @@ public class AuthenticateActor extends UntypedActor {
         Player player = new Player();
         player.setId(new ObjectId());
         player.setChannel(messageEvent.getChannel());
-        player.setPosition(200, 200, 200);
+        player.setPosition(
+            ByteString.copyFrom(String.valueOf(200).getBytes()),
+            ByteString.copyFrom(String.valueOf(200).getBytes()),
+            ByteString.copyFrom(String.valueOf(200).getBytes())
+        );
         subject.getSession().setAttribute(Player.class.getSimpleName(), player);
         world.addPlayer(player);
 

@@ -13,6 +13,10 @@
 // responsibility to update it.
 
 #include <SDL_image.h>
+#pragma warning( push )
+#pragma warning( disable : 4244 )
+#include <sprig.h>
+#pragma warning( pop ) 
 
 #include "BaseTypes.h"
 #include "Interface.h"
@@ -29,6 +33,7 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* p
     m_position->x = 0;
     m_position->y = 0;
     m_image = IMG_Load("../../Assets/Media/Graphic/SpaceShip.png");
+    m_DisplayImage = SDL_ConvertSurface(m_image, m_image->format, m_image->flags);
 }
 
 /**
@@ -38,6 +43,7 @@ ImageGraphicObject::~ImageGraphicObject(void) {
     delete m_position;
     if (m_bInitialized) {
         SDL_FreeSurface(m_image);
+        SDL_FreeSurface(m_DisplayImage);
     }
 }
 
@@ -62,11 +68,15 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
         m_position->x = (Sint16) position->x - 64;
         m_position->y = (Sint16) position->y - 64;
     }
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
+        m_DisplayImage = SPG_Rotate(m_image, orientation->x);
+    }
 
     return Errors::Success;
 }
 
 void ImageGraphicObject::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
-    SDL_BlitSurface(m_image, NULL, screen, m_position);
+    SDL_BlitSurface(m_DisplayImage, NULL, screen, m_position);
 }

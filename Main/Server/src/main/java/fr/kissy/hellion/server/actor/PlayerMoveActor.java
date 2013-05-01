@@ -25,9 +25,6 @@ public class PlayerMoveActor extends UntypedActor {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerMoveActor.class);
 
     @Autowired
-    private WorldService worldService;
-
-    @Autowired
     @Qualifier("synchronizeActorRef")
     private ActorRef synchronizeActorRef;
 
@@ -41,15 +38,22 @@ public class PlayerMoveActor extends UntypedActor {
         for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
             if (propertyProto.getName().equals("Position")) {
                 player.setPosition(
-                    Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())),
-                    Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())),
-                    Integer.valueOf(new String(propertyProto.getValue(2).toByteArray()))
+                    propertyProto.getValue(0),
+                    propertyProto.getValue(1),
+                    propertyProto.getValue(2)
+                );
+            } else if (propertyProto.getName().equals("Orientation")) {
+                player.setOrientation(
+                    propertyProto.getValue(0),
+                    propertyProto.getValue(1),
+                    propertyProto.getValue(2),
+                    propertyProto.getValue(3)
                 );
             } else if (propertyProto.getName().equals("Velocity")) {
                 player.setVelocity(
-                    Integer.valueOf(new String(propertyProto.getValue(0).toByteArray())),
-                    Integer.valueOf(new String(propertyProto.getValue(1).toByteArray())),
-                    Integer.valueOf(new String(propertyProto.getValue(2).toByteArray()))
+                    propertyProto.getValue(0),
+                    propertyProto.getValue(1),
+                    propertyProto.getValue(2)
                 );
             }
         }

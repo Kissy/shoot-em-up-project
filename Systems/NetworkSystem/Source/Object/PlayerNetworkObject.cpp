@@ -30,6 +30,7 @@ PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char*
     , m_dirty(true)
     , m_position(Math::Vector3::Zero)
     , m_velocity(Math::Vector3::Zero)
+    , m_orientation(Math::Quaternion::Zero)
     , m_heartbeat_delay(500000000LL) /* 500ms */ {
     m_heartbeat.stop();
 }
@@ -65,12 +66,20 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 
         m_dirty = true;
     }
-
     if (ChangeType & System::Changes::Physic::Position) {
         const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
         m_position.x = position->x;
         m_position.y = position->y;
         m_position.z = position->z;
+    }
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
+        m_orientation.x = orientation->x;
+        m_orientation.y = orientation->y;
+        m_orientation.z = orientation->z;
+        m_orientation.w = orientation->w;
+
+        m_dirty = true;
     }
 
     return Errors::Success;
@@ -101,6 +110,12 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
         velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.x));
         velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.y));
         velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.z));
+        PropertyProto* orientationProperty = systemObject->add_properties();
+        orientationProperty->set_name("Orientation");
+        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.x));
+        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.y));
+        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.z));
+        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.w));
         PropertyProto* positionProperty = systemObject->add_properties();
         positionProperty->set_name("Position");
         positionProperty->add_value(boost::lexical_cast<std::string>(m_position.x));

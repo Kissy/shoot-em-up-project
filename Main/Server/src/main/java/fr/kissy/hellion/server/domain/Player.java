@@ -24,6 +24,7 @@ public class Player implements BoxObject {
     private ObjectId id;
     private PropertyDto.PropertyProto.Builder positionProperty;
     private PropertyDto.PropertyProto.Builder velocityProperty;
+    private PropertyDto.PropertyProto.Builder orientationProperty;
 
     // Local Instance
     private Channel channel;
@@ -35,6 +36,13 @@ public class Player implements BoxObject {
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+
+        orientationProperty = PropertyDto.PropertyProto.newBuilder();
+        orientationProperty.setName("Orientation");
+        orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(1)));
 
         velocityProperty = PropertyDto.PropertyProto.newBuilder();
         velocityProperty.setName("Velocity");
@@ -55,20 +63,31 @@ public class Player implements BoxObject {
         return positionProperty;
     }
 
+    public void setPosition(ByteString x, ByteString y, ByteString z) {
+        positionProperty.setValue(0, x);
+        positionProperty.setValue(1, y);
+        positionProperty.setValue(2, z);
+    }
+
     public PropertyDto.PropertyProto.Builder getVelocityProperty() {
         return velocityProperty;
     }
 
-    public void setPosition(int x, int y, int z) {
-        positionProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
-        positionProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
-        positionProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
+    public void setVelocity(ByteString x, ByteString y, ByteString z) {
+        velocityProperty.setValue(0, x);
+        velocityProperty.setValue(1, y);
+        velocityProperty.setValue(2, z);
     }
 
-    public void setVelocity(float x, float y, float z) {
-        velocityProperty.setValue(0, ByteString.copyFromUtf8(String.valueOf(x)));
-        velocityProperty.setValue(1, ByteString.copyFromUtf8(String.valueOf(y)));
-        velocityProperty.setValue(2, ByteString.copyFromUtf8(String.valueOf(z)));
+    public PropertyDto.PropertyProto.Builder getOrientationProperty() {
+        return orientationProperty;
+    }
+
+    public void setOrientation(ByteString x, ByteString y, ByteString z, ByteString w) {
+        orientationProperty.setValue(0, x);
+        orientationProperty.setValue(1, y);
+        orientationProperty.setValue(2, z);
+        orientationProperty.setValue(3, w);
     }
 
     @Transient
@@ -88,9 +107,9 @@ public class Player implements BoxObject {
     @Override
     public Box getBox() {
         return new Box(
-                Integer.valueOf(new String(positionProperty.getValue(0).toByteArray())),
-                Integer.valueOf(new String(positionProperty.getValue(1).toByteArray())),
-                Integer.valueOf(new String(positionProperty.getValue(2).toByteArray()))
+            Float.valueOf(new String(positionProperty.getValue(0).toByteArray())).intValue(),
+            Float.valueOf(new String(positionProperty.getValue(1).toByteArray())).intValue(),
+            Float.valueOf(new String(positionProperty.getValue(2).toByteArray())).intValue()
         );
     }
 

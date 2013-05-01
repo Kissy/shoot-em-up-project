@@ -63,6 +63,10 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
         m_position.y = position->y;
         m_position.z = position->z;
     }
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
+        m_orientation.Set(Math::Vector3::UnitZ, Math::Angle::Deg2Rad(orientation->x));
+    }
 
     return Errors::Success;
 }
@@ -74,9 +78,12 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
     if (m_velocity != Math::Vector3::Zero) {
-        m_position.x += m_velocity.x * m_speed_multiplier;
-        m_position.y += m_velocity.y * m_speed_multiplier;
-        m_position.z += m_velocity.z * m_speed_multiplier;
+        Math::Vector3 rotatedNormalizedVelocity = Math::Vector3(m_velocity);
+        m_orientation.Rotate(rotatedNormalizedVelocity);
+        rotatedNormalizedVelocity.Normalize();
+        m_position.x += rotatedNormalizedVelocity.x * m_speed_multiplier;
+        m_position.y += rotatedNormalizedVelocity.y * m_speed_multiplier;
+        m_position.z += rotatedNormalizedVelocity.z * m_speed_multiplier;
         PostChanges(System::Changes::Physic::Position);
     }
 }

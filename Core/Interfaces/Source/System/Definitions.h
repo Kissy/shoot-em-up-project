@@ -180,6 +180,7 @@ namespace System {
         namespace Physic {
             static const u32 Velocity           = (1 << 20);
             static const u32 Position           = (1 << 21);
+            static const u32 Orientation        = (1 << 22);
         }
 
         static const u32 Link                   = (1 << 30);

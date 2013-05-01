@@ -20,11 +20,6 @@ public class AppConfig {
     }
 
     @Bean
-    public WorldService worldService() {
-        return new WorldService();
-    }
-
-    @Bean
     public RTree rTree() {
         return new RTree(15, 30, SplitterType.QUADRATIC);
     }
