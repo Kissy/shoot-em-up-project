@@ -19,6 +19,8 @@
 #include "PhysicObject.h"
 #include "Object/MovablePhysicObject.h"
 
+const int MovablePhysicObject::m_speed_multiplier = 4;
+
 /**
  * @inheritDoc
  */
@@ -73,9 +75,9 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
     if (m_velocity != Math::Vector3::Zero) {
-        m_position.x += m_velocity.x * 10;
-        m_position.y += m_velocity.y * 10;
-        m_position.z += m_velocity.z * 10;
+        m_position.x += m_velocity.x * m_speed_multiplier;
+        m_position.y += m_velocity.y * m_speed_multiplier;
+        m_position.z += m_velocity.z * m_speed_multiplier;
         PostChanges(System::Changes::Physic::Position);
     }
 }

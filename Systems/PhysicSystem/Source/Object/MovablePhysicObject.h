@@ -69,6 +69,7 @@ public:
     void Update(f32 DeltaTime);
 
 private:
-    Math::Vector3   m_velocity;
+    static const int     m_speed_multiplier;
+    Math::Vector3        m_velocity;
 
 };
