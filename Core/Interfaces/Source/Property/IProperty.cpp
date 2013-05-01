@@ -34,8 +34,8 @@ IProperty::~IProperty(void) {
  * @inheritDoc
  */
 void IProperty::setProperties(const ProtoPropertyList& properties) {
-    for (ProtoPropertyList::const_iterator property = properties.begin(); property != properties.end(); property++) {
-        setProperty(*property);
+    for (auto property : properties) {
+        setProperty(property);
     }
 };
 
@@ -57,10 +57,10 @@ void IProperty::setProperty(const PropertyProto& property) {
  */
 ProtoPropertyList IProperty::getProperties(void) {
     ProtoPropertyList propertyList;
-    for (PropertyGetters::const_iterator getter = m_propertyGetters.begin(); getter != m_propertyGetters.end(); getter++) {
+    for (auto getter : m_propertyGetters) {
         PropertyProto* property = propertyList.Add();
-        property->set_name(getter->first);
-        getter->second(property->mutable_value());
+        property->set_name(getter.first);
+        getter.second(property->mutable_value());
     }
     return propertyList;
 };
