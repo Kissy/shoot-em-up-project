@@ -156,7 +156,7 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     // Added systems extension.
     //
-    for (ObjectProto_SystemObjectProto objectProto : objectProto->systemobjects()) {
+    for (auto objectProto : objectProto->systemobjects()) {
         ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
         ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());
 

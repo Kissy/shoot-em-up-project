@@ -31,9 +31,9 @@ UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, const
     , m_position(Math::Vector3::Zero)
     , m_velocity(Math::Vector3::Zero) {
     m_propertySetters["Velocity"] = boost::bind(&UpdatableNetworkObject::setVelocity, this, _1);
-    m_propertySetters["Position"] = boost::bind(&UpdatableNetworkObject::setPosition, this, _1);
-
     m_propertyGetters["Velocity"] = boost::bind(&UpdatableNetworkObject::getVelocity, this, _1);
+
+    m_propertySetters["Position"] = boost::bind(&UpdatableNetworkObject::setPosition, this, _1);
     m_propertyGetters["Position"] = boost::bind(&UpdatableNetworkObject::getPosition, this, _1);
 }
 
@@ -94,7 +94,6 @@ void UpdatableNetworkObject::getVelocity(ProtoStringList* values) {
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(m_velocity.z));
 }
-
 
 /**
  * @inheritDoc
