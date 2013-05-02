@@ -28,3 +28,10 @@ ISystemSubject::ISystemSubject(void) : IProperty() {
 ISystemSubject::~ISystemSubject(void) {
 
 }
+
+/**
+ * @inheritDoc
+ */
+void ISystemSubject::propertyChanged(System::Changes::BitMask uInChangedBits) {
+    PostChanges(uInChangedBits);
+}

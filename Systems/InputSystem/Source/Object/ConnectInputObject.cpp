@@ -68,8 +68,8 @@ void ConnectInputObject::Update(f32 DeltaTime) {
 /**
  * @inheritDoc
  */
-void ConnectInputObject::setKey(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
+void ConnectInputObject::setKey(ProtoStringList* values) {
+    ProtoStringList::const_iterator value = values->begin();
     std::string key = *value;
     if (key == "F1") {
         m_key = SDLK_F1;

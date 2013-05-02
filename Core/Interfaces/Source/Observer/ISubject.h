@@ -102,10 +102,8 @@ public:
     *
     * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
     *                          to the published interests.
-    * @return   One of the following Error codes: Error::Success No error. Error::InvalidAddress
-    *              pInObserver and/or pInSubject was NULL.
     */
-    virtual void PostChanges(System::Changes::BitMask uInChangedBits);
+    void PostChanges(System::Changes::BitMask uInChangedBits);
 
 protected:
 

@@ -94,6 +94,8 @@
     <ClInclude Include="Source\Proto.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\SpinMutex.h" />
+    <ClInclude Include="Source\System\Changes.h" />
+    <ClInclude Include="Source\System\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Logger.cpp" />

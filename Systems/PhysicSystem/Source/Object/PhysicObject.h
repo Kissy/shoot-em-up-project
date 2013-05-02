@@ -41,36 +41,6 @@ public:
     /**
      * @inheritDoc
      */
-    void setVelocity(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getVelocity(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
-    void setPosition(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getPosition(ProtoStringList* values);
-    
-    /**
-     * @inheritDoc
-     */
-    void setOrientation(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getOrientation(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
     inline System::Type GetSystemType(void) {
         return System::Types::Physic;
     }

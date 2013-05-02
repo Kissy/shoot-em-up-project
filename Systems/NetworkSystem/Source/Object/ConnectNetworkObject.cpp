@@ -23,8 +23,8 @@
  * @inheritDoc
  */
 ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName) {
-    m_propertySetters["Username"] = boost::bind(&ConnectNetworkObject::setUsername, this, _1);
-    m_propertyGetters["Username"] = boost::bind(&ConnectNetworkObject::getUsername, this, _1);
+    m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_username, _1);
+    m_propertyGetters["Username"] = boost::bind(&IProperty::getString, this, &m_username, _1);
 }
 
 /**
@@ -68,21 +68,4 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
 void ConnectNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
-}
-
-/**
- * @inheritDoc
- */
-void ConnectNetworkObject::setUsername(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
-    m_username = *value;
-}
-
-/**
- * @inheritDoc
- */
-void ConnectNetworkObject::getUsername(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(m_username);
 }

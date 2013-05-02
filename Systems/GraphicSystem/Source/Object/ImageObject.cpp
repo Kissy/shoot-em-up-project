@@ -35,9 +35,9 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* p
     m_position = new SDL_Rect();
     m_position->x = 0;
     m_position->y = 0;
-    
-    m_propertySetters["Image"] = boost::bind(&ImageGraphicObject::setImage, this, _1);
-    m_propertyGetters["Image"] = boost::bind(&ImageGraphicObject::getImage, this, _1);
+
+    m_propertySetters["Image"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_image, _1);
+    m_propertyGetters["Image"] = boost::bind(&IProperty::getString, this, &m_image, _1);
 }
 
 /**
@@ -90,21 +90,4 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 void ImageGraphicObject::Update(f32 DeltaTime) {
     SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
     SDL_BlitSurface(m_displayImage, NULL, screen, m_position);
-}
-
-/**
- * @inheritDoc
- */
-void ImageGraphicObject::setImage(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
-    m_image = *value;
-}
-
-/**
- * @inheritDoc
- */
-void ImageGraphicObject::getImage(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(m_image);
 }

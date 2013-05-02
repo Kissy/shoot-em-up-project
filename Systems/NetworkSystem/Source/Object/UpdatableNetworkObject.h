@@ -73,36 +73,6 @@ public:
     /**
      * @inheritDoc
      */
-    void setVelocity(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getVelocity(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
-    void setOrientation(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getOrientation(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
-    void setPosition(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getPosition(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
     inline const Math::Vector3* GetPosition(void) {
         return &m_position;
     }

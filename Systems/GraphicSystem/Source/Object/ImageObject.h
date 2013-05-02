@@ -66,16 +66,6 @@ public:
      */
     void Update(f32 DeltaTime);
 
-    /**
-     * @inheritDoc
-     */
-    void setImage(ProtoStringList values);
-
-    /**
-     * @inheritDoc
-     */
-    void getImage(ProtoStringList* values);
-
 public:
     static const std::string IMAGE_BASE_PATH;
 

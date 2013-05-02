@@ -30,14 +30,14 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : IS
     , m_orientation(Math::Quaternion::Zero) {
     m_orientation.Set(Math::Vector3::UnitZ, 0);
 
-    m_propertySetters["Velocity"] = boost::bind(&PhysicObject::setVelocity, this, _1);
-    m_propertyGetters["Velocity"] = boost::bind(&PhysicObject::getVelocity, this, _1);
+    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Velocity, &m_velocity, _1);
+    m_propertyGetters["Velocity"] = boost::bind(&IProperty::getVector3, this, &m_velocity, _1);
     
-    m_propertySetters["Position"] = boost::bind(&PhysicObject::setPosition, this, _1);
-    m_propertyGetters["Position"] = boost::bind(&PhysicObject::getPosition, this, _1);
+    m_propertySetters["Position"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Position, &m_position, _1);
+    m_propertyGetters["Position"] = boost::bind(&IProperty::getVector3, this, &m_position, _1);
     
-    m_propertySetters["Orientation"] = boost::bind(&PhysicObject::setOrientation, this, _1);
-    m_propertyGetters["Orientation"] = boost::bind(&PhysicObject::getOrientation, this, _1);
+    m_propertySetters["Orientation"] = boost::bind(&IProperty::setQuaternion, this, System::Changes::Physic::Orientation, &m_orientation, _1);
+    m_propertyGetters["Orientation"] = boost::bind(&IProperty::getQuaternion, this, &m_orientation, _1);
 }
 
 /**
@@ -45,79 +45,4 @@ PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : IS
  */
 PhysicObject::~PhysicObject(void) {
 
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::setVelocity(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
-    m_velocity.x = boost::lexical_cast<f32>(*(value++));
-    m_velocity.y = boost::lexical_cast<f32>(*(value++));
-    m_velocity.z = boost::lexical_cast<f32>(*value);
-    PostChanges(System::Changes::Physic::Velocity);
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::getVelocity(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_velocity.x));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_velocity.y));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_velocity.z));
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::setPosition(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
-    m_position.x = boost::lexical_cast<f32>(*(value++));
-    m_position.y = boost::lexical_cast<f32>(*(value++));
-    m_position.z = boost::lexical_cast<f32>(*value);
-    PostChanges(System::Changes::Physic::Position);
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::getPosition(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_position.x));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_position.y));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_position.z));
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::setOrientation(ProtoStringList values) {
-    ProtoStringList::const_iterator value = values.begin();
-    m_orientation.x = boost::lexical_cast<f32>(*value);
-    m_orientation.y = boost::lexical_cast<f32>(*(++value));
-    m_orientation.z = boost::lexical_cast<f32>(*(++value));
-    m_orientation.w = boost::lexical_cast<f32>(*(++value));
-    PostChanges(System::Changes::Physic::Orientation);
-}
-
-/**
- * @inheritDoc
- */
-void PhysicObject::getOrientation(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_orientation.x));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_orientation.y));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_orientation.z));
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_orientation.w));
 }

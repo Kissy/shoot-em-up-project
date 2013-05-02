@@ -14,9 +14,12 @@
 
 #pragma once
 
-#include "boost/function.hpp"
+#include <boost/function.hpp>
+
 #include "Errors.h"
 #include "Proto.h"
+#include "MathUtils.h"
+#include "System/Changes.h"
 
 /**
  * Interface defining methods to Initialize & Set properties to an object.
@@ -24,7 +27,7 @@
 class IProperty {
 public:
     
-    typedef boost::function<void (ProtoStringList propertiesValue)> PropertySetter;
+    typedef boost::function<void (ProtoStringList* propertiesValue)> PropertySetter;
     typedef std::map<std::string, PropertySetter> PropertySetters;
     
     typedef boost::function<void (ProtoStringList* propertiesValue)> PropertyGetter;
@@ -68,8 +71,66 @@ public:
      */
     virtual Error initialize(void);
 
+    /**
+     * Sets a string.
+     *
+     * @param   changeType      Type of the change.
+     * @param [in,out]  string  If non-null, the string.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void setString(System::Changes::BitMask changeType, std::string* string, ProtoStringList* values);
+
+    /**
+     * Gets a string.
+     *
+     * @param [in,out]  string  If non-null, the string.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void getString(std::string* string, ProtoStringList* values);
+
+    /**
+     * Sets vector 3.
+     *
+     * @param   changeType      Type of the change.
+     * @param [in,out]  vector3 If non-null, the third vector.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void setVector3(System::Changes::BitMask changeType, Math::Vector3* vector3, ProtoStringList* values);
+
+    /**
+     * Gets vector 3.
+     *
+     * @param [in,out]  vector3 If non-null, the third vector.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void getVector3(Math::Vector3* vector3, ProtoStringList* values);
+
+    /**
+     * Sets a quaternion.
+     *
+     * @param   changeType          Type of the change.
+     * @param [in,out]  quaternion  If non-null, the quaternion.
+     * @param [in,out]  values      If non-null, the values.
+     */
+    void setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, ProtoStringList* values);
+
+    /**
+     * Gets a quaternion.
+     *
+     * @param [in,out]  quaternion  If non-null, the quaternion.
+     * @param [in,out]  values      If non-null, the values.
+     */
+    void getQuaternion(Math::Quaternion* quaternion, ProtoStringList* values);
+
+    /**
+    * Method called to notify the object that a property has been changed.
+    *
+    * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
+    *                          to the published interests.
+    */
+    virtual void propertyChanged(System::Changes::BitMask uInChangedBits);
+
 protected:
-    
     bool                    m_bInitialized;
     PropertySetters         m_propertySetters;
     PropertyGetters         m_propertyGetters;

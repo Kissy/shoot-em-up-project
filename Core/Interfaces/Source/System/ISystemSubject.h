@@ -27,40 +27,44 @@
  * @sa  ISubject
  */
 class ISystemSubject : public ISubject, public IProperty, public IObserver {
+public :
+        
+    /**
+     * @inheritDoc
+     */
+    ISystemSubject(void);
+        
+    /**
+     * @inheritDoc
+     */
+    virtual ~ISystemSubject(void);
+        
+    /**
+     * Gets the system type for this system object.
+     * This is a shortcut to getting the system type w/o having to go the system first.
+     *
+     * @return  The type of the system. 
+     */
+    virtual System::Type GetSystemType(void) = 0;
+        
+    /**
+     * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
+     *  to inform the change control manager if this scene should be informed of the change.
+     *
+     * @return  A System::Changes::BitMask.
+     */
+    virtual System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
 
-    public :
-        
-        /**
-         * @inheritDoc
-         */
-        ISystemSubject(void);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual ~ISystemSubject(void);
-        
-        /**
-         * Gets the system type for this system object.
-         * This is a shortcut to getting the system type w/o having to go the system first.
-         *
-         * @return  The type of the system. 
-         */
-        virtual System::Type GetSystemType(void) = 0;
-        
-        /**
-         * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
-         *  to inform the change control manager if this scene should be informed of the change.
-         *
-         * @return  A System::Changes::BitMask.
-         */
-        virtual System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
-
-        /**
-         * Update the system object.
-         *
-         * @param   DeltaTime   Time of the delta.
-         */
-        virtual void Update(f32 DeltaTime) = 0;
+    /**
+     * Update the system object.
+     *
+     * @param   DeltaTime   Time of the delta.
+     */
+    virtual void Update(f32 DeltaTime) = 0;
+    
+    /**
+     * @inheritDoc
+     */
+    void propertyChanged(System::Changes::BitMask uInChangedBits);
 
 };

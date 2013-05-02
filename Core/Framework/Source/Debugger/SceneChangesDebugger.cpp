@@ -48,6 +48,8 @@ Error SceneChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::
 
             m_pDebugger->send(&debugProto);
         }
+        
+        ISystemScene* systemScene = reinterpret_cast<ISystemScene*>(pSubject);
     }
     return Errors::Success;
 }

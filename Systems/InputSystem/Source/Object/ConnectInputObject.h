@@ -69,7 +69,7 @@ public:
     /**
      * @inheritDoc
      */
-    void setKey(ProtoStringList values);
+    void setKey(ProtoStringList* values);
 
     /**
      * @inheritDoc

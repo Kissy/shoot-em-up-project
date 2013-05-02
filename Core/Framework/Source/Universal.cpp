@@ -219,7 +219,6 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
         // Inform the link requester that the link has been established.
         //
         pSubject->PostChanges(System::Changes::Link);
-        
     }
 }
 
