@@ -84,6 +84,10 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         m_position.x += rotatedNormalizedVelocity.x * m_speed_multiplier;
         m_position.y += rotatedNormalizedVelocity.y * m_speed_multiplier;
         m_position.z += rotatedNormalizedVelocity.z * m_speed_multiplier;
+
+        m_position.x = m_position.x > 780 ? 780 : (m_position.x < 40 ? 40 : m_position.x);
+        m_position.y = m_position.y > 570 ? 570 : (m_position.y < 40 ? 40 : m_position.y);
+
         PostChanges(System::Changes::Physic::Position);
     }
 }
