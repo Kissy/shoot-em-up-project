@@ -125,47 +125,6 @@ namespace System {
 
         typedef u32 BitMask;
     }
-
-    typedef u32 Change;
-
-    /**
-     * Defines the different changes as a bit mask that the systems can request
-     * for other systems to perform. Custom changes are not allowed.
-     */
-    namespace Changes {
-        static const u32 None                   = 0;
-
-        namespace Generic {
-            static const u32 CreateObject       = (1 <<  0);
-            static const u32 DeleteObject       = (1 <<  1);
-            static const u32 All                = CreateObject | DeleteObject;
-        }
-
-        namespace Graphic {
-
-        }
-
-        namespace Input {
-            static const u32 Keyboard           = (1 << 10);
-        }
-
-        namespace Network {
-
-        }
-
-        namespace Physic {
-            static const u32 Velocity           = (1 << 20);
-            static const u32 Position           = (1 << 21);
-            static const u32 Orientation        = (1 << 22);
-        }
-
-        static const u32 Link                   = (1 << 30);
-        static const u32 ParentLink             = (1 << 31);
-        static const u32 All                    = static_cast<u32>(-1);
-
-        typedef u32 BitMask;
-    }
-
 }
 
 /**

@@ -32,4 +32,5 @@
 #include "Assert.h"
 #include "MathUtils.h"
 #include "Singleton.h"
+#include "System/Changes.h"
 #include "System/Components.h"
