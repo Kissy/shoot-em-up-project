@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+// Copyright ? 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,22 +14,36 @@
 
 #pragma once
 
-// Disabling the warning for using the non-standard scope operator with enums.
-#ifdef _MSC_VER
-#pragma warning( disable : 4482 )
-#endif
-
-#include <vector>
-#include <queue>
-#include <list>
-#include <map>
 #include <string>
 
 #include "Defines.h"
-#include "DataTypes.h"
-#include "Logger.h"
-#include "Errors.h"
-#include "Assert.h"
-#include "MathUtils.h"
-#include "Singleton.h"
-#include "System/Components.h"
+
+/**
+ * The System namespace contains meta-data about the various sytems,
+ * and various enums, datatypes and helper functions for system types.
+ */
+namespace System {
+    /**
+     * The List of components
+     */
+    enum Components {
+        System, Scene, Object, Task
+    };
+
+#ifdef DEBUG_BUILD
+    __forceinline std::string getComponentName(const System::Components component) {
+        switch (component) {
+        case Components::System:
+            return "System";
+        case Components::Scene:
+            return "Scene";
+        case Components::Object:
+            return "Object";
+        case Components::Task:
+            return "Task";
+        default:
+            return "Default";
+        }
+    }
+#endif
+}

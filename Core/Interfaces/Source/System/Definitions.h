@@ -38,30 +38,6 @@ class ITaskManager;
  */
 namespace System {
 
-    /**
-     * The List of components
-     */
-    enum Components {
-        System, Scene, Object, Task
-    };
-
-#ifdef DEBUG_BUILD
-    __forceinline std::string getComponentName(const System::Components component) {
-        switch (component) {
-        case Components::System:
-            return "System";
-        case Components::Scene:
-            return "Scene";
-        case Components::Object:
-            return "Object";
-        case Components::Task:
-            return "Task";
-        default:
-            return "Default";
-        }
-    }
-#endif
-
     typedef u32 Type;
 
     /**
