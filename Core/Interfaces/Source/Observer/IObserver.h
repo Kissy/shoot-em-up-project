@@ -15,7 +15,7 @@
 #pragma once
 
 #include "Errors.h"
-#include "System/Definitions.h"
+#include "System/Changes.h"
 
 class ISubject;
 

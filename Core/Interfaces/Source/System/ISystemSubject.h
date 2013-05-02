@@ -15,6 +15,8 @@
 #pragma once
 
 #include "Errors.h"
+#include "System/Changes.h"
+#include "System/Definitions.h"
 #include "Property/IProperty.h"
 #include "Observer/ISubject.h"
 #include "Observer/IObserver.h"
