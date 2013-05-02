@@ -180,3 +180,6 @@ pip-log.txt
 # G++
 *.d
 *.o
+
+# Scene definition files
+!/Assets/Definitions/*.sdf

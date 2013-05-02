@@ -1,0 +1,58 @@
+<Scene Name="Main">
+	<Properties SystemType="Graphic">
+	</Properties>
+	<Properties SystemType="Input">
+	</Properties>
+	<Properties SystemType="Network">
+	</Properties>
+	<Properties SystemType="Physic">
+	</Properties>
+	<Objects>
+		<Object Name="Connect1">
+			<Properties SystemType="Input" ObjectType="Connect">
+				<Property Name="Key" Value1="F1" />
+			</Properties>
+			<Properties SystemType="Network" ObjectType="Connect">
+				<Property Name="Username" Value1="1" />
+			</Properties>
+		</Object>
+		<Object Name="Connect2">
+			<Properties SystemType="Input" ObjectType="Connect">
+				<Property Name="Key" Value1="F2" />
+			</Properties>
+			<Properties SystemType="Network" ObjectType="Connect">
+				<Property Name="Username" Value1="2" />
+			</Properties>
+		</Object>
+		<Object Name="Connect3">
+			<Properties SystemType="Input" ObjectType="Connect">
+				<Property Name="Key" Value1="F3" />
+			</Properties>
+			<Properties SystemType="Network" ObjectType="Connect">
+				<Property Name="Username" Value1="3" />
+			</Properties>
+		</Object>
+		<Object Name="Connect4">
+			<Properties SystemType="Input" ObjectType="Connect">
+				<Property Name="Key" Value1="F4" />
+			</Properties>
+			<Properties SystemType="Network" ObjectType="Connect">
+				<Property Name="Username" Value1="4" />
+			</Properties>
+		</Object>
+		<!--<Object Name="Spaceship">
+			<Properties SystemType="Graphic" ObjectType="Image">
+			</Properties>
+			<Properties SystemType="Input" ObjectType="Player">
+			</Properties>
+			<Properties SystemType="Network" ObjectType="Player">
+			</Properties>
+			<Properties SystemType="Physic" ObjectType="Movable">
+				<Property Name="Position" Value1="200" Value2="200" Value3="0"/>
+			</Properties>
+		</Object>-->
+	</Objects>
+	<Links>
+		<!--<Link Subject="Player" Observer="MainCamera" SubjectSystemType="Physic" ObserverSystemType="Graphic"/>-->
+	</Links>
+</Scene>
