@@ -252,7 +252,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             ISceneObject::ObjectProtoQueue* objectsToCreate = pScene->getCreateObjects();
             while (!objectsToCreate->empty()) {
-                const ObjectProto objectProto = objectsToCreate->back();
+                const ObjectProto objectProto = objectsToCreate->front();
                 ASSERT(FindObject(objectProto.name().c_str()) == NULL);
                 UObject* pObject = createObject(&objectProto);
                 ASSERT(pObject != NULL);
@@ -265,7 +265,7 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             ISceneObject::ObjectProtoQueue* objectsToDestroy = pScene->getDeleteObjects();
             while (!objectsToDestroy->empty()) {
-                const ObjectProto objectProto = objectsToDestroy->back();
+                const ObjectProto objectProto = objectsToDestroy->front();
                 UObject* pObject = FindObject(objectProto.name().c_str());
                 ASSERT(pObject != NULL);
                 DestroyObject(pObject);
