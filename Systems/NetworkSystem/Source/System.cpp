@@ -42,7 +42,7 @@ NetworkSystem::~NetworkSystem(void) {
 Error NetworkSystem::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    m_networkService->connect("localhost", "9999");
+    m_networkService->connect("kissy.synology.me", "9999");
 
     m_bInitialized = true;
     return Errors::Success;
