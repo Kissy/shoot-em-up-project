@@ -49,7 +49,7 @@ void Debugger::init(bool debuggerActive) {
 
     m_pContext = new zmq::context_t(1);
     m_pSocket = new zmq::socket_t(*m_pContext, ZMQ_PUSH);
-    m_pSocket->connect("tcp://localhost:5555");
+    m_pSocket->connect("tcp://kissy.synology.me:26901");
 }
 
 void Debugger::setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) {
