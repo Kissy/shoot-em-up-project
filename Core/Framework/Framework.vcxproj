@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Debugger\Debugger.cpp" />
     <ClCompile Include="Source\Debugger\ObjectChangesDebugger.cpp" />
+    <ClCompile Include="Source\Debugger\SceneChangesDebugger.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\Instrumentation.cpp" />
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Debugger\Debugger.h" />
     <ClInclude Include="Source\Debugger\ObjectChangesDebugger.h" />
+    <ClInclude Include="Source\Debugger\SceneChangesDebugger.h" />
     <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\FrameworkAPI.h" />
     <ClInclude Include="Source\Instrumentation.h" />

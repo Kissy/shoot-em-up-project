@@ -40,8 +40,8 @@ extern ManagerInterfaces   g_Managers;
  * @inheritDoc
  */
 NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
-    m_createObjectQueue = new std::queue<ObjectProto>();
-    m_deleteObjectQueue = new std::queue<ObjectProto>();
+    m_createObjectQueue = new std::list<ObjectProto>();
+    m_deleteObjectQueue = new std::list<ObjectProto>();
     m_TaskFactory = boost::factory<NetworkTask*>();
     
     m_ObjectFactories["Connect"] = boost::factory<ConnectNetworkObject*>();
@@ -54,6 +54,7 @@ NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
  */
 NetworkScene::~NetworkScene(void) {
     delete m_createObjectQueue;
+    delete m_deleteObjectQueue;
 }
 
 /**
@@ -81,7 +82,7 @@ void NetworkScene::Update(f32 DeltaTime) {
  */
 void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
-        m_createObjectQueue->push(object);
+        m_createObjectQueue->push_back(object);
     }
     PostChanges(System::Changes::Generic::CreateObject);
 }
@@ -91,11 +92,10 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
  */
 void NetworkScene::queueDeleteObjects(ProtoObjectList objectProtoList) {
     for (auto object : objectProtoList) {
-        m_deleteObjectQueue->push(object);
+        m_deleteObjectQueue->push_back(object);
     }
     PostChanges(System::Changes::Generic::DeleteObject);
 }
-
 
 /**
  * @inheritDoc
@@ -108,4 +108,12 @@ void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
             systemObjectIterator->second->setProperties(object.systemobjects().Get(0).properties());
         }
     }
+}
+
+/**
+ * @inheritDoc
+ */
+void NetworkScene::reset(void) {
+    m_createObjectQueue->clear();
+    m_deleteObjectQueue->clear();
 }

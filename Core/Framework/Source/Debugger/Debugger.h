@@ -18,6 +18,7 @@
 
 #include "Defines.h"
 #include "Singleton.h"
+#include "SceneChangesDebugger.h"
 #include "ObjectChangesDebugger.h"
 
 #if defined DEBUG_BUILD
@@ -27,16 +28,56 @@
 class IChangeManager;
 class UScene;
 
+/**
+ * Debugger.
+ *
+ * @sa  Singleton
+ */
 class Debugger : public Singleton {
 public:
 
+    /**
+     * Default constructor.
+     */
     Debugger(void);
+
+    /**
+     * Destructor.
+     */
     ~Debugger(void);
 
+    /**
+     * Initialises this object.
+     *
+     * @param   debuggerActive  true to debugger active.
+     */
     void init(bool debuggerActive);
+
+    /**
+     * Sets a ccm.
+     *
+     * @param [in,out]  pSceneCCM   If non-null, the scene ccm.
+     * @param [in,out]  pObjectCCM  If non-null, the object ccm.
+     */
     void setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
+
+    /**
+     * Sets u scene.
+     *
+     * @param [in,out]  pUScene If non-null, the u scene.
+     */
     void setUScene(UScene* pUScene);
+
+    /**
+     * Cleans this object.
+     */
     void clean(void);
+
+    /**
+     * Send this message.
+     *
+     * @param [in,out]  debugHolderProto    If non-null, the debug holder prototype.
+     */
     void send(DebugProto* debugHolderProto);
 
 private:
@@ -44,6 +85,7 @@ private:
     IChangeManager*         m_pSceneCCM;
     IChangeManager*         m_pObjectCCM;
     
+    SceneChangesDebugger*   m_pSceneChangesDebugger;
     ObjectChangesDebugger*  m_pObjectChangesDebugger;
 
     UScene*                 m_pUScene;

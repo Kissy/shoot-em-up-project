@@ -250,26 +250,22 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
     switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            ISceneObject::ObjectProtoQueue* objectsToCreate = pScene->getCreateObjects();
-            while (!objectsToCreate->empty()) {
-                const ObjectProto objectProto = objectsToCreate->front();
+            const ISceneObject::ObjectProtoQueue objectsToCreate = *pScene->getCreateObjects();
+            for (auto objectProto : objectsToCreate) {
                 ASSERT(FindObject(objectProto.name().c_str()) == NULL);
                 UObject* pObject = createObject(&objectProto);
                 ASSERT(pObject != NULL);
-                objectsToCreate->pop();
             }
             break;
         }
 
         case System::Changes::Generic::DeleteObject: {
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
-            ISceneObject::ObjectProtoQueue* objectsToDestroy = pScene->getDeleteObjects();
-            while (!objectsToDestroy->empty()) {
-                const ObjectProto objectProto = objectsToDestroy->front();
+            const ISceneObject::ObjectProtoQueue objectsToDestroy = *pScene->getDeleteObjects();
+            for (auto objectProto : objectsToDestroy) {
                 UObject* pObject = FindObject(objectProto.name().c_str());
                 ASSERT(pObject != NULL);
                 DestroyObject(pObject);
-                objectsToDestroy->pop();
             }
             break;
         }

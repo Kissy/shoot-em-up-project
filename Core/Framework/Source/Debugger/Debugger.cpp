@@ -45,7 +45,8 @@ void Debugger::init(bool debuggerActive) {
     }
 
     m_bDebuggerActive = debuggerActive;
-    m_pObjectChangesDebugger = new ObjectChangesDebugger(this);    
+    m_pSceneChangesDebugger = new SceneChangesDebugger(this);
+    m_pObjectChangesDebugger = new ObjectChangesDebugger(this);
 
     m_pContext = new zmq::context_t(1);
     m_pSocket = new zmq::socket_t(*m_pContext, ZMQ_PUSH);
@@ -72,7 +73,7 @@ void Debugger::setUScene(UScene* pUScene) {
         debugEntityProto->set_id(System::Types::getName(pScene->GetSystemType()));
         debugEntityProto->set_name(System::Types::getName(pScene->GetSystemType()));
         debugEntityProto->set_category(System::getComponentName(System::Components::Scene));
-        //m_pSceneCCM->Register(pScene, System::Changes::All, this);
+        m_pSceneCCM->Register(pScene, System::Changes::All, m_pSceneChangesDebugger);
     }
 
     UScene::Objects Objects = m_pUScene->GetObjects();
@@ -104,8 +105,7 @@ void Debugger::clean(void) {
     UScene::SystemScenes Scenes = m_pUScene->GetSystemScenes();
     for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
-        //m_pSceneCCM->Unregister(pSystemScene, this);
-
+        m_pSceneCCM->Unregister(pScene, m_pSceneChangesDebugger);
     }
 
     UScene::Objects Objects = m_pUScene->GetObjects();
@@ -114,7 +114,7 @@ void Debugger::clean(void) {
         UObject::SystemObjects SystemObjects = pUObject->GetExtensions();
         for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
             ISystemObject* pObject = it->second;
-            //m_pObjectCCM->Unregister(pSystemObject, this);
+            m_pObjectCCM->Unregister(pObject, m_pObjectChangesDebugger);
         }
     }
 }

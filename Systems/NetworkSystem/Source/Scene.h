@@ -108,6 +108,11 @@ public:
      */
     void updateObjects(ProtoObjectList objectProtoList);
 
+    /**
+     * Resets the create & delete object lists.
+     */
+    void reset(void);
+
 protected:
     ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
     ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;

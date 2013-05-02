@@ -12,32 +12,43 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "BaseTypes.h"
-#include "Interface.h"
+#pragma once
 
-#include "Task.h"
-#include "Scene.h"
-#include "Object/Object.h"
+#include "Observer/IObserver.h"
 
-/**
- * @inheritDoc
- */
-NetworkTask::NetworkTask(ISystemScene* pScene) : ISystemTask(pScene) {
-
-}
+class Debugger;
 
 /**
- * @inheritDoc
+ * Scene changes debugger.
+ *
+ * @sa  IObserver
  */
-NetworkTask::~NetworkTask(void) {
+class SceneChangesDebugger : public IObserver {
+public:
 
-}
+    /**
+     * Constructor.
+     *
+     * @param [in,out]  debugger    If non-null, the debugger.
+     */
+    SceneChangesDebugger(Debugger* debugger);
 
-/**
- * @inheritDoc
- */
-void NetworkTask::Update(f32 DeltaTime) {
-    static_cast<NetworkScene*>(GetSystemScene())->reset();
-    static_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->receive();
-    m_pSystemScene->Update(DeltaTime);
-}
+    /**
+     * Destructor.
+     */
+    ~SceneChangesDebugger(void);
+
+    /**
+     * Change occurred.
+     *
+     * @param [in,out]  pSubject    If non-null, the subject.
+     * @param   ChangeType          Type of the change.
+     *
+     * @return  .
+     */
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+
+private:
+    Debugger*       m_pDebugger;
+
+};
