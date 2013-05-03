@@ -31,7 +31,6 @@ public:
     }
 
 private:
-
     google::protobuf::uint32 decodedVarint;
     int messageSize;
     int bitsRead;
@@ -43,4 +42,3 @@ namespace boost {
         template <> struct is_match_condition<MatchingVarintPrefix> : public boost::true_type {};
     }
 }
-

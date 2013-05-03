@@ -34,6 +34,10 @@ NetworkService::NetworkService(NetworkSystem* networkSystem)
     m_messageHandlers[UpstreamMessageProto_Type_OBJECT_CREATED] = boost::bind(&NetworkService::onObjectCreated, this, _1);
     m_messageHandlers[UpstreamMessageProto_Type_OBJECT_UPDATED] = boost::bind(&NetworkService::onObjectUpdated, this, _1);
     m_messageHandlers[UpstreamMessageProto_Type_OBJECT_DELETED] = boost::bind(&NetworkService::onObjectDeleted, this, _1);
+
+    // TODO change the receive part to be able
+    // to handle more than 2048 if needed
+    m_readBuffer.prepare(2048);
 }
 
 /**
