@@ -1,7 +1,9 @@
 package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
+import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
+import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import fr.kissy.hellion.server.handler.event.AuthenticatedStateEvent;
 import org.apache.shiro.subject.Subject;
@@ -19,6 +21,8 @@ public class  DisconnectActor extends UntypedActor {
 
     @Autowired
     private WorldService world;
+    @Autowired
+    private UpstreamMessageService upstreamMessageService;
 
     @Override
     public void onReceive(Object o) throws Exception {
@@ -27,6 +31,11 @@ public class  DisconnectActor extends UntypedActor {
 
         Player player = (Player) subject.getSession().getAttribute(Player.class.getSimpleName());
         if (player != null) {
+            UpstreamMessageDto.UpstreamMessageProto playerDeleteMessage = upstreamMessageService.getObjectDeletedMessage(player);
+            for (Player nearPlayer : player.getNearPlayers()) {
+                nearPlayer.getChannel().write(playerDeleteMessage);
+            }
+
             world.removePlayer(player);
             LOGGER.info("Removed player from World {}", player.getId());
         }
