@@ -85,7 +85,7 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
     if (m_dirty || heartbeat_triggered) {
         m_dirty = false;
         m_heartbeat.stop();
-        if (m_velocity != Math::Vector3::Zero) {
+        if (m_velocity != Math::Vector4::Zero) {
             m_heartbeat.start();
         }
         
