@@ -33,6 +33,7 @@ public class  DisconnectActor extends UntypedActor {
         if (player != null) {
             UpstreamMessageDto.UpstreamMessageProto playerDeleteMessage = upstreamMessageService.getObjectDeletedMessage(player);
             for (Player nearPlayer : player.getNearPlayers()) {
+                nearPlayer.getNearPlayers().remove(player);
                 nearPlayer.getChannel().write(playerDeleteMessage);
             }
 
