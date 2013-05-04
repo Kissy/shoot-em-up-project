@@ -107,20 +107,13 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
         systemObject->set_systemtype(SystemProto_Type_Geometry);
         PropertyProto* velocityProperty = systemObject->add_properties();
         velocityProperty->set_name("Velocity");
-        velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.x));
-        velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.y));
-        velocityProperty->add_value(boost::lexical_cast<std::string>(m_velocity.z));
+        getVector3(&m_velocity, velocityProperty->mutable_value());
         PropertyProto* orientationProperty = systemObject->add_properties();
         orientationProperty->set_name("Orientation");
-        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.x));
-        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.y));
-        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.z));
-        orientationProperty->add_value(boost::lexical_cast<std::string>(m_orientation.w));
+        getQuaternion(&m_orientation, orientationProperty->mutable_value());
         PropertyProto* positionProperty = systemObject->add_properties();
         positionProperty->set_name("Position");
-        positionProperty->add_value(boost::lexical_cast<std::string>(m_position.x));
-        positionProperty->add_value(boost::lexical_cast<std::string>(m_position.y));
-        positionProperty->add_value(boost::lexical_cast<std::string>(m_position.z));
+        getVector3(&m_position, positionProperty->mutable_value());
 
         std::string data;
         objectUpdatedProto.AppendToString(&data);
