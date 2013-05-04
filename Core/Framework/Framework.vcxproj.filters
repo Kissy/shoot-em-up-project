@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Debugger">
       <UniqueIdentifier>{58bec1b6-27b4-4439-8a85-3d00f2c0141e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Universal">
+      <UniqueIdentifier>{75a2b8fc-62f4-4e2d-af4a-6574941db766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Universal">
+      <UniqueIdentifier>{0b434cf3-16f6-4729-8ae2-2e114e8745f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
@@ -57,9 +63,6 @@
     <ClCompile Include="Source\Parser\DefinitionParser.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Universal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,6 +84,12 @@
     <ClCompile Include="Source\Debugger\SceneChangesDebugger.cpp">
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Universal\UObject.cpp">
+      <Filter>Header Files\Universal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Universal\UScene.cpp">
+      <Filter>Header Files\Universal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework.h">
@@ -99,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\ThreadPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Universal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Manager\ChangeControlManager.h">
@@ -136,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="Source\Debugger\SceneChangesDebugger.h">
       <Filter>Header Files\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Universal\UObject.h">
+      <Filter>Source Files\Universal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Universal\UScene.h">
+      <Filter>Source Files\Universal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

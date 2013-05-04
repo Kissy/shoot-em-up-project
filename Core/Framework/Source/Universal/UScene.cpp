@@ -15,22 +15,23 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
-#include "Universal.h"
+#include "Universal/UScene.h"
+#include "Universal/UObject.h"
 #include "Object/ISceneObject.h"
 #include "Manager/SystemManager.h"
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-// UScene
-////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * @inheritDoc
+ */
 UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) 
     : m_pSceneCCM(pSceneCCM)
     , m_pObjectCCM(pObjectCCM) {
 
 }
 
-
+/**
+ * @inheritDoc
+ */
 UScene::~UScene(
     void
 ) {
@@ -78,7 +79,9 @@ UScene::~UScene(
     m_SystemScenes.clear();
 }
 
-
+/**
+ * @inheritDoc
+ */
 ISystemScene* UScene::Extend(ISystem* pSystem) {
     ASSERT(pSystem != NULL);
     //
@@ -111,7 +114,9 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     return pScene;
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error UScene::Unextend(ISystemScene* pScene) {
     ASSERT(pScene != NULL);
     //
@@ -141,14 +146,16 @@ Error UScene::Unextend(ISystemScene* pScene) {
     return Errors::Success;
 }
 
-
+/**
+ * @inheritDoc
+ */
 UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     // Create the new object.
     //
     UObject* pObject = new UObject(this, objectProto->name().c_str());
     ASSERT(pObject != NULL);
-    pObject->m_pObjectCCM = m_pObjectCCM;
+    pObject->setObjectCCM(m_pObjectCCM);
     //
     // Add the object to the collection.
     //
@@ -178,7 +185,9 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     return pObject;
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error UScene::DestroyObject(UObject* pObject) {
     ASSERT(pObject != NULL);
     m_Objects.remove(pObject);
@@ -186,7 +195,9 @@ Error UScene::DestroyObject(UObject* pObject) {
     return Errors::Success;
 }
 
-
+/**
+ * @inheritDoc
+ */
 UObject* UScene::FindObject(const char* pszName) {
     UObject* pObject = NULL;
 
@@ -200,7 +211,9 @@ UObject* UScene::FindObject(const char* pszName) {
     return pObject;
 }
 
-
+/**
+ * @inheritDoc
+ */
 void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver) {
     //
     // Register objects with the CCM.
@@ -222,7 +235,9 @@ void UScene::CreateObjectLink(ISystemObject* pSubject, ISystemObject* pObserver)
     }
 }
 
-
+/**
+ * @inheritDoc
+ */
 void UScene::CreateObjectLink(UObject* pSubject, ISystemObject* pObserver) {
     //
     // Register objects with the CCM.
@@ -244,7 +259,9 @@ void UScene::CreateObjectLink(UObject* pSubject, ISystemObject* pObserver) {
     }
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     switch (ChangeType) {
         case System::Changes::Generic::CreateObject: {
@@ -271,245 +288,4 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
     }
 
     return Errors::Success;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-// UObject
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-UObject::UObject(UScene* pScene, const char* pszName)
-    : m_pScene(pScene)
-    , m_pGeometryObject(NULL) {
-    //
-    // Copy the name.
-    //
-    SetName(pszName);
-}
-
-
-UObject::~UObject(void) {
-    //
-    // Remove all the extensions.
-    //
-    SystemObjects SysObjs = m_ObjectExtensions;
-
-    for (SystemObjectsIt it = SysObjs.begin(); it != SysObjs.end(); it++) {
-        Unextend(it->second->GetSystemScene());
-    }
-
-    m_ObjectExtensions.clear();
-}
-
-
-ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType) {
-    ASSERT(pSystemScene != NULL);
-    ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
-    ISystemObject* pSystemObject = NULL;
-    //
-    // Create the system object.
-    //
-    pSystemObject = pSystemScene->CreateObject(m_sName.c_str(), pszSystemObjectType);
-    ASSERT(pSystemObject != NULL);
-    Extend(pSystemObject);
-    return pSystemObject;
-}
-
-
-bool UObject::Extend(ISystemObject* pSystemObject) {
-    // 
-    // If the object is already extended, do nothing
-    // 
-    if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) != m_ObjectExtensions.end()) {
-        return false;
-    }
-
-    //
-    // Set this as the parent.
-    //
-    pSystemObject->SetParentObject(this);
-
-    //
-    // Get the changes this object will make and is looking for.
-    //
-    System::Changes::BitMask SysObjPotentialChanges = pSystemObject->GetPotentialSystemChanges();
-    System::Changes::BitMask SysObjDesiredChanges = pSystemObject->GetDesiredSystemChanges();;
-
-    //
-    // Register each object with scenes that care about the object's changes.
-    //
-    UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
-        ISystemScene* pScene = it->second;
-
-        if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Register(pSystemObject, pScene->GetDesiredSystemChanges(), pScene);
-        }
-    }
-
-    //
-    // Register each of the systems with each other.
-    //
-    System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
-    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
-            it != m_ObjectExtensions.end(); it++) {
-        ISystemObject* pObj = it->second;
-
-        if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
-            m_pObjectCCM->Register(pObj, Changes, pSystemObject);
-        }
-
-        if (SysObjPotentialChanges & pObj->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Register(pSystemObject, pObj->GetDesiredSystemChanges(), pObj);
-        }
-    }
-
-    //
-    // Add the system object to the list.
-    //
-    System::Type SystemType = pSystemObject->GetSystemType();
-    m_ObjectExtensions[ SystemType ] = pSystemObject;
-
-    //
-    // Set up the speed path for the geometry and graphics objects.
-    //
-    if (SystemType == System::Types::Physic) {
-        m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
-        ASSERT(m_pGeometryObject != NULL);
-    }
-
-    return true;
-}
-
-
-void UObject::Unextend(ISystemScene* pSystemScene) {
-    ASSERT(pSystemScene != NULL);
-    //
-    // Get the iterator for the object.
-    //
-    System::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
-    SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
-    ASSERTMSG(SysObjIt != m_ObjectExtensions.end(),
-              "The object to delete doesn't exist in the scene.");
-    ISystemObject* pSystemObject = SysObjIt->second;
-
-    //
-    // Go through all the other systems and unregister them with this as subject and observer.
-    //  The CCM should know if the objects are registered or not, and if not won't do anything.
-    //
-    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
-            it != m_ObjectExtensions.end(); it++) {
-        ISystemObject* pObj = it->second;
-
-        //
-        // Make sure he system object is not unregistering as an observer of itself.
-        //
-        if (pSystemObject != pObj) {
-            m_pObjectCCM->Unregister(pObj, pSystemObject);
-            m_pObjectCCM->Unregister(pSystemObject, pObj);
-        }
-    }
-
-    //
-    // Unregister each object with scenes that cared about the object's changes.
-    //
-    UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
-        ISystemScene* pScene = it->second;
-
-        if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
-            m_pObjectCCM->Unregister(pSystemObject,  pScene);
-        }
-    }
-
-    //
-    // Destroy the object.
-    //
-    pSystemScene->DestroyObject(pSystemObject);
-    //
-    // Remove the object from the map.
-    //
-    m_ObjectExtensions.erase(SysObjIt);
-}
-
-
-const UObject::SystemObjects& UObject::GetExtensions(void) {
-    return m_ObjectExtensions;
-}
-
-
-ISystemObject* UObject::GetExtension(System::Type SystemType) {
-    ISystemObject* pSystemObject = nullptr;
-
-    SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
-    if (it != m_ObjectExtensions.end()) {
-        pSystemObject = it->second;
-    }
-
-    return pSystemObject;
-}
-
-/**
- * @inheritDoc
- */
-void UObject::update(const ObjectProto* objectProto) {
-    //
-    // Update systems extension.
-    //
-    for (auto objectProto : objectProto->systemobjects()) {
-        ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
-        ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());
-
-        if (m_pSystem != NULL) {
-            ISystemObject* systemObject = GetExtension(m_pSystem->GetSystemType());
-            ASSERTMSG1(systemObject != nullptr, "Unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            systemObject->setProperties(objectProto.properties());
-        }
-    }
-}
-
-System::Changes::BitMask UObject::GetPotentialSystemChanges(void) {
-    return System::Changes::Generic::All | System::Changes::Physic::Position;
-}
-
-
-Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    UNREFERENCED_PARAM(pSubject);
-
-    if (ChangeType & (System::Changes::Generic::All | System::Changes::Physic::Position)) {
-        ChangeType &= (System::Changes::Generic::All | System::Changes::Physic::Position);
-        //
-        // Post the pertinent changes made by the extension to the scene CCM.
-        //
-        PostChanges(ChangeType);
-    }
-
-    return Errors::Success;
-}
-
-
-const Math::Vector3*
-UObject::GetPosition(
-    void
-) {
-    ASSERT(m_pGeometryObject != NULL);
-    return m_pGeometryObject->GetPosition();
-}
-
-
-const Math::Quaternion*
-UObject::GetOrientation(
-    void
-) {
-    ASSERT(m_pGeometryObject != NULL);
-    return m_pGeometryObject->GetOrientation();
-}
-
-
-const Math::Vector3*
-UObject::GetScale(
-    void
-) {
-    ASSERT(m_pGeometryObject != NULL);
-    return m_pGeometryObject->GetScale();
 }

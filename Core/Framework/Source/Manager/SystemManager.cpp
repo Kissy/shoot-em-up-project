@@ -15,7 +15,7 @@
 #include "BaseTypes.h"
 #include "Interface.h"
 
-#include "Universal.h"
+#include "Universal/UScene.h"
 #include "SystemManager.h"
 
 

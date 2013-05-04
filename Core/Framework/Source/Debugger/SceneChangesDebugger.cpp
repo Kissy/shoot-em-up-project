@@ -19,7 +19,7 @@
 #include "Debugger.h"
 #include "BaseTypes.h"
 #include "Interface.h"
-#include "Universal.h"
+#include "Universal/UScene.h"
 
 SceneChangesDebugger::SceneChangesDebugger(Debugger* debugger) :
     m_pDebugger(debugger) {

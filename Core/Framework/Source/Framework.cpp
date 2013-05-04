@@ -17,7 +17,8 @@
 #include "Interface.h"
 
 #include "Proto.h"
-#include "Universal.h"
+#include "Universal/UScene.h"
+#include "Universal/UObject.h"
 #include "Debugger/Debugger.h"
 #include "Manager/MemoryManager.h"
 #include "Manager/SystemManager.h"

@@ -13,6 +13,8 @@
 // responsibility to update it.
 
 #include "Proto.h"
+#include "Universal/UScene.h"
+#include "Universal/UObject.h"
 #include "Manager/PlatformManager.h"
 #include "Manager/EnvironmentManager.h"
 #include "Manager/SystemManager.h"

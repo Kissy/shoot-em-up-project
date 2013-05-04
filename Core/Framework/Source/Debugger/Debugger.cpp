@@ -20,7 +20,8 @@
 
 #include "BaseTypes.h"
 #include "Interface.h"
-#include "Universal.h"
+#include "Universal/UScene.h"
+#include "Universal/UObject.h"
 
 void protobuf_uint8_free(void* data, void* hint) {
     delete[] data;

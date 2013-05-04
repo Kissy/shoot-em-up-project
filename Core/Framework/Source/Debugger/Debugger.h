@@ -20,7 +20,6 @@
 
 #include "Defines.h"
 #include "Singleton.h"
-#include "Universal.h"
 #include "SceneChangesDebugger.h"
 #include "ObjectChangesDebugger.h"
 
@@ -30,6 +29,7 @@
 
 class IChangeManager;
 class UScene;
+class UObject;
 
 /**
  * Debugger.

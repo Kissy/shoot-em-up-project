@@ -16,7 +16,7 @@
 
 #include "Errors.h"
 #include "Singleton.h"
-#include "Universal.h"
+#include "Universal/UScene.h"
 #include "System/Definitions.h"
 
 class ISystem;

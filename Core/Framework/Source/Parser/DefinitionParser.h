@@ -18,9 +18,10 @@
 
 #include "Assert.h"
 #include "Proto.h"
-#include "Universal.h"
 #include "System\ISystem.h"
 #include "System\ISystemObject.h"
+
+class UScene;
 
 /**
  * Gdf parser.

@@ -26,7 +26,8 @@
     <ClCompile Include="Source\Parser\DefinitionParser.cpp" />
     <ClCompile Include="Source\Scheduler.cpp" />
     <ClCompile Include="Source\ThreadPool.cpp" />
-    <ClCompile Include="Source\Universal.cpp" />
+    <ClCompile Include="Source\Universal\UObject.cpp" />
+    <ClCompile Include="Source\Universal\UScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Debugger\Debugger.h" />
@@ -46,7 +47,8 @@
     <ClInclude Include="Source\Parser\DefinitionParser.h" />
     <ClInclude Include="Source\Scheduler.h" />
     <ClInclude Include="Source\ThreadPool.h" />
-    <ClInclude Include="Source\Universal.h" />
+    <ClInclude Include="Source\Universal\UObject.h" />
+    <ClInclude Include="Source\Universal\UScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseTypes\BaseTypes.vcxproj">
