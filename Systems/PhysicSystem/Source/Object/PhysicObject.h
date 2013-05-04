@@ -44,13 +44,6 @@ public:
     inline System::Type GetSystemType(void) {
         return System::Types::Physic;
     }
-        
-    /**
-     * @inheritDoc
-     */
-    const Math::Vector3* GetVelocity(void) {
-        return &m_velocity;
-    }
 
     /**
      * @inheritDoc
@@ -74,7 +67,7 @@ public:
     }
 
 protected:
-    Math::Vector3       m_velocity;
+    f32                 m_rotation;
     Math::Vector3       m_position;
     Math::Quaternion    m_orientation;
 

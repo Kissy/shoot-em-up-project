@@ -23,9 +23,8 @@
 /**
  * @inheritDoc
  */
-PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName)
-    , m_velocity(Math::Vector3::Zero)
-    , m_orientation(Math::Quaternion::Zero) {
+PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, const char* pszName) 
+    : InputObject(pSystemScene, pszName) {
     
 }
 
@@ -83,13 +82,13 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
     }
-    if (m_rightRotateInputAction->isActive()) {
-        mModified |= System::Changes::Physic::Orientation;
-        m_orientation.x += 3;
+    if (m_rightRotateInputAction->hasChanged()) {
+        mModified |= System::Changes::Physic::Velocity;
+        m_velocity.w += m_rightRotateInputAction->isActive() ? 1 : -1;
     }
-    if (m_leftRotateInputAction->isActive()) {
-        mModified |= System::Changes::Physic::Orientation;
-        m_orientation.x -= 3;
+    if (m_leftRotateInputAction->hasChanged()) {
+        mModified |= System::Changes::Physic::Velocity;
+        m_velocity.w += m_leftRotateInputAction->isActive() ? -1 : 1;
     }
     
     if (mModified != 0) {

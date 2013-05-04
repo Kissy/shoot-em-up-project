@@ -106,6 +106,23 @@ public:
     void getVector3(Math::Vector3* vector3, ProtoStringList* values);
 
     /**
+     * Sets vector 4.
+     *
+     * @param   changeType      Type of the change.
+     * @param [in,out]  vector4 If non-null, the third vector.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, ProtoStringList* values);
+
+    /**
+     * Gets vector 4.
+     *
+     * @param [in,out]  vector4 If non-null, the third vector.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    void getVector4(Math::Vector4* vector4, ProtoStringList* values);
+
+    /**
      * Sets a quaternion.
      *
      * @param   changeType          Type of the change.

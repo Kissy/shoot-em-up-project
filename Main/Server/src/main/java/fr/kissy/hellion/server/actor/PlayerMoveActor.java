@@ -53,7 +53,8 @@ public class PlayerMoveActor extends UntypedActor {
                 player.setVelocity(
                     propertyProto.getValue(0),
                     propertyProto.getValue(1),
-                    propertyProto.getValue(2)
+                    propertyProto.getValue(2),
+                    propertyProto.getValue(3)
                 );
             }
         }

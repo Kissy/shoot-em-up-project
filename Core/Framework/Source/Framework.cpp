@@ -240,7 +240,7 @@ Error Framework::Execute(void) {
         
         // Process first the object creation messages alone since it will 
         // generate some object messages that need to be processed by the object CCM.
-        m_pSceneCCM->DistributeQueuedChanges(System::Types::Generic, System::Changes::Generic::CreateObject);
+        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
         //
         // Distribute changes for object and scene CCMs.  The UObject propagates some object
         // messages up to the scene CCM so it needs to go first.

@@ -91,16 +91,8 @@ public:
         return NULL;
     }
 
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetVelocity(void) {
-        return &m_velocity;
-    }
-
 private:
     Math::Quaternion                m_orientation;
     Math::Vector3                   m_position;
-    Math::Vector3                   m_velocity;
 
 };

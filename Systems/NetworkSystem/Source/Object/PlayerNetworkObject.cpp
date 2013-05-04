@@ -26,10 +26,11 @@
 /**
  * @inheritDoc
  */
-PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
+PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) 
+    : NetworkObject(pSystemScene, pszName)
     , m_dirty(true)
-    , m_position(Math::Vector3::Zero)
-    , m_velocity(Math::Vector3::Zero)
+    //, m_position(Math::Vector3::Zero)
+    , m_velocity(Math::Vector4::Zero)
     , m_orientation(Math::Quaternion::Zero)
     , m_heartbeat_delay(500000000LL) /* 500ms */ {
     m_heartbeat.stop();
@@ -59,26 +60,14 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Physic::Velocity) {
-        const Math::Vector3* velocity = dynamic_cast<IMoveObject*>(pSubject)->GetVelocity();
-        m_velocity.x = velocity->x;
-        m_velocity.y = velocity->y;
-        m_velocity.z = velocity->z;
-
+        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
         m_dirty = true;
     }
     if (ChangeType & System::Changes::Physic::Position) {
-        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_position.x = position->x;
-        m_position.y = position->y;
-        m_position.z = position->z;
+        m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
-        const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_orientation.x = orientation->x;
-        m_orientation.y = orientation->y;
-        m_orientation.z = orientation->z;
-        m_orientation.w = orientation->w;
-
+        m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
         m_dirty = true;
     }
 
@@ -107,7 +96,7 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
         systemObject->set_systemtype(SystemProto_Type_Geometry);
         PropertyProto* velocityProperty = systemObject->add_properties();
         velocityProperty->set_name("Velocity");
-        getVector3(&m_velocity, velocityProperty->mutable_value());
+        getVector4(&m_velocity, velocityProperty->mutable_value());
         PropertyProto* orientationProperty = systemObject->add_properties();
         orientationProperty->set_name("Orientation");
         getQuaternion(&m_orientation, orientationProperty->mutable_value());

@@ -31,7 +31,7 @@ const Vector3 Vector3::UnitX(1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::UnitY(0.0f, 1.0f, 0.0f);
 const Vector3 Vector3::UnitZ(0.0f, 0.0f, 1.0f);
 
-const Vector4 Vector4::Zero = { 0.0f, 0.0f, 0.0f, 1.0f };
+const Vector4 Vector4::Zero = { 0.0f, 0.0f, 0.0f, 0.0f };
 const Vector4 Vector4::One  = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 const Quaternion Quaternion::Zero = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -94,6 +94,21 @@ void Quaternion::Rotate(Vector3& a) {
     a.y = r.y;
     a.z = r.z;
     return;
+}
+
+/**
+ * @inheritDoc
+ */
+f32 Quaternion::GetAngle() const {
+    f32 angle;
+    const f32 scale = this->Magnitude();
+    if (scale == 0 || w > 1.0f || w < -1.0f) {
+        angle = 0.0f;
+    } else {
+        const f32 invscale = 1 / scale;
+        angle = 2.0f * acosf(w);
+    }
+    return angle;
 }
 
 /**

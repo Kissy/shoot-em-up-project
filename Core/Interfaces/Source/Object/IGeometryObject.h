@@ -16,31 +16,31 @@
 
 #include "MathUtils.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>IGeometryObject</c> is an interface for providing geometry related functionality.  Any
-///    objects that modify geometry data are required to implement this class.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * <c>IGeometryObject</c> is an interface for providing geometry related functionality.  Any
+ *  objects that modify geometry data are required to implement this class.
+ */
 class IGeometryObject {
-    public:
+public:
 
-        /// <summary>
-        /// Gets the position of the object.
-        /// </summary>
-        /// <returns>A constant pointer to the position.</returns>
-        virtual const Math::Vector3* GetPosition(void) = 0;
+    /**
+     * Gets the position of the object.
+     *
+     * @return  A constant pointer to the position.
+     */
+    virtual const Math::Vector3* GetPosition(void) = 0;
 
-        /// <summary>
-        /// Gets the orientation of the object.
-        /// </summary>
-        /// <returns>A constant pointer to the orientation.</returns>
-        virtual const Math::Quaternion* GetOrientation(void) = 0;
+    /**
+     * Gets the orientation of the object.
+     *
+     * @return  A constant pointer to the orientation.
+     */
+    virtual const Math::Quaternion* GetOrientation(void) = 0;
 
-        /// <summary>
-        /// Gets the scale of the object.
-        /// </summary>
-        /// <returns>A constant pointer to the scle.</returns>
-        virtual const Math::Vector3* GetScale(void) = 0;
-
+    /**
+     * Gets the scale of the object.
+     *
+     * @return  A constant pointer to the scle.
+     */
+    virtual const Math::Vector3* GetScale(void) = 0;
 };

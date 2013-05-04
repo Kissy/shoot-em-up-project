@@ -123,6 +123,33 @@ void IProperty::getVector3(Math::Vector3* vector3, ProtoStringList* values) {
 /**
  * @inheritDoc
  */
+void IProperty::setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, ProtoStringList* values) {
+    ProtoStringList::const_iterator value = values->begin();
+    vector4->x = boost::lexical_cast<f32>(*value);
+    vector4->y = boost::lexical_cast<f32>(*(++value));
+    vector4->z = boost::lexical_cast<f32>(*(++value));
+    vector4->w = boost::lexical_cast<f32>(*(++value));
+    propertyChanged(changeType);
+}
+
+/**
+ * @inheritDoc
+ */
+void IProperty::getVector4(Math::Vector4* vector4, ProtoStringList* values) {
+    std::string* value = nullptr;
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(vector4->x));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(vector4->y));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(vector4->z));
+    value = values->Add();
+    value->append(boost::lexical_cast<std::string>(vector4->w));
+}
+
+/**
+ * @inheritDoc
+ */
 void IProperty::setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, ProtoStringList* values) {
     ProtoStringList::const_iterator value = values->begin();
     quaternion->x = boost::lexical_cast<f32>(*value);

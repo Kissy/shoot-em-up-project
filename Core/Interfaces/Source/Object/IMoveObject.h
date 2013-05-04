@@ -17,19 +17,36 @@
 #include "DataTypes.h"
 #include "MathUtils.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>IMoveObject</c> is an interface for providing Move related functionality.  Any
-///    objects that modify or provide Move data are required to implement this class.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * <c>IMoveObject</c> is an interface for providing Move related functionality.  Any
+ *  objects that modify or provide Move data are required to implement this class.
+ */
 class IMoveObject {
-    public:
+public:
 
-        /// <summary>
-        /// Gets the velocity of the object.
-        /// </summary>
-        /// <returns>A constant pointer to the velocity.</returns>
-        virtual const Math::Vector3* GetVelocity(void) = 0;
+    /**
+     * Default constructor.
+     */
+    IMoveObject() {
+        m_velocity = Math::Vector4::Zero;
+    }
+
+    /**
+     * Destructor.
+     */
+    virtual ~IMoveObject() {
+    }
+
+    /**
+     * Gets the velocity of the object.
+     *
+     * @return  A constant pointer to the velocity.
+     */
+    inline const Math::Vector4* getVelocity(void) {
+        return &m_velocity;
+    }
+
+protected:
+    Math::Vector4       m_velocity;
 
 };

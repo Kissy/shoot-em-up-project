@@ -54,6 +54,7 @@ public class Player implements BoxObject {
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
     }
 
     public ObjectId getId() {
@@ -82,10 +83,11 @@ public class Player implements BoxObject {
         return velocityProperty;
     }
 
-    public void setVelocity(ByteString x, ByteString y, ByteString z) {
+    public void setVelocity(ByteString x, ByteString y, ByteString z, ByteString w) {
         velocityProperty.setValue(0, x);
         velocityProperty.setValue(1, y);
         velocityProperty.setValue(2, z);
+        velocityProperty.setValue(3, w);
     }
 
     public PropertyDto.PropertyProto.Builder getOrientationProperty() {

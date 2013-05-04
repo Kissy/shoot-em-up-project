@@ -19,12 +19,13 @@
 #include "PhysicObject.h"
 #include "Object/MovablePhysicObject.h"
 
-const int MovablePhysicObject::m_speed_multiplier = 4;
+const f32 MovablePhysicObject::m_speed_multiplier = 4;
 
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) : PhysicObject(pSystemScene, pszName) {
+MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) 
+    : PhysicObject(pSystemScene, pszName) {
     
 }
 
@@ -52,20 +53,13 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Physic::Velocity) {
-        const Math::Vector3* velocity = dynamic_cast<IMoveObject*>(pSubject)->GetVelocity();
-        m_velocity.x = velocity->x;
-        m_velocity.y = velocity->y;
-        m_velocity.z = velocity->z;
+        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
     }
     if (ChangeType & System::Changes::Physic::Position) {
-        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_position.x = position->x;
-        m_position.y = position->y;
-        m_position.z = position->z;
+        m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
-        const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_orientation.Set(Math::Vector3::UnitZ, Math::Angle::Deg2Rad(orientation->x));
+        m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
     }
 
     return Errors::Success;
@@ -76,18 +70,35 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
  */
 void MovablePhysicObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
+    u32 modified = 0;
 
-    if (m_velocity != Math::Vector3::Zero) {
-        Math::Vector3 rotatedNormalizedVelocity = Math::Vector3(m_velocity);
-        m_orientation.Rotate(rotatedNormalizedVelocity);
-        rotatedNormalizedVelocity.Normalize();
-        m_position.x += rotatedNormalizedVelocity.x * m_speed_multiplier;
-        m_position.y += rotatedNormalizedVelocity.y * m_speed_multiplier;
-        m_position.z += rotatedNormalizedVelocity.z * m_speed_multiplier;
+    if (m_velocity != Math::Vector4::Zero) {
+        // Rotation
+        if (m_velocity.w != 0) {
+            m_rotation += m_velocity.w * m_speed_multiplier/* * DeltaTime*/;
+            m_rotation = fmod(m_rotation, 360.0f);
+            if(m_rotation < 0) {
+                m_rotation += 360.0f;
+            }
+            m_orientation.Set(Math::Vector3::UnitZ, Math::Angle::Deg2Rad(m_rotation));
+            modified |= System::Changes::Physic::Orientation;
+        }
 
-        m_position.x = m_position.x > 780 ? 780 : (m_position.x < 40 ? 40 : m_position.x);
-        m_position.y = m_position.y > 570 ? 570 : (m_position.y < 40 ? 40 : m_position.y);
+        // Position
+        Math::Vector3 normalizedVelocity = Math::Vector3(m_velocity.x, m_velocity.y, m_velocity.z);
+        if (normalizedVelocity != Math::Vector3::Zero) {
+            m_orientation.Rotate(normalizedVelocity);
+            normalizedVelocity.Normalize();
+            m_position.x += normalizedVelocity.x * m_speed_multiplier/* * DeltaTime*/;
+            m_position.y += normalizedVelocity.y * m_speed_multiplier/* * DeltaTime*/;
+            m_position.z += normalizedVelocity.z * m_speed_multiplier/* * DeltaTime*/;
 
-        PostChanges(System::Changes::Physic::Position);
+            m_position.x = m_position.x > 780.0f ? 780.0f : (m_position.x < 40.0f ? 40.0f : m_position.x);
+            m_position.y = m_position.y > 570.0f ? 570.0f : (m_position.y < 40.0f ? 40.0f : m_position.y);
+        
+            modified |= System::Changes::Physic::Position;
+        }
     }
+
+    PostChanges(modified);
 }

@@ -69,6 +69,6 @@ public:
     void Update(f32 DeltaTime);
 
 private:
-    static const int     m_speed_multiplier;
+    static const f32     m_speed_multiplier;
 
 };

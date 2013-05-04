@@ -67,13 +67,6 @@ class PlayerInputObject : public InputObject, public IGeometryObject, public IMo
          * @inheritDoc
          */
         void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        const Math::Vector3* GetVelocity(void) {
-            return &m_velocity;
-        }
 
         /**
          * @inheritDoc
@@ -86,7 +79,7 @@ class PlayerInputObject : public InputObject, public IGeometryObject, public IMo
          * @inheritDoc
          */
         inline const Math::Quaternion* GetOrientation(void) {
-            return &m_orientation;
+            return NULL;
         }
 
         /**
@@ -104,9 +97,6 @@ class PlayerInputObject : public InputObject, public IGeometryObject, public IMo
         InputAction* m_leftInputAction;
         InputAction* m_rightRotateInputAction;
         InputAction* m_leftRotateInputAction;
-
-        Math::Vector3       m_velocity;
-        Math::Quaternion    m_orientation;
 
 };
 

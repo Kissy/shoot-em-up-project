@@ -29,10 +29,9 @@
  */
 UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
     , m_position(Math::Vector3::Zero)
-    , m_velocity(Math::Vector3::Zero)
     , m_orientation(Math::Quaternion::Zero) {
-    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Velocity, &m_velocity, _1);
-    m_propertyGetters["Velocity"] = boost::bind(&IProperty::getVector3, this, &m_velocity, _1);
+    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector4, this, System::Changes::Physic::Velocity, &m_velocity, _1);
+    m_propertyGetters["Velocity"] = boost::bind(&IProperty::getVector4, this, &m_velocity, _1);
     
     m_propertySetters["Position"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Position, &m_position, _1);
     m_propertyGetters["Position"] = boost::bind(&IProperty::getVector3, this, &m_position, _1);

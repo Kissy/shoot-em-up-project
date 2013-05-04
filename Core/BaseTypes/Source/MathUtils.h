@@ -34,6 +34,10 @@ namespace Math {
                 return Degrees * (Pi / 180.0f);
             }
 
+            static float Rad2Deg(f32 radian) {
+                return radian * (180.0f / Pi);
+            }
+
             static f32 Sin(f32 Rad) {
                 return sin(Rad);
             }
@@ -356,7 +360,10 @@ namespace Math {
         ///   Construct an uninitialized vector
         /// </summary>
         /// <returns>The constructed Vector3.</returns>
-        Vector3() {
+        Vector3() 
+            : x(0)
+            , y(0)
+            , z(0) {
         }
 
         f32             x;
@@ -535,6 +542,24 @@ namespace Math {
 
             return r;
         }
+        
+        /// <summary>
+        ///   Functionality for equals.
+        /// </summary>
+        /// <param name="a">The vector to compare to this vector.</param>
+        /// <returns>The result of the comparison.</returns>
+        bool operator==(const Vector4& a) const {
+            return (x == a.x) && (y == a.y) && (z == a.z) && (w == a.w);
+        }
+
+        /// <summary>
+        ///   Functionality for not equals.
+        /// </summary>
+        /// <param name="a">The vector to compare to this vector.</param>
+        /// <returns>The result of the comparison.</returns>
+        bool operator!=(const Vector4& a) const {
+            return (x != a.x) || (y != a.y) || (z != a.z) || (w != a.w);
+        }
 
         f32             x;
         f32             y;
@@ -646,7 +671,7 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>The magnitude.</returns>
-        f32 Magnitude(void) {
+        f32 Magnitude(void) const {
             return sqrtf(x * x + y * y + z * z + w * w);
         }
 
@@ -678,6 +703,13 @@ namespace Math {
         /// <param name="a ">The vector to be rotated by this this quaternion.</param>
         /// <remarks>Inlined for performance.</remarks>
         void Rotate(Vector3& a);
+
+        /**
+         * Gets an angle.
+         *
+         * @return  The angle.
+         */
+        f32 GetAngle() const;
 
         f32             x;
         f32             y;

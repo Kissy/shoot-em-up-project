@@ -72,13 +72,14 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Physic::Position) {
-        const Math::Vector3* position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
+        auto position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
         m_position->x = (Sint16) position->x - 64;
         m_position->y = (Sint16) position->y - 64;
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
         const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_displayImage = SPG_Rotate(m_sourceImage, orientation->x);
+        f32 rotation = Math::Angle::Rad2Deg(orientation->GetAngle());
+        m_displayImage = SPG_Rotate(m_sourceImage, rotation);
     }
 
     return Errors::Success;
