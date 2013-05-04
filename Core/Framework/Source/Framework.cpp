@@ -44,20 +44,20 @@ CreateSingleton(Instrumentation);
 
 TaskManager*    g_pTaskManager = NULL;
 
-void
-ExecuteFramework(void) {
+/**
+ * @inheritDoc
+ */
+void ExecuteFramework(void) {
 #ifndef DEBUG_BUILD
     try
 #endif
     {
-        Framework   Framework;
-
+        Framework Framework;
         if (Framework.Initialize() == Errors::Success) {
             Framework.Execute();
             Framework.Shutdown();
         }
     }
-
 #ifndef DEBUG_BUILD
     catch (...) {
         // Display an error message.
@@ -65,32 +65,35 @@ ExecuteFramework(void) {
 #endif
 }
 
-
-Framework::Framework(void) :
+/**
+ * @inheritDoc
+ */
+Framework::Framework(void) : 
     m_bExecuteLoop(true)
     , m_pScheduler(NULL)
     , m_pSceneCCM(NULL)
-    , m_pObjectCCM(NULL)
-{
+    , m_pObjectCCM(NULL) {
     //
     // g_pTaskManager and m_pScheduler are instantiated after the environment variables
     // in the config file are parsed
     //
     m_pSceneCCM = new ChangeManager();
-    ASSERT(m_pSceneCCM != NULL);
     m_pObjectCCM = new ChangeManager();
-    ASSERT(m_pObjectCCM != NULL);
 }
 
-
+/**
+ * @inheritDoc
+ */
 Framework::~Framework(void) {
-    SAFE_DELETE(m_pScheduler);
-    SAFE_DELETE(g_pTaskManager);
-    SAFE_DELETE(m_pSceneCCM);
-    SAFE_DELETE(m_pObjectCCM);
+    delete m_pScheduler;
+    delete g_pTaskManager;
+    delete m_pSceneCCM;
+    delete m_pObjectCCM;
 }
 
-
+/**
+ * @inheritDoc
+ */
 Error Framework::Initialize(void) {
     //
     // Set the current directory to the location of the GDF.
@@ -118,16 +121,28 @@ Error Framework::Initialize(void) {
     //
     DefinitionParser Parser(m_pScene, apszFile);
     Parser.ParseEnvironment();
+    
+    //
+    // Init debugger
+    // 
+#ifdef DEBUG_BUILD
+    bool debuggerActive = Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false);
+    Singletons::Debugger.initialize(debuggerActive);
+    Singletons::Debugger.setChangeManagers(m_pSceneCCM, m_pObjectCCM);
+#endif
+    
     //
     // Register the framework as the system access provider.  The system access provider gives the
     //  ability for systems to set the properties in other systems.
     //
     Singletons::ServiceManager.RegisterSystemAccessProvider(this);
+    
     //
     // Instantiate the task manager.
     //
     g_pTaskManager = new TaskManager();
     g_pTaskManager->Init();
+    
     //
     // Instantiate the scheduler.
     //
@@ -144,20 +159,11 @@ Error Framework::Initialize(void) {
     Parser.ParseSystems();
     m_sNextScene = Parser.StartupScene();
     Parser.ParseScene(m_sNextScene);
+    
     //
     // Set the initial scene for the scheduler.
     //
     m_pScheduler->SetScene(m_pScene);
-    
-    //
-    // Init debugger
-    // 
-#ifdef DEBUG_BUILD
-    bool debuggerActive = Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false);
-    Singletons::Debugger.init(debuggerActive);
-    Singletons::Debugger.setCCM(m_pSceneCCM, m_pObjectCCM);
-    Singletons::Debugger.setUScene(m_pScene);
-#endif
 
     return Errors::Success;
 }
@@ -173,7 +179,7 @@ void Framework::Shutdown(void) {
     //
     // Get rid of the scene.
     //
-    SAFE_DELETE(m_pScene);
+    delete m_pScene;
     //
     // De-register the framework as the system access provider.
     //
@@ -239,7 +245,7 @@ Error Framework::Execute(void) {
         // messages up to the scene CCM so it needs to go first.
         m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
         m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All ^ System::Changes::Generic::CreateObject);
-
+        
         //
         // Check with the environment manager if there is a change in the runtime status to quit.
         //

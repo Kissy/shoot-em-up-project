@@ -22,6 +22,7 @@
 #include "Manager/TaskManager.h"
 #include "Scheduler.h"
 #include "Instrumentation.h"
+#include "Debugger/Debugger.h"
 
 const f32 Scheduler::sm_DefaultClockFrequency = 1.0f / 120.0f;      // Set the timer to 120Hz
 
@@ -40,6 +41,13 @@ Scheduler::~Scheduler(void) {
 
 
 void Scheduler::SetScene(const UScene* pScene) {
+    //
+    // Setup the Debugger
+    // 
+#ifdef DEBUG_BUILD
+    Singletons::Debugger.setScene(pScene);
+#endif
+
     //
     // Wait for any executing scenes to finish and clear out the list.
     //
@@ -91,6 +99,13 @@ void Scheduler::Execute(void) {
     //
     // TODO : maybe disable it when not used ?
     Singletons::ServiceManager.Instrumentation().UpdatePeriodicData(DeltaTime);
+    
+#ifdef DEBUG_BUILD
+    //
+    // Update the debugger
+    // 
+    Singletons::Debugger.update(DeltaTime);
+#endif
 
     //
     // Check if the execution is paused, and set delta time to 0 if so.

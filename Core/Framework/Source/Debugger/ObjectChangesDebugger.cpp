@@ -38,9 +38,8 @@ Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes:
     debugEntityProto->set_name(systemObject->GetName());
     debugEntityProto->set_category(System::getComponentName(System::Components::Object));
 
-    std::string category = System::Types::getName(systemObject->GetSystemType());
     DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-    debugPropertyProto->set_category(category);
+    debugPropertyProto->set_category(System::Types::getName(systemObject->GetSystemType()));
     
     const ProtoPropertyList properties = systemObject->getProperties();
     debugPropertyProto->mutable_properties()->CopyFrom(properties);

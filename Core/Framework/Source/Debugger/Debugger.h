@@ -14,10 +14,13 @@
 
 #pragma once
 
+#include <list>
+
 #include "Proto/Debug/Debug.pb.h"
 
 #include "Defines.h"
 #include "Singleton.h"
+#include "Universal.h"
 #include "SceneChangesDebugger.h"
 #include "ObjectChangesDebugger.h"
 
@@ -44,29 +47,29 @@ public:
     /**
      * Destructor.
      */
-    ~Debugger(void);
+    ~Debugger();
 
     /**
      * Initialises this object.
      *
      * @param   debuggerActive  true to debugger active.
      */
-    void init(bool debuggerActive);
+    void initialize(bool debuggerActive);
 
     /**
-     * Sets a ccm.
+     * Sets the change managers references.
      *
      * @param [in,out]  pSceneCCM   If non-null, the scene ccm.
      * @param [in,out]  pObjectCCM  If non-null, the object ccm.
      */
-    void setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
+    void setChangeManagers(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM);
 
     /**
      * Sets u scene.
      *
      * @param [in,out]  pUScene If non-null, the u scene.
      */
-    void setUScene(UScene* pUScene);
+    void setScene(const UScene* pUScene);
 
     /**
      * Cleans this object.
@@ -74,11 +77,31 @@ public:
     void clean(void);
 
     /**
+     * Update the debugger.
+     */
+    void update(f32 deltaTime);
+
+    /**
      * Send this message.
      *
      * @param [in,out]  debugHolderProto    If non-null, the debug holder prototype.
      */
     void send(DebugProto* debugHolderProto);
+
+    /**
+     * Gets created object identifiers.
+     *
+     * @return  The created object identifiers.
+     */
+    void addCreatedObjectIds(std::string objectId);
+
+    /**
+     * Debug object.
+     *
+     * @param [in,out]  object      If non-null, the object.
+     * @param [in,out]  debugProto  The debug prototype.
+     */
+    void debugObject(UObject* object, DebugProto& debugProto);
 
 private:
 
@@ -89,6 +112,7 @@ private:
     ObjectChangesDebugger*  m_pObjectChangesDebugger;
 
     UScene*                 m_pUScene;
+    std::list<std::string>  m_createdObjectIds;
     
     zmq::context_t*         m_pContext;
     zmq::socket_t*          m_pSocket;

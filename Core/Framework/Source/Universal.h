@@ -131,27 +131,31 @@ protected:
     ObjectLinks                             m_ObjectLinks;
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// Implements a universal object that can be extended to add functionality.  By
-/// default this universal object does not have any system functionality.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Implements a universal object that can be extended to add functionality.  By default this
+ * universal object does not have any system functionality.
+ *
+ * @sa  ISubject
+ * @sa  IObserver
+ * @sa  IGeometryObject
+ */
 class UObject : public ISubject, public IObserver, public IGeometryObject {
     friend class UScene;
 
 protected:
 
-    //
-    // Constructor.
-    //  pszName - the name of this object.
-    //
+    /**
+     * Constructor.
+     *  pszName - the name of this object.
+     *
+     * @param [in,out]  pScene  If non-null, the scene.
+     * @param   pszName         (Optional) the name.
+     */
     UObject(UScene* pScene, const char* pszName = "");
 
-    //
-    // Destructor.
-    //
+    /**
+     * Destructor.
+     */
     ~UObject(void);
 
 public:
@@ -160,51 +164,69 @@ public:
     typedef SystemObjects::iterator                     SystemObjectsIt;
     typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
-    //
-    // Gets the name of the object.
-    //   return - the name of the object.
-    //
+    /**
+     * Gets the name of the object.
+     *   return - the name of the object.
+     *
+     * @return  null if it fails, else the name.
+     */
     const char* GetName(void) {
         return m_sName.c_str();
     }
 
-    //
-    // Sets the name of the object.
-    //  pszName - the new name of the object.
-    //
+    /**
+     * Sets the name of the object.
+     *  pszName - the new name of the object.
+     *
+     * @param   pszName The name.
+     */
     void SetName(const char* pszName) {
         m_sName = pszName;
     }
 
-    //
-    // Used to extend the objects functionality for a given system.
-    //   return - the newly created system object.
-    //
+    /**
+     * Used to extend the objects functionality for a given system.
+     *   return - the newly created system object.
+     *
+     * @param [in,out]  pSystemScene    If non-null, the system scene.
+     * @param   pszSystemObjectType     Type of the system object.
+     *
+     * @return  null if it fails, else.
+     */
     ISystemObject* Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType);
 
-    /// <summary>
-    ///   Used to extend the objects functionality for a given system.
-    /// </summary>
-    /// <param name="pSystemObject">A pointer to an already created object.</param>
-    /// <returns>true is successful, false otherwise.</returns>
+    /**
+     * Used to extend the objects functionality for a given system.
+     *
+     * @param [in,out]  pSystemObject   A pointer to an already created object.
+     *
+     * @return  true is successful, false otherwise.
+     */
     bool Extend(ISystemObject* pSystemObject);
 
-    //
-    // Used to unextend the objects functionality for a given system.
-    //
+    /**
+     * Used to unextend the objects functionality for a given system.
+     *
+     * @param [in,out]  pSystemScene    If non-null, the system scene.
+     */
     void Unextend(ISystemScene* pSystemScene);
 
-    /// <summary>
-    ///   Returns the system objects map for this UObject.
-    /// </summary>
-    /// <returns>A constant reference to the system object mapping.</returns>
+    /**
+     * Returns the system objects map for this UObject.
+     *
+     * @return  A constant reference to the system object mapping.
+     */
     const SystemObjects& GetExtensions(void);
 
-    //
-    // Gets the specified system object.
-    //  System - the system type of the object.
-    //   return - this UOBject's system object for the specified type.
-    //
+    /**
+     * Gets the specified system object.
+     *  System - the system type of the object.
+     *   return - this UOBject's system object for the specified type.
+     *
+     * @param   System  The system.
+     *
+     * @return  null if it fails, else the extension.
+     */
     ISystemObject* GetExtension(System::Type System);
 
     /**
@@ -215,29 +237,47 @@ public:
     // TODO maybe move it to system scene instead ?
     void update(const ObjectProto* objectProto);
 
-    /// <summary cref="IObserver::ChangeOccurred">
-    ///   Implementation of the IObserver ChangeOccurred function.
-    /// </summary>
+    /**
+     * Change occurred.
+     * Implementation of the IObserver ChangeOccurred function.
+     *
+     * @param [in,out]  pSubject    If non-null, the subject.
+     * @param   SystemChanges       The system changes.
+     *
+     * @return  .
+     */
     virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
 
-    /// <summary cref="ISubject::GetPotentialSystemChanges">
-    ///   Implementation of the ISubject GetPotentialSystemChanges function.
-    /// </summary>
+    /**
+     * Gets potential system changes.
+     * Implementation of the ISubject GetPotentialSystemChanges function.
+     *
+     * @return  The potential system changes.
+     */
     virtual System::Changes::BitMask GetPotentialSystemChanges(void);
 
-    /// <summary cref="IGeometryObject::GetPosition">
-    ///   Implementation of the IGeometryObject GetPosition function.
-    /// </summary>
+    /**
+     * Gets the position.
+     * Implementation of the IGeometryObject GetPosition function.
+     *
+     * @return  null if it fails, else the position.
+     */
     virtual const Math::Vector3* GetPosition(void);
 
-    /// <summary cref="IGeometryObject::GetOrientation">
-    ///   Implementation of the IGeometryObject GetOrientation function.
-    /// </summary>
+    /**
+     * Gets the orientation.
+     * Implementation of the IGeometryObject GetOrientation function.
+     *
+     * @return  null if it fails, else the orientation.
+     */
     virtual const Math::Quaternion* GetOrientation(void);
 
-    /// <summary cref="IGeometryObject::GetScale">
-    ///   Implementation of the IGeometryObject GetScale function.
-    /// </summary>
+    /**
+     * Gets the scale.
+     * Implementation of the IGeometryObject GetScale function.
+     *
+     * @return  null if it fails, else the scale.
+     */
     virtual const Math::Vector3* GetScale(void);
 
 protected:

@@ -63,7 +63,6 @@ class Framework : public IServiceManager::ISystemAccess {
          */
         Error Execute(void) throw(...);
 
-
     protected:
 
         /**

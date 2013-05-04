@@ -16,58 +16,57 @@
 
 class TaskManager;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Handles scheduling of all task execution.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Handles scheduling of all task execution.
+ */
 class Scheduler {
-    public:
+public:
 
-        /// <summary>
-        ///   Constructor.
-        /// </summary>
-        /// <param name="pTaskManager">A pointer to the task manager.</param>
-        Scheduler(TaskManager* pTaskManager);
+    /**
+     * Constructor.
+     *
+     * @param [in,out]  pTaskManager    A pointer to the task manager.
+     */
+    Scheduler(TaskManager* pTaskManager);
 
-        /// <summary>
-        ///   Destructor.
-        /// </summary>
-        ~Scheduler(void);
+    /**
+     * Destructor.
+     */
+    ~Scheduler(void);
 
-        /// <summary>
-        ///   Turns benchmarking on or off.
-        /// </summary>
-        void EnableBenchmarking(bool bEnable = true) {
-            m_bBenchmarkingEnabled = bEnable;
-        }
+    /**
+     * Turns benchmarking on or off.
+     *
+     * @param   bEnable (Optional) the enable.
+     */
+    void EnableBenchmarking(bool bEnable = true) {
+        m_bBenchmarkingEnabled = bEnable;
+    }
 
-        /// <summary>
-        ///   Sets the UScene to schedule execution of.
-        /// </summary>
-        /// <param name="pScene">A pointer to the universal scene.</param>
-        void SetScene(const UScene* pScene);
+    /**
+     * Sets the UScene to schedule execution of.
+     *
+     * @param   pScene  A pointer to the universal scene.
+     */
+    void SetScene(const UScene* pScene);
 
-        /// <summary>
-        ///   Execute the set UScene.
-        /// </summary>
-        void Execute(void);
+    /**
+     * Execute the set UScene.
+     */
+    void Execute(void);
 
+protected:
+    static const f32                sm_DefaultClockFrequency;
+    TaskManager*                    m_pTaskManager;
 
-    protected:
+    f32                             m_ClockFrequency;
+    Handle                          m_hExecutionTimer;
 
-        static const f32                sm_DefaultClockFrequency;
-        TaskManager*                    m_pTaskManager;
+    bool                            m_bBenchmarkingEnabled;
 
-        f32                             m_ClockFrequency;
-        Handle                          m_hExecutionTimer;
+    typedef std::map<System::Type, ISystemScene*>   SceneExecs;
+    typedef SceneExecs::iterator                    SceneExecsIt;
 
-        bool                            m_bBenchmarkingEnabled;
-
-        typedef std::map<System::Type, ISystemScene*>   SceneExecs;
-        typedef SceneExecs::iterator                    SceneExecsIt;
-
-        SceneExecs                      m_SceneExecs;
+    SceneExecs                      m_SceneExecs;
 
 };

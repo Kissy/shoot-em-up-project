@@ -26,20 +26,29 @@ void protobuf_uint8_free(void* data, void* hint) {
     delete[] data;
 }
 
+/**
+ * @inheritDoc
+ */
 Debugger::Debugger(void) 
     : m_bDebuggerActive(false) {    
 }
 
+/**
+ * @inheritDoc
+ */
 Debugger::~Debugger(void) {
     if (!m_bDebuggerActive) {
         return;
     }
 
-    SAFE_DELETE(m_pSocket);
-    SAFE_DELETE(m_pObjectChangesDebugger);
+    delete m_pSocket;
+    delete m_pObjectChangesDebugger;
 }
 
-void Debugger::init(bool debuggerActive) {
+/**
+ * @inheritDoc
+ */
+void Debugger::initialize(bool debuggerActive) {
     if (!debuggerActive) {
         return;
     }
@@ -53,13 +62,19 @@ void Debugger::init(bool debuggerActive) {
     m_pSocket->connect("tcp://kissy.synology.me:26901");
 }
 
-void Debugger::setCCM(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) {
+/**
+ * @inheritDoc
+ */
+void Debugger::setChangeManagers(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM) {
     m_pSceneCCM = pSceneCCM;
     m_pObjectCCM = pObjectCCM;
 }
 
-void Debugger::setUScene(UScene* pUScene) {
-    m_pUScene = pUScene;
+/**
+ * @inheritDoc
+ */
+void Debugger::setScene(const UScene* pUScene) {
+    m_pUScene = const_cast<UScene*>(pUScene);
 
     if (!m_bDebuggerActive) {
         return;
@@ -78,25 +93,15 @@ void Debugger::setUScene(UScene* pUScene) {
 
     UScene::Objects Objects = m_pUScene->GetObjects();
     for (UScene::ObjectsConstIt it = Objects.begin(); it != Objects.end(); it++) {
-        UObject* pUObject = *it;
-        UObject::SystemObjects SystemObjects = pUObject->GetExtensions();
-        
-        DebugEntityProto* debugEntityProto = debugProto.add_entities();
-        debugEntityProto->set_id(pUObject->GetName());
-        debugEntityProto->set_name(pUObject->GetName());
-        debugEntityProto->set_category(System::getComponentName(System::Components::Object));
-        for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
-            ISystemObject* pObject = it->second;
-            DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-            debugPropertyProto->set_category(System::Types::getName(pObject->GetSystemType()));
-            m_pObjectCCM->Register(pObject, System::Changes::All, m_pObjectChangesDebugger);
-        }
+        debugObject(*it, debugProto);
     }
 
     send(&debugProto);
 }
 
-
+/**
+ * @inheritDoc
+ */
 void Debugger::clean(void) {
     if (!m_bDebuggerActive) {
         return;
@@ -119,6 +124,31 @@ void Debugger::clean(void) {
     }
 }
 
+/**
+ * @inheritDoc
+ */
+void Debugger::update(f32 deltaTime) {
+    if (!m_bDebuggerActive) {
+        return;
+    }
+    
+    DebugProto debugProto;
+
+    for (auto createdObjectId : m_createdObjectIds) {
+        UObject* pUObject = m_pUScene->FindObject(createdObjectId.c_str());
+        if (pUObject != NULL) {
+            debugObject(pUObject, debugProto);
+        }
+    }
+
+    m_createdObjectIds.clear();
+
+    send(&debugProto);
+}
+
+/**
+ * @inheritDoc
+ */
 void Debugger::send(DebugProto* debugProto) {
     int size = debugProto->ByteSize(); 
     google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
@@ -127,5 +157,30 @@ void Debugger::send(DebugProto* debugProto) {
     m_pSocket->send(*message);
 }
 
+/**
+ * @inheritDoc
+ */
+void Debugger::addCreatedObjectIds(std::string objectId) {
+    m_createdObjectIds.push_back(objectId);
+}
+
+/**
+ * @inheritDoc
+ */
+void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
+    DebugEntityProto* debugEntityProto = debugProto.add_entities();
+    debugEntityProto->set_id(object->GetName());
+    debugEntityProto->set_name(object->GetName());
+    debugEntityProto->set_category(System::getComponentName(System::Components::Object));
+    UObject::SystemObjects SystemObjects = object->GetExtensions();
+    for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
+        ISystemObject* systemObject = it->second;
+        DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
+        debugPropertyProto->set_category(System::Types::getName(systemObject->GetSystemType()));
+        const ProtoPropertyList properties = systemObject->getProperties();
+        debugPropertyProto->mutable_properties()->CopyFrom(properties);
+        m_pObjectCCM->Register(systemObject, System::Changes::All, m_pObjectChangesDebugger);
+    }
+}
 
 #endif
