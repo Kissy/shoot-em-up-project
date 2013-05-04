@@ -19,7 +19,7 @@
 #include "PhysicObject.h"
 #include "Object/MovablePhysicObject.h"
 
-const f32 MovablePhysicObject::m_speed_multiplier = 4;
+const f32 MovablePhysicObject::m_speed_multiplier = 500;
 
 /**
  * @inheritDoc
@@ -75,7 +75,7 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     if (m_velocity != Math::Vector4::Zero) {
         // Rotation
         if (m_velocity.w != 0) {
-            m_rotation += m_velocity.w * m_speed_multiplier/* * DeltaTime*/;
+            m_rotation += m_velocity.w * m_speed_multiplier * DeltaTime;
             m_rotation = fmod(m_rotation, 360.0f);
             if(m_rotation < 0) {
                 m_rotation += 360.0f;
@@ -89,9 +89,9 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         if (normalizedVelocity != Math::Vector3::Zero) {
             m_orientation.Rotate(normalizedVelocity);
             normalizedVelocity.Normalize();
-            m_position.x += normalizedVelocity.x * m_speed_multiplier/* * DeltaTime*/;
-            m_position.y += normalizedVelocity.y * m_speed_multiplier/* * DeltaTime*/;
-            m_position.z += normalizedVelocity.z * m_speed_multiplier/* * DeltaTime*/;
+            m_position.x += normalizedVelocity.x * m_speed_multiplier * DeltaTime;
+            m_position.y += normalizedVelocity.y * m_speed_multiplier * DeltaTime;
+            m_position.z += normalizedVelocity.z * m_speed_multiplier * DeltaTime;
 
             m_position.x = m_position.x > 780.0f ? 780.0f : (m_position.x < 40.0f ? 40.0f : m_position.x);
             m_position.y = m_position.y > 570.0f ? 570.0f : (m_position.y < 40.0f ? 40.0f : m_position.y);
