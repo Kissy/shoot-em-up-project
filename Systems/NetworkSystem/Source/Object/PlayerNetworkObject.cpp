@@ -29,7 +29,6 @@
 PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) 
     : NetworkObject(pSystemScene, pszName)
     , m_dirty(true)
-    //, m_position(Math::Vector3::Zero)
     , m_velocity(Math::Vector4::Zero)
     , m_orientation(Math::Quaternion::Zero)
     , m_heartbeat_delay(500000000LL) /* 500ms */ {

@@ -21,8 +21,9 @@
 #include "Interface.h"
 #include "Universal/UScene.h"
 
-ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger) :
-    m_pDebugger(debugger) {
+ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)
+    : m_pDebugger(debugger)
+    , m_updateTimerDelay(100000000LL) /* 100ms */ {
 }
 
 
@@ -30,6 +31,10 @@ ObjectChangesDebugger::~ObjectChangesDebugger(void) {
 }
 
 Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+    if (m_updateTimer.elapsed().wall >= m_updateTimerDelay) {
+
+    }
+    
     ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
 
     DebugProto debugProto;

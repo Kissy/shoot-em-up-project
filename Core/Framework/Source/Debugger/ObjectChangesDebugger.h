@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <boost/timer/timer.hpp>
+
 #include "Observer/IObserver.h"
 
 class Debugger;
@@ -49,6 +51,8 @@ public:
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
 private:
-    Debugger*       m_pDebugger;
+    Debugger*                       m_pDebugger;
+    boost::timer::cpu_timer         m_updateTimer;
+    boost::timer::nanosecond_type   m_updateTimerDelay;
 
 };

@@ -31,22 +31,9 @@ SceneChangesDebugger::~SceneChangesDebugger(void) {
 
 Error SceneChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     if (ChangeType & System::Changes::Generic::CreateObject) {
-        //DebugProto debugProto;
-
         for (auto objectProto : *dynamic_cast<ISceneObject*>(pSubject)->getCreateObjects()) {
             m_pDebugger->addCreatedObjectIds(objectProto.name());
-            /*DebugEntityProto* debugEntityProto = debugProto.add_entities();
-            debugEntityProto->set_id(objectProto.name());
-            debugEntityProto->set_name(objectProto.name());
-            for (auto systemObject : objectProto.systemobjects()) {
-                debugEntityProto->set_category(System::getComponentName(System::Components::Object));
-                DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-                debugPropertyProto->set_category(systemObject.type());
-                debugPropertyProto->mutable_properties()->CopyFrom(systemObject.properties());
-            }*/
         }
-
-        //m_pDebugger->send(&debugProto);
     }
     return Errors::Success;
 }
