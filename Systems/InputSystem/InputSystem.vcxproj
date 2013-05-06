@@ -56,13 +56,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;INPUTSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost;C:\Program Files (x86)\SDK\Protobuf\src;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\stage\lib;C:\Program Files (x86)\SDK\TBB\build\vsproject\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\vsprojects\Debug;C:\Program Files (x86)\SDK\SDL\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;C:\Program Files (x86)\SDK\SDL\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>InputSystem.def</ModuleDefinitionFile>
     </Link>
