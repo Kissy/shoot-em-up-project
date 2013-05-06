@@ -24,6 +24,7 @@
 ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)
     : m_pDebugger(debugger)
     , m_updateTimerDelay(100000000LL) /* 100ms */ {
+	m_updateTimer.start();
 }
 
 
@@ -31,9 +32,12 @@ ObjectChangesDebugger::~ObjectChangesDebugger(void) {
 }
 
 Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    if (m_updateTimer.elapsed().wall >= m_updateTimerDelay) {
-
+    if (m_updateTimer.elapsed().wall < m_updateTimerDelay) {
+        return Errors::Success;
     }
+
+	m_updateTimer.stop();
+    m_updateTimer.start();
     
     ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
 

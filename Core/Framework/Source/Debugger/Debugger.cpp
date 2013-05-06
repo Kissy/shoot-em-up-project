@@ -50,7 +50,7 @@ Debugger::~Debugger(void) {
  * @inheritDoc
  */
 void Debugger::initialize(bool debuggerActive) {
-    if (!debuggerActive) {
+	if (!debuggerActive) {
         return;
     }
 
@@ -151,6 +151,10 @@ void Debugger::update(f32 deltaTime) {
  * @inheritDoc
  */
 void Debugger::send(DebugProto* debugProto) {
+    if (!m_pSocket->connected()) {
+        return;
+    }
+
     int size = debugProto->ByteSize(); 
     google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
     debugProto->SerializeWithCachedSizesToArray(buffer);
