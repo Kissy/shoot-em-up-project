@@ -31,7 +31,7 @@ void protobuf_uint8_free(void* data, void* hint) {
  * @inheritDoc
  */
 Debugger::Debugger(void) 
-    : m_bDebuggerActive(false) {    
+    : m_bDebuggerActive(false) {
 }
 
 /**
@@ -50,7 +50,7 @@ Debugger::~Debugger(void) {
  * @inheritDoc
  */
 void Debugger::initialize(bool debuggerActive) {
-	if (!debuggerActive) {
+    if (!debuggerActive) {
         return;
     }
 
@@ -141,8 +141,12 @@ void Debugger::update(f32 deltaTime) {
             debugObject(pUObject, debugProto);
         }
     }
-
     m_createdObjectIds.clear();
+    
+    for (auto updatedObject : m_updatedObjects) {
+        debugObject(dynamic_cast<ISystemObject*>(updatedObject), debugProto);
+    }
+    m_updatedObjects.clear();
 
     send(&debugProto);
 }
@@ -151,10 +155,6 @@ void Debugger::update(f32 deltaTime) {
  * @inheritDoc
  */
 void Debugger::send(DebugProto* debugProto) {
-    if (!m_pSocket->connected()) {
-        return;
-    }
-
     int size = debugProto->ByteSize(); 
     google::protobuf::uint8* buffer = new google::protobuf::uint8[size];
     debugProto->SerializeWithCachedSizesToArray(buffer);
@@ -167,6 +167,13 @@ void Debugger::send(DebugProto* debugProto) {
  */
 void Debugger::addCreatedObjectIds(std::string objectId) {
     m_createdObjectIds.push_back(objectId);
+}
+
+/**
+ * @inheritDoc
+ */
+void Debugger::addUpdatedObject(ISubject* object) {
+    m_updatedObjects.insert(object);
 }
 
 /**
@@ -186,6 +193,22 @@ void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
         debugPropertyProto->mutable_properties()->CopyFrom(properties);
         m_pObjectCCM->Register(systemObject, System::Changes::All, m_pObjectChangesDebugger);
     }
+}
+
+/**
+ * @inheritDoc
+ */
+void Debugger::debugObject(ISystemObject* object, DebugProto& debugProto) {
+    DebugEntityProto* debugEntityProto = debugProto.add_entities();
+    debugEntityProto->set_id(object->GetName());
+    debugEntityProto->set_name(object->GetName());
+    debugEntityProto->set_category(System::getComponentName(System::Components::Object));
+
+    DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
+    debugPropertyProto->set_category(System::Types::getName(object->GetSystemType()));
+    
+    const ProtoPropertyList properties = object->getProperties();
+    debugPropertyProto->mutable_properties()->CopyFrom(properties);
 }
 
 #endif

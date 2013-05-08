@@ -52,7 +52,5 @@ public:
 
 private:
     Debugger*                       m_pDebugger;
-    boost::timer::cpu_timer         m_updateTimer;
-    boost::timer::nanosecond_type   m_updateTimerDelay;
 
 };

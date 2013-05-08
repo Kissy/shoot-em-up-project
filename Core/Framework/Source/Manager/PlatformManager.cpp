@@ -13,7 +13,7 @@
 // responsibility to update it.
 
 // Prevent other headers from including any platform specific ones
-#define __PLATFORM_MANAGER
+#pragma once
 
 #include "BaseTypes.h"
 #include "Interface.h"

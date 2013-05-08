@@ -22,9 +22,7 @@
 #include "Universal/UScene.h"
 
 ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)
-    : m_pDebugger(debugger)
-    , m_updateTimerDelay(100000000LL) /* 100ms */ {
-	m_updateTimer.start();
+    : m_pDebugger(debugger) {
 }
 
 
@@ -32,27 +30,6 @@ ObjectChangesDebugger::~ObjectChangesDebugger(void) {
 }
 
 Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    if (m_updateTimer.elapsed().wall < m_updateTimerDelay) {
-        return Errors::Success;
-    }
-
-	m_updateTimer.stop();
-    m_updateTimer.start();
-    
-    ISystemObject* systemObject = dynamic_cast<ISystemObject*>(pSubject);
-
-    DebugProto debugProto;
-    DebugEntityProto* debugEntityProto = debugProto.add_entities();
-    debugEntityProto->set_id(systemObject->GetName());
-    debugEntityProto->set_name(systemObject->GetName());
-    debugEntityProto->set_category(System::getComponentName(System::Components::Object));
-
-    DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-    debugPropertyProto->set_category(System::Types::getName(systemObject->GetSystemType()));
-    
-    const ProtoPropertyList properties = systemObject->getProperties();
-    debugPropertyProto->mutable_properties()->CopyFrom(properties);
-
-    m_pDebugger->send(&debugProto);
+    m_pDebugger->addUpdatedObject(pSubject);
     return Errors::Success;
 }

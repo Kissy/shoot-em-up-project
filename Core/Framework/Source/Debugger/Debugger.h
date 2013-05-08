@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <set>
 #include <list>
 
 #include "Proto/Debug/Debug.pb.h"
@@ -28,6 +29,7 @@
 #include <zmq.hpp>
 
 class IChangeManager;
+class ISystemObject;
 class UScene;
 class UObject;
 
@@ -89,11 +91,18 @@ public:
     void send(DebugProto* debugHolderProto);
 
     /**
-     * Gets created object identifiers.
+     * Add created object identifiers.
      *
-     * @return  The created object identifiers.
+     * @param objectId The created object identifiers.
      */
     void addCreatedObjectIds(std::string objectId);
+    
+    /**
+     * Add updated object to the list.
+     *
+     * @param object The updated object.
+     */
+    void addUpdatedObject(ISubject* object);
 
     /**
      * Debug object.
@@ -102,6 +111,15 @@ public:
      * @param [in,out]  debugProto  The debug prototype.
      */
     void debugObject(UObject* object, DebugProto& debugProto);
+
+    /**
+     * Debug object.
+     *
+     * @param [in,out]  object      If non-null, the object.
+     * @param [in]      changes     The object changes.
+     * @param [in,out]  debugProto  The debug prototype.
+     */
+    void debugObject(ISystemObject* object, DebugProto& debugProto);
 
 private:
 
@@ -113,6 +131,7 @@ private:
 
     UScene*                 m_pUScene;
     std::list<std::string>  m_createdObjectIds;
+    std::set<ISubject*>     m_updatedObjects;
     
     zmq::context_t*         m_pContext;
     zmq::socket_t*          m_pSocket;
