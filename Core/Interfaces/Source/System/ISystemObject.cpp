@@ -14,18 +14,17 @@
 
 #include "Assert.h"
 #include "Generic/IProperty.h"
+#include "Generic/IEntity.h"
 #include "System/ISystem.h"
 #include "System/ISystemObject.h"
 
 /**
  * @inheritDoc
  */
-ISystemObject::ISystemObject(ISystemScene* pSystemScene, const char* pszName) 
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, std::string id, std::string name) 
     : IProperty()
+    , IEntity(id, name)
     , m_pSystemScene(pSystemScene) {
-        if (pszName) {
-            SetName(pszName);
-        }
 }
 
 /**

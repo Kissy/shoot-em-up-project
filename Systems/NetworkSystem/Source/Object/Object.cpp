@@ -21,7 +21,8 @@
 /**
  * @inheritDoc
  */
-NetworkObject::NetworkObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
+NetworkObject::NetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : ISystemObject(pSystemScene, id, name) {
 
 }
 

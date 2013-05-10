@@ -85,10 +85,10 @@
       <Filter>Source Files\Debugger</Filter>
     </ClCompile>
     <ClCompile Include="Source\Universal\UObject.cpp">
-      <Filter>Header Files\Universal</Filter>
+      <Filter>Source Files\Universal</Filter>
     </ClCompile>
     <ClCompile Include="Source\Universal\UScene.cpp">
-      <Filter>Header Files\Universal</Filter>
+      <Filter>Source Files\Universal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +144,10 @@
       <Filter>Header Files\Debugger</Filter>
     </ClInclude>
     <ClInclude Include="Source\Universal\UObject.h">
-      <Filter>Source Files\Universal</Filter>
+      <Filter>Header Files\Universal</Filter>
     </ClInclude>
     <ClInclude Include="Source\Universal\UScene.h">
-      <Filter>Source Files\Universal</Filter>
+      <Filter>Header Files\Universal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,8 +26,8 @@
 /**
  * @inheritDoc
  */
-PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName) 
-    : NetworkObject(pSystemScene, pszName)
+PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : NetworkObject(pSystemScene, id, name)
     , m_dirty(true)
     , m_velocity(Math::Vector4::Zero)
     , m_orientation(Math::Quaternion::Zero)
@@ -90,7 +90,7 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
         
         ObjectUpdatedProto objectUpdatedProto;
         ObjectProto* object = objectUpdatedProto.add_objects();
-        object->set_name(GetName());
+        object->set_name(getName());
         ObjectProto_SystemObjectProto* systemObject = object->add_systemobjects();
         systemObject->set_systemtype(SystemProto_Type_Geometry);
         PropertyProto* velocityProperty = systemObject->add_properties();

@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Generic\IComponent.h" />
+    <ClInclude Include="Source\Generic\IEntity.h" />
     <ClInclude Include="Source\Generic\IObserver.h" />
     <ClInclude Include="Source\Generic\IProperty.h" />
     <ClInclude Include="Source\Generic\ISubject.h" />
@@ -108,11 +109,13 @@
     <ClInclude Include="Source\System\ISystemTask.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Generic\IEntity.cpp" />
     <ClCompile Include="Source\Generic\IProperty.cpp" />
     <ClCompile Include="Source\Generic\ISubject.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
     <ClCompile Include="Source\System\ISystemObject.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />
+    <ClCompile Include="Source\System\ISystemTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseTypes\BaseTypes.vcxproj">

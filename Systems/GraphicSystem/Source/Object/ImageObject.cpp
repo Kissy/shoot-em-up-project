@@ -31,7 +31,8 @@ const std::string ImageGraphicObject::IMAGE_BASE_PATH = "../../Assets/Media/Grap
 /**
  * @inheritDoc
  */
-ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName) : GraphicObject(pSystemScene, pszName) {
+ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : GraphicObject(pSystemScene, id, name) {
     m_position = new SDL_Rect();
     m_position->x = 0;
     m_position->y = 0;

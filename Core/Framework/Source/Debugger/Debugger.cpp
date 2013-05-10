@@ -182,8 +182,8 @@ void Debugger::addUpdatedObject(ISubject* object) {
  */
 void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
     DebugEntityProto* debugEntityProto = debugProto.add_entities();
-    debugEntityProto->set_id(object->GetName());
-    debugEntityProto->set_name(object->GetName());
+    debugEntityProto->set_id(object->getName());
+    debugEntityProto->set_name(object->getName());
     debugEntityProto->set_category(System::getComponentName(System::Components::Object));
     UObject::SystemObjects SystemObjects = object->GetExtensions();
     for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
@@ -201,8 +201,8 @@ void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
  */
 void Debugger::debugObject(ISystemObject* object, DebugProto& debugProto) {
     DebugEntityProto* debugEntityProto = debugProto.add_entities();
-    debugEntityProto->set_id(object->GetName());
-    debugEntityProto->set_name(object->GetName());
+    debugEntityProto->set_id(object->getId());
+    debugEntityProto->set_name(object->getName());
     debugEntityProto->set_category(System::getComponentName(System::Components::Object));
 
     DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();

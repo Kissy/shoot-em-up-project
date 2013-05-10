@@ -20,7 +20,8 @@
 /**
  * @inheritDoc
  */
-ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, const char* pszName) : InputObject(pSystemScene, pszName) {
+ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : InputObject(pSystemScene, id, name) {
     m_propertySetters["Key"] = boost::bind(&ConnectInputObject::setKey, this, _1);
     m_propertyGetters["Key"] = boost::bind(&ConnectInputObject::getKey, this, _1);
 }

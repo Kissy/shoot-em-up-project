@@ -20,6 +20,7 @@
 #include "Errors.h"
 #include "System/Definitions.h"
 #include "Generic/IProperty.h"
+#include "Generic/IComponent.h"
 
 class ISystemScene;
 
@@ -30,7 +31,7 @@ class ISystemScene;
  *
  * @sa  IProperty
  */
-class ISystem : public IProperty {
+class ISystem : public IComponent, public IProperty {
 
     public:
 
@@ -44,14 +45,6 @@ class ISystem : public IProperty {
          * Interface have virtual destructors.
          */
         virtual ~ISystem(void);
-
-        /**
-         * Gets the system type for this system.
-         * This must function even w/o initialization.
-         *
-         * @return  The type of the system.
-         */
-        virtual System::Type GetSystemType(void) = 0;
 
         /**
          * Creates a system scene for containing system objects.

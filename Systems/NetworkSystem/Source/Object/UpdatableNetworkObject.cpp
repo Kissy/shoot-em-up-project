@@ -27,7 +27,8 @@
 /**
  * @inheritDoc
  */
-UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName)
+UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : NetworkObject(pSystemScene, id, name)
     , m_position(Math::Vector3::Zero)
     , m_orientation(Math::Quaternion::Zero) {
     m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector4, this, System::Changes::Physic::Velocity, &m_velocity, _1);

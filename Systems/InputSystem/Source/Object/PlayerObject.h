@@ -32,7 +32,7 @@ class PlayerInputObject : public InputObject, public IGeometryObject, public IMo
         /**
          * @inheritDoc
          */
-        PlayerInputObject(ISystemScene* pSystemScene, const char* pszName);
+        PlayerInputObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
         /**
          * @inheritDoc

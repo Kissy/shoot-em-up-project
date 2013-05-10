@@ -105,6 +105,9 @@
     <ClInclude Include="Source\Generic\IUpdatable.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Generic\IEntity.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\ISystem.cpp">
@@ -121,6 +124,12 @@
     </ClCompile>
     <ClCompile Include="Source\System\ISystemObject.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ISystemTask.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Generic\IEntity.cpp">
+      <Filter>Source Files\Generic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

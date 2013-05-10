@@ -24,7 +24,8 @@
 /**
  * @inheritDoc
  */
-PhysicObject::PhysicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName)
+PhysicObject::PhysicObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : ISystemObject(pSystemScene, id, name)
     , m_rotation(0)
     , m_position(Math::Vector3::Zero)
     , m_orientation(Math::Quaternion::Zero) {

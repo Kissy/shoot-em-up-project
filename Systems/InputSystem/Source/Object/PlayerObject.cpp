@@ -23,8 +23,8 @@
 /**
  * @inheritDoc
  */
-PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, const char* pszName) 
-    : InputObject(pSystemScene, pszName) {
+PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : InputObject(pSystemScene, id, name) {
     
 }
 

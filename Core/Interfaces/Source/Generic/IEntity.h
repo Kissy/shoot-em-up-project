@@ -14,53 +14,44 @@
 
 #pragma once
 
-#include "object.h"
+#include <string>
 
-class ConnectNetworkObject : public NetworkObject {
+#include "Errors.h"
+#include "System/Changes.h"
+
+/**
+ * The <c>IEntity</c> interface supplies id & name management.
+ */
+class IEntity {
 public:
-
+    
     /**
      * Default constructor.
      */
-    ConnectNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    IEntity(std::string id, std::string name);
 
     /**
      * Destructor.
+     * All interfaces must have virtual destructors
      */
-    ~ConnectNetworkObject(void);
-
+    virtual ~IEntity();
     
     /**
-     * @inheritDoc
+     * Get the entity ID.
      */
-    Error initialize(void);
-
+    inline std::string getId(void) {
+        return m_id;
+    }
+    
     /**
-     * @inheritDoc
+     * Get the entity name.
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::None;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Input::Keyboard;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
-    /**
-     * @inheritDoc
-     */
-    void Update(f32 DeltaTime);
-
-private:
-    std::string     m_username;
-
+    inline std::string getName(void) {
+        return m_name;
+    }
+    
+protected:
+    std::string			m_id;
+    std::string			m_name;
+    
 };
-

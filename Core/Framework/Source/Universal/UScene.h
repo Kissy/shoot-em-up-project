@@ -124,11 +124,11 @@ public:
     /**
      * Searches for the first object.
      *
-     * @param   pszName The name.
+     * @param   id The unique identifier.
      *
      * @return  null if it fails, else the found object.
      */
-    UObject* FindObject(const char* pszName);
+    UObject* FindObject(std::string id);
 
     /**
      * Creates object link.
@@ -158,12 +158,16 @@ public:
         return System::Changes::Generic::All;
     }
 
-protected:
+    inline IChangeManager* getObjectCCM(void) {
+        return m_pObjectCCM;
+    }
 
+protected:
     IChangeManager*                         m_pSceneCCM;
     IChangeManager*                         m_pObjectCCM;
 
     SystemScenes                            m_SystemScenes;
     Objects                                 m_Objects;
     ObjectLinks                             m_ObjectLinks;
+
 };

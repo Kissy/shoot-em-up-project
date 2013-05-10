@@ -84,11 +84,12 @@ public:
     /**
      * Creates a system object used to extend a UObject.
      *
-     * @param   pszName The unique name for this object.
-     * @param   pszType The object type to create.
+     * @param   id The unique identifier for this object.
+     * @param   name The name for this object.
+     * @param   type The object type to create.
      * @return  The newly created system object.
      */
-    ISystemObject* CreateObject(const char* pszName, const char* pszType);
+    ISystemObject* CreateObject(std::string id, std::string name, std::string type);
 
     /**
      * Destroys a system object.
@@ -125,7 +126,7 @@ protected:
     
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
     typedef boost::function<ISystemTask*(ISystemScene* pSystemScene)> TaskFactory;
-    typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, const char* pszName)> ObjectFactory;
+    typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, std::string id, std::string name)> ObjectFactory;
 
     ISystem*                                        m_pSystem;
     ISystemTask*							        m_pSystemTask;

@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,40 +12,20 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#pragma once
-
-#include "System.h"
-#include "System/ISystemObject.h"
-
-class NetworkSystem;
-class NetworkScene;
+#include "BaseTypes.h"
+#include "Interface.h"
+#include "Generic/IEntity.h"
 
 /**
- * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
- * System.h for a definition of the class and its functions.
- * 
- * @sa  ISystemObject
+ * @inheritDoc
  */
-class NetworkObject : public ISystemObject {
+IEntity::IEntity(std::string id, std::string name)
+    : m_id(id)
+    , m_name(name) {
+}
 
-    public:
-
-        /**
-         * @inheritDoc
-         */
-        NetworkObject(ISystemScene* pSystemScene, std::string id, std::string name);
-        
-        /**
-         * @inheritDoc
-         */
-        virtual ~NetworkObject(void);
-
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Network;
-        }
-
-};
-
+/**
+ * @inheritDoc
+ */
+IEntity::~IEntity() {
+}

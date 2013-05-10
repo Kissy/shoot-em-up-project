@@ -33,7 +33,7 @@ public:
     /**
      * @inheritDoc
      */
-    PlayerNetworkObject(ISystemScene* pSystemScene, const char* pszName);
+    PlayerNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
     /**
      * @inheritDoc

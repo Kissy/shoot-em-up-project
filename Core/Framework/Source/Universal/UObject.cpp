@@ -23,10 +23,11 @@
 /**
  * @inheritDoc
  */
-UObject::UObject(UScene* pScene, const char* pszName)
+UObject::UObject(UScene* pScene, std::string id, std::string name)
     : ISubject()
-    , m_pScene(pScene) {
-    SetName(pszName);
+    , IEntity(id, name)
+    , m_pScene(pScene)
+    , m_pObjectCCM(pScene->getObjectCCM()) {
 }
 
 /**
@@ -48,29 +49,15 @@ UObject::~UObject(void) {
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType) {
+ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObjectType) {
     ASSERT(pSystemScene != NULL);
     ASSERT(m_ObjectExtensions.find(pSystemScene->GetSystemType()) == m_ObjectExtensions.end());
-    ISystemObject* pSystemObject = NULL;
+
     //
     // Create the system object.
     //
-    pSystemObject = pSystemScene->CreateObject(m_sName.c_str(), pszSystemObjectType);
+    ISystemObject* pSystemObject = pSystemScene->CreateObject(m_id, m_name, systemObjectType);
     ASSERT(pSystemObject != NULL);
-    Extend(pSystemObject);
-    return pSystemObject;
-}
-
-/**
- * @inheritDoc
- */
-bool UObject::Extend(ISystemObject* pSystemObject) {
-    // 
-    // If the object is already extended, do nothing
-    // 
-    if (m_ObjectExtensions.find(pSystemObject->GetSystemType()) != m_ObjectExtensions.end()) {
-        return false;
-    }
 
     //
     // Set this as the parent.
@@ -127,7 +114,7 @@ bool UObject::Extend(ISystemObject* pSystemObject) {
         ASSERT(m_pGeometryObject != NULL);
     }*/
 
-    return true;
+    return pSystemObject;
 }
 
 /**
@@ -229,14 +216,15 @@ void UObject::update(const ObjectProto* objectProto) {
 Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     UNREFERENCED_PARAM(pSubject);
 
-    // TODO check why position is here
-    if (ChangeType & (System::Changes::Generic::All | System::Changes::Physic::Position)) {
-        ChangeType &= (System::Changes::Generic::All | System::Changes::Physic::Position);
+    // Objects are probably not observers,
+    // Objects can be subjects through links
+    // TODO : check
+    /*if (ChangeType & System::Changes::Generic::All) {
         //
         // Post the pertinent changes made by the extension to the scene CCM.
         //
         PostChanges(ChangeType);
-    }
+    }*/
 
     return Errors::Success;
 }

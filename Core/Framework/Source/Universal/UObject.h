@@ -14,7 +14,9 @@
 
 #pragma once
 
+#include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
+#include "Generic/IEntity.h"
 #include "System/ISystemScene.h"
 #include "Object/IGeometryObject.h"
 
@@ -29,46 +31,26 @@ class UScene;
  * @sa  IObserver
  * @sa  IGeometryObject
  */
-class UObject : public ISubject, public IObserver {
+class UObject : public ISubject, public IObserver, public IEntity {
 public:
-
-    /**
-     * Constructor.
-     *  pszName - the name of this object.
-     *
-     * @param [in,out]  pScene  If non-null, the scene.
-     * @param   pszName         (Optional) the name.
-     */
-    UObject(UScene* pScene, const char* pszName = "");
-
-    /**
-     * Destructor.
-     */
-    ~UObject(void);
 
     typedef std::map<System::Type, ISystemObject*>      SystemObjects;
     typedef SystemObjects::iterator                     SystemObjectsIt;
     typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
     /**
-     * Gets the name of the object.
-     *   return - the name of the object.
+     * Constructor.
      *
-     * @return  null if it fails, else the name.
+     * @param [in,out]  pScene  If non-null, the scene.
+     * @param   id      The universal id of the object.
+     * @param   name      The name of the object.
      */
-    const char* GetName(void) {
-        return m_sName.c_str();
-    }
+    UObject(UScene* pScene, std::string id, std::string name);
 
     /**
-     * Sets the name of the object.
-     *  pszName - the new name of the object.
-     *
-     * @param   pszName The name.
+     * Destructor.
      */
-    void SetName(const char* pszName) {
-        m_sName = pszName;
-    }
+    ~UObject(void);
 
     /**
      * Used to extend the objects functionality for a given system.
@@ -79,16 +61,7 @@ public:
      *
      * @return  null if it fails, else.
      */
-    ISystemObject* Extend(ISystemScene* pSystemScene, const char* pszSystemObjectType);
-
-    /**
-     * Used to extend the objects functionality for a given system.
-     *
-     * @param [in,out]  pSystemObject   A pointer to an already created object.
-     *
-     * @return  true is successful, false otherwise.
-     */
-    bool Extend(ISystemObject* pSystemObject);
+    ISystemObject* Extend(ISystemScene* pSystemScene, std::string pszSystemObjectType);
 
     /**
      * Used to unextend the objects functionality for a given system.
@@ -142,20 +115,10 @@ public:
         return System::Changes::Generic::All | System::Changes::Physic::Position;
     }
 
-    /**
-     * Sets object ccm.
-     *
-     * @param [in,out]  objectCCM   If non-null, the object ccm.
-     */
-    inline void setObjectCCM(IChangeManager* objectCCM) {
-        m_pObjectCCM = objectCCM;
-    }
-
 protected:
     IChangeManager*                                     m_pObjectCCM;
 
     UScene*                                             m_pScene;
-    std::string                                         m_sName;
     SystemObjects                                       m_ObjectExtensions;
 
 };

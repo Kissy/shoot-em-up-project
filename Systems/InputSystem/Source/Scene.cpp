@@ -22,8 +22,8 @@
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
-#include "Object/ConnectInputObject.h"
 #include "Object/PlayerObject.h"
+#include "Object/ConnectInputObject.h"
 
 
 extern ManagerInterfaces   g_Managers;

@@ -33,7 +33,7 @@ class GraphicObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        GraphicObject(ISystemScene* pSystemScene, const char* pszName);
+        GraphicObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
         /**
          * @inheritDoc

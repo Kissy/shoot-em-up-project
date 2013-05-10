@@ -15,6 +15,8 @@
 #pragma once
 
 #include "System/Definitions.h"
+#include "Generic/IComponent.h"
+#include "Generic/IUpdatable.h"
 
 class ISystemScene;
 
@@ -22,7 +24,7 @@ class ISystemScene;
  * <c>ISystemTask</c> is an interface class designed to work with a task manager for starting the
  *  system's task and spawning off new tasks as need be.
  */
-class ISystemTask {
+class ISystemTask : public IComponent, public IUpdatable {
 
     public:
 
@@ -31,24 +33,12 @@ class ISystemTask {
          *
          * @param [in,out]  pSystemScene    If non-null, the system scene.
          */
-        ISystemTask(ISystemScene* pSystemScene)
-            : m_pSystemScene(pSystemScene) {
-        }
+        ISystemTask(ISystemScene* pSystemScene);
 
         /**
          * Destructor.
          */
-        virtual ~ISystemTask(void) {
-
-        }
-
-        /**
-         * Updates the given DeltaTime.
-         * Function informing the task to perform its updates.
-         *
-         * @param   DeltaTime   The time delta from the last call.
-         */
-        virtual void Update(f32 DeltaTime) = 0;
+        virtual ~ISystemTask(void);
 
         /**
          * Query if this ISystemTask is primary thread only.
@@ -59,14 +49,6 @@ class ISystemTask {
          * @return  true if primary thread only, false if not.
          */
         virtual bool IsPrimaryThreadOnly(void) = 0;
-
-        /**
-         * Gets the system type for this system task.
-         * This is a shortcut to getting the system type without having to go the system first.
-         *
-         * @return  The type of the system.
-         */
-        virtual System::Type GetSystemType(void) = 0;
         
         /**
          * Gets the system scene.

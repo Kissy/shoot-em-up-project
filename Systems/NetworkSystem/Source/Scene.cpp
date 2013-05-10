@@ -39,7 +39,8 @@ extern ManagerInterfaces   g_Managers;
 /**
  * @inheritDoc
  */
-NetworkScene::NetworkScene(ISystem* pSystem) : ISystemScene(pSystem) {
+NetworkScene::NetworkScene(ISystem* pSystem) 
+    : ISystemScene(pSystem) {
     m_createObjectQueue = new std::list<ObjectProto>();
     m_deleteObjectQueue = new std::list<ObjectProto>();
     m_TaskFactory = boost::factory<NetworkTask*>();

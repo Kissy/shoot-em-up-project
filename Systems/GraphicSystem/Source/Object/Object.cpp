@@ -21,7 +21,8 @@
 /**
  * @inheritDoc
  */
-GraphicObject::GraphicObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
+GraphicObject::GraphicObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : ISystemObject(pSystemScene, id, name) {
     
 }
 

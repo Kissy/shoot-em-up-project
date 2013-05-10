@@ -19,7 +19,8 @@
 /**
  * @inheritDoc
  */
-InputObject::InputObject(ISystemScene* pSystemScene, const char* pszName) : ISystemObject(pSystemScene, pszName) {
+InputObject::InputObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : ISystemObject(pSystemScene, id, name) {
 
 }
 

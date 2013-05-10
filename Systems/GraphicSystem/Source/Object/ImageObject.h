@@ -30,7 +30,7 @@ public:
     /**
      * @inheritDoc
      */
-    ImageGraphicObject(ISystemScene* pSystemScene, const char* pszName);
+    ImageGraphicObject(ISystemScene* pSystemScene, std::string id, std::string name);
     
     /**
      * @inheritDoc

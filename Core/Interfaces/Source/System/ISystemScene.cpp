@@ -63,15 +63,15 @@ void ISystemScene::createTask(void) {
 /**
  * @inheritDoc
  */
-ISystemObject* ISystemScene::CreateObject(const char* pszName, const char* pszType) {
+ISystemObject* ISystemScene::CreateObject(std::string id, std::string name, std::string type) {
     ASSERT(m_bInitialized);
 
-    ISystemObject* systemObject = m_ObjectFactories[pszType](this, pszName);
+    ISystemObject* systemObject = m_ObjectFactories[type](this, id, name);
 
     if (systemObject != NULL) {
-        m_pObjects[systemObject->GetName()] = systemObject;
+        m_pObjects[systemObject->getId()] = systemObject;
     } else {
-        ASSERTMSG1(false, "Impossible to find the object type %s", pszName);
+        ASSERTMSG2(false, "Impossible to create the object with name %s and type %s", name, type);
     }
 
     return systemObject;
@@ -85,7 +85,7 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(pSystemObject != NULL);
 
     if (pSystemObject != NULL) {
-        m_pObjects.erase(pSystemObject->GetName());
+        m_pObjects.erase(pSystemObject->getId());
         delete pSystemObject;
     }
 

@@ -22,7 +22,8 @@
 /**
  * @inheritDoc
  */
-ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, const char* pszName) : NetworkObject(pSystemScene, pszName) {
+ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : NetworkObject(pSystemScene, id, name) {
     m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_username, _1);
     m_propertyGetters["Username"] = boost::bind(&IProperty::getString, this, &m_username, _1);
 }

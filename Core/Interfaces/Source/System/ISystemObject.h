@@ -18,6 +18,7 @@
 #include <vector>
 
 #include "Errors.h"
+#include "Generic/IEntity.h"
 #include "Generic/IComponent.h"
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
@@ -36,13 +37,13 @@ class ISystemScene;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable {
+class ISystemObject : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable, public IEntity {
 public:
 
     /**
      * @inheritDoc
      */
-    ISystemObject(ISystemScene* pSystemScene, const char* pszName);
+    ISystemObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
     /**
      * @inheritDoc
@@ -84,26 +85,7 @@ public:
         m_hParentObject = hParentObject;
     }
 
-    /**
-     * Gets the name of the object.
-     *
-     * @return  The name of the object.
-     */
-    inline const char* GetName(void) {
-        return m_sName.c_str();
-    }
-
-    /**
-     * Sets the name of the object.
-     *
-     * @param   pszName The new name of the object.
-     */
-    inline void SetName(const char* pszName) {
-        m_sName = pszName;
-    }
-
 protected:
-    std::string                 m_sName;
     ISystemScene*               m_pSystemScene;
     Handle                      m_hParentObject;
 

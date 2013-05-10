@@ -24,8 +24,8 @@ const f32 MovablePhysicObject::m_speed_multiplier = 500;
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName) 
-    : PhysicObject(pSystemScene, pszName) {
+MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+    : PhysicObject(pSystemScene, id, name) {
     
 }
 

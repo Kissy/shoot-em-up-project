@@ -34,7 +34,7 @@ class InputObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        InputObject(ISystemScene* pSystemScene, const char* pszName);
+        InputObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
         /**
          * @inheritDoc

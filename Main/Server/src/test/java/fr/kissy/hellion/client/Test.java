@@ -35,6 +35,13 @@ public class Test {
 
     @org.testng.annotations.Test
     public void test() {
+        System.out.println(new ObjectId().toString());
+        System.out.println(new ObjectId().toString());
+        System.out.println(new ObjectId().toString());
+        System.out.println(new ObjectId().toString());
+        System.out.println(new ObjectId().toString());
+        System.out.println(new ObjectId().toString());
+
         for (int i = 0; i < ELEMENTS; i++) {
             Player player = new Player("SpaceShip.png");
             player.setId(new ObjectId());

@@ -32,7 +32,7 @@ public:
     /**
      * @inheritDoc
      */
-    MovablePhysicObject(ISystemScene* pSystemScene, const char* pszName);
+    MovablePhysicObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
     /**
      * @inheritDoc

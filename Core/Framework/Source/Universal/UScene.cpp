@@ -153,9 +153,8 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, objectProto->name().c_str());
+    UObject* pObject = new UObject(this, objectProto->name(), objectProto->name());
     ASSERT(pObject != NULL);
-    pObject->setObjectCCM(m_pObjectCCM);
     //
     // Add the object to the collection.
     //
@@ -198,11 +197,11 @@ Error UScene::DestroyObject(UObject* pObject) {
 /**
  * @inheritDoc
  */
-UObject* UScene::FindObject(const char* pszName) {
+UObject* UScene::FindObject(std::string id) {
     UObject* pObject = NULL;
 
     for (UScene::ObjectsConstIt it = m_Objects.begin(); it != m_Objects.end(); it++) {
-        if (strcmp(pszName, (*it)->GetName()) == 0) {
+        if (id == (*it)->getId()) {
             pObject = *it;
             break;
         }

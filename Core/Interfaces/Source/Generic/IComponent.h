@@ -37,4 +37,5 @@ public:
      * @return  The type of the system.
      */
     virtual inline System::Type GetSystemType(void) = 0;
+
 };

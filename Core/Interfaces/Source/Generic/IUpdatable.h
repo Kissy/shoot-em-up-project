@@ -35,4 +35,5 @@ public:
      * @param   DeltaTime   Time of the delta.
      */
     virtual void Update(f32 DeltaTime) = 0;
+
 };

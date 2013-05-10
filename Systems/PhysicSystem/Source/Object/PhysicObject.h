@@ -31,7 +31,7 @@ public:
     /**
      * @inheritDoc
      */
-    PhysicObject(ISystemScene* pSystemScene, const char* pszName);
+    PhysicObject(ISystemScene* pSystemScene, std::string id, std::string name);
 
     /**
      * @inheritDoc
