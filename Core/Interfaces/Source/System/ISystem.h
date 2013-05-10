@@ -19,7 +19,7 @@
 
 #include "Errors.h"
 #include "System/Definitions.h"
-#include "Property/IProperty.h"
+#include "Generic/IProperty.h"
 
 class ISystemScene;
 

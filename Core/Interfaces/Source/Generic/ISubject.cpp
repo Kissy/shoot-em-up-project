@@ -118,7 +118,6 @@ Error ISubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
 #endif
     // Find the given observer in our observer list
     ObserverList::iterator it = std::find(m_observerList.begin(), m_observerList.end(), pObserver);
-
     if (it != m_observerList.end()) {
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
         // We are under the lock in this case
@@ -149,30 +148,30 @@ Error ISubject::UpdateInterestBits(IObserver* pObserver, u32 uInIntrestBits) {
  * @inheritDoc
  */
 void ISubject::PostChanges(System::Changes::BitMask changedBits) {
-    if (!m_observerList.empty()) {
-        typedef std::pair<IObserver*, u32> PostData;
-        PostData* aPostData = NULL;
-        u32 nNotificationsToPost = 0;
-        // Double check to avoid unnecessary lock acquisition
-        {
-            SCOPED_SPIN_LOCK(m_observerListMutex);
-            aPostData = (PostData*)alloca(m_observerList.size() * sizeof(PostData));
-            ObserverList::iterator it = m_observerList.begin();
+    if (m_observerList.empty()) {
+        return;
+    }
 
-            for (; it != m_observerList.end(); ++it) {
-                u32 changedBitsOfInterest = GetBitsToPost(*it, changedBits);
+    typedef std::pair<IObserver*, u32> PostData;
+    PostData* aPostData = NULL;
+    u32 nNotificationsToPost = 0;
+    // Double check to avoid unnecessary lock acquisition
+    {
+        SCOPED_SPIN_LOCK(m_observerListMutex);
+        aPostData = (PostData*)alloca(m_observerList.size() * sizeof(PostData));
+        for (auto observerRequest : m_observerList) {
+            u32 changedBitsOfInterest = GetBitsToPost(observerRequest, changedBits);
 
-                if (changedBitsOfInterest) {
-                    aPostData[nNotificationsToPost] = std::make_pair(it->m_pObserver, changedBitsOfInterest);
-                    ++nNotificationsToPost;
-                }
+            if (changedBitsOfInterest) {
+                aPostData[nNotificationsToPost] = std::make_pair(observerRequest.m_pObserver, changedBitsOfInterest);
+                ++nNotificationsToPost;
             }
         }
+    }
 
-        // Posting is done outside of the lock
-        for (u32 i = 0; i < nNotificationsToPost; ++i) {
-            aPostData[i].first->ChangeOccurred(this, aPostData[i].second);
-        }
+    // Posting is done outside of the lock
+    for (u32 i = 0; i < nNotificationsToPost; ++i) {
+        aPostData[i].first->ChangeOccurred(this, aPostData[i].second);
     }
 } // ISubject::PostChanges
 
@@ -185,13 +184,10 @@ void ISubject::PostChanges(System::Changes::BitMask changedBits) {
 #if SUPPORT_CONCURRENT_ATTACH_DETACH_TO_SUBJECTS
     SCOPED_SPIN_LOCK(m_observerListMutex);
 #endif
-    ObserverList::iterator it = m_observerList.begin();
-
-    for (; it != m_observerList.end(); ++it) {
-        u32 changedBitsOfInterest = GetBitsToPost(*it, changedBits);
-
+    for (auto observerRequest : m_observerList) {
+        u32 changedBitsOfInterest = GetBitsToPost(observerRequest, changedBits);
         if (changedBitsOfInterest) {
-            it->m_pObserver->ChangeOccurred(this, changedBitsOfInterest);
+            observerRequest.m_pObserver->ChangeOccurred(this, changedBitsOfInterest);
         }
     }
 }

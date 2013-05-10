@@ -50,6 +50,7 @@ Debugger::~Debugger(void) {
  * @inheritDoc
  */
 void Debugger::initialize(bool debuggerActive) {
+    return;
     if (!debuggerActive) {
         return;
     }

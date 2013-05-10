@@ -16,9 +16,6 @@
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{3f3b6416-06f5-4163-981c-ef739780561c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Property">
-      <UniqueIdentifier>{39035409-d10b-428f-8c34-402f670919a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Service">
       <UniqueIdentifier>{ab4133e5-c645-4481-af16-bf308ab0aab1}</UniqueIdentifier>
     </Filter>
@@ -31,31 +28,19 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{cbb66fba-2a03-431e-abc3-ab7d718a73f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Property">
-      <UniqueIdentifier>{0bc0d9bf-d088-45e3-b9b1-3249836a7d4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Observer">
-      <UniqueIdentifier>{c224030a-2a1e-42ec-9425-f9c54f27911f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Observer">
-      <UniqueIdentifier>{0af1f723-686e-49ca-9bb4-43f6ae6b8f29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Manager">
       <UniqueIdentifier>{fb887a80-f980-4c27-8f48-933b89832c88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Generic">
+      <UniqueIdentifier>{9b92da1d-f425-41d4-bb1f-e423f47c01d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Generic">
+      <UniqueIdentifier>{16ed69be-bf7a-4b59-b71f-5e26155a928d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Property\IProperty.h">
-      <Filter>Header Files\Property</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Observer\IObserver.h">
-      <Filter>Header Files\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Observer\ISubject.h">
-      <Filter>Header Files\Observer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Service\API\Collision.h">
       <Filter>Header Files\Service\API</Filter>
@@ -108,6 +93,15 @@
     <ClInclude Include="Source\Manager\IChangeManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Generic\IObserver.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\IProperty.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\ISubject.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\ISystem.cpp">
@@ -119,11 +113,11 @@
     <ClCompile Include="Source\System\ISystemSubject.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Property\IProperty.cpp">
-      <Filter>Source Files\Property</Filter>
+    <ClCompile Include="Source\Generic\ISubject.cpp">
+      <Filter>Source Files\Generic</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Observer\ISubject.cpp">
-      <Filter>Source Files\Observer</Filter>
+    <ClCompile Include="Source\Generic\IProperty.cpp">
+      <Filter>Source Files\Generic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

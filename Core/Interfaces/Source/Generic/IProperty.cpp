@@ -17,7 +17,7 @@
 #include "Errors.h"
 #include "MathUtils.h"
 #include "System/Changes.h"
-#include "Property/IProperty.h"
+#include "Generic/IProperty.h"
 
 /**
  * @inheritDoc

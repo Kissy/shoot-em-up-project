@@ -17,9 +17,9 @@
 #include "Errors.h"
 #include "System/Changes.h"
 #include "System/Definitions.h"
-#include "Property/IProperty.h"
-#include "Observer/ISubject.h"
-#include "Observer/IObserver.h"
+#include "Generic/IProperty.h"
+#include "Generic/ISubject.h"
+#include "Generic/IObserver.h"
 
 /**
  * The Subject implementation.

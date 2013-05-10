@@ -14,8 +14,8 @@
 
 #pragma once
 
-#include "Observer/IObserver.h"
-#include "Observer/ISubject.h"
+#include "Generic/IObserver.h"
+#include "Generic/ISubject.h"
 #include "Manager/IChangeManager.h"
 #include "Manager/IPlatformManager.h"
 #include "Manager/IEnvironmentManager.h"
