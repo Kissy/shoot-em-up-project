@@ -55,7 +55,8 @@ UScene::~UScene(
     //
     // Get rid of all the objects.
     //
-    for (auto object : m_Objects) {
+    Objects objects = m_Objects;
+    for (auto object : objects) {
         DestroyObject(object);
     }
     m_Objects.clear();
@@ -63,9 +64,9 @@ UScene::~UScene(
     //
     // Send "post-destroying objects" message to the scene extensions then delete the scene.
     //
-    SystemScenes SysScenes = m_SystemScenes;
-    for (SystemScenesIt it = SysScenes.begin(); it != SysScenes.end(); it++) {
-        ISystemScene* pSystemScene = it->second;
+    SystemScenes systemScenes = m_SystemScenes;
+    for (auto systemScene : systemScenes) {
+        ISystemScene* pSystemScene = systemScene.second;
         pSystemScene->GlobalSceneStatusChanged(
             ISystemScene::GlobalSceneStatus::PostDestroyingObjects
         );
