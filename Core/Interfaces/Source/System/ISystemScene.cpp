@@ -14,6 +14,8 @@
 
 #include "Assert.h"
 #include "Errors.h"
+#include "Generic/ISubject.h"
+#include "Generic/IProperty.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
@@ -21,7 +23,9 @@
 /**
  * @inheritDoc
  */
-ISystemScene::ISystemScene(ISystem* pSystem) : ISystemSubject()
+ISystemScene::ISystemScene(ISystem* pSystem) 
+    : ISubject()
+    , IProperty()
     , m_pSystem(pSystem) {
     ASSERT(m_pSystem != NULL);
 }
@@ -86,4 +90,11 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     }
 
     return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+void ISystemScene::propertyChanged(System::Changes::BitMask uInChangedBits) {
+    PostChanges(uInChangedBits);
 }

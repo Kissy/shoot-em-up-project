@@ -24,7 +24,8 @@
  * @inheritDoc
  */
 UObject::UObject(UScene* pScene, const char* pszName)
-    : m_pScene(pScene) {
+    : ISubject()
+    , m_pScene(pScene) {
     SetName(pszName);
 }
 
@@ -225,16 +226,10 @@ void UObject::update(const ObjectProto* objectProto) {
 /**
  * @inheritDoc
  */
-System::Changes::BitMask UObject::GetPotentialSystemChanges(void) {
-    return System::Changes::Generic::All | System::Changes::Physic::Position;
-}
-
-/**
- * @inheritDoc
- */
 Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     UNREFERENCED_PARAM(pSubject);
 
+    // TODO check why position is here
     if (ChangeType & (System::Changes::Generic::All | System::Changes::Physic::Position)) {
         ChangeType &= (System::Changes::Generic::All | System::Changes::Physic::Position);
         //

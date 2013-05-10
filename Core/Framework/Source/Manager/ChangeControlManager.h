@@ -48,6 +48,13 @@ class ChangeManager : public IChangeManager {
         // IObserver Functionality
         Error ChangeOccurred(ISubject* pInChangedSubject,
                              System::Changes::BitMask uInChangedBits);
+        
+        /**
+         * @inheritDoc
+         */
+        inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+            return System::Changes::All;
+        }
 
         // Must be called before any parallel execution starts (that is
         // before changes start being accumulated in thread local lists),

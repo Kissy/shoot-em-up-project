@@ -32,11 +32,9 @@ ISubject::~ISubject() {
  * @inheritDoc
  */
 u32 ISubject::getObserverId(IObserver* pObserver) const {
-    ObserverList::const_iterator it = m_observerList.begin();
-
-    for (; it != m_observerList.end(); ++it) {
-        if (it->m_pObserver == pObserver) {
-            return it->m_myID;
+    for (auto observer : m_observerList) {
+        if (observer.m_pObserver == pObserver) {
+            return observer.m_myID;
         }
     }
 

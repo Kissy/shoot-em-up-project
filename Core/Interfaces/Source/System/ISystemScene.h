@@ -17,12 +17,16 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "boost/function.hpp"
-#include "boost/container/flat_map.hpp"
+#include <boost/function.hpp>
+#include <boost/container/flat_map.hpp>
 
 #include "Errors.h"
+#include "Generic/IComponent.h"
+#include "Generic/ISubject.h"
+#include "Generic/IObserver.h"
+#include "Generic/IProperty.h"
+#include "Generic/IUpdatable.h"
 #include "System/Definitions.h"
-#include "System/ISystemSubject.h"
 
 class ISystem;
 class ISystemTask;
@@ -30,10 +34,8 @@ class ISystemObject;
 
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.
- *
- * @sa  ISystemSubject
  */
-class ISystemScene : public ISystemSubject {
+class ISystemScene : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable {
 
 public:
 
@@ -95,6 +97,11 @@ public:
      * @return  An error code.
      */
     Error DestroyObject(ISystemObject* pSystemObject);
+
+    /**
+     * @inheritDoc
+     */
+    void propertyChanged(System::Changes::BitMask uInChangedBits);
      
     /**
      * Gets the system this object belongs to.

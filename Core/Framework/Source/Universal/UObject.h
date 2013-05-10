@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "Observer/IObserver.h"
+#include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 #include "Object/IGeometryObject.h"
 
@@ -124,23 +124,23 @@ public:
     void update(const ObjectProto* objectProto);
 
     /**
-     * Change occurred.
-     * Implementation of the IObserver ChangeOccurred function.
-     *
-     * @param [in,out]  pSubject    If non-null, the subject.
-     * @param   SystemChanges       The system changes.
-     *
-     * @return  .
+     * @inheritDoc
      */
-    virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
-
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
+    
     /**
-     * Gets potential system changes.
-     * Implementation of the ISubject GetPotentialSystemChanges function.
-     *
-     * @return  The potential system changes.
+     * @inheritDoc
      */
-    virtual System::Changes::BitMask GetPotentialSystemChanges(void);
+    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::Generic::All;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    inline System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::Generic::All | System::Changes::Physic::Position;
+    }
 
     /**
      * Sets object ccm.

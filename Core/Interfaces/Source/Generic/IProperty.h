@@ -44,6 +44,13 @@ public:
     virtual ~IProperty(void);
 
     /**
+     * One time initialization function for the system.
+     * 
+     * @return  An error code.
+     */
+    virtual Error initialize(void);
+
+    /**
      * Sets the properties for this system.
      *
      * @param   properties Property structure array to get values from.
@@ -63,13 +70,6 @@ public:
      * @return The map of properties associated with their values.
      */
     ProtoPropertyList getProperties(void);
-
-    /**
-     * One time initialization function for the system.
-     * 
-     * @return  An error code.
-     */
-    virtual Error initialize(void);
 
     /**
      * Sets a string.
@@ -140,11 +140,11 @@ public:
     void getQuaternion(Math::Quaternion* quaternion, ProtoStringList* values);
 
     /**
-    * Method called to notify the object that a property has been changed.
-    *
-    * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
-    *                          to the published interests.
-    */
+     * Method called to notify the object that a property has been changed.
+     *
+     * @param   uInChangedBits  The u32 bit field that describes the conceptual change with respect
+     *                          to the published interests.
+     */
     virtual void propertyChanged(System::Changes::BitMask uInChangedBits);
 
 protected:

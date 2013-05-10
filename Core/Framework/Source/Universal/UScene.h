@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "Observer/IObserver.h"
+#include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
 
 #include "Object/IGeometryObject.h"
@@ -145,17 +145,18 @@ public:
      * @param [in,out]  pObserver   If non-null, the observer.
      */
     void CreateObjectLink(UObject* pSubject, ISystemObject* pObserver);
-
+    
     /**
-     * Change occurred.
-     * Implementation of the IObserver ChangeOccurred function.
-     *
-     * @param [in,out]  pSubject    If non-null, the subject.
-     * @param   SystemChanges       The system changes.
-     *
-     * @return  .
+     * @inheritDoc
      */
-    virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
+    
+    /**
+     * @inheritDoc
+     */
+    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::Generic::All;
+    }
 
 protected:
 

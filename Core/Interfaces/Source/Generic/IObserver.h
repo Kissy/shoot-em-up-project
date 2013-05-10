@@ -30,29 +30,35 @@ class ISubject;
  * @sa  IChangeManager
  */
 class IObserver {
+public:
 
-    public:
+    /**
+     * Destructor.
+     * All interfaces must have virtual destructors
+     */
+    virtual ~IObserver() {}
 
-        /**
-         * Destructor.
-         * All interfaces must have virtual destructors
-         */
-        virtual ~IObserver() {}
+    /**
+     * Returns a bit mask of System Changes that this scene wants to receive changes for.  Used
+     *  to inform the change control manager if this scene should be informed of the change.
+     *
+     * @return  A System::Changes::BitMask.
+     */
+    virtual inline System::Changes::BitMask GetDesiredSystemChanges(void) = 0;
 
-        /**
-         * Lets the ISubject notify the IObserver in changes in registered aspects of interest.
-         *  This method is typically called from  IChangeManager::DistributeQueuedChanges()
-         *  or ISubject::PostChanges() depending on whether the observer registered with an
-         *  IChangeManager or an ISubject respectively.
-         *              
-         * @param   pSubject    A pointer to the ISubject interface of the component that changed.
-         * @param   ChangeType  The aspects of interest that changed as defined by the supplied
-         *                      ISubject's published interest bits. if uInChangeBits are 0, then the
-         *                      subject is shutting down, and should be released.
-         * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
-         *          pInSubject was NULL. Error::OutOfMemory Not enough memory is available to resolve the
-         *          change.
-         */
-        virtual Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) = 0;
-
+    /**
+     * Lets the ISubject notify the IObserver in changes in registered aspects of interest.
+     *  This method is typically called from  IChangeManager::DistributeQueuedChanges()
+     *  or ISubject::PostChanges() depending on whether the observer registered with an
+     *  IChangeManager or an ISubject respectively.
+     *
+     * @param   pSubject    A pointer to the ISubject interface of the component that changed.
+     * @param   ChangeType  The aspects of interest that changed as defined by the supplied
+     *                      ISubject's published interest bits. if uInChangeBits are 0, then the
+     *                      subject is shutting down, and should be released.
+     * @return  One of the following Error codes: Error::Success No error. Error::InvalidAddress
+     *          pInSubject was NULL. Error::OutOfMemory Not enough memory is available to resolve the
+     *          change.
+     */
+    virtual inline Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) = 0;
 };

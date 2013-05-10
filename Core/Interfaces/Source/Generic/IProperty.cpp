@@ -85,6 +85,7 @@ Error IProperty::initialize(void) {
 void IProperty::setString(System::Changes::BitMask changeType, std::string* string, ProtoStringList* values) {
     ProtoStringList::const_iterator value = values->begin();
     string->assign(*value);
+    propertyChanged(changeType);
 }
 
 /**

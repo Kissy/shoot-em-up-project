@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,43 +14,25 @@
 
 #pragma once
 
-#include "Generic/IObserver.h"
-
-class Debugger;
+#include "Errors.h"
+#include "System/Changes.h"
 
 /**
- * Scene changes debugger.
- *
- * @sa  IObserver
+ * The updatable interface.
  */
-class SceneChangesDebugger : public IObserver {
+class IUpdatable {
 public:
 
     /**
-     * Constructor.
-     *
-     * @param [in,out]  debugger    If non-null, the debugger.
-     */
-    SceneChangesDebugger(Debugger* debugger);
-
-    /**
      * Destructor.
+     * All interfaces must have virtual destructors
      */
-    ~SceneChangesDebugger(void);
-    
-    /**
-     * @inheritDoc
-     */
-    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-    
-    /**
-     * @inheritDoc
-     */
-    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::All;
-    }
+    virtual ~IUpdatable() {}
 
-private:
-    Debugger*       m_pDebugger;
-
+    /**
+     * Update the system object.
+     *
+     * @param   DeltaTime   Time of the delta.
+     */
+    virtual void Update(f32 DeltaTime) = 0;
 };

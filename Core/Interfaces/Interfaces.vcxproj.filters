@@ -66,9 +66,6 @@
     <ClInclude Include="Source\System\ISystemScene.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\System\ISystemSubject.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\System\ISystemTask.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
@@ -102,6 +99,12 @@
     <ClInclude Include="Source\Generic\ISubject.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Generic\IComponent.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\IUpdatable.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\ISystem.cpp">
@@ -110,14 +113,14 @@
     <ClCompile Include="Source\System\ISystemScene.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\System\ISystemSubject.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Generic\ISubject.cpp">
       <Filter>Source Files\Generic</Filter>
     </ClCompile>
     <ClCompile Include="Source\Generic\IProperty.cpp">
       <Filter>Source Files\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ISystemObject.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

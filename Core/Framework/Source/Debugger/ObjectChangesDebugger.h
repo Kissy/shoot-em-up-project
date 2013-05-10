@@ -16,7 +16,7 @@
 
 #include <boost/timer/timer.hpp>
 
-#include "Observer/IObserver.h"
+#include "Generic/IObserver.h"
 
 class Debugger;
 
@@ -39,16 +39,18 @@ public:
      * Destructor.
      */
     ~ObjectChangesDebugger(void);
-
+    
     /**
-     * Change occurred.
-     *
-     * @param [in,out]  pSubject    If non-null, the subject.
-     * @param   ChangeType          Type of the change.
-     *
-     * @return  .
+     * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
+    
+    /**
+     * @inheritDoc
+     */
+    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::All;
+    }
 
 private:
     Debugger*                       m_pDebugger;

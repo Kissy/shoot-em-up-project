@@ -12,26 +12,32 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Errors.h"
-#include "System/ISystemSubject.h"
+#include "Assert.h"
+#include "Generic/IProperty.h"
+#include "System/ISystem.h"
+#include "System/ISystemObject.h"
 
 /**
  * @inheritDoc
  */
-ISystemSubject::ISystemSubject(void) : IProperty() {
-
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, const char* pszName) 
+    : IProperty()
+    , m_pSystemScene(pSystemScene) {
+        if (pszName) {
+            SetName(pszName);
+        }
 }
 
 /**
  * @inheritDoc
  */
-ISystemSubject::~ISystemSubject(void) {
-
+ISystemObject::~ISystemObject() {
+    
 }
 
 /**
  * @inheritDoc
  */
-void ISystemSubject::propertyChanged(System::Changes::BitMask uInChangedBits) {
+void ISystemObject::propertyChanged(System::Changes::BitMask uInChangedBits) {
     PostChanges(uInChangedBits);
 }
