@@ -21,6 +21,7 @@
 #include <boost/container/flat_map.hpp>
 
 #include "Errors.h"
+#include "Generic/IEntity.h"
 #include "Generic/IComponent.h"
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
@@ -84,12 +85,11 @@ public:
     /**
      * Creates a system object used to extend a UObject.
      *
-     * @param   id The unique identifier for this object.
-     * @param   name The name for this object.
+     * @param   entity The entity for this object.
      * @param   type The object type to create.
      * @return  The newly created system object.
      */
-    ISystemObject* CreateObject(std::string id, std::string name, std::string type);
+    ISystemObject* CreateObject(IEntity* entity, std::string type);
 
     /**
      * Destroys a system object.
@@ -126,7 +126,7 @@ protected:
     
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
     typedef boost::function<ISystemTask*(ISystemScene* pSystemScene)> TaskFactory;
-    typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, std::string id, std::string name)> ObjectFactory;
+    typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, IEntity* entity)> ObjectFactory;
 
     ISystem*                                        m_pSystem;
     ISystemTask*							        m_pSystemTask;

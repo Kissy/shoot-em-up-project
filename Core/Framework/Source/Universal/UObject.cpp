@@ -56,13 +56,8 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     //
     // Create the system object.
     //
-    ISystemObject* pSystemObject = pSystemScene->CreateObject(m_id, m_name, systemObjectType);
+    ISystemObject* pSystemObject = pSystemScene->CreateObject(this, systemObjectType);
     ASSERT(pSystemObject != NULL);
-
-    //
-    // Set this as the parent.
-    //
-    pSystemObject->SetParentObject(this);
 
     //
     // Get the changes this object will make and is looking for.

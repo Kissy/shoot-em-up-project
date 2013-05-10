@@ -30,7 +30,7 @@ public:
     /**
      * @inheritDoc
      */
-    ImageGraphicObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    ImageGraphicObject(ISystemScene* pSystemScene, IEntity* entity);
     
     /**
      * @inheritDoc

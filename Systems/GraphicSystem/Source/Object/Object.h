@@ -15,6 +15,7 @@
 #pragma once
 
 #include "System.h"
+#include "Generic/IEntity.h"
 #include "System/ISystemObject.h"
 
 class GraphicSystem;
@@ -33,7 +34,7 @@ class GraphicObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        GraphicObject(ISystemScene* pSystemScene, std::string id, std::string name);
+        GraphicObject(ISystemScene* pSystemScene, IEntity* entity);
 
         /**
          * @inheritDoc

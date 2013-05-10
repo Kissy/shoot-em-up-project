@@ -23,7 +23,7 @@ public:
     /**
      * Default constructor.
      */
-    ConnectInputObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    ConnectInputObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
      * Destructor.

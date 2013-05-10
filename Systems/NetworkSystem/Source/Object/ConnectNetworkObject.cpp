@@ -15,6 +15,7 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "Generic/IEntity.h"
 #include "System/ISystemScene.h"
 #include "ConnectNetworkObject.h"
 #include "Object/IKeyboardObject.h"
@@ -22,8 +23,8 @@
 /**
  * @inheritDoc
  */
-ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : NetworkObject(pSystemScene, id, name) {
+ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : NetworkObject(pSystemScene, entity) {
     m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_username, _1);
     m_propertyGetters["Username"] = boost::bind(&IProperty::getString, this, &m_username, _1);
 }

@@ -14,6 +14,7 @@
 
 #include "Assert.h"
 #include "Errors.h"
+#include "Generic/IEntity.h"
 #include "Generic/ISubject.h"
 #include "Generic/IProperty.h"
 #include "System/ISystem.h"
@@ -63,15 +64,15 @@ void ISystemScene::createTask(void) {
 /**
  * @inheritDoc
  */
-ISystemObject* ISystemScene::CreateObject(std::string id, std::string name, std::string type) {
+ISystemObject* ISystemScene::CreateObject(IEntity* entity, std::string type) {
     ASSERT(m_bInitialized);
 
-    ISystemObject* systemObject = m_ObjectFactories[type](this, id, name);
+    ISystemObject* systemObject = m_ObjectFactories[type](this, entity);
 
     if (systemObject != NULL) {
-        m_pObjects[systemObject->getId()] = systemObject;
+        m_pObjects[systemObject->getEntity()->getId()] = systemObject;
     } else {
-        ASSERTMSG2(false, "Impossible to create the object with name %s and type %s", name, type);
+        ASSERTMSG2(false, "Impossible to create the object with name %s and type %s", entity->getName(), type);
     }
 
     return systemObject;
@@ -85,7 +86,7 @@ Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(pSystemObject != NULL);
 
     if (pSystemObject != NULL) {
-        m_pObjects.erase(pSystemObject->getId());
+        m_pObjects.erase(pSystemObject->getEntity()->getId());
         delete pSystemObject;
     }
 

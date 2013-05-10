@@ -15,13 +15,14 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "Generic/IEntity.h"
 #include "ConnectInputObject.h"
 
 /**
  * @inheritDoc
  */
-ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : InputObject(pSystemScene, id, name) {
+ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : InputObject(pSystemScene, entity) {
     m_propertySetters["Key"] = boost::bind(&ConnectInputObject::setKey, this, _1);
     m_propertyGetters["Key"] = boost::bind(&ConnectInputObject::getKey, this, _1);
 }

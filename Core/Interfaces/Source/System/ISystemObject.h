@@ -37,13 +37,13 @@ class ISystemScene;
  * @sa  CSubject
  * @sa  IObserver
  */
-class ISystemObject : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable, public IEntity {
+class ISystemObject : public IComponent, public ISubject, public IObserver, public IProperty, public IUpdatable {
 public:
 
     /**
      * @inheritDoc
      */
-    ISystemObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    ISystemObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
      * @inheritDoc
@@ -65,28 +65,16 @@ public:
     }
 
     /**
-     * Returns a handle to the parent object that this system object belongs to.
+     * Gets the entity of this object.
      *
-     * @return  A handle to the parent object.
+     * @return  A pointer to the entity.
      */
-    inline Handle GetParentObject(void) {
-        return m_hParentObject;
-    }
-
-    /**
-     * Set a handle to the parent object that this system object belongs to.
-     * This should only be called by the parent object.
-     *
-     * @param   hParentObject   Handle of the parent object.
-     *
-     * @return   A handle to the parent object.
-     */
-    inline void SetParentObject(Handle hParentObject) {
-        m_hParentObject = hParentObject;
+    inline IEntity* getEntity(void) {
+        return m_entity;
     }
 
 protected:
     ISystemScene*               m_pSystemScene;
-    Handle                      m_hParentObject;
+    IEntity*                    m_entity;
 
 };

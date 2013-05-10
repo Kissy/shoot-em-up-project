@@ -21,9 +21,9 @@
 /**
  * @inheritDoc
  */
-ISystemObject::ISystemObject(ISystemScene* pSystemScene, std::string id, std::string name) 
+ISystemObject::ISystemObject(ISystemScene* pSystemScene, IEntity* entity) 
     : IProperty()
-    , IEntity(id, name)
+    , m_entity(entity) 
     , m_pSystemScene(pSystemScene) {
 }
 

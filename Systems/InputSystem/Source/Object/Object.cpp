@@ -13,14 +13,15 @@
 // responsibility to update it.
 
 #include "Interface.h"
+#include "Generic/IEntity.h"
 
 #include "Object/Object.h"
 
 /**
  * @inheritDoc
  */
-InputObject::InputObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : ISystemObject(pSystemScene, id, name) {
+InputObject::InputObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : ISystemObject(pSystemScene, entity) {
 
 }
 

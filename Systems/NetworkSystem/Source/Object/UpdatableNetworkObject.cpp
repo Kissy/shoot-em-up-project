@@ -19,6 +19,7 @@
 #include "Interface.h"
 
 #include "Scene.h"
+#include "Generic/IEntity.h"
 #include "Object/Object.h"
 #include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
@@ -27,8 +28,8 @@
 /**
  * @inheritDoc
  */
-UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : NetworkObject(pSystemScene, id, name)
+UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : NetworkObject(pSystemScene, entity)
     , m_position(Math::Vector3::Zero)
     , m_orientation(Math::Quaternion::Zero) {
     m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector4, this, System::Changes::Physic::Velocity, &m_velocity, _1);

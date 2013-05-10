@@ -16,6 +16,7 @@
 #pragma once
 
 #include "System.h"
+#include "Generic/IEntity.h"
 
 class InputSystem;
 class InputScene;
@@ -34,7 +35,7 @@ class InputObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        InputObject(ISystemScene* pSystemScene, std::string id, std::string name);
+        InputObject(ISystemScene* pSystemScene, IEntity* entity);
 
         /**
          * @inheritDoc

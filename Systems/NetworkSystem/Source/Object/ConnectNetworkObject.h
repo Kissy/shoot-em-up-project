@@ -15,6 +15,7 @@
 #pragma once
 
 #include "object.h"
+#include "Generic/IEntity.h"
 
 class ConnectNetworkObject : public NetworkObject {
 public:
@@ -22,7 +23,7 @@ public:
     /**
      * Default constructor.
      */
-    ConnectNetworkObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    ConnectNetworkObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
      * Destructor.

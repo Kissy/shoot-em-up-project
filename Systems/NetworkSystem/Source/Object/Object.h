@@ -15,6 +15,7 @@
 #pragma once
 
 #include "System.h"
+#include "Generic/IEntity.h"
 #include "System/ISystemObject.h"
 
 class NetworkSystem;
@@ -33,7 +34,7 @@ class NetworkObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        NetworkObject(ISystemScene* pSystemScene, std::string id, std::string name);
+        NetworkObject(ISystemScene* pSystemScene, IEntity* entity);
         
         /**
          * @inheritDoc

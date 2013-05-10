@@ -15,6 +15,7 @@
 #pragma once
 
 #include "System.h"
+#include "Generic/IEntity.h"
 #include "Object/PhysicObject.h"
 #include "Object/IGeometryObject.h"
 
@@ -32,7 +33,7 @@ public:
     /**
      * @inheritDoc
      */
-    MovablePhysicObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    MovablePhysicObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
      * @inheritDoc

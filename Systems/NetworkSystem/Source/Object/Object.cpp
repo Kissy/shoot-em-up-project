@@ -16,13 +16,14 @@
 #include "Interface.h"
 
 #include "Scene.h"
+#include "Generic/IEntity.h"
 #include "Object/Object.h"
 
 /**
  * @inheritDoc
  */
-NetworkObject::NetworkObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : ISystemObject(pSystemScene, id, name) {
+NetworkObject::NetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : ISystemObject(pSystemScene, entity) {
 
 }
 

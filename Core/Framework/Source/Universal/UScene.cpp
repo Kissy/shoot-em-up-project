@@ -47,27 +47,23 @@ UScene::~UScene(
     //
     // Get rid of all the links.
     //
-    for (ObjectLinksIt it = m_ObjectLinks.begin(); it != m_ObjectLinks.end(); it++) {
-        const ObjectLinkData& old = *it;
-        m_pObjectCCM->Unregister(old.pSubject, old.pObserver);
+    for (auto objectLink : m_ObjectLinks) {
+        m_pObjectCCM->Unregister(objectLink.pSubject, objectLink.pObserver);
     }
-
     m_ObjectLinks.clear();
+
     //
     // Get rid of all the objects.
     //
-    Objects Objs = m_Objects;
-
-    for (ObjectsIt it = Objs.begin(); it != Objs.end(); it++) {
-        DestroyObject(*it);
+    for (auto object : m_Objects) {
+        DestroyObject(object);
     }
-
     m_Objects.clear();
+
     //
     // Send "post-destroying objects" message to the scene extensions then delete the scene.
     //
     SystemScenes SysScenes = m_SystemScenes;
-
     for (SystemScenesIt it = SysScenes.begin(); it != SysScenes.end(); it++) {
         ISystemScene* pSystemScene = it->second;
         pSystemScene->GlobalSceneStatusChanged(
@@ -75,7 +71,6 @@ UScene::~UScene(
         );
         Unextend(pSystemScene);
     }
-
     m_SystemScenes.clear();
 }
 
@@ -159,6 +154,8 @@ UObject* UScene::createObject(const ObjectProto* objectProto) {
     // Add the object to the collection.
     //
     m_Objects.push_back(pObject);
+    Objects objects = m_Objects;
+
     //
     // Added systems extension.
     //

@@ -17,6 +17,7 @@
 
 #include "Scene.h"
 #include "PhysicObject.h"
+#include "Generic/IEntity.h"
 #include "Object/MovablePhysicObject.h"
 
 const f32 MovablePhysicObject::m_speed_multiplier = 500;
@@ -24,8 +25,8 @@ const f32 MovablePhysicObject::m_speed_multiplier = 500;
 /**
  * @inheritDoc
  */
-MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, std::string id, std::string name) 
-    : PhysicObject(pSystemScene, id, name) {
+MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : PhysicObject(pSystemScene, entity) {
     
 }
 

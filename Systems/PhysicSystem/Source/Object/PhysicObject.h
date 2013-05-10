@@ -14,6 +14,12 @@
 
 #pragma once
 
+#include "System/ISystemScene.h"
+#include "System/ISystemObject.h"
+#include "Object/IGeometryObject.h"
+#include "Object/IMoveObject.h"
+#include "Generic/IEntity.h"
+
 class HavokPhysicsSystem;
 class HavokPhysicsScene;
 class HavokPhysicsTask;
@@ -31,7 +37,7 @@ public:
     /**
      * @inheritDoc
      */
-    PhysicObject(ISystemScene* pSystemScene, std::string id, std::string name);
+    PhysicObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
      * @inheritDoc
