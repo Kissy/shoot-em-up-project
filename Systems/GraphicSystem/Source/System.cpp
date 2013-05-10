@@ -19,7 +19,6 @@
 #include <SDL_image.h>
 
 #include "Defines.h"
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "System.h"

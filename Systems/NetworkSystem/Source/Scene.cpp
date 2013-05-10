@@ -22,7 +22,6 @@
 
 #include <boost/functional/factory.hpp>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "System.h"

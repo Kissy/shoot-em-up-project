@@ -15,20 +15,10 @@
 
 #include <windows.h>
 
-//
-// core includes
-//
-#include "BaseTypes.h"
 #include "Interface.h"
-
-//
-// system includes
-//
 #include "System.h"
 
-//
-// Global variables
-//
+
 ManagerInterfaces   g_Managers;
 
 

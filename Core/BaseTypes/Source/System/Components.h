@@ -16,7 +16,7 @@
 
 #include <string>
 
-#include "Defines.h"
+#include "../Defines.h"
 
 /**
  * The System namespace contains meta-data about the various sytems,

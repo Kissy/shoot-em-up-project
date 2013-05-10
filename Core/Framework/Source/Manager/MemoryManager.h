@@ -14,13 +14,14 @@
 
 #pragma once
 
+#include "Singleton.h"
+
 /*******************************************************************************
 * CLASS: MemoryManager
 *
 * DESCRIPTION:
 * Responsible for managing memory.
 *******************************************************************************/
-
 class MemoryManager : public Singleton {
     public:
 

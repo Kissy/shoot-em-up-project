@@ -19,7 +19,6 @@
 #include <sprig.h>
 #pragma warning( pop ) 
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Scene.h"

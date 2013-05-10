@@ -13,7 +13,6 @@
 // responsibility to update it.
 
 #include "Defines.h"
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Proto.h"

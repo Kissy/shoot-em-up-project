@@ -18,8 +18,8 @@
 
 #include "Proto/Debug/DebugEntity.pb.h"
 
-#include "BaseTypes.h"
 #include "Interface.h"
+#include "System/Components.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 

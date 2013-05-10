@@ -85,7 +85,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Assert.h" />
-    <ClInclude Include="Source\BaseTypes.h" />
     <ClInclude Include="Source\DataTypes.h" />
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Defines.h" />

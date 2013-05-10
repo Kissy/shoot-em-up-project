@@ -15,7 +15,6 @@
 // Prevent other headers from including any platform specific ones
 #pragma once
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "PlatformManager.h"

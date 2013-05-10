@@ -14,7 +14,6 @@
 
 #include <windows.h>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "System.h"

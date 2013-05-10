@@ -15,7 +15,6 @@
 #include <cstring>
 #include "boost/algorithm/string.hpp"
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "EnvironmentManager.h"

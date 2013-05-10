@@ -15,7 +15,6 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Scene.h"

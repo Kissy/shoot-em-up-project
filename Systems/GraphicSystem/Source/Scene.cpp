@@ -15,7 +15,6 @@
 #include <boost/functional/factory.hpp>
 #include <SDL_image.h>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "System.h"

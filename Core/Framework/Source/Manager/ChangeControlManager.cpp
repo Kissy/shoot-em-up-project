@@ -16,7 +16,6 @@
 
 #include "Windows.h" // For ::TlsXxx()
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "ChangeControlManager.h"

@@ -15,7 +15,6 @@
 #include "boost/functional/factory.hpp"
 #include "boost/bind.hpp"
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Collision.h"

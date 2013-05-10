@@ -14,7 +14,6 @@
 
 #include <Windows.h>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Manager/PlatformManager.h"

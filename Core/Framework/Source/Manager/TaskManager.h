@@ -21,7 +21,6 @@
 #include "tbb/tbb_thread.h"
 #pragma warning( pop )
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "SpinMutex.h"

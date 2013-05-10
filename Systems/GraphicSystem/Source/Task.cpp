@@ -14,7 +14,6 @@
 
 #include <SDL.h>
 
-#include "BaseTypes.h"
 #include "Interface.h"
 
 #include "Scene.h"
