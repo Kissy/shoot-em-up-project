@@ -114,6 +114,8 @@ Error GraphicSystem::initialize(void) {
         &m_RenderWindowDescription.miscParams
     );
     ASSERT(m_pRenderWindow != NULL);
+    m_pRenderWindow->setDeactivateOnFocusChange(false);
+
 
     // Save the window handle & render window
     size_t hWnd;
