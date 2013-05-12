@@ -89,6 +89,7 @@ Error GraphicScene::initialize(void) {
     //m_pRootNode->hideBoundingBox(true);
 
     m_pSceneManager->setAmbientLight(m_ambientLight);
+    m_pSceneManager->setSkyBox(true, "nebula");
     
     m_bInitialized = true;
     return Errors::Success;
