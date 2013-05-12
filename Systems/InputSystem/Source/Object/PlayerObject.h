@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <OISB.h>
+
 #include "System.h"
 #include "Object/Object.h"
 
@@ -22,81 +24,56 @@ class ISystemScene;
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
  * System.h for a definition of the class and its functions.
- * 
+ *
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IGeometryObject, public IMoveObject {
-    
-    public:
+class PlayerInputObject : public InputObject, public IMoveObject {
+public:
 
-        /**
-         * @inheritDoc
-         */
-        PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity);
+    /**
+     * @inheritDoc
+     */
+    PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity);
 
-        /**
-         * @inheritDoc
-         */
-        ~PlayerInputObject(void);
+    /**
+     * @inheritDoc
+     */
+    ~PlayerInputObject(void);
 
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Physic::Velocity | System::Changes::Physic::Orientation;
-        };
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::Physic::Velocity;
+    };
 
-        /**
-         * @inheritDoc
-         */
-        System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-        
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
+    /**
+     * @inheritDoc
+     */
+    System::Types::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::None;
+    };
 
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetPosition(void) {
-            return NULL;
-        }
+    /**
+     * @inheritDoc
+     */
+    Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
 
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Quaternion* GetOrientation(void) {
-            return NULL;
-        }
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-        /**
-         * @inheritDoc
-         */
-        inline const Math::Vector3* GetScale(void) {
-            return NULL;
-        }
-
-    private:
-        
-        InputAction* m_upInputAction;
-        InputAction* m_rightInputAction;
-        InputAction* m_downInputAction;
-        InputAction* m_leftInputAction;
-        InputAction* m_rightRotateInputAction;
-        InputAction* m_leftRotateInputAction;
-
+private:
+    OISB::TriggerAction*    m_upInputAction;
+    OISB::TriggerAction*    m_rightInputAction;
+    OISB::TriggerAction*    m_downInputAction;
+    OISB::TriggerAction*    m_leftInputAction;
+    OISB::TriggerAction*    m_rightRotateInputAction;
+    OISB::TriggerAction*    m_leftRotateInputAction;
 };
-

@@ -15,57 +15,38 @@
 #pragma once
 
 #include <list>
-#include <SDL_keysym.h>
 
 #include "Errors.h"
 #include "Interface.h"
 #include "System/ISystem.h"
-#include "Input/InputAction.h"
 
 /**
  * Input system.
- * 
+ *
  * @sa  ISystem
  */
 class InputSystem : public ISystem {
+public:
 
-    public:
+    /**
+     * @inheritDoc
+     */
+    InputSystem(void);
 
-        /**
-         * @inheritDoc
-         */
-        InputSystem(void);
+    /**
+     * @inheritDoc
+     */
+    ~InputSystem(void);
 
-        /**
-         * @inheritDoc
-         */
-        ~InputSystem(void);
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
-
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Input;
-        }
-        
-        /**
-         * Create a new input action binded to a key
-         */
-        InputAction* createInputAction(SDLKey key);
-
-        /**
-         * Process the list of events from SDL.
-         */
-        void pollInputEvents(void);
-
-    protected:
-
-        std::list<InputAction*> m_inputActions;
-        
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Input;
+    }
 };
-

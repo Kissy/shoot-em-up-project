@@ -14,8 +14,11 @@
 
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
+#include <OIS.h>
 
+#include "Generic/IProperty.h"
 #include "Generic/IEntity.h"
+#include "Scene.h"
 #include "ConnectInputObject.h"
 
 /**
@@ -23,8 +26,11 @@
  */
 ConnectInputObject::ConnectInputObject(ISystemScene* pSystemScene, IEntity* entity) 
     : InputObject(pSystemScene, entity) {
-    m_propertySetters["Key"] = boost::bind(&ConnectInputObject::setKey, this, _1);
-    m_propertyGetters["Key"] = boost::bind(&ConnectInputObject::getKey, this, _1);
+    m_propertySetters["Key"] = boost::bind(&IProperty::setString, this, System::Changes::None, &m_key, _1);
+    m_propertyGetters["Key"] = boost::bind(&IProperty::getString, this, &m_key, _1);
+    
+    InputScene* inputScene = reinterpret_cast<InputScene*>(pSystemScene);
+    m_connectInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName());
 }
 
 /**
@@ -39,8 +45,8 @@ ConnectInputObject::~ConnectInputObject(void) {
 Error ConnectInputObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    m_connectInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(m_key);
-    
+    m_connectInputAction->bind(m_key);
+
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -65,30 +71,4 @@ void ConnectInputObject::Update(f32 DeltaTime) {
     }
     
     PostChanges(modified);
-}
-
-/**
- * @inheritDoc
- */
-void ConnectInputObject::setKey(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
-    std::string key = *value;
-    if (key == "F1") {
-        m_key = SDLK_F1;
-    } else if (key == "F2") {
-        m_key = SDLK_F2;
-    } else if (key == "F3") {
-        m_key = SDLK_F3;
-    } else if (key == "F4") {
-        m_key = SDLK_F4;
-    }
-}
-
-/**
- * @inheritDoc
- */
-void ConnectInputObject::getKey(ProtoStringList* values) {
-    std::string* value = nullptr;
-    value = values->Add();
-    value->append(boost::lexical_cast<std::string>(m_key));
 }

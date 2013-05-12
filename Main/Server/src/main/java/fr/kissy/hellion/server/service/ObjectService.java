@@ -11,7 +11,7 @@ public class ObjectService {
 
     private static final String MOVABLE = "Movable";
     private static final String PLAYER = "Player";
-    private static final String IMAGE = "Image";
+    private static final String MESH = "Mesh";
     private static final String UPDATABLE = "Updatable";
     private static final String NETWORK = "Network";
 
@@ -28,8 +28,8 @@ public class ObjectService {
 
         ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
         graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
-        graphicSystemObject.setType(IMAGE);
-        graphicSystemObject.addProperties(player.getImageProperty().build());
+        graphicSystemObject.setType(MESH);
+        graphicSystemObject.addProperties(player.getMeshProperty().build());
 
         if (isControllable) {
             ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = builder.addSystemObjectsBuilder();

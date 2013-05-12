@@ -13,7 +13,7 @@
 // responsibility to update it.
 
 #include <boost/functional/factory.hpp>
-#include <SDL.h>
+#include <OISB.h>
 
 #include "Interface.h"
 
@@ -36,6 +36,9 @@ InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem) {
 
     m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
     m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
+    
+    m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
+    m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");
 }
 
 /**
@@ -51,7 +54,7 @@ InputScene::~InputScene(void) {
 Error InputScene::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    quitInputAction = static_cast<InputSystem*>(m_pSystem)->createInputAction(SDLK_ESCAPE);
+    m_quitInputAction->bind("Keyboard/ECHAP");
     
     m_bInitialized = true;
     return Errors::Success;
@@ -61,7 +64,7 @@ Error InputScene::initialize(void) {
  * @inheritDoc
  */
 void InputScene::Update(f32 DeltaTime) {
-    if (quitInputAction->isActive()) {
+    if (m_quitInputAction->isActive()) {
         g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
         return;
     }

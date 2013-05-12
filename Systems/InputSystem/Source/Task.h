@@ -21,43 +21,40 @@
 /**
  * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
  * definition of the class and its functions.
- * 
+ *
  * @sa  ISystemTask
  */
 class InputTask : public ISystemTask {
-    
-    public:
+public:
 
-        /**
-         * @inheritDoc
-         */
-        InputTask(ISystemScene* pScene);
+    /**
+     * @inheritDoc
+     */
+    InputTask(ISystemScene* pScene);
 
-        /**
-         * @inheritDoc
-         */
-        ~InputTask(void);
+    /**
+     * @inheritDoc
+     */
+    ~InputTask(void);
 
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-        /**
-         * @inheritDoc
-         */
-        inline bool IsPrimaryThreadOnly(void) {
-            return false;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        inline System::Type GetSystemType(void) {
-            return System::Types::Input;
-        }
+    /**
+     * @inheritDoc
+     */
+    inline bool IsPrimaryThreadOnly(void) {
+        return false;
+    };
 
-    private:
+    /**
+     * @inheritDoc
+     */
+    inline System::Type GetSystemType(void) {
+        return System::Types::Input;
+    }
 
+private:
 };
-

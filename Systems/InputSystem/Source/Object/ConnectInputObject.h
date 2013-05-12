@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <OISB.h>
+
 #include "object.h"
 #include "Object/IKeyboardObject.h"
 
@@ -77,8 +79,8 @@ public:
     void getKey(ProtoStringList* values);
 
 private:
-    SDLKey                          m_key;
-    InputAction*                    m_connectInputAction;
+    std::string                     m_key;
+    OISB::TriggerAction*            m_connectInputAction;
     KeyboardButtonData              m_keyboardButtonData;
 
 };

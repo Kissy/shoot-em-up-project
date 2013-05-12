@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <OISB.h>
+
 #include "Errors.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
@@ -25,56 +27,64 @@ class InputAction;
 /**
  * Implementation of the ISystemScene interface. See Interfaces\System.h for a definition of the
  * class and its functions.
- * 
+ *
  * @sa  ISystemScene
  */
 class InputScene : public ISystemScene {
+public:
 
-    public:
+    /**
+     * @inheritDoc
+     */
+    InputScene(ISystem* pSystem);
 
-        /**
-         * @inheritDoc
-         */
-        InputScene(ISystem* pSystem);
+    /**
+     * @inheritDoc
+     */
+    ~InputScene(void);
 
-        /**
-         * @inheritDoc
-         */
-        ~InputScene(void);
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
-        
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::Physic::Velocity;
-        };
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-        /**
-         * @inheritDoc
-         */
-        System::Changes::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::None;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Input;
-        };
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetPotentialSystemChanges(void) {
+        return System::Changes::Physic::Velocity;
+    };
 
-    protected:
+    /**
+     * @inheritDoc
+     */
+    System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::None;
+    };
 
-        InputAction* quitInputAction;
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Input;
+    };
+
+    /**
+     * Access the DefaultSchema.
+     *
+     * @return  null if it fails, else the default schema.
+     */
+    OISB::ActionSchema* getDefaultSchema(void) const {
+        return m_defaultSchema;
+    };
+
+private:
+    OISB::ActionSchema*             m_defaultSchema;
+    OISB::TriggerAction*            m_quitInputAction;
 
 };

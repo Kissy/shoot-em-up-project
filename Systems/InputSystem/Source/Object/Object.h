@@ -12,7 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
 #pragma once
 
 #include "System.h"
@@ -21,33 +20,29 @@
 class InputSystem;
 class InputScene;
 
-
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
  * System.h for a definition of the class and its functions.
- * 
+ *
  * @sa  GuiObject
  */
 class InputObject : public ISystemObject {
-     
-    public:
+public:
+    
+    /**
+     * @inheritDoc
+     */
+    InputObject(ISystemScene* pSystemScene, IEntity* entity);
 
-        /**
-         * @inheritDoc
-         */
-        InputObject(ISystemScene* pSystemScene, IEntity* entity);
-
-        /**
-         * @inheritDoc
-         */
-        virtual ~InputObject(void);
-
-        /**
-         * @inheritDoc
-         */
-        inline System::Type GetSystemType(void) {
-            return System::Types::Input;
-        }
-
+    /**
+     * @inheritDoc
+     */
+    virtual ~InputObject(void);
+    
+    /**
+     * @inheritDoc
+     */
+    inline System::Type GetSystemType(void) {
+        return System::Types::Input;
+    }
 };
-

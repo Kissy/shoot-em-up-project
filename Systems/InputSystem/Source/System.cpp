@@ -13,13 +13,13 @@
 // responsibility to update it.
 
 #include <boost/functional/factory.hpp>
-#include <SDL.h>
+#include <OIS.h>
+#include <OISB.h>
 
 #include "Interface.h"
 
 #include "System.h"
 #include "Scene.h"
-#include "Input/InputAction.h"
 
 extern ManagerInterfaces    g_Managers;
 
@@ -27,7 +27,9 @@ extern ManagerInterfaces    g_Managers;
 /**
  * @inheritDoc
  */
-InputSystem::InputSystem(void) : ISystem() {
+InputSystem::InputSystem(void) 
+    : ISystem() {
+    new OISB::System();
     m_SceneFactory = boost::factory<InputScene*>();
 }
 
@@ -35,7 +37,7 @@ InputSystem::InputSystem(void) : ISystem() {
  * @inheritDoc
  */
 InputSystem::~InputSystem(void) {
-
+    delete OISB::System::getSingletonPtr();
 }
 
 /**
@@ -44,39 +46,29 @@ InputSystem::~InputSystem(void) {
 Error InputSystem::initialize(void) {
     ASSERT(!m_bInitialized);
     
+    size_t hWnd = g_Managers.pPlatform->Window().GetHandle();
+    ASSERTMSG(hWnd != 0, "Window handle should not be null !");
+
+    OIS::ParamList paramList;
+    std::ostringstream windowHndStr;
+    windowHndStr << hWnd;
+    paramList.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+
+    /*#if defined OIS_WIN32_PLATFORM
+    paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND")));
+    paramList.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+    paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+    paramList.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+    #elif defined OIS_LINUX_PLATFORM
+    paramList.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+    paramList.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    paramList.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+    paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    #endif*/
+
+    OIS::InputManager* inputManager = OIS::InputManager::createInputSystem(paramList);
+    OISB::System::getSingleton().initialize(inputManager);
+
     m_bInitialized = true;
     return Errors::Success;
 }
-
-/**
- * @inheritDoc
- */
-InputAction* InputSystem::createInputAction(SDLKey key) {
-    InputAction* inputAction = new InputAction(key);
-    m_inputActions.push_back(inputAction);
-    return inputAction;
-}
-
-/**
- * @inheritDoc
- */
-void InputSystem::pollInputEvents(void) {
-    SDL_Event event;
-    std::list<InputAction*>::const_iterator inputActionIterator;
-    
-    for (inputActionIterator = m_inputActions.begin(); inputActionIterator != m_inputActions.end(); ++inputActionIterator) {
-        (*inputActionIterator)->updatePreviousValue();
-    }
-
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
-            return;
-        }
-
-        for (inputActionIterator = m_inputActions.begin(); inputActionIterator != m_inputActions.end(); ++inputActionIterator) {
-            (*inputActionIterator)->processEvent(event);
-        }
-    }
-}
-

@@ -16,7 +16,6 @@
 
 #include "Scene.h"
 #include "Object.h"
-#include "Input/InputAction.h"
 #include "Object/PlayerObject.h"
 
 /**
@@ -25,6 +24,13 @@
 PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity) 
     : InputObject(pSystemScene, entity) {
     
+    InputScene* inputScene = reinterpret_cast<InputScene*>(pSystemScene);
+    m_upInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Up");
+    m_rightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_R");
+    m_downInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Down");
+    m_leftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_E");
+    m_rightRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Right");
+    m_leftRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Left");
 }
 
 /**
@@ -40,13 +46,13 @@ PlayerInputObject::~PlayerInputObject(void) {
 Error PlayerInputObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    m_upInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_UP);
-    m_rightInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_r);
-    m_downInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_DOWN);
-    m_leftInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_e);
-    m_rightRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_RIGHT);
-    m_leftRotateInputAction = static_cast<InputSystem*>(m_pSystemScene->GetSystem())->createInputAction(SDLK_LEFT);
-    
+    m_upInputAction->bind("Keyboard/HAUT");
+    m_rightInputAction->bind("Keyboard/R");
+    m_downInputAction->bind("Keyboard/BAS");
+    m_leftInputAction->bind("Keyboard/E");
+    m_rightRotateInputAction->bind("Keyboard/DROITE");
+    m_leftRotateInputAction->bind("Keyboard/GAUCHE");
+
     m_bInitialized = true;
     return Errors::Success;
 }

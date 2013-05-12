@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <OISB.h>
+
 #include "Interface.h"
 
 #include "System.h"
@@ -37,6 +39,6 @@ InputTask::~InputTask(void) {
  * @inheritDoc
  */
 void InputTask::Update(f32 DeltaTime) {
-    static_cast<InputSystem*>(m_pSystemScene->GetSystem())->pollInputEvents();
+    OISB::System::getSingleton().process(DeltaTime);
     m_pSystemScene->Update(DeltaTime);
 }

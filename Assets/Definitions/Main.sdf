@@ -23,12 +23,12 @@
 				<Property Name="ClipDistances" Value1="1" Value2="1000"/>
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Movable">
-				<Property Name="Position" Value1="0" Value2="0" Value3="10" />
+				<Property Name="Position" Value1="0" Value2="0" Value3="100" />
 			</Properties>
 		</Object>
 		<Object Name="Connect1">
 			<Properties SystemType="Input" ObjectType="Connect">
-				<Property Name="Key" Value1="F1" />
+				<Property Name="Key" Value1="Keyboard/F1" />
 			</Properties>
 			<Properties SystemType="Network" ObjectType="Connect">
 				<Property Name="Username" Value1="1" />
@@ -36,7 +36,7 @@
 		</Object>
 		<Object Name="Connect2">
 			<Properties SystemType="Input" ObjectType="Connect">
-				<Property Name="Key" Value1="F2" />
+				<Property Name="Key" Value1="Keyboard/F2" />
 			</Properties>
 			<Properties SystemType="Network" ObjectType="Connect">
 				<Property Name="Username" Value1="2" />
@@ -44,7 +44,7 @@
 		</Object>
 		<Object Name="Connect3">
 			<Properties SystemType="Input" ObjectType="Connect">
-				<Property Name="Key" Value1="F3" />
+				<Property Name="Key" Value1="Keyboard/F3" />
 			</Properties>
 			<Properties SystemType="Network" ObjectType="Connect">
 				<Property Name="Username" Value1="3" />
@@ -52,20 +52,20 @@
 		</Object>
 		<Object Name="Connect4">
 			<Properties SystemType="Input" ObjectType="Connect">
-				<Property Name="Key" Value1="F4" />
+				<Property Name="Key" Value1="Keyboard/F4" />
 			</Properties>
 			<Properties SystemType="Network" ObjectType="Connect">
 				<Property Name="Username" Value1="4" />
 			</Properties>
 		</Object>
 		
-		<Object Name="Player">
+		<!--<Object Name="Player">
 			<Properties SystemType="Graphic" ObjectType="Mesh">
 				<Property Name="Mesh" Value1="bloodelffemale.mesh"/>
-				<!--<Property Name="Skeleton" Value1="characters/bloodelffemale.skeleton"/>-->
-				<!--<Property Name="CastShadows" Value1="0"/>
+				< ! - -<Property Name="Skeleton" Value1="characters/bloodelffemale.skeleton"/>- - >
+				< ! - -<Property Name="CastShadows" Value1="0"/>
 				<Property Name="Animation" Value1="idle" Value2="Idle"/>
-				<Property Name="Animation" Value1="run" Value2="Running"/>-->
+				<Property Name="Animation" Value1="run" Value2="Running"/>- - >
 			</Properties>
 			<Properties SystemType="Input" ObjectType="Player">
 			</Properties>
@@ -73,11 +73,11 @@
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Movable">
 				<Property Name="Position" Value1="0" Value2="0" Value3="0"/>
-				<!--<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
+				< !- - <Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
 				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
-				<Property Name="Radius" Value1="0.3"/>-->
+				<Property Name="Radius" Value1="0.3"/>- - >
 			</Properties>
-		</Object>
+		</Object>-->
 	</Objects>
 	<Links>
 		<!--<Link Subject="Player" Observer="MainCamera" SubjectSystemType="Physic" ObserverSystemType="Graphic"/>-->

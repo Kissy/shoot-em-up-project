@@ -2,9 +2,7 @@ package fr.kissy.hellion.server.domain;
 
 import com.google.common.collect.Sets;
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.proto.common.ObjectDto;
 import fr.kissy.hellion.proto.common.PropertyDto;
-import fr.kissy.hellion.proto.common.SystemDto;
 import fr.kissy.hellion.server.core.rtree.model.Box;
 import fr.kissy.hellion.server.core.rtree.model.BoxObject;
 import org.bson.types.ObjectId;
@@ -22,7 +20,7 @@ public class Player implements BoxObject {
 
     @Id
     private ObjectId id;
-    private PropertyDto.PropertyProto.Builder imageProperty;
+    private PropertyDto.PropertyProto.Builder meshProperty;
     private PropertyDto.PropertyProto.Builder positionProperty;
     private PropertyDto.PropertyProto.Builder velocityProperty;
     private PropertyDto.PropertyProto.Builder orientationProperty;
@@ -32,9 +30,9 @@ public class Player implements BoxObject {
     private Set<Player> nearPlayers = Sets.newHashSet();
 
     public Player(String image) {
-        imageProperty = PropertyDto.PropertyProto.newBuilder();
-        imageProperty.setName("Image");
-        imageProperty.addValue(ByteString.copyFrom(image.getBytes()));
+        meshProperty = PropertyDto.PropertyProto.newBuilder();
+        meshProperty.setName("Mesh");
+        meshProperty.addValue(ByteString.copyFrom(image.getBytes()));
 
         positionProperty = PropertyDto.PropertyProto.newBuilder();
         positionProperty.setName("Position");
@@ -69,8 +67,8 @@ public class Player implements BoxObject {
         return positionProperty;
     }
 
-    public PropertyDto.PropertyProto.Builder getImageProperty() {
-        return imageProperty;
+    public PropertyDto.PropertyProto.Builder getMeshProperty() {
+        return meshProperty;
     }
 
     public void setPosition(ByteString x, ByteString y, ByteString z) {
