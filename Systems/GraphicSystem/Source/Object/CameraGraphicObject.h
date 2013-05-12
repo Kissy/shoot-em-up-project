@@ -63,7 +63,7 @@ class CameraGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         virtual System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Physic::Position;
+            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
         }
         
         /**

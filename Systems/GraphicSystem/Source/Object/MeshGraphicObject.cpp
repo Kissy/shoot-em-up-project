@@ -72,7 +72,6 @@ MeshGraphicObject::~MeshGraphicObject(void) {
 Error MeshGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    GraphicObject::initialize();
     m_pNode->attachObject(m_pEntity);
 
     m_bInitialized = true;
@@ -91,6 +90,19 @@ void MeshGraphicObject::Update(f32 DeltaTime) {
  */
 Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
+
+    if (ChangeType & System::Changes::Physic::Position) {
+        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
+        const Math::Vector3& Position = *pGeometryObject->GetPosition();
+        m_pNode->setPosition(Position.x, Position.y, Position.z);
+    }
+
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
+        const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();
+        m_pNode->setOrientation(Orientation.w, Orientation.x, Orientation.y, Orientation.z);
+    }
+
     return Errors::Success;
 }
 

@@ -43,11 +43,6 @@ public:
     /**
      * @inheritDoc
      */
-    virtual Error initialize(void);
-
-    /**
-     * @inheritDoc
-     */
     inline System::Type GetSystemType(void) {
         return System::Types::Graphic;
     }

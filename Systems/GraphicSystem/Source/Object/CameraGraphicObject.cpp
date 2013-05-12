@@ -37,6 +37,14 @@ CameraGraphicObject::CameraGraphicObject(ISystemScene* pSystemScene, IEntity* en
     , m_pCamera(NULL)
     , m_pViewport(NULL)
     , m_vLookAt(Ogre::Vector3::ZERO) {
+    m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
+    m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
+    
+    //
+    // Create the camera.
+    //
+    m_pCamera = POGRESCENEMGR->createCamera(m_entity->getName());
+    ASSERT(m_pCamera != NULL);
 }
 
 /**
@@ -51,8 +59,11 @@ CameraGraphicObject::~CameraGraphicObject(void) {
         pRenderWindow->removeViewport(m_pViewport->getZOrder());
     }
 
-    if (m_pCamera != NULL) {
+    if (m_bInitialized) {
         m_pCameraNode->detachObject(m_pCamera);
+    }
+
+    if (m_pCamera != NULL) {
         POGRESCENEMGR->destroyCamera(m_pCamera);
     }
 }
@@ -63,10 +74,14 @@ CameraGraphicObject::~CameraGraphicObject(void) {
 Error CameraGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
 
+    if (m_pCamera == NULL) {
+        return Errors::Failure;
+    }
+
     //
     // Custom init function for the camera
     //
-    Ogre::SceneNode* parentNode;
+    /*Ogre::SceneNode* parentNode;
     // TODO parameter this
     if (POGRESCENEMGR->hasSceneNode("Player_SceneNode")) {
         parentNode = POGRESCENEMGR->getSceneNode("Player_SceneNode");
@@ -74,20 +89,10 @@ Error CameraGraphicObject::initialize(void) {
         parentNode = PSCENE->getRootNode();
     }
     m_pNode = parentNode->createChildSceneNode(m_entity->getId() + "_SceneNode");
-    m_pNode->setPosition(0, 1.0f, 0);
-    ASSERT(m_pNode != NULL);
+    m_pNode->setPosition(0, 0, 80);*/
+
     m_pCameraNode = m_pNode->createChildSceneNode(m_entity->getId() + "Camera_SceneNode");
     ASSERT(m_pCameraNode != NULL);
-
-    //
-    // Create the camera.
-    //
-    m_pCamera = POGRESCENEMGR->createCamera(m_entity->getName());
-    ASSERT(m_pCamera != NULL);
-
-    if (m_pCamera == NULL) {
-        return Errors::Failure;
-    }
 
     //
     // Create the viewport.
@@ -111,14 +116,13 @@ Error CameraGraphicObject::initialize(void) {
     //
     // Set auto tracking
     //
-    m_pCamera->setAutoTracking(true, m_pNode);
-    m_pCamera->setFixedYawAxis(true);
+    //m_pCamera->setAutoTracking(true, m_pNode);
+    //m_pCamera->setFixedYawAxis(true);
     //
     // Attach the camera to the Ogre scene node.
     //
     m_pCameraNode->attachObject(m_pCamera);
-    m_pCamera->setPosition(Ogre::Vector3(0, 0, 500));
-    m_pCameraNode->hideBoundingBox(true);
+    //m_pCameraNode->hideBoundingBox(true);
 
     //
     // Set the far clip distance
@@ -146,10 +150,15 @@ Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Physic::Position) {
-        Math::Vector3 Position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_vLookAt.x = Position.x;
-        m_vLookAt.y = Position.y;
-        m_vLookAt.z = Position.z;
+        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
+        const Math::Vector3& Position = *pGeometryObject->GetPosition();
+        m_pNode->setPosition(Position.x, Position.y, Position.z);
+    }
+
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
+        const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();
+        m_pNode->setOrientation(Orientation.w, Orientation.x, Orientation.y, Orientation.z);
     }
 
     return Errors::Success;

@@ -64,7 +64,7 @@ class MeshGraphicObject : public GraphicObject {
          * @inheritDoc
          */
         System::Types::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::Physic::Position;
+            return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
         };
         
         /**

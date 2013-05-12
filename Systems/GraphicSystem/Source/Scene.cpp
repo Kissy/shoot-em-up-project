@@ -78,7 +78,7 @@ GraphicScene::~GraphicScene(void) {
 Error GraphicScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    m_pSceneManager = reinterpret_cast<GraphicSystem*>(m_pSystem)->getRoot()->createSceneManager(Ogre::ST_EXTERIOR_FAR);
+    m_pSceneManager = reinterpret_cast<GraphicSystem*>(m_pSystem)->getRoot()->createSceneManager(Ogre::ST_GENERIC);
     ASSERT(m_pSceneManager != NULL);
     if (!m_pSceneManager) {
         return Errors::Failure;
@@ -86,7 +86,7 @@ Error GraphicScene::initialize(void) {
 
     m_pRootNode = m_pSceneManager->getRootSceneNode();
     ASSERT(m_pRootNode != NULL);
-    m_pRootNode->hideBoundingBox(true);
+    //m_pRootNode->hideBoundingBox(true);
 
     m_pSceneManager->setAmbientLight(m_ambientLight);
     

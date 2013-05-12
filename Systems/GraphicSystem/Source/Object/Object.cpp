@@ -24,26 +24,13 @@
  */
 GraphicObject::GraphicObject(ISystemScene* pSystemScene, IEntity* entity) 
     : ISystemObject(pSystemScene, entity) {
-    
+    m_pNode = POGREROOTNODE->createChildSceneNode(m_entity->getName() + "_SceneNode");
+    ASSERT(m_pNode != NULL);
 }
 
 /**
  * @inheritDoc
  */
 GraphicObject::~GraphicObject(void) {
-    if (m_bInitialized) {
-        POGREROOTNODE->removeChild(m_pNode);
-    }
-}
-
-/**
- * @inheritDoc
- */
-Error GraphicObject::initialize(void) {
-    ASSERT(!m_bInitialized);
-
-    m_pNode = POGREROOTNODE->createChildSceneNode(m_entity->getName() + "_SceneNode");
-    ASSERT(m_pNode != NULL);
-
-    return Errors::Success;
+    POGREROOTNODE->removeChild(m_pNode);
 }
