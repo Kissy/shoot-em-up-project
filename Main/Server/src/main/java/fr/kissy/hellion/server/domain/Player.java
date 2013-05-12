@@ -125,7 +125,7 @@ public class Player implements BoxObject {
     @Transient
     public Box getNearestBounds() {
         Box nearest = getBox();
-        nearest.expand(400, 300, 200);
+        nearest.expand(50, 50, 50);
         return nearest;
     }
 

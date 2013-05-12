@@ -17,20 +17,21 @@
 #include "Scene.h"
 #include "Object.h"
 
-#define POGREROOTNODE (reinterpret_cast<GraphicScene*>(m_pSystemScene)->getRootNode())
-
 /**
  * @inheritDoc
  */
 GraphicObject::GraphicObject(ISystemScene* pSystemScene, IEntity* entity) 
-    : ISystemObject(pSystemScene, entity) {
-    m_pNode = POGREROOTNODE->createChildSceneNode(m_entity->getName() + "_SceneNode");
+    : ISystemObject(pSystemScene, entity)
+    , m_sceneManager(reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager()) {
+    m_pNode = m_sceneManager->createSceneNode(m_entity->getName() + "_SceneNode");
     ASSERT(m_pNode != NULL);
+    m_sceneManager->getRootSceneNode()->addChild(m_pNode);
 }
 
 /**
  * @inheritDoc
  */
 GraphicObject::~GraphicObject(void) {
-    POGREROOTNODE->removeChild(m_pNode);
+    m_pNode->getParent()->removeChild(m_pNode);
+    m_sceneManager->destroySceneNode(m_pNode);
 }

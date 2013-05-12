@@ -19,7 +19,6 @@
 #include "System/ISystemObject.h"
 
 class GraphicSystem;
-class OGREGraphicsScene;
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
@@ -48,6 +47,7 @@ public:
     }
 
 protected:
+    Ogre::SceneManager*                 m_sceneManager;
     Ogre::SceneNode*                    m_pNode;
 
 };
