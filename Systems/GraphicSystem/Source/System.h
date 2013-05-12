@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include <SDL.h>
+#include "OgreWindowEventUtilities.h"
 
 #include "Errors.h"
 #include "System.h"
@@ -26,43 +26,116 @@ class GraphicTask;
 /**
  * Implementation of the ISystem interface for graphics. See Interfaces\System.h for a
  * definition of the class and its functions.
- * 
+ *
  * @sa  ISystem
  * @sa  Ogre::WindowEventListener
  */
-class GraphicSystem : public ISystem {
+class GraphicSystem : public ISystem, public Ogre::WindowEventListener {
+public:
 
-    public:
+    /**
+     * @inheritDoc
+     */
+    GraphicSystem(void);
 
-        /**
-         * @inheritDoc
-         */
-        GraphicSystem(void);
+    /**
+     * @inheritDoc
+     */
+    ~GraphicSystem(void);
 
-        /**
-         * @inheritDoc
-         */
-        ~GraphicSystem(void);
+    /**
+     * @inheritDoc
+     */
+    Error initialize(void);
 
-        /**
-         * @inheritDoc
-         */
-        Error initialize(void);
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Graphic;
+    }
 
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Graphic;
-        }
+    /**
+     * Gets the ogre root.
+     * This function returns a pointer to the interanl Ogre root.
+     *
+     * @return  Ogre::Root* - A pointer to the Ogre root.
+     */
+    Ogre::Root* getRoot(void) {
+        return m_pRoot;
+    }
 
-        SDL_Surface* GetScreen(void) {
-            return screen;
-        }
+    /**
+     * Gets the ogre render window.
+     * This function returns a pointer to the interanl Ogre render window.
+     *
+     * @return  Ogre::RenderWindow* - A pointer to the Ogre render window.
+     */
+    Ogre::RenderWindow* getRenderWindow(void) {
+        return m_pRenderWindow;
+    }
 
-    private:
-        
-        SDL_Surface* screen;
+    /**
+     * Window closed.
+     * This function is called when the app window is close (to signal that the app is shutting
+     * down).
+     *
+     * @param   pRenderWindow   Ogre::RenderWindow* - A pointer to Ogre render window that closed.
+     */
+    void windowClosed(Ogre::RenderWindow* pRenderWindow);
+
+protected:
+    
+    /**
+     * Sets the resources location.
+     *
+     * @param   values  The values.
+     */
+    void setResourceLocation(ProtoStringList* values);
+
+    /**
+     * Sets the window name.
+     *
+     * @param   values  The values.
+     */
+    void setWindowName(ProtoStringList* values);
+
+    /**
+     * Sets the resolution.
+     *
+     * @param   values  The values.
+     */
+    void setResolution(ProtoStringList* values);
+
+    /**
+     * Sets the fullscreen.
+     *
+     * @param   values  The values.
+     */
+    void setFullScreen(ProtoStringList* values);
+
+    /**
+     * Sets the vertical sync.
+     *
+     * @param   values  The values.
+     */
+    void setVerticalSync(ProtoStringList* values);
+
+    /**
+     * Sets the anti aliasing.
+     *
+     * @param   values  The values.
+     */
+    void setAntiAliasing(ProtoStringList* values);
+
+private:
+    Ogre::Root*             m_pRoot;
+
+    Ogre::ResourceGroupManager*         m_pResourceGroupManager;
+    Ogre::MaterialManager*              m_pMaterialManager;
+    Ogre::RenderSystem*                 m_pRenderSystem;
+
+    Ogre::RenderWindowDescription       m_RenderWindowDescription;
+    Ogre::RenderWindow*                 m_pRenderWindow;
 
 };
-

@@ -15,12 +15,18 @@
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <SDL.h>
-#include <SDL_image.h>
+
+#pragma warning( push, 0 )
+// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
+#include <Ogre.h>
+#include <OgrePlugin.h>
+#include <OgreWindowEventUtilities.h>
+#pragma warning( pop )
 
 #include "Defines.h"
 #include "Interface.h"
 
+#include "Manager/IEnvironmentManager.h"
 #include "System.h"
 #include "Scene.h"
 
@@ -29,41 +35,177 @@ extern ManagerInterfaces    g_Managers;
 /**
  * @inheritDoc
  */
-GraphicSystem::GraphicSystem(void) : ISystem() {
+GraphicSystem::GraphicSystem(void) 
+    : ISystem()
+    , m_pRenderSystem(NULL)
+    , m_pRenderWindow(NULL)
+    , m_pMaterialManager(NULL) {
     m_SceneFactory = boost::factory<GraphicScene*>();
+
+    m_propertySetters["ResourceLocation"] = boost::bind(&GraphicSystem::setResourceLocation, this, _1);
+    m_propertySetters["WindowName"] = boost::bind(&GraphicSystem::setWindowName, this, _1);
+    m_propertySetters["Resolution"] = boost::bind(&GraphicSystem::setResolution, this, _1);
+    m_propertySetters["FullScreen"] = boost::bind(&GraphicSystem::setFullScreen, this, _1);
+    m_propertySetters["VerticalSync"] = boost::bind(&GraphicSystem::setVerticalSync, this, _1);
+    m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);
+
+    m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
+    m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
 }
 
 /**
  * @inheritDoc
  */
 GraphicSystem::~GraphicSystem(void) {
-    // quit listening to the RenderWindow
+// quit listening to the RenderWindow
     if (m_bInitialized) {
-        SDL_Quit();
+        Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
+
+        m_pResourceGroupManager->shutdownAll();
+
+        // Note: it appears that attempting to unload or uninstall the ParticleFX plugin at all with Ogre1.9
+        // will cause heap corruption around the guard pages allocated by the NT memory manager.  Luckily it seems
+        // like this is not leaking appreciable resources as the app will soon exit.  This should eventually be revisited
+        // should a new version of the ParticleFX plugin and/or Ogre become available.
+        // m_pRoot->unloadPlugin("Plugin_ParticleFX");
+        // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
     }
+
+    m_pRoot->shutdown();
+    delete m_pRoot;
 }
 
 /**
  * @inheritDoc
  */
 Error GraphicSystem::initialize(void) {
-    ASSERT(!m_bInitialized);
+   ASSERT(!m_bInitialized);
 
-    if (SDL_Init(SDL_INIT_VIDEO) == -1) {
-        return Errors::Failure;
-    }
+    //
+    // Intialize the render system and render window.
+    //
+#ifdef DEBUG_BUILD
+    m_pRoot->loadPlugin("RenderSystem_Direct3D9_d");
+#else
+    m_pRoot->loadPlugin("RenderSystem_Direct3D9");
+#endif
 
-    screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    if ( screen == NULL ) {
-        return Errors::Failure;
-    }
+    Ogre::RenderSystemList pRenderList;
+    pRenderList = m_pRoot->getAvailableRenderers();
+    m_pRenderSystem = pRenderList.front();
+    m_pRoot->setRenderSystem(m_pRenderSystem);
+    m_pRoot->initialise(false);
 
-    int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-    int initted = IMG_Init(flags);
-    if((initted & flags) != flags) {
-        return Errors::Failure;
-    }
-    
-    m_bInitialized = true; 
+    // Install the particle fx plugin
+#ifdef DEBUG_BUILD
+    //m_pRoot->loadPlugin("Plugin_ParticleFX_d");
+#else
+    //m_pRoot->loadPlugin("Plugin_ParticleFX");
+#endif
+
+    // Note: createRenderWindow() is now called directly so that a render winow is created.  The old calling steps
+    // yielded a render system with no render window until after plugins load which causes assertions for CreateParticleSystem
+    // which requires a render window at the time the billboard renderer loads.
+    m_pRenderWindow = m_pRoot->createRenderWindow(
+        m_RenderWindowDescription.name,
+        m_RenderWindowDescription.width,
+        m_RenderWindowDescription.height,
+        m_RenderWindowDescription.useFullScreen,
+        &m_RenderWindowDescription.miscParams
+    );
+    ASSERT(m_pRenderWindow != NULL);
+
+    // Save the window handle & render window
+    size_t hWnd;
+    m_pRenderWindow->getCustomAttribute("WINDOW", &hWnd);
+    g_Managers.pPlatform->Window().SetHandle(hWnd);
+    g_Managers.pPlatform->Window().SetRenderWindow(m_pRenderWindow);
+
+    // listen to the RenderWindow
+    Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWindow, this);
+
+    m_bInitialized = true;
     return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
+    ASSERT(pRenderWindow == m_pRenderWindow);
+    UNREFERENCED_PARAM(pRenderWindow);
+    g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
+}
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setResourceLocation(ProtoStringList* values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values->begin();
+
+    const std::string name = *value;
+    const std::string locationType = *(++value);
+    const std::string resourceGroup = *(++value);
+    bool recursive = boost::lexical_cast<bool>(*(++value));
+
+    m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
+    m_pResourceGroupManager->initialiseResourceGroup(resourceGroup);
+    m_pResourceGroupManager->loadResourceGroup(resourceGroup);
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setWindowName(ProtoStringList* values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values->begin();
+    m_RenderWindowDescription.name = *value;
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setResolution(ProtoStringList* values) {
+    ProtoStringList::const_iterator value = values->begin();
+
+    u32 width  = boost::lexical_cast<u32>(*value);
+    u32 height = boost::lexical_cast<u32>(*(++value));
+
+    if (m_bInitialized) {
+        m_pRenderWindow->resize(width, height);
+    } else {
+        m_RenderWindowDescription.width = width;
+        m_RenderWindowDescription.height = height;
+    }
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setFullScreen(ProtoStringList* values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values->begin();
+
+    m_RenderWindowDescription.useFullScreen = boost::lexical_cast<bool>(*value);
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setVerticalSync(ProtoStringList* values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values->begin();
+
+    m_RenderWindowDescription.miscParams["verticalSync"] = boost::lexical_cast<bool>(*value);
+}
+
+/**
+ * @inheritDoc
+ */
+void GraphicSystem::setAntiAliasing(ProtoStringList* values) {
+    ASSERT(!m_bInitialized);
+    ProtoStringList::const_iterator value = values->begin();
+
+    m_RenderWindowDescription.miscParams["FSAA"] = *(value++);
+    m_RenderWindowDescription.miscParams["FSAAQuality"] = *value;
 }

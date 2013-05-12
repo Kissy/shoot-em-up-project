@@ -13,11 +13,10 @@
 // responsibility to update it.
 
 #include <boost/bind.hpp>
-#include <SDL_image.h>
-#pragma warning( push )
-#pragma warning( disable : 4244 )
-#include <sprig.h>
-#pragma warning( pop ) 
+#pragma warning( push, 0 )
+#pragma warning( disable : 6326 6385 )
+#include <OgreSceneNode.h>
+#pragma warning( pop )
 
 #include "Interface.h"
 
@@ -32,9 +31,9 @@ const std::string ImageGraphicObject::IMAGE_BASE_PATH = "../../Assets/Media/Grap
  */
 ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, IEntity* entity) 
     : GraphicObject(pSystemScene, entity) {
-    m_position = new SDL_Rect();
+    /*m_position = new SDL_Rect();
     m_position->x = 0;
-    m_position->y = 0;
+    m_position->y = 0;*/
 
     m_propertySetters["Image"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_image, _1);
     m_propertyGetters["Image"] = boost::bind(&IProperty::getString, this, &m_image, _1);
@@ -44,11 +43,11 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, IEntity* enti
  * @inheritDoc
  */
 ImageGraphicObject::~ImageGraphicObject(void) {
-    delete m_position;
+    /*delete m_position;
     if (m_bInitialized) {
         SDL_FreeSurface(m_sourceImage);
         SDL_FreeSurface(m_displayImage);
-    }
+    }*/
 }
 
 /**
@@ -58,8 +57,16 @@ Error ImageGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
     
     std::string image = IMAGE_BASE_PATH + m_image;
-    m_sourceImage = IMG_Load(image.c_str());
-    m_displayImage = SDL_ConvertSurface(m_sourceImage, m_sourceImage->format, m_sourceImage->flags);
+    /*m_sourceImage = IMG_Load(image.c_str());
+    m_displayImage = SDL_ConvertSurface(m_sourceImage, m_sourceImage->format, m_sourceImage->flags);*/
+    
+    Ogre::SceneNode* rootNode = static_cast<GraphicScene*>(m_pSystemScene)->getRootNode();
+    Ogre::SceneManager* sceneManager = static_cast<GraphicScene*>(m_pSystemScene)->getSceneManager();
+    Ogre::SceneNode* myNode = static_cast<Ogre::SceneNode*>(rootNode->createChild());
+    Ogre::BillboardSet* mySet = sceneManager->createBillboardSet("mySet");
+    Ogre::Billboard* myBillboard = mySet->createBillboard(Ogre::Vector3(0, 0, 0));
+    myBillboard->setDimensions(100, 100);
+    myNode->attachObject(mySet);
     
     m_bInitialized = true;
     return Errors::Success;
@@ -73,13 +80,13 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 
     if (ChangeType & System::Changes::Physic::Position) {
         auto position = dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-        m_position->x = (Sint16) position->x - 64;
-        m_position->y = (Sint16) position->y - 64;
+        /*m_position->x = (Sint16) position->x - 64;
+        m_position->y = (Sint16) position->y - 64;*/
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
         const Math::Quaternion* orientation = dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        f32 rotation = Math::Angle::Rad2Deg(orientation->GetAngle());
-        m_displayImage = SPG_Rotate(m_sourceImage, rotation);
+        /*f32 rotation = Math::Angle::Rad2Deg(orientation->GetAngle());
+        m_displayImage = SPG_Rotate(m_sourceImage, rotation);*/
     }
 
     return Errors::Success;
@@ -89,6 +96,6 @@ Error ImageGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
  * @inheritDoc
  */
 void ImageGraphicObject::Update(f32 DeltaTime) {
-    SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
-    SDL_BlitSurface(m_displayImage, NULL, screen, m_position);
+    /*SDL_Surface* screen = static_cast<GraphicSystem*>(GetSystemScene()->GetSystem())->GetScreen();
+    SDL_BlitSurface(m_displayImage, NULL, screen, m_position);*/
 }

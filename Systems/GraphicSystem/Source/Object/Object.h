@@ -28,25 +28,32 @@ class OGREGraphicsScene;
  * @sa  ISystemObject
  */
 class GraphicObject : public ISystemObject {
-    
-    public:
+public:
         
-        /**
-         * @inheritDoc
-         */
-        GraphicObject(ISystemScene* pSystemScene, IEntity* entity);
+    /**
+     * @inheritDoc
+     */
+    GraphicObject(ISystemScene* pSystemScene, IEntity* entity);
 
-        /**
-         * @inheritDoc
-         */
-        virtual ~GraphicObject(void);
+    /**
+     * @inheritDoc
+     */
+    virtual ~GraphicObject(void);
 
-        /**
-         * @inheritDoc
-         */
-        inline System::Type GetSystemType(void) {
-            return System::Types::Graphic;
-        }
+    /**
+     * @inheritDoc
+     */
+    virtual Error initialize(void);
+
+    /**
+     * @inheritDoc
+     */
+    inline System::Type GetSystemType(void) {
+        return System::Types::Graphic;
+    }
+
+protected:
+    Ogre::SceneNode*                    m_pNode;
 
 };
 

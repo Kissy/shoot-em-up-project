@@ -57,7 +57,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NETWORKSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

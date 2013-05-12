@@ -14,61 +14,54 @@
 
 #pragma once
 
+#pragma warning( push, 0 )
+// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
+#include "Ogre.h"
+#pragma warning( pop )
+
 #include "System/ISystemScene.h"
 
 class GraphicScene;
-struct SDL_Surface;
 
 /**
  * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
  * definition of the class and its functions.
- * 
+ *
  * @sa  ISystemTask
  */
 class GraphicTask : public ISystemTask {
+public:
 
-    public:
-        
-        /**
-         * @inheritDoc
-         */
-        GraphicTask(ISystemScene* pScene);
+    /**
+     * @inheritDoc
+     */
+    GraphicTask(ISystemScene* pScene);
 
-        /**
-         * @inheritDoc
-         */
-        ~GraphicTask(void);
+    /**
+     * @inheritDoc
+     */
+    ~GraphicTask(void);
 
-        /**
-         * @inheritDoc
-         */
-        void Update(f32 DeltaTime);
-        
-        /**
-         * @inheritDoc
-         */
-        bool IsPrimaryThreadOnly(void) {
-            return false;
-        };
-        
-        /**
-         * @inheritDoc
-         */
-        System::Type GetSystemType(void) {
-            return System::Types::Graphic;
-        }
+    /**
+     * @inheritDoc
+     */
+    void Update(f32 DeltaTime);
 
-    private:
+    /**
+     * @inheritDoc
+     */
+    bool IsPrimaryThreadOnly(void) {
+        return false;
+    };
 
-        /**
-         * Lock the screen
-         */
-        bool lockScreen(SDL_Surface* screen);
+    /**
+     * @inheritDoc
+     */
+    System::Type GetSystemType(void) {
+        return System::Types::Graphic;
+    }
 
-        /**
-         * Unlock the screen
-         */
-        void unlockScreen(SDL_Surface* screen);
+private:
+    Ogre::Root*                         m_pRoot;
 
 };
-

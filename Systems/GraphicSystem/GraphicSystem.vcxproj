@@ -56,15 +56,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRAPHICSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\SDL\include;C:\Program Files (x86)\SDK\SDL_image\include;C:\Program Files (x86)\SDK\SPriG\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;D:\My Documents\SDK\OgreSDK\include\OGRE;D:\My Documents\SDK\libRocket\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>GraphicSystem.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;C:\Program Files (x86)\SDK\SDL\lib\x86;C:\Program Files (x86)\SDK\SDL_image\lib;C:\Program Files (x86)\SDK\SPriG\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libprotobuf.lib;SDL.lib;SDL_image.lib;sprig.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;D:\My Documents\SDK\OgreSDK\lib\Debug;D:\My Documents\SDK\libRocket\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libprotobuf.lib;OgreMain_d.lib;RocketCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -96,14 +96,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GraphicSystem.cpp" />
+    <ClCompile Include="Source\Object\CameraGraphicObject.cpp" />
     <ClCompile Include="Source\Object\ImageObject.cpp" />
+    <ClCompile Include="Source\Object\LightGraphicObject.cpp" />
+    <ClCompile Include="Source\Object\MeshGraphicObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Object\CameraGraphicObject.h" />
     <ClInclude Include="Source\Object\ImageObject.h" />
+    <ClInclude Include="Source\Object\LightGraphicObject.h" />
+    <ClInclude Include="Source\Object\MeshGraphicObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\System.h" />

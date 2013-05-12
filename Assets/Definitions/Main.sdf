@@ -1,5 +1,6 @@
 <Scene Name="Main">
 	<Properties SystemType="Graphic">
+        <Property Name="AmbientLight" R="0.8" G="0.8" B="0.8"/>
 	</Properties>
 	<Properties SystemType="Input">
 	</Properties>
@@ -8,6 +9,23 @@
 	<Properties SystemType="Physic">
 	</Properties>
 	<Objects>
+		<Object Name="Sun">
+			<Properties SystemType="Graphic" ObjectType="Light">
+				<Property Name="Type" Value1="Point"/>
+				<Property Name="Position" Value1="-10359.527" Value2="25641.795" Value3="60803.297"/>
+				<Property Name="Diffuse" R="0.862745" G="0.768628" B="0.607843"/>
+				<Property Name="Specular" R="0.862745" G="0.768628" B="0.607843"/>
+			</Properties>
+		</Object>
+		<Object Name="MainCamera">
+			<Properties SystemType="Graphic" ObjectType="Camera">
+				<Property Name="FOVy" Value1="0.523598"/>
+				<Property Name="ClipDistances" Value1="5.0" Value2="120000.0"/>
+			</Properties>
+			<Properties SystemType="Physic" ObjectType="Movable">
+				<Property Name="Position" Value1="10" Value2="5" Value3="0" />
+			</Properties>
+		</Object>
 		<Object Name="Connect1">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="F1" />
@@ -40,17 +58,26 @@
 				<Property Name="Username" Value1="4" />
 			</Properties>
 		</Object>
-		<!--<Object Name="Spaceship">
-			<Properties SystemType="Graphic" ObjectType="Image">
+		
+		<Object Name="Player">
+			<Properties SystemType="Graphic" ObjectType="Mesh">
+				<Property Name="Mesh" Value1="bloodelffemale.mesh"/>
+				<!--<Property Name="Skeleton" Value1="characters/bloodelffemale.skeleton"/>-->
+				<!--<Property Name="CastShadows" Value1="0"/>
+				<Property Name="Animation" Value1="idle" Value2="Idle"/>
+				<Property Name="Animation" Value1="run" Value2="Running"/>-->
 			</Properties>
 			<Properties SystemType="Input" ObjectType="Player">
 			</Properties>
 			<Properties SystemType="Network" ObjectType="Player">
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Movable">
-				<Property Name="Position" Value1="200" Value2="200" Value3="0"/>
+				<Property Name="Position" Value1="510" Value2="10" Value3="-490"/>
+				<!--<Property Name="CapsuleA" Value1="0.0" Value2="0.35" Value3="0.0"/>
+				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
+				<Property Name="Radius" Value1="0.3"/>-->
 			</Properties>
-		</Object>-->
+		</Object>
 	</Objects>
 	<Links>
 		<!--<Link Subject="Player" Observer="MainCamera" SubjectSystemType="Physic" ObserverSystemType="Graphic"/>-->

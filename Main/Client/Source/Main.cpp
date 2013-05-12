@@ -40,7 +40,7 @@ _tWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR pszCmdLine, int 
         switch (*argv[iArg]) {
             case '-':
             case '/': {
-                if (0 == _wcsicmp(argv[iArg] + 1, L"logging"))     {
+                if (0 == _wcsicmp(argv[iArg] + 1, L"logging")) {
                     bLogging = true;
                 }
             }

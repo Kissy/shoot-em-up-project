@@ -12,7 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <SDL.h>
+#pragma warning( push, 0 )
+// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
+#include "Ogre.h"
+#pragma warning( pop )
 
 #include "Interface.h"
 
@@ -31,7 +34,10 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 /**
  * @inheritDoc
  */
-GraphicTask::GraphicTask(ISystemScene* pScene) : ISystemTask((ISystemScene*)pScene) {
+GraphicTask::GraphicTask(ISystemScene* pScene) 
+    : ISystemTask((ISystemScene*)pScene) {
+    m_pRoot = reinterpret_cast<GraphicSystem*>(pScene->GetSystem())->getRoot(); 
+    ASSERT(m_pRoot != NULL);
 }
 
 /**
@@ -45,36 +51,21 @@ GraphicTask::~GraphicTask(void) {
  * @inheritDoc
  */
 void GraphicTask::Update(f32 DeltaTime) {
-    SDL_Surface* screen = static_cast<GraphicSystem*> (m_pSystemScene->GetSystem())->GetScreen();
-    lockScreen(screen);
-
+    // Since rendering is a limiting serial stage in some (if not most) of the frames,
+    // we do not want it to be preempted. So temporarily boost up its thread priority.
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    //
+    // Render the scene
+    //
+    __ITT_EVENT_START(g_tpeRendering, PROFILE_RENDER);
+    m_pRoot->renderOneFrame();
+    __ITT_EVENT_END(g_tpeRendering, PROFILE_RENDER);
+    // Since it's the pool thread, we know that normally it runs at normal priority.
+    // In more general case we would have needed to remember the initial priority
+    // before bringing it up.
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
     //
     // Update objects for next frame
     //
     m_pSystemScene->Update(DeltaTime);
-    
-    unlockScreen(screen);
-    SDL_UpdateRect(screen, 0, 0, 800, 600);
-}
-
-/**
- * @inheritDoc
- */
-bool GraphicTask::lockScreen(SDL_Surface* screen) {
-    if (SDL_MUSTLOCK(screen)) {
-        if (SDL_LockSurface(screen) < 0) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-/**
- * @inheritDoc
- */
-void GraphicTask::unlockScreen(SDL_Surface* screen) {
-    if (SDL_MUSTLOCK(screen)) {
-        SDL_UnlockSurface(screen);
-    }
 }

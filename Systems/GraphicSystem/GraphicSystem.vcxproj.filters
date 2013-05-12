@@ -44,6 +44,15 @@
     <ClCompile Include="Source\Object\ImageObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\CameraGraphicObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\LightGraphicObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\MeshGraphicObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Task.h">
@@ -59,6 +68,15 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\ImageObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\CameraGraphicObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\LightGraphicObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\MeshGraphicObject.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

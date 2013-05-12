@@ -70,9 +70,9 @@ public:
     static const std::string IMAGE_BASE_PATH;
 
     std::string                         m_image;
-    SDL_Surface*                        m_sourceImage;
+    /*SDL_Surface*                        m_sourceImage;
     SDL_Surface*                        m_displayImage;
-    SDL_Rect*                           m_position;
+    SDL_Rect*                           m_position;*/
 
 };
 
