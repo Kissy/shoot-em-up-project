@@ -11,7 +11,7 @@
 		<System Type="Graphic">
 			<Properties>
                 <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic" Value2="FileSystem" Value3="Default" Value4="0"/>
-                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/bloodelffemale" Value2="FileSystem" Value3="BloodElfFemale" Value4="0"/>
+                <Property Name="ResourceLocation" Value1="../../Assets/Media/Graphic/SpaceShip" Value2="FileSystem" Value3="SpaceShip" Value4="1"/>
 				<Property Name="WindowName" Value1="Hellion Game"/>
 				<Property Name="Resolution" Value1="1024" Value2="768"/>
 				<Property Name="ShadowTexture" Value1="1" Value2="1024"/>

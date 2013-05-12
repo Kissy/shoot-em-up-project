@@ -74,26 +74,26 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     if (m_upInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.y += m_upInputAction->isActive() ? -1 : 1;
-    }    
+    }
     if (m_rightInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.x += m_rightInputAction->isActive() ? 1 : -1;
-    }    
+    }
     if (m_downInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.y += m_downInputAction->isActive() ? 1 : -1;
-    }    
+    }
     if (m_leftInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
     }
     if (m_rightRotateInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
-        m_velocity.w += m_rightRotateInputAction->isActive() ? 1 : -1;
+        m_velocity.w += m_rightRotateInputAction->isActive() ? -1 : 1;
     }
     if (m_leftRotateInputAction->hasChanged()) {
         mModified |= System::Changes::Physic::Velocity;
-        m_velocity.w += m_leftRotateInputAction->isActive() ? -1 : 1;
+        m_velocity.w += m_leftRotateInputAction->isActive() ? 1 : -1;
     }
     
     if (mModified != 0) {

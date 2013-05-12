@@ -57,7 +57,6 @@ MeshGraphicObject::MeshGraphicObject(ISystemScene* pSystemScene, IEntity* entity
  */
 MeshGraphicObject::~MeshGraphicObject(void) {
     if (m_pEntity != NULL) {
-        m_pNode->detachObject(m_pEntity);
         POGRESCENEMGR->destroyEntity(m_pEntity);
     }
 

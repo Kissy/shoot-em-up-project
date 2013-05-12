@@ -19,7 +19,7 @@
 #include "Generic/IEntity.h"
 #include "Object/MovablePhysicObject.h"
 
-const f32 MovablePhysicObject::m_speed_multiplier = 20;
+const f32 MovablePhysicObject::m_speed_multiplier = 40;
 
 /**
  * @inheritDoc
@@ -75,7 +75,7 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     if (m_velocity != Math::Vector4::Zero) {
         // Rotation
         if (m_velocity.w != 0) {
-            m_rotation += m_velocity.w * m_speed_multiplier * DeltaTime * 20;
+            m_rotation += m_velocity.w * m_speed_multiplier * DeltaTime * 10;
             m_rotation = fmod(m_rotation, 360.0f);
             if(m_rotation < 0) {
                 m_rotation += 360.0f;

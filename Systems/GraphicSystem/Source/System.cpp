@@ -126,6 +126,12 @@ Error GraphicSystem::initialize(void) {
     // listen to the RenderWindow
     Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWindow, this);
 
+    // Load materials
+    // TODO make a way to use the property setters to set this
+    m_pResourceGroupManager->addResourceLocation("../../Assets/Media/Graphic", "FileSystem", "Default", true);
+    m_pResourceGroupManager->initialiseResourceGroup("Default");
+    m_pResourceGroupManager->loadResourceGroup("Default");
+
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -149,10 +155,10 @@ void GraphicSystem::setResourceLocation(ProtoStringList* values) {
     const std::string locationType = *(++value);
     const std::string resourceGroup = *(++value);
     bool recursive = boost::lexical_cast<bool>(*(++value));
-
-    m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
+    
+    /*m_pResourceGroupManager->addResourceLocation(name, locationType, resourceGroup, recursive);
     m_pResourceGroupManager->initialiseResourceGroup(resourceGroup);
-    m_pResourceGroupManager->loadResourceGroup(resourceGroup);
+    m_pResourceGroupManager->loadResourceGroup(resourceGroup);*/
 }
 
 /**
