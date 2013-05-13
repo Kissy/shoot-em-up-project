@@ -27,8 +27,8 @@ public:
     /**
      * Default constructor.
      */
-    IMoveObject() {
-        m_velocity = Math::Vector4::Zero;
+    IMoveObject()
+        : m_velocity(Math::Vector4::Zero) {
     }
 
     /**

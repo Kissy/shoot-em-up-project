@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <queue>
+
 #include "SpinMutex.h"
 
 /// <summary>

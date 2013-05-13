@@ -14,11 +14,10 @@
 
 #pragma once
 
-#include <queue>
+#include <list>
 
 #include "Proto/Common/Object.pb.h"
 
-#include "DataTypes.h"
 #include "System/Definitions.h"
 
 /**
@@ -29,19 +28,42 @@ class ISceneObject {
 public:
 
     typedef std::list<ObjectProto> ObjectProtoQueue;
+    
+    /**
+     * Default constructor.
+     */
+    ISceneObject();
+
+    /**
+     * Destructor.
+     */
+    virtual ~ISceneObject();
+    
+    /**
+     * Resets the create & delete object lists.
+     */
+    void resetObjectQueues(void);
 
     /**
      * Gets create objects.
      *
      * @return  null if it fails, else the create objects.
      */
-    virtual const ObjectProtoQueue* getCreateObjects(void) = 0;
+    inline const ObjectProtoQueue* getCreateObjects(void) {
+        return m_createObjectQueue;
+    }
 
     /**
      * Gets destroy objects.
      *
      * @return  null if it fails, else the destroy objects.
      */
-    virtual const ObjectProtoQueue* getDeleteObjects(void) = 0;
+    inline const ObjectProtoQueue* getDeleteObjects(void) {
+        return m_deleteObjectQueue;
+    }
+    
+protected:
+    ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
+    ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;
 
 };

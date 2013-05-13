@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Generic">
       <UniqueIdentifier>{16ed69be-bf7a-4b59-b71f-5e26155a928d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{21ad5e37-2feb-424f-a559-473192eaa1aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Source\Generic\IEntity.cpp">
       <Filter>Source Files\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object\ISceneObject.cpp">
+      <Filter>Source Files\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

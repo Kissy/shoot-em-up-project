@@ -17,9 +17,11 @@
 #include <OISB.h>
 
 #include "System.h"
+#include "Object/ISceneObject.h"
 #include "Object/Object.h"
 
 class ISystemScene;
+struct KeyboardButtonData;
 
 /**
  * Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
@@ -27,7 +29,7 @@ class ISystemScene;
  *
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IMoveObject {
+class PlayerInputObject : public InputObject, public IMoveObject, public ISceneObject {
 public:
 
     /**
@@ -49,7 +51,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Velocity;
+        return System::Changes::Physic::Velocity | System::Changes::Generic::CreateObject | System::Changes::Input::Keyboard;
     };
 
     /**
@@ -69,6 +71,18 @@ public:
      */
     void Update(f32 DeltaTime);
 
+    /**
+     * @inheritDoc
+     */
+    inline const KeyboardButtonData* getKeyboardButtonData(void) {
+        return m_shotKeyboardButtonData;
+    }
+
+    /**
+     * Create a new shot and queue it.
+     */
+    void createShot(void);
+
 private:
     OISB::TriggerAction*    m_upInputAction;
     OISB::TriggerAction*    m_rightInputAction;
@@ -76,4 +90,8 @@ private:
     OISB::TriggerAction*    m_leftInputAction;
     OISB::TriggerAction*    m_rightRotateInputAction;
     OISB::TriggerAction*    m_leftRotateInputAction;
+    OISB::TriggerAction*    m_shotInputAction;
+
+    KeyboardButtonData*     m_shotKeyboardButtonData;
+
 };

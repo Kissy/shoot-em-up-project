@@ -112,6 +112,7 @@
     <ClCompile Include="Source\Generic\IEntity.cpp" />
     <ClCompile Include="Source\Generic\IProperty.cpp" />
     <ClCompile Include="Source\Generic\ISubject.cpp" />
+    <ClCompile Include="Source\Object\ISceneObject.cpp" />
     <ClCompile Include="Source\System\ISystem.cpp" />
     <ClCompile Include="Source\System\ISystemObject.cpp" />
     <ClCompile Include="Source\System\ISystemScene.cpp" />

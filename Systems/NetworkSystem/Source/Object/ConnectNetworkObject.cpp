@@ -52,7 +52,7 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Input::Keyboard) {
-        const IKeyboardObject::KeyboardButtonData* keyboardButtonData = dynamic_cast<IKeyboardObject*>(pSubject)->getKeyboardButtonData();
+        const KeyboardButtonData* keyboardButtonData = dynamic_cast<IKeyboardObject*>(pSubject)->getKeyboardButtonData();
         if (keyboardButtonData->down) {
             DownstreamMessageProto downstreamMessageProto;
             downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);

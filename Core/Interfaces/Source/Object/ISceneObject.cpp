@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,30 +12,30 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#pragma once
+#include <list>
 
-#include "DataTypes.h"
-#include "MathUtils.h"
+#include "Object/ISceneObject.h"
 
-struct KeyboardButtonData {
-    int type;
-    bool down;
-};
+/**
+ * @inheritDoc
+ */
+ISceneObject::ISceneObject(void) 
+    : m_createObjectQueue(new std::list<ObjectProto>())
+    , m_deleteObjectQueue(new std::list<ObjectProto>()) {
+}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   <c>IKeyboardObject</c> is an interface for providing Keyboard related functionality. Any
-///    objects that modify or provide Keyboard data are required to implement this class.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-class IKeyboardObject {
-public:
+/**
+ * @inheritDoc
+ */
+ISceneObject::~ISceneObject(void) {
+    delete m_createObjectQueue;
+    delete m_deleteObjectQueue;
+}
 
-    /**
-     * Gets the keyboard button data.
-     *
-     * @return  A constant to the keyboard button data.
-     */
-    virtual const KeyboardButtonData* getKeyboardButtonData(void) = 0;
-
-};
+/**
+ * @inheritDoc
+ */
+void ISceneObject::resetObjectQueues(void) {
+    m_createObjectQueue->clear();
+    m_deleteObjectQueue->clear();
+}

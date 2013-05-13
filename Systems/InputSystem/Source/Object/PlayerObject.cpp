@@ -12,18 +12,22 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+
 #include "Interface.h"
 
 #include "Scene.h"
 #include "Object.h"
 #include "Object/PlayerObject.h"
+#include "Object/IKeyboardObject.h"
 
 /**
  * @inheritDoc
  */
 PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity) 
-    : InputObject(pSystemScene, entity) {
+    : InputObject(pSystemScene, entity)
+    , ISceneObject() {
     
+    m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = reinterpret_cast<InputScene*>(pSystemScene);
     m_upInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Up");
     m_rightInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_R");
@@ -31,6 +35,7 @@ PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity
     m_leftInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_E");
     m_rightRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Right");
     m_leftRotateInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Left");
+    m_shotInputAction = inputScene->getDefaultSchema()->createAction<OISB::TriggerAction>(entity->getName() + "_Shot");
 }
 
 /**
@@ -52,6 +57,7 @@ Error PlayerInputObject::initialize(void) {
     m_leftInputAction->bind("Keyboard/E");
     m_rightRotateInputAction->bind("Keyboard/DROITE");
     m_leftRotateInputAction->bind("Keyboard/GAUCHE");
+    m_shotInputAction->bind("Keyboard/ESPACE");
 
     m_bInitialized = true;
     return Errors::Success;
@@ -95,8 +101,19 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         mModified |= System::Changes::Physic::Velocity;
         m_velocity.w += m_leftRotateInputAction->isActive() ? 1 : -1;
     }
+    if (m_shotInputAction->hasChanged()) {
+        
+        mModified |= System::Changes::Input::Keyboard;
+        m_shotKeyboardButtonData->down = m_shotInputAction->isActive();
+    }
     
     if (mModified != 0) {
         PostChanges(mModified);
     }
+}
+
+void PlayerInputObject::createShot(void) {
+    ObjectProto shotProto;
+    shotProto.set_name("Test");
+    m_createObjectQueue->push_back(shotProto);
 }
