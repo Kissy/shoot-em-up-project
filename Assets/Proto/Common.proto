@@ -1,0 +1,34 @@
+option java_package = "fr.kissy.hellion.proto";
+option java_outer_classname = "Common";
+option java_generic_services = false;
+
+enum SystemType {
+    None = 0;
+    Generic = 1;
+    AI = 2;
+    Animation = 3;
+    Audio = 4;
+    Graphic = 5;
+    Gui = 6;
+    Input = 7;
+    Network = 8; 
+    Physic = 9;
+}
+    
+message Property {
+    required string name = 1;
+    repeated bytes value = 2;
+}
+message SystemObject {
+    required SystemType systemType = 1;
+    repeated Property properties = 2;
+    optional string type = 3;
+}
+message Object {
+    required string name = 1;
+    repeated SystemObject systemObjects = 2;
+}
+message System {
+    required SystemType type = 1;
+    repeated Property properties = 2;
+}

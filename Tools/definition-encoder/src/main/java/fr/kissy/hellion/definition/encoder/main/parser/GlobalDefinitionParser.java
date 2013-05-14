@@ -2,8 +2,8 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.proto.common.SystemDto;
-import fr.kissy.hellion.proto.definition.GlobalDefinitionDto;
+import fr.kissy.hellion.proto.Common;
+import fr.kissy.hellion.proto.Definition;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class GlobalDefinitionParser extends AbstractParser {
     
-    private List<SystemDto.SystemProto.Type> systems = new ArrayList<SystemDto.SystemProto.Type>();
+    private List<Common.SystemType> systems = new ArrayList<>();
 
     /**
      * @inheritDoc
@@ -36,7 +36,7 @@ public class GlobalDefinitionParser extends AbstractParser {
         try {
             System.out.println("Parsing GDF File " + xmlFile.getPath());
 
-            builder = GlobalDefinitionDto.GlobalDefinitionProto.newBuilder();
+            builder = Definition.Application.newBuilder();
 
             Element documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .parse(xmlFile).getDocumentElement();
@@ -95,11 +95,11 @@ public class GlobalDefinitionParser extends AbstractParser {
 
         NodeList systemList = systemsElement.getElementsByTagName("System");
         for (int i = 0; i < systemList.getLength(); i++) {
-            SystemDto.SystemProto.Builder systemBuilder = SystemDto.SystemProto.newBuilder();
+            Common.System.Builder systemBuilder = Common.System.newBuilder();
             Element systemElement = (Element) systemList.item(i);
 
             String type = ParseUtils.safeGetAttribute(systemElement, "Type");
-            systemBuilder.setType(SystemDto.SystemProto.Type.valueOf(type));
+            systemBuilder.setType(Common.SystemType.valueOf(type));
 
             NodeList properties = systemElement.getElementsByTagName("Property");
             for (int j = 0; j < properties.getLength(); j++) {
@@ -137,8 +137,8 @@ public class GlobalDefinitionParser extends AbstractParser {
      *
      * @return The GDF Builder.
      */
-    public GlobalDefinitionDto.GlobalDefinitionProto.Builder getGlobalDefinitionBuilder() {
-        return (GlobalDefinitionDto.GlobalDefinitionProto.Builder) builder;
+    public Definition.Application.Builder getGlobalDefinitionBuilder() {
+        return (Definition.Application.Builder) builder;
     }
 
     /**
@@ -146,7 +146,7 @@ public class GlobalDefinitionParser extends AbstractParser {
      *
      * @return The system list.
      */
-    public List<SystemDto.SystemProto.Type> getSystems() {
+    public List<Common.SystemType> getSystems() {
         return systems;
     }
 }

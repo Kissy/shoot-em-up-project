@@ -3,10 +3,8 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.proto.common.ObjectDto;
-import fr.kissy.hellion.proto.common.PropertyDto;
-import fr.kissy.hellion.proto.common.SystemDto;
-import fr.kissy.hellion.proto.definition.SceneDefinitionDto;
+import fr.kissy.hellion.proto.Common;
+import fr.kissy.hellion.proto.Definition;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,13 +25,13 @@ import java.util.Map;
 public class SceneDefinitionParser extends AbstractParser {
     
     private boolean include = false;
-    private List<SystemDto.SystemProto.Type> systems;
-    private List<String> objects = new ArrayList<String>();
+    private List<Common.SystemType> systems;
+    private List<String> objects = new ArrayList<>();
 
     /**
      * @inheritDoc
      */
-    public SceneDefinitionParser(String xmlPath, String outputPath, List<SystemDto.SystemProto.Type> systems) throws XMLParseException {
+    public SceneDefinitionParser(String xmlPath, String outputPath, List<Common.SystemType> systems) throws XMLParseException {
         super(xmlPath, outputPath);
         this.systems = systems;
     }
@@ -41,7 +39,7 @@ public class SceneDefinitionParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public SceneDefinitionParser(String xmlPath, String outputPath, List<SystemDto.SystemProto.Type> systems, boolean include) throws XMLParseException {
+    public SceneDefinitionParser(String xmlPath, String outputPath, List<Common.SystemType> systems, boolean include) throws XMLParseException {
         this(xmlPath, outputPath, systems);
         this.include = include;
     }
@@ -54,7 +52,7 @@ public class SceneDefinitionParser extends AbstractParser {
         try {
             System.out.println("Parsing SDF File " + xmlFile.getPath());
 
-            builder = SceneDefinitionDto.SceneDefinitionProto.newBuilder();
+            builder = Definition.Scene.newBuilder();
 
             Element documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile).getDocumentElement();
             documentElement.normalize();
@@ -103,7 +101,7 @@ public class SceneDefinitionParser extends AbstractParser {
     private void parseInclude(Element node) throws XMLParseException {
         SceneDefinitionParser includeParser = new SceneDefinitionParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
                 outputFile.getAbsolutePath(), systems, true);
-        SceneDefinitionDto.SceneDefinitionProto.Builder builder = (SceneDefinitionDto.SceneDefinitionProto.Builder) includeParser.getBuilder();
+        Definition.Scene.Builder builder = (Definition.Scene.Builder) includeParser.getBuilder();
         // TODO make system properties update correctly
         getSceneDefinitionBuilder().addAllObjects(builder.getObjectsList());
         getSceneDefinitionBuilder().addAllLinks(builder.getLinksList());
@@ -130,7 +128,7 @@ public class SceneDefinitionParser extends AbstractParser {
     private void parseSystemProperties(Element propertiesElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
 
-        SystemDto.SystemProto.Builder systems = ParseUtils.parseSystemProperties(propertiesElement);
+        Common.System.Builder systems = ParseUtils.parseSystemProperties(propertiesElement);
         AssertUtils.makeTest(this.systems.contains(systems.getType()), systems.getType() + " is not a known systemType");
 
         getSceneDefinitionBuilder().addSystems(systems);
@@ -146,12 +144,12 @@ public class SceneDefinitionParser extends AbstractParser {
         System.out.println("\t- Parsing Properties");
 
         // Store object properties (used because ODF / Object properties can be the same)
-        Map<String, ObjectDto.ObjectProto.SystemObjectProto> propertiesMap = new HashMap<String, ObjectDto.ObjectProto.SystemObjectProto>();
+        Map<String, Common.SystemObject> propertiesMap = new HashMap<>();
 
         // Object properties
         NodeList objects = objectsElement.getElementsByTagName("Object");
         for (int i = 0; i < objects.getLength(); i++) {
-            ObjectDto.ObjectProto.Builder objectBuilder = ObjectDto.ObjectProto.newBuilder();
+            Common.Object.Builder objectBuilder = Common.Object.newBuilder();
             Element objectElement = (Element) objects.item(i);
             
             // Object name
@@ -167,7 +165,7 @@ public class SceneDefinitionParser extends AbstractParser {
                 } catch (IOException ignored) {}
                 
                 // Fill the properties map
-                for (ObjectDto.ObjectProto.SystemObjectProto properties : objectBuilder.getSystemObjectsList()) {
+                for (Common.SystemObject properties : objectBuilder.getSystemObjectsList()) {
                     propertiesMap.put(properties.getType(), properties);
                 }
             }
@@ -175,10 +173,10 @@ public class SceneDefinitionParser extends AbstractParser {
             // Object properties
             NodeList properties = objectElement.getElementsByTagName("Properties");
             for (int j = 0; j < properties.getLength(); j++) {
-                ObjectDto.ObjectProto.SystemObjectProto.Builder propertiesBuilder = ParseUtils.parseObjectProperties((Element) properties.item(j));
+                Common.SystemObject.Builder propertiesBuilder = ParseUtils.parseObjectProperties((Element) properties.item(j));
                 if (propertiesMap.containsKey(propertiesBuilder.getType())) {
                     List<String> currentSystemProperties = getCurrentSystemProperties(propertiesBuilder.getPropertiesList());
-                    for (PropertyDto.PropertyProto property : propertiesBuilder.getPropertiesList()) {
+                    for (Common.Property property : propertiesBuilder.getPropertiesList()) {
                         if (currentSystemProperties.contains(property.getName())) {
                             updateProperty(propertiesBuilder, property);
                         } else {
@@ -203,10 +201,10 @@ public class SceneDefinitionParser extends AbstractParser {
      * @param propertiesBuilder The property builder.
      * @param property The property.
      */
-    private void updateProperty(ObjectDto.ObjectProto.SystemObjectProto.Builder propertiesBuilder, PropertyDto.PropertyProto property) {
+    private void updateProperty(Common.SystemObject.Builder propertiesBuilder, Common.Property property) {
         for (int i = 0; i < propertiesBuilder.getPropertiesCount(); i++) {
             if (property.getName().equals(propertiesBuilder.getProperties(i).getName())) {
-                PropertyDto.PropertyProto.Builder propertyBuilder = propertiesBuilder.getProperties(i).toBuilder();
+                Common.Property.Builder propertyBuilder = propertiesBuilder.getProperties(i).toBuilder();
                 propertyBuilder.clearValue();
                 for (ByteString value : property.getValueList()) {
                     propertyBuilder.addValue(value);
@@ -222,9 +220,9 @@ public class SceneDefinitionParser extends AbstractParser {
      * @param propertiesList The list of Property.
      * @return The list of Property names.
      */
-    private List<String> getCurrentSystemProperties(List<PropertyDto.PropertyProto> propertiesList) {
-        List<String> names = new ArrayList<String>();
-        for (PropertyDto.PropertyProto property : propertiesList) {
+    private List<String> getCurrentSystemProperties(List<Common.Property> propertiesList) {
+        List<String> names = new ArrayList<>();
+        for (Common.Property property : propertiesList) {
             names.add(property.getName());
         }
         return names;
@@ -242,15 +240,15 @@ public class SceneDefinitionParser extends AbstractParser {
         // Object properties
         NodeList links = linksElement.getElementsByTagName("Link");
         for (int i = 0; i < links.getLength(); i++) {
-            SceneDefinitionDto.SceneDefinitionProto.LinkProto.Builder linkBuilder = SceneDefinitionDto.SceneDefinitionProto.LinkProto.newBuilder();
+            Definition.Link.Builder linkBuilder = Definition.Link.newBuilder();
             Element linkElement = (Element) links.item(i);
             
             linkBuilder.setSubject(ParseUtils.safeGetAttribute(linkElement, "Subject"));
             linkBuilder.setObserver(ParseUtils.safeGetAttribute(linkElement, "Observer"));
             String subjectSystemType = ParseUtils.safeGetAttribute(linkElement, "SubjectSystem");
-            linkBuilder.setSubjectSystemType(SystemDto.SystemProto.Type.valueOf(subjectSystemType));
+            linkBuilder.setSubjectSystemType(Common.SystemType.valueOf(subjectSystemType));
             String observerSystemType = ParseUtils.safeGetAttribute(linkElement, "ObserverSystem");
-            linkBuilder.setObserverSystemType(SystemDto.SystemProto.Type.valueOf(observerSystemType));
+            linkBuilder.setObserverSystemType(Common.SystemType.valueOf(observerSystemType));
 
             AssertUtils.makeTest(objects.contains(linkBuilder.getSubject()),
                     linkBuilder.getSubject() + " is not a known object");
@@ -270,7 +268,7 @@ public class SceneDefinitionParser extends AbstractParser {
      *
      * @return The SDF Builder.
      */
-    public SceneDefinitionDto.SceneDefinitionProto.Builder getSceneDefinitionBuilder() {
-        return (SceneDefinitionDto.SceneDefinitionProto.Builder) builder;
+    public Definition.Scene.Builder getSceneDefinitionBuilder() {
+        return (Definition.Scene.Builder) builder;
     }
 }

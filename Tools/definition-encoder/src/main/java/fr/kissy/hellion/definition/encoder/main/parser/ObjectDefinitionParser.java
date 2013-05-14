@@ -2,7 +2,7 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
-import fr.kissy.hellion.proto.common.ObjectDto;
+import fr.kissy.hellion.proto.Common;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -21,7 +21,7 @@ public class ObjectDefinitionParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public ObjectDefinitionParser(String xmlPath, String outputPath, ObjectDto.ObjectProto.Builder builder) throws XMLParseException {
+    public ObjectDefinitionParser(String xmlPath, String outputPath, Common.Object.Builder builder) throws XMLParseException {
         super(xmlPath, outputPath);
         this.builder = builder;
     }
@@ -78,8 +78,8 @@ public class ObjectDefinitionParser extends AbstractParser {
      *
      * @return The ODF Builder.
      */
-    public ObjectDto.ObjectProto.Builder getObjectBuilder() {
-        return (ObjectDto.ObjectProto.Builder) builder;
+    public Common.Object.Builder getObjectBuilder() {
+        return (Common.Object.Builder) builder;
     }
 
     /**

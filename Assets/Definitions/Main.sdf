@@ -26,7 +26,8 @@
 				<Property Name="Position" Value1="0" Value2="0" Value3="100" />
 			</Properties>
 		</Object>
-		<Object Name="Connect1">
+		<Object Name="Connect"></Object>
+		<Object Name="Connect1" parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F1" />
 			</Properties>
@@ -34,7 +35,7 @@
 				<Property Name="Username" Value1="1" />
 			</Properties>
 		</Object>
-		<Object Name="Connect2">
+		<Object Name="Connect2" parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F2" />
 			</Properties>
@@ -42,7 +43,7 @@
 				<Property Name="Username" Value1="2" />
 			</Properties>
 		</Object>
-		<Object Name="Connect3">
+		<Object Name="Connect3" parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F3" />
 			</Properties>
@@ -50,7 +51,7 @@
 				<Property Name="Username" Value1="3" />
 			</Properties>
 		</Object>
-		<Object Name="Connect4">
+		<Object Name="Connect4" parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F4" />
 			</Properties>
