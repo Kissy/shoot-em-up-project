@@ -74,20 +74,6 @@ public:
     };
 
     /**
-     * @inheritDoc
-     */
-    inline ObjectProtoQueue* getCreateObjects(void) {
-        return m_createObjectQueue;
-    };
-    
-    /**
-     * @inheritDoc
-     */
-    inline ObjectProtoQueue* getDeleteObjects(void) {
-        return m_deleteObjectQueue;
-    };
-
-    /**
      * Queue create objects.
      *
      * @param   objectProtoList List of object prototypes.
@@ -107,9 +93,5 @@ public:
      * @param   objectProtoList List of object prototypes.
      */
     void updateObjects(ProtoObjectList objectProtoList);
-
-protected:
-    ISceneObject::ObjectProtoQueue*          m_createObjectQueue;
-    ISceneObject::ObjectProtoQueue*          m_deleteObjectQueue;
 
 };

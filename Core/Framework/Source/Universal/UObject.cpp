@@ -68,8 +68,8 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     // Register each object with scenes that care about the object's changes.
     //
     UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
-        ISystemScene* pScene = it->second;
+    for (auto it : pScenes) {
+        ISystemScene* pScene = it.second;
 
         if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
             m_pObjectCCM->Register(pSystemObject, pScene->GetDesiredSystemChanges(), pScene);
@@ -80,9 +80,8 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     // Register each of the systems with each other.
     //
     System::Changes::BitMask Changes = pSystemObject->GetDesiredSystemChanges();
-    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
-            it != m_ObjectExtensions.end(); it++) {
-        ISystemObject* pObj = it->second;
+    for (auto it : m_ObjectExtensions) {
+        ISystemObject* pObj = it.second;
 
         if (pObj->GetPotentialSystemChanges() & SysObjDesiredChanges) {
             m_pObjectCCM->Register(pObj, Changes, pSystemObject);
@@ -97,7 +96,7 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     // Add the system object to the list.
     //
     System::Type SystemType = pSystemObject->GetSystemType();
-    m_ObjectExtensions[ SystemType ] = pSystemObject;
+    m_ObjectExtensions[SystemType] = pSystemObject;
 
     //
     // Set up the speed path for the geometry and graphics objects.
@@ -121,17 +120,15 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     //
     System::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
     SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
-    ASSERTMSG(SysObjIt != m_ObjectExtensions.end(),
-              "The object to delete doesn't exist in the scene.");
+    ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;
 
     //
     // Go through all the other systems and unregister them with this as subject and observer.
     //  The CCM should know if the objects are registered or not, and if not won't do anything.
     //
-    for (std::map<System::Type, ISystemObject*>::iterator it = m_ObjectExtensions.begin();
-            it != m_ObjectExtensions.end(); it++) {
-        ISystemObject* pObj = it->second;
+    for (auto it : m_ObjectExtensions) {
+        ISystemObject* pObj = it.second;
 
         //
         // Make sure he system object is not unregistering as an observer of itself.
