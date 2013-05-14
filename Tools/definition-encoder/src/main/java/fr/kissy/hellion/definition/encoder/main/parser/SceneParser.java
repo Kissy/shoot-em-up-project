@@ -6,6 +6,7 @@ import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.proto.Definition;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,9 +21,9 @@ import java.util.Map;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
- * @version $Id: SceneDefinitionParser.java 32 2012-03-29 14:44:19Z kissy $
+ * @version $Id: SceneParser.java 32 2012-03-29 14:44:19Z kissy $
  */
-public class SceneDefinitionParser extends AbstractParser {
+public class SceneParser extends AbstractParser {
     
     private boolean include = false;
     private List<Common.SystemType> systems;
@@ -31,7 +32,7 @@ public class SceneDefinitionParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public SceneDefinitionParser(String xmlPath, String outputPath, List<Common.SystemType> systems) throws XMLParseException {
+    public SceneParser(String xmlPath, String outputPath, List<Common.SystemType> systems) throws XMLParseException {
         super(xmlPath, outputPath);
         this.systems = systems;
     }
@@ -39,7 +40,7 @@ public class SceneDefinitionParser extends AbstractParser {
     /**
      * @inheritDoc
      */
-    public SceneDefinitionParser(String xmlPath, String outputPath, List<Common.SystemType> systems, boolean include) throws XMLParseException {
+    public SceneParser(String xmlPath, String outputPath, List<Common.SystemType> systems, boolean include) throws XMLParseException {
         this(xmlPath, outputPath, systems);
         this.include = include;
     }
@@ -57,8 +58,7 @@ public class SceneDefinitionParser extends AbstractParser {
             Element documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile).getDocumentElement();
             documentElement.normalize();
 
-            AssertUtils.makeTest("Scene".equals(documentElement.getNodeName()),
-                    "SDF files must contain Scene root element");
+            AssertUtils.makeTest("Scene".equals(documentElement.getNodeName()), "SDF files must contain Scene root element");
             
             if (include) {
                 getSceneDefinitionBuilder().setName("Included");
@@ -79,8 +79,7 @@ public class SceneDefinitionParser extends AbstractParser {
                     } else if ("Include".equals(node.getNodeName())) {
                         parseInclude((Element) node);
                     } else {
-                        AssertUtils.makeTest(true,
-                                "SDF files must contain Properties, Objects and Links children only");
+                        AssertUtils.makeTest(true, "SDF files must contain Properties, Objects and Links children only");
                     }
                 }
             }
@@ -99,7 +98,7 @@ public class SceneDefinitionParser extends AbstractParser {
      * @throws javax.management.modelmbean.XMLParseException The exception.
      */
     private void parseInclude(Element node) throws XMLParseException {
-        SceneDefinitionParser includeParser = new SceneDefinitionParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
+        SceneParser includeParser = new SceneParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
                 outputFile.getAbsolutePath(), systems, true);
         Definition.Scene.Builder builder = (Definition.Scene.Builder) includeParser.getBuilder();
         // TODO make system properties update correctly
@@ -153,15 +152,18 @@ public class SceneDefinitionParser extends AbstractParser {
             Element objectElement = (Element) objects.item(i);
             
             // Object name
+            String id = objectElement.getAttribute("Id");
+            objectBuilder.setId(StringUtils.isNotBlank(id) ? id : new ObjectId().toString());
             objectBuilder.setName(ParseUtils.safeGetAttribute(objectElement, "Name"));
-            
+            objectBuilder.setParent(objectElement.getAttribute("Parent"));
+
             // ODF : odf properties will be overridden by object properties
             String odf = objectElement.getAttribute("ODF");
             if (StringUtils.isNotEmpty(odf)) {
-                ObjectDefinitionParser objectDefinitionParser = new ObjectDefinitionParser(xmlFile.getParent() + "\\"  + odf + ".odf",
+                ObjectParser objectParser = new ObjectParser(xmlFile.getParent() + "\\"  + odf + ".odf",
                         outputFile.getAbsolutePath(), objectBuilder);
                 try {
-                    objectDefinitionParser.writeBuilder();
+                    objectParser.writeBuilder();
                 } catch (IOException ignored) {}
                 
                 // Fill the properties map

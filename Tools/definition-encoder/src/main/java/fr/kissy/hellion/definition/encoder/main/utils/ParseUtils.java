@@ -102,8 +102,7 @@ public class ParseUtils {
      */
     public static String safeGetAttribute(Element element, String attribute) throws XMLParseException {
         String value = element.getAttribute(attribute);
-        AssertUtils.makeTest(StringUtils.isNotEmpty(value),
-                attribute + " attribute is required for " + element.getNodeName() + " element");
+        AssertUtils.makeTest(StringUtils.isNotEmpty(value), attribute + " attribute is required for " + element.getNodeName() + " element");
         return value;
     }
 

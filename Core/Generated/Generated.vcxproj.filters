@@ -16,29 +16,17 @@
     <Filter Include="Header Files\Proto">
       <UniqueIdentifier>{9ab34575-4a43-4559-a4ac-283b4c990042}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Proto\Common">
-      <UniqueIdentifier>{8f9e6a8a-c690-46d4-9c3e-bb1033a9f6b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Proto\Message">
       <UniqueIdentifier>{7d4b2caf-43fc-4093-9678-6b0faf6776eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Proto\Server">
       <UniqueIdentifier>{abca4223-cf76-4319-b98f-2607e6f55283}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Proto\Definition">
-      <UniqueIdentifier>{6bdfb71c-df9b-445a-82e6-5c6827bdadb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Proto">
       <UniqueIdentifier>{42f581ad-4e3d-4956-b755-624d2230b30c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Proto\Common">
-      <UniqueIdentifier>{5ce8287b-a46b-4786-9701-68e7283fb650}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Proto\Message">
       <UniqueIdentifier>{86c26057-5575-49d1-899d-ec3928f7a90a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Proto\Definition">
-      <UniqueIdentifier>{7ea1f804-4170-4d4e-9873-33e9444a2616}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Proto\Server">
       <UniqueIdentifier>{f8441e37-62b8-4b6e-b6c0-afbcbe4ab5fe}</UniqueIdentifier>
@@ -49,6 +37,12 @@
     <Filter Include="Header Files\Proto\Debug">
       <UniqueIdentifier>{5da671f6-bf5f-42eb-8b20-fccee11b61ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Proto\Old">
+      <UniqueIdentifier>{1ca1b986-935a-400b-bc4f-3367a5dcdba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Proto\Old">
+      <UniqueIdentifier>{8cf63eef-95f0-4255-a70f-033ffaead69d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Proto\Server\DownstreamMessage.pb.cc">
@@ -57,26 +51,11 @@
     <ClCompile Include="Source\Proto\Server\UpstreamMessage.pb.cc">
       <Filter>Source Files\Proto\Server</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Proto\Definition\SceneDefinition.pb.cc">
-      <Filter>Source Files\Proto\Definition</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Proto\Definition\GlobalDefinition.pb.cc">
-      <Filter>Source Files\Proto\Definition</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Proto\Message\Authenticated.pb.cc">
       <Filter>Source Files\Proto\Message</Filter>
     </ClCompile>
     <ClCompile Include="Source\Proto\Message\ObjectUpdated.pb.cc">
       <Filter>Source Files\Proto\Message</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Proto\Common\Object.pb.cc">
-      <Filter>Source Files\Proto\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Proto\Common\Property.pb.cc">
-      <Filter>Source Files\Proto\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Proto\Common\System.pb.cc">
-      <Filter>Source Files\Proto\Common</Filter>
     </ClCompile>
     <ClCompile Include="Source\Proto\Debug\Debug.pb.cc">
       <Filter>Source Files\Proto\Debug</Filter>
@@ -87,23 +66,29 @@
     <ClCompile Include="Source\Proto\Debug\DebugProperty.pb.cc">
       <Filter>Source Files\Proto\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Proto\Definition.pb.cc">
+      <Filter>Source Files\Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Common.pb.cc">
+      <Filter>Source Files\Proto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Definition\GlobalDefinition.pb.cc">
+      <Filter>Source Files\Proto\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Common\Object.pb.cc">
+      <Filter>Source Files\Proto\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Common\Property.pb.cc">
+      <Filter>Source Files\Proto\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Definition\SceneDefinition.pb.cc">
+      <Filter>Source Files\Proto\Old</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Proto\Common\System.pb.cc">
+      <Filter>Source Files\Proto\Old</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Proto\Common\Object.pb.h">
-      <Filter>Header Files\Proto\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\Common\Property.pb.h">
-      <Filter>Header Files\Proto\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\Common\System.pb.h">
-      <Filter>Header Files\Proto\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\Definition\GlobalDefinition.pb.h">
-      <Filter>Header Files\Proto\Definition</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Proto\Definition\SceneDefinition.pb.h">
-      <Filter>Header Files\Proto\Definition</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Proto\Message\Authenticated.pb.h">
       <Filter>Header Files\Proto\Message</Filter>
     </ClInclude>
@@ -124,6 +109,27 @@
     </ClInclude>
     <ClInclude Include="Source\Proto\Debug\DebugProperty.pb.h">
       <Filter>Header Files\Proto\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Common.pb.h">
+      <Filter>Header Files\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Definition.pb.h">
+      <Filter>Header Files\Proto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Common\Object.pb.h">
+      <Filter>Header Files\Proto\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Common\Property.pb.h">
+      <Filter>Header Files\Proto\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Common\System.pb.h">
+      <Filter>Header Files\Proto\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Definition\GlobalDefinition.pb.h">
+      <Filter>Header Files\Proto\Old</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Proto\Definition\SceneDefinition.pb.h">
+      <Filter>Header Files\Proto\Old</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

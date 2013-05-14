@@ -1,13 +1,10 @@
 package fr.kissy.hellion.definition.encoder.main;
 
-import fr.kissy.hellion.definition.encoder.main.parser.GlobalDefinitionParser;
-import fr.kissy.hellion.definition.encoder.main.parser.SceneDefinitionParser;
-import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
-import fr.kissy.hellion.proto.Definition;
+import fr.kissy.hellion.definition.encoder.main.parser.ApplicationParser;
+import fr.kissy.hellion.definition.encoder.main.parser.SceneParser;
 
 import javax.management.modelmbean.XMLParseException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -24,10 +21,10 @@ public class Main {
         }
         
         // Test if gdf file exists and find the directory.
-        String gdfPath = args[0];
-        File globalDefinitionFile = new File(gdfPath);
-        if (!globalDefinitionFile.exists() || !globalDefinitionFile.canRead()) {
-            System.out.println("File " + gdfPath + " not found.");
+        String applicationPath = args[0];
+        File applicationFile = new File(applicationPath);
+        if (!applicationFile.exists() || !applicationFile.canRead()) {
+            System.out.println("File " + applicationFile.getAbsoluteFile() + " not found.");
             return;
         }
 
@@ -40,12 +37,11 @@ public class Main {
         }
 
         // Process the file
-        generateFile(globalDefinitionFile, outputFile);
+        generateFile(applicationFile, outputFile);
     }
 
     /**
      * Convert the GDF File into a binary file.
-     *
      *
      * @param rawGdcFile The gdf file as the user gave it.
      * @param outputFile The output file as the user gave it.
@@ -53,22 +49,22 @@ public class Main {
      * @throws XMLParseException Exception.
      */
     private static void generateFile(File rawGdcFile, File outputFile) throws IOException, XMLParseException {
-        File globalDefinitionFile = rawGdcFile.getAbsoluteFile();
-        File gdfDirectoryFile = new File(globalDefinitionFile.getParent());
+        File applicationFile = rawGdcFile.getAbsoluteFile();
+        File applicationDirectory = new File(applicationFile.getParent());
 
-        GlobalDefinitionParser globalDefinitionParser = new GlobalDefinitionParser(globalDefinitionFile.getAbsolutePath(), outputFile.getAbsolutePath());
-        File globalDefinitionOutput = globalDefinitionParser.writeBuilder();
+        ApplicationParser applicationParser = new ApplicationParser(applicationFile.getAbsolutePath(), outputFile.getAbsolutePath());
+        applicationParser.writeBuilder();
 
-        for (String scene : globalDefinitionParser.getGlobalDefinitionBuilder().getScenesList()) {
-            SceneDefinitionParser sceneDefinitionParser = new SceneDefinitionParser(gdfDirectoryFile.getAbsolutePath() + "/" + scene + ".sdf",
-                    outputFile.getAbsolutePath(), globalDefinitionParser.getSystems());
-            sceneDefinitionParser.writeBuilder();
+        for (String scene : applicationParser.getApplicationBuilder().getScenesList()) {
+            File sceneFile = new File(applicationDirectory.getAbsolutePath() + "/" + scene + ".sdf");
+            if (!sceneFile.exists() || !sceneFile.canRead()) {
+                System.out.println("File " + sceneFile.getAbsoluteFile() + " not found.");
+                return;
+            }
+
+            SceneParser sceneParser = new SceneParser(sceneFile.getAbsolutePath(), outputFile.getAbsolutePath(), applicationParser.getSystems());
+            sceneParser.writeBuilder();
         }
-
-        // Test generated files
-        Definition.Application.Builder gdfBuilder = Definition.Application.newBuilder();
-        gdfBuilder.mergeFrom(new FileInputStream(globalDefinitionOutput));
-        AssertUtils.makeTest(gdfBuilder.getSystemsCount() > 0);
     }
 
 }

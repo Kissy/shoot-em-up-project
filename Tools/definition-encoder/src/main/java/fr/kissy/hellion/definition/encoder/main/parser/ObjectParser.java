@@ -14,14 +14,14 @@ import java.io.IOException;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
- * @version $Id: ObjectDefinitionParser.java 7 2012-03-02 17:43:54Z kissy $
+ * @version $Id: ObjectParser.java 7 2012-03-02 17:43:54Z kissy $
  */
-public class ObjectDefinitionParser extends AbstractParser {
+public class ObjectParser extends AbstractParser {
 
     /**
      * @inheritDoc
      */
-    public ObjectDefinitionParser(String xmlPath, String outputPath, Common.Object.Builder builder) throws XMLParseException {
+    public ObjectParser(String xmlPath, String outputPath, Common.Object.Builder builder) throws XMLParseException {
         super(xmlPath, outputPath);
         this.builder = builder;
     }
@@ -37,8 +37,7 @@ public class ObjectDefinitionParser extends AbstractParser {
             Element documentElement = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile).getDocumentElement();
             documentElement.normalize();
 
-            AssertUtils.makeTest("Object".equals(documentElement.getNodeName()),
-                    "ODF files must contain Object root element");
+            AssertUtils.makeTest("Object".equals(documentElement.getNodeName()), "ODF files must contain Object root element");
 
             NodeList nodeList = documentElement.getChildNodes();
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -47,8 +46,7 @@ public class ObjectDefinitionParser extends AbstractParser {
                     if ("Properties".equals(node.getNodeName())) {
                         parseSystemProperties((Element) node);
                     } else {
-                        AssertUtils.makeTest(true,
-                                "ODF files must contain Properties children only");
+                        AssertUtils.makeTest(true, "ODF files must contain Properties children only");
                     }
                 }
             }

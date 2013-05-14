@@ -15,16 +15,16 @@ import java.util.List;
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
- * @version $Id: GlobalDefinitionParser.java 32 2012-03-29 14:44:19Z kissy $
+ * @version $Id: ApplicationParser.java 32 2012-03-29 14:44:19Z kissy $
  */
-public class GlobalDefinitionParser extends AbstractParser {
+public class ApplicationParser extends AbstractParser {
     
     private List<Common.SystemType> systems = new ArrayList<>();
 
     /**
      * @inheritDoc
      */
-    public GlobalDefinitionParser(String xmlPath, String outputPath) throws XMLParseException {
+    public ApplicationParser(String xmlPath, String outputPath) throws XMLParseException {
         super(xmlPath, outputPath);
     }
 
@@ -42,8 +42,7 @@ public class GlobalDefinitionParser extends AbstractParser {
                     .parse(xmlFile).getDocumentElement();
             documentElement.normalize();
 
-            AssertUtils.makeTest("GlobalDefinition".equals(documentElement.getNodeName()),
-                    "GDF files must contain GlobalDefinition root element");
+            AssertUtils.makeTest("GlobalDefinition".equals(documentElement.getNodeName()), "GDF files must contain GlobalDefinition root element");
 
             NodeList nodeList = documentElement.getChildNodes();
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -56,8 +55,7 @@ public class GlobalDefinitionParser extends AbstractParser {
                     } else if ("Scenes".equals(node.getNodeName())) {
                         parseScenes((Element) node);
                     } else {
-                        AssertUtils.makeTest(false,
-                                "GDF files must contain Environment, Systems and Scenes children only");
+                        AssertUtils.makeTest(false, "GDF files must contain Environment, Systems and Scenes children only");
                     }
                 }
             }
@@ -80,7 +78,7 @@ public class GlobalDefinitionParser extends AbstractParser {
 
         NodeList properties = propertiesElement.getElementsByTagName("Property");
         for (int i = 0; i < properties.getLength(); i++) {
-            getGlobalDefinitionBuilder().addProperties(ParseUtils.parseProperty((Element) properties.item(i)));
+            getApplicationBuilder().addProperties(ParseUtils.parseProperty((Element) properties.item(i)));
         }
     }
 
@@ -109,7 +107,7 @@ public class GlobalDefinitionParser extends AbstractParser {
             // Save the system into the list.
             systems.add(systemBuilder.getType());
 
-            getGlobalDefinitionBuilder().addSystems(systemBuilder);
+            getApplicationBuilder().addSystems(systemBuilder);
         }
     }
 
@@ -122,13 +120,13 @@ public class GlobalDefinitionParser extends AbstractParser {
     private void parseScenes(Element scenesElement) throws XMLParseException {
         System.out.println("\t- Parsing Scenes");
 
-        getGlobalDefinitionBuilder().setStartupScene(ParseUtils.safeGetAttribute(scenesElement, "Startup"));
+        getApplicationBuilder().setStartupScene(ParseUtils.safeGetAttribute(scenesElement, "Startup"));
 
         // Scenes
         NodeList scenesList = scenesElement.getElementsByTagName("Scene");
         for (int i = 0; i < scenesList.getLength(); i++) {
             Element sceneElement = (Element) scenesList.item(i);
-            getGlobalDefinitionBuilder().addScenes(ParseUtils.safeGetAttribute(sceneElement, "Name"));
+            getApplicationBuilder().addScenes(ParseUtils.safeGetAttribute(sceneElement, "Name"));
         }
     }
 
@@ -137,7 +135,7 @@ public class GlobalDefinitionParser extends AbstractParser {
      *
      * @return The GDF Builder.
      */
-    public Definition.Application.Builder getGlobalDefinitionBuilder() {
+    public Definition.Application.Builder getApplicationBuilder() {
         return (Definition.Application.Builder) builder;
     }
 
