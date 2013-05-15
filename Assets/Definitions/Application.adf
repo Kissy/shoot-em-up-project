@@ -1,4 +1,4 @@
-<GlobalDefinition>
+<Application>
 	<Properties>
 		<Property Name="Framework::DebugWindow" Value="0"/>
 		<Property Name="Scheduler::Benchmarking" Value="0"/>
@@ -37,6 +37,6 @@
 		</System>
 	</Systems>
 	<Scenes Startup="Main">
-		<Scene Name="Main"/>
+		<Scene Name="Main" />
 	</Scenes>
-</GlobalDefinition>
+</Application>

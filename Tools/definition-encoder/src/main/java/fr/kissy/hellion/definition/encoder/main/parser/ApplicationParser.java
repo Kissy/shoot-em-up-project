@@ -35,7 +35,7 @@ public class ApplicationParser extends AbstractParser {
     @Override
     protected void parse() {
         try {
-            System.out.println("Parsing GDF File " + xmlFile.getPath());
+            System.out.println("Parsing ADF File " + xmlFile.getPath());
 
             builder = Definition.Application.newBuilder();
 
@@ -43,7 +43,7 @@ public class ApplicationParser extends AbstractParser {
                     .parse(xmlFile).getDocumentElement();
             documentElement.normalize();
 
-            AssertUtils.makeTest("GlobalDefinition".equals(documentElement.getNodeName()), "GDF files must contain GlobalDefinition root element");
+            AssertUtils.makeTest("Application".equals(documentElement.getNodeName()), "ADF files must contain Application root element");
 
             NodeList nodeList = documentElement.getChildNodes();
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -53,10 +53,10 @@ public class ApplicationParser extends AbstractParser {
                 }
             }
 
-            System.out.println("GDF File parsed\n");
+            System.out.println("ADF File parsed\n");
             parsed = true;
         } catch (Exception e) {
-            throw new RuntimeException("Cannot parse the GDF File " + xmlFile.getPath() + ", " + e.getMessage());
+            throw new RuntimeException("Cannot parse the ADF File " + xmlFile.getPath() + ", " + e.getMessage());
         }
     }
 
@@ -124,9 +124,9 @@ public class ApplicationParser extends AbstractParser {
     }
 
     /**
-     * Get the GDF Builder.
+     * Get the ADF Builder.
      *
-     * @return The GDF Builder.
+     * @return The ADF Builder.
      */
     public Definition.Application.Builder getApplicationBuilder() {
         return (Definition.Application.Builder) builder;

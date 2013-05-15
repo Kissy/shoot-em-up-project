@@ -44,28 +44,6 @@ public class ParseUtils {
     }
 
     /**
-     * Parse the system properties.
-     *
-     * @param propertiesElement The property element.
-     * @return The group properties created.
-     * @throws javax.management.modelmbean.XMLParseException If the xml is not well formatted.
-     */
-    public static Common.System.Builder parseSystemProperties(Element propertiesElement) throws XMLParseException {
-        // System type
-        Common.System.Builder systemProperties = Common.System.newBuilder();
-        String systemType = safeGetAttribute(propertiesElement, "SystemType");
-        systemProperties.setType(Common.SystemType.valueOf(systemType));
-
-        // System properties
-        NodeList properties = propertiesElement.getElementsByTagName("Property");
-        for (int i = 0; i < properties.getLength(); i++) {
-            systemProperties.addProperties(ParseUtils.parseProperty((Element) properties.item(i)));
-        }
-
-        return systemProperties;
-    }
-
-    /**
      * Parse the object properties.
      *
      * @param propertiesElement The property element.

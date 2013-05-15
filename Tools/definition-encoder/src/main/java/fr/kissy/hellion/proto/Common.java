@@ -1790,27 +1790,42 @@ public final class Common {
     com.google.protobuf.ByteString
         getParentBytes();
 
-    // repeated .Proto.SystemObject systemObjects = 4;
+    // optional string template = 4;
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>optional string template = 4;</code>
+     */
+    boolean hasTemplate();
+    /**
+     * <code>optional string template = 4;</code>
+     */
+    java.lang.String getTemplate();
+    /**
+     * <code>optional string template = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getTemplateBytes();
+
+    // repeated .Proto.SystemObject systemObjects = 5;
+    /**
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Common.SystemObject> 
         getSystemObjectsList();
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     fr.kissy.hellion.proto.Common.SystemObject getSystemObjects(int index);
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     int getSystemObjectsCount();
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Common.SystemObjectOrBuilder> 
         getSystemObjectsOrBuilderList();
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     fr.kissy.hellion.proto.Common.SystemObjectOrBuilder getSystemObjectsOrBuilder(
         int index);
@@ -1882,9 +1897,14 @@ public final class Common {
               break;
             }
             case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              bitField0_ |= 0x00000008;
+              template_ = input.readBytes();
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
                 systemObjects_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.SystemObject>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000010;
               }
               systemObjects_.add(input.readMessage(fr.kissy.hellion.proto.Common.SystemObject.PARSER, extensionRegistry));
               break;
@@ -1897,7 +1917,7 @@ public final class Common {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
           systemObjects_ = java.util.Collections.unmodifiableList(systemObjects_);
         }
         this.unknownFields = unknownFields.build();
@@ -2061,36 +2081,79 @@ public final class Common {
       }
     }
 
-    // repeated .Proto.SystemObject systemObjects = 4;
-    public static final int SYSTEMOBJECTS_FIELD_NUMBER = 4;
+    // optional string template = 4;
+    public static final int TEMPLATE_FIELD_NUMBER = 4;
+    private java.lang.Object template_;
+    /**
+     * <code>optional string template = 4;</code>
+     */
+    public boolean hasTemplate() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional string template = 4;</code>
+     */
+    public java.lang.String getTemplate() {
+      java.lang.Object ref = template_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          template_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string template = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTemplateBytes() {
+      java.lang.Object ref = template_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        template_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // repeated .Proto.SystemObject systemObjects = 5;
+    public static final int SYSTEMOBJECTS_FIELD_NUMBER = 5;
     private java.util.List<fr.kissy.hellion.proto.Common.SystemObject> systemObjects_;
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Common.SystemObject> getSystemObjectsList() {
       return systemObjects_;
     }
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemObjectOrBuilder> 
         getSystemObjectsOrBuilderList() {
       return systemObjects_;
     }
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     public int getSystemObjectsCount() {
       return systemObjects_.size();
     }
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemObject getSystemObjects(int index) {
       return systemObjects_.get(index);
     }
     /**
-     * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+     * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemObjectOrBuilder getSystemObjectsOrBuilder(
         int index) {
@@ -2101,6 +2164,7 @@ public final class Common {
       id_ = "";
       name_ = "";
       parent_ = "";
+      template_ = "";
       systemObjects_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -2138,8 +2202,11 @@ public final class Common {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, getParentBytes());
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getTemplateBytes());
+      }
       for (int i = 0; i < systemObjects_.size(); i++) {
-        output.writeMessage(4, systemObjects_.get(i));
+        output.writeMessage(5, systemObjects_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2162,9 +2229,13 @@ public final class Common {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getParentBytes());
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getTemplateBytes());
+      }
       for (int i = 0; i < systemObjects_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, systemObjects_.get(i));
+          .computeMessageSize(5, systemObjects_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2289,9 +2360,11 @@ public final class Common {
         bitField0_ = (bitField0_ & ~0x00000002);
         parent_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        template_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (systemObjectsBuilder_ == null) {
           systemObjects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
         } else {
           systemObjectsBuilder_.clear();
         }
@@ -2335,10 +2408,14 @@ public final class Common {
           to_bitField0_ |= 0x00000004;
         }
         result.parent_ = parent_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.template_ = template_;
         if (systemObjectsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
             systemObjects_ = java.util.Collections.unmodifiableList(systemObjects_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000010);
           }
           result.systemObjects_ = systemObjects_;
         } else {
@@ -2375,11 +2452,16 @@ public final class Common {
           parent_ = other.parent_;
           onChanged();
         }
+        if (other.hasTemplate()) {
+          bitField0_ |= 0x00000008;
+          template_ = other.template_;
+          onChanged();
+        }
         if (systemObjectsBuilder_ == null) {
           if (!other.systemObjects_.isEmpty()) {
             if (systemObjects_.isEmpty()) {
               systemObjects_ = other.systemObjects_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
             } else {
               ensureSystemObjectsIsMutable();
               systemObjects_.addAll(other.systemObjects_);
@@ -2392,7 +2474,7 @@ public final class Common {
               systemObjectsBuilder_.dispose();
               systemObjectsBuilder_ = null;
               systemObjects_ = other.systemObjects_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
               systemObjectsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getSystemObjectsFieldBuilder() : null;
@@ -2664,13 +2746,87 @@ public final class Common {
         return this;
       }
 
-      // repeated .Proto.SystemObject systemObjects = 4;
+      // optional string template = 4;
+      private java.lang.Object template_ = "";
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public boolean hasTemplate() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public java.lang.String getTemplate() {
+        java.lang.Object ref = template_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          template_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTemplateBytes() {
+        java.lang.Object ref = template_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          template_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public Builder setTemplate(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        template_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public Builder clearTemplate() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        template_ = getDefaultInstance().getTemplate();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string template = 4;</code>
+       */
+      public Builder setTemplateBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        template_ = value;
+        onChanged();
+        return this;
+      }
+
+      // repeated .Proto.SystemObject systemObjects = 5;
       private java.util.List<fr.kissy.hellion.proto.Common.SystemObject> systemObjects_ =
         java.util.Collections.emptyList();
       private void ensureSystemObjectsIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
           systemObjects_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.SystemObject>(systemObjects_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000010;
          }
       }
 
@@ -2678,7 +2834,7 @@ public final class Common {
           fr.kissy.hellion.proto.Common.SystemObject, fr.kissy.hellion.proto.Common.SystemObject.Builder, fr.kissy.hellion.proto.Common.SystemObjectOrBuilder> systemObjectsBuilder_;
 
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.SystemObject> getSystemObjectsList() {
         if (systemObjectsBuilder_ == null) {
@@ -2688,7 +2844,7 @@ public final class Common {
         }
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public int getSystemObjectsCount() {
         if (systemObjectsBuilder_ == null) {
@@ -2698,7 +2854,7 @@ public final class Common {
         }
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemObject getSystemObjects(int index) {
         if (systemObjectsBuilder_ == null) {
@@ -2708,7 +2864,7 @@ public final class Common {
         }
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder setSystemObjects(
           int index, fr.kissy.hellion.proto.Common.SystemObject value) {
@@ -2725,7 +2881,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder setSystemObjects(
           int index, fr.kissy.hellion.proto.Common.SystemObject.Builder builderForValue) {
@@ -2739,7 +2895,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder addSystemObjects(fr.kissy.hellion.proto.Common.SystemObject value) {
         if (systemObjectsBuilder_ == null) {
@@ -2755,7 +2911,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder addSystemObjects(
           int index, fr.kissy.hellion.proto.Common.SystemObject value) {
@@ -2772,7 +2928,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder addSystemObjects(
           fr.kissy.hellion.proto.Common.SystemObject.Builder builderForValue) {
@@ -2786,7 +2942,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder addSystemObjects(
           int index, fr.kissy.hellion.proto.Common.SystemObject.Builder builderForValue) {
@@ -2800,7 +2956,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder addAllSystemObjects(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.SystemObject> values) {
@@ -2814,12 +2970,12 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder clearSystemObjects() {
         if (systemObjectsBuilder_ == null) {
           systemObjects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
           onChanged();
         } else {
           systemObjectsBuilder_.clear();
@@ -2827,7 +2983,7 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public Builder removeSystemObjects(int index) {
         if (systemObjectsBuilder_ == null) {
@@ -2840,14 +2996,14 @@ public final class Common {
         return this;
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemObject.Builder getSystemObjectsBuilder(
           int index) {
         return getSystemObjectsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemObjectOrBuilder getSystemObjectsOrBuilder(
           int index) {
@@ -2857,7 +3013,7 @@ public final class Common {
         }
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemObjectOrBuilder> 
            getSystemObjectsOrBuilderList() {
@@ -2868,14 +3024,14 @@ public final class Common {
         }
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemObject.Builder addSystemObjectsBuilder() {
         return getSystemObjectsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Common.SystemObject.getDefaultInstance());
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemObject.Builder addSystemObjectsBuilder(
           int index) {
@@ -2883,7 +3039,7 @@ public final class Common {
             index, fr.kissy.hellion.proto.Common.SystemObject.getDefaultInstance());
       }
       /**
-       * <code>repeated .Proto.SystemObject systemObjects = 4;</code>
+       * <code>repeated .Proto.SystemObject systemObjects = 5;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.SystemObject.Builder> 
            getSystemObjectsBuilderList() {
@@ -2896,7 +3052,7 @@ public final class Common {
           systemObjectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               fr.kissy.hellion.proto.Common.SystemObject, fr.kissy.hellion.proto.Common.SystemObject.Builder, fr.kissy.hellion.proto.Common.SystemObjectOrBuilder>(
                   systemObjects_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000010) == 0x00000010),
                   getParentForChildren(),
                   isClean());
           systemObjects_ = null;
@@ -3735,15 +3891,16 @@ public final class Common {
       "\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \003(\014\"h\n\014SystemOb" +
       "ject\022\014\n\004type\030\001 \002(\t\022%\n\nsystemType\030\002 \002(\0162\021" +
       ".Proto.SystemType\022#\n\nproperties\030\003 \003(\0132\017." +
-      "Proto.Property\"^\n\006Object\022\n\n\002id\030\001 \002(\t\022\014\n\004" +
-      "name\030\002 \002(\t\022\016\n\006parent\030\003 \001(\t\022*\n\rsystemObje" +
-      "cts\030\004 \003(\0132\023.Proto.SystemObject\"N\n\006System" +
-      "\022\037\n\004type\030\001 \002(\0162\021.Proto.SystemType\022#\n\npro" +
-      "perties\030\002 \003(\0132\017.Proto.Property*\201\001\n\nSyste" +
-      "mType\022\010\n\004Null\020\000\022\013\n\007Generic\020\001\022\006\n\002AI\020\002\022\r\n\t",
-      "Animation\020\004\022\t\n\005Audio\020\010\022\013\n\007Graphic\020\020\022\007\n\003G" +
-      "ui\020 \022\t\n\005Input\020@\022\014\n\007Network\020\200\001\022\013\n\006Physic\020" +
-      "\200\002B#\n\026fr.kissy.hellion.protoB\006Common\210\001\000"
+      "Proto.Property\"p\n\006Object\022\n\n\002id\030\001 \002(\t\022\014\n\004" +
+      "name\030\002 \002(\t\022\016\n\006parent\030\003 \001(\t\022\020\n\010template\030\004" +
+      " \001(\t\022*\n\rsystemObjects\030\005 \003(\0132\023.Proto.Syst" +
+      "emObject\"N\n\006System\022\037\n\004type\030\001 \002(\0162\021.Proto" +
+      ".SystemType\022#\n\nproperties\030\002 \003(\0132\017.Proto." +
+      "Property*\201\001\n\nSystemType\022\010\n\004Null\020\000\022\013\n\007Gen",
+      "eric\020\001\022\006\n\002AI\020\002\022\r\n\tAnimation\020\004\022\t\n\005Audio\020\010" +
+      "\022\013\n\007Graphic\020\020\022\007\n\003Gui\020 \022\t\n\005Input\020@\022\014\n\007Net" +
+      "work\020\200\001\022\013\n\006Physic\020\200\002B#\n\026fr.kissy.hellion" +
+      ".protoB\006Common\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -3767,7 +3924,7 @@ public final class Common {
           internal_static_Proto_Object_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Proto_Object_descriptor,
-              new java.lang.String[] { "Id", "Name", "Parent", "SystemObjects", });
+              new java.lang.String[] { "Id", "Name", "Parent", "Template", "SystemObjects", });
           internal_static_Proto_System_descriptor =
             getDescriptor().getMessageTypes().get(3);
           internal_static_Proto_System_fieldAccessorTable = new

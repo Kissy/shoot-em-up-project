@@ -111,18 +111,33 @@ public class SceneParser extends AbstractParser {
     }
 
     /**
-     * Parse the resources.
+     * Parse the systems.
      *
-     * @param propertiesElement The Properties element.
-     * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
+     * @param systemsElement The Systems element.
+     * @throws XMLParseException Exception if the document is malformed.
      */
-    public void parseProperties(Element propertiesElement) throws XMLParseException {
-        System.out.println("\t- Parsing Properties");
+    public void parseSystems(Element systemsElement) throws XMLParseException {
+        System.out.println("\t- Parsing Systems");
 
-        Common.System.Builder systems = ParseUtils.parseSystemProperties(propertiesElement);
-        AssertUtils.makeTest(this.systems.contains(systems.getType()), systems.getType() + " is not a known systemType");
+        NodeList systemList = systemsElement.getElementsByTagName("System");
+        for (int i = 0; i < systemList.getLength(); i++) {
+            Common.System.Builder systemBuilder = Common.System.newBuilder();
+            Element systemElement = (Element) systemList.item(i);
 
-        getSceneDefinitionBuilder().addSystems(systems);
+            Common.SystemType type = Common.SystemType.valueOf(ParseUtils.safeGetAttribute(systemElement, "Type"));
+            systemBuilder.setType(type);
+            AssertUtils.makeTest(this.systems.contains(type), type + " is not a known systemType");
+
+            NodeList properties = systemElement.getElementsByTagName("Property");
+            for (int j = 0; j < properties.getLength(); j++) {
+                systemBuilder.addProperties(ParseUtils.parseProperty((Element) properties.item(j)));
+            }
+
+            // Save the system into the list.
+            systems.add(systemBuilder.getType());
+
+            getSceneDefinitionBuilder().addSystems(systemBuilder);
+        }
     }
 
     /**
@@ -154,9 +169,6 @@ public class SceneParser extends AbstractParser {
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
     private void internalParseObjects(Element parentElement) throws XMLParseException {
-        // Store object properties (used because ODF / Object properties can be the same)
-        Map<String, Common.SystemObject> propertiesMap = new HashMap<>();
-
         // Object properties
         NodeList objects = parentElement.getElementsByTagName("Object");
         for (int i = 0; i < objects.getLength(); i++) {
@@ -168,38 +180,13 @@ public class SceneParser extends AbstractParser {
             objectBuilder.setId(StringUtils.isNotBlank(id) ? id : new ObjectId().toString());
             objectBuilder.setName(ParseUtils.safeGetAttribute(objectElement, "Name"));
             objectBuilder.setParent(objectElement.getAttribute("Parent"));
-
-            // ODF : odf properties will be overridden by object properties
-            String odf = objectElement.getAttribute("ODF");
-            if (StringUtils.isNotEmpty(odf)) {
-                ObjectParser objectParser = new ObjectParser(xmlFile.getParent() + "\\"  + odf + ".odf",
-                        outputFile.getAbsolutePath(), objectBuilder);
-                try {
-                    objectParser.writeBuilder();
-                } catch (IOException ignored) {}
-
-                // Fill the properties map
-                for (Common.SystemObject properties : objectBuilder.getSystemObjectsList()) {
-                    propertiesMap.put(properties.getType(), properties);
-                }
-            }
+            objectBuilder.setTemplate(objectElement.getAttribute("Template"));
 
             // Object properties
             NodeList properties = objectElement.getElementsByTagName("Properties");
             for (int j = 0; j < properties.getLength(); j++) {
                 Common.SystemObject.Builder propertiesBuilder = ParseUtils.parseObjectProperties((Element) properties.item(j));
-                if (propertiesMap.containsKey(propertiesBuilder.getType())) {
-                    List<String> currentSystemProperties = getCurrentSystemProperties(propertiesBuilder.getPropertiesList());
-                    for (Common.Property property : propertiesBuilder.getPropertiesList()) {
-                        if (currentSystemProperties.contains(property.getName())) {
-                            updateProperty(propertiesBuilder, property);
-                        } else {
-                            propertiesBuilder.addProperties(property);
-                        }
-                    }
-                } else {
-                    objectBuilder.addSystemObjects(propertiesBuilder);
-                }
+                objectBuilder.addSystemObjects(propertiesBuilder);
             }
 
             // Add the object to the list
@@ -207,39 +194,6 @@ public class SceneParser extends AbstractParser {
 
             getSceneDefinitionBuilder().addObjects(objectBuilder);
         }
-    }
-
-    /**
-     * Remove the current property.
-     * 
-     * @param propertiesBuilder The property builder.
-     * @param property The property.
-     */
-    private void updateProperty(Common.SystemObject.Builder propertiesBuilder, Common.Property property) {
-        for (int i = 0; i < propertiesBuilder.getPropertiesCount(); i++) {
-            if (property.getName().equals(propertiesBuilder.getProperties(i).getName())) {
-                Common.Property.Builder propertyBuilder = propertiesBuilder.getProperties(i).toBuilder();
-                propertyBuilder.clearValue();
-                for (ByteString value : property.getValueList()) {
-                    propertyBuilder.addValue(value);
-                }
-                break;
-            }
-        }
-    }
-
-    /**
-     * Get the list of properties name.
-     *
-     * @param propertiesList The list of Property.
-     * @return The list of Property names.
-     */
-    private List<String> getCurrentSystemProperties(List<Common.Property> propertiesList) {
-        List<String> names = new ArrayList<>();
-        for (Common.Property property : propertiesList) {
-            names.add(property.getName());
-        }
-        return names;
     }
 
     /**

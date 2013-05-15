@@ -61,16 +61,6 @@ class DefinitionParser {
          */
         std::string StartupScene(void);
 
-        /**
-         * Assignment operator.
-         *
-         * @param   parameter1  The first parameter.
-         * @return  A shallow copy of this DefinitionParser.
-         */
-        DefinitionParser& operator=(const DefinitionParser&) {
-            ASSERT(false);
-        }
-
     protected:
 
         Proto::Application                              m_gdProto;

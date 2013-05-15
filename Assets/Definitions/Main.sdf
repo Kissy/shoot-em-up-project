@@ -1,13 +1,17 @@
 <Scene Name="Main">
-	<Properties SystemType="Graphic">
-        <Property Name="AmbientLight" R="0.8" G="0.8" B="0.8"/>
-	</Properties>
-	<Properties SystemType="Input">
-	</Properties>
-	<Properties SystemType="Network">
-	</Properties>
-	<Properties SystemType="Physic">
-	</Properties>
+	<Systems>
+		<System Type="Graphic">
+			<Properties>
+                <Property Name="AmbientLight" R="0.8" G="0.8" B="0.8"/>
+			</Properties>
+		</System>
+		<System Type="Input">
+		</System>
+		<System Type="Network">
+		</System>
+		<System Type="Physic">
+		</System>
+	</Systems>
 	<Templates>
         
 	</Templates>
@@ -30,7 +34,7 @@
 			</Properties>
 		</Object>
 		<Object Name="Connect"></Object>
-		<Object Name="Connect1" parent="Connect">
+		<Object Name="Connect1" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F1" />
 			</Properties>
@@ -38,7 +42,7 @@
 				<Property Name="Username" Value1="1" />
 			</Properties>
 		</Object>
-		<Object Name="Connect2" parent="Connect">
+		<Object Name="Connect2" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F2" />
 			</Properties>
@@ -46,7 +50,7 @@
 				<Property Name="Username" Value1="2" />
 			</Properties>
 		</Object>
-		<Object Name="Connect3" parent="Connect">
+		<Object Name="Connect3" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F3" />
 			</Properties>
@@ -54,7 +58,7 @@
 				<Property Name="Username" Value1="3" />
 			</Properties>
 		</Object>
-		<Object Name="Connect4" parent="Connect">
+		<Object Name="Connect4" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F4" />
 			</Properties>

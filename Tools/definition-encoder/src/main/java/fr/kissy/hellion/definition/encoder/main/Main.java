@@ -20,7 +20,7 @@ public class Main {
             return;
         }
         
-        // Test if gdf file exists and find the directory.
+        // Test if adf file exists and find the directory.
         String applicationPath = args[0];
         File applicationFile = new File(applicationPath);
         if (!applicationFile.exists() || !applicationFile.canRead()) {
@@ -41,9 +41,9 @@ public class Main {
     }
 
     /**
-     * Convert the GDF File into a binary file.
+     * Convert the ADF File into a binary file.
      *
-     * @param rawGdcFile The gdf file as the user gave it.
+     * @param rawGdcFile The adf file as the user gave it.
      * @param outputFile The output file as the user gave it.
      * @throws IOException Exception.
      * @throws XMLParseException Exception.
