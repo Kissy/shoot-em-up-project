@@ -74,7 +74,7 @@ class MeshGraphicObject : public GraphicObject {
 
     protected:
 
-        void setMeshName(ProtoStringList* values);
+        void setMeshName(Proto::RepeatedString* values);
 
     private:
         static u32                          sm_EntityId;

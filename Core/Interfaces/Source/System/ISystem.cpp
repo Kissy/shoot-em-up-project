@@ -35,15 +35,6 @@ ISystem::~ISystem(void) {
 /**
  * @inheritDoc
  */
-const char* ISystem::GetName(void) {
-    u32 index = System::Types::GetIndex(GetSystemType());
-    SystemProto::Type systemType = static_cast<SystemProto::Type>(index);
-    return SystemProto::Type_Name(systemType).c_str();
-}
-
-/**
- * @inheritDoc
- */
 void ISystem::createScene(void) {
     m_pSystemScene = m_SceneFactory(this);
 }

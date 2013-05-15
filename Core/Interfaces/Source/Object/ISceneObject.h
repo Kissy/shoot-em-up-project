@@ -16,7 +16,7 @@
 
 #include <list>
 
-#include "Proto/Common/Object.pb.h"
+#include "Proto.h"
 
 #include "System/Definitions.h"
 
@@ -27,7 +27,7 @@
 class ISceneObject {
 public:
 
-    typedef std::list<ObjectProto> ObjectProtoQueue;
+    typedef std::list<Proto::Object> ObjectProtoQueue;
     
     /**
      * Default constructor.

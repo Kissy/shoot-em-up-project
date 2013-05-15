@@ -39,28 +39,12 @@ class IServiceManager {
             public:
 
                 /**
-                 * Gets a system by its name.
-                 *
-                 * @param   pszSystemName   The name of the system to get.
-                 * @return  A handle to the system or null if the system doesn't exist.
-                 */
-                virtual Handle GetSystem(const char* pszSystemName) = 0;
-
-                /**
                  * Gets a system by its type.
                  *
                  * @param   Type    The type of the system to get.
                  * @return  A handle to the system or null if the system doesn't exist.
                  */
-                virtual Handle GetSystem(System::Type Type) = 0;
-
-                /**
-                 * Gets a system scene by its system name.
-                 *
-                 * @param   pszSystemName   The name of the system scene to get.
-                 * @return  A handle to the system scene or null if it doesn't exist.
-                 */
-                virtual Handle GetScene(const char* pszSystemName) = 0;
+                virtual Handle GetSystem(Proto::SystemType Type) = 0;
 
                 /**
                  * Gets a system scene by its system type.
@@ -68,16 +52,7 @@ class IServiceManager {
                  * @param   Type    The type of the system scene to get.
                  * @return  A handle to the system scene or null if it doesn't exist.
                  */
-                virtual Handle GetScene(System::Type Type) = 0;
-
-                /**
-                 * Gets a system object by its system name.
-                 *
-                 * @param   pszSystemName   The name of the system object to get.
-                 * @param   pszName         The name of the object.
-                 * @return  A handle to the system object or null if it doesn't exist.
-                 */
-                virtual Handle GetSystemObject(const char* pszSystemName, const char* pszName) = 0;
+                virtual Handle GetScene(Proto::SystemType Type) = 0;
 
                 /**
                  * Gets a system object by its system type and name.
@@ -86,7 +61,7 @@ class IServiceManager {
                  * @param   pszName Name of the object.
                  * @return  A handle to the system object or null if it doesn't exist.
                  */
-                virtual Handle GetSystemObject(System::Type Type, const char* pszName) = 0;
+                virtual Handle GetSystemObject(Proto::SystemType Type, const char* pszName) = 0;
 
         };
 
@@ -244,12 +219,12 @@ class IServiceManager {
                  * frame. There may be many jobs of one type passed in during a single frame; their results will
                  * be appended.
                  *
-                 * @param   jobType         u32 - The type of the job that has just completed; a member of
-                 *                          System::Types.
+                 * @param   jobType         Proto::SystemType - The type of the job that has just completed; a member of
+                 *                          Proto::SystemType.
                  * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
                  *                          during this frame.
                  */
-                virtual void CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) = 0;
+                virtual void CaptureJobCounterTicks(Proto::SystemType jobType, i64 jobCounterTicks) = 0;
 
                 /**
                  * Instrumentation::getJobCount>

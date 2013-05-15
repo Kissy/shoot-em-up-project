@@ -8,6 +8,9 @@
 	</Properties>
 	<Properties SystemType="Physic">
 	</Properties>
+	<Templates>
+        
+	</Templates>
 	<Objects>
 		<Object Name="Sun">
 			<Properties SystemType="Graphic" ObjectType="Light">

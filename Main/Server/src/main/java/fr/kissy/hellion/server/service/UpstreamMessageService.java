@@ -2,8 +2,7 @@ package fr.kissy.hellion.server.service;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import fr.kissy.hellion.proto.message.Authenticated;
-import fr.kissy.hellion.proto.message.ObjectUpdated;
+import fr.kissy.hellion.proto.Message;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.transform.PlayerToCreateObjectDto;
@@ -32,7 +31,7 @@ public class UpstreamMessageService {
      * @return The created UpstreamMessageProto.
      */
     public UpstreamMessageDto.UpstreamMessageProto getAuthenticatedMessage(Player player) {
-        Authenticated.AuthenticatedProto.Builder dataBuilder = Authenticated.AuthenticatedProto.newBuilder();
+        Message.Authenticated.Builder dataBuilder = Message.Authenticated.newBuilder();
         dataBuilder.addPlayers(objectService.getCreateObject(player, true));
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
@@ -49,7 +48,7 @@ public class UpstreamMessageService {
      * @return The created UpstreamMessageProto.
      */
     public UpstreamMessageDto.UpstreamMessageProto getObjectCreatedMessage(Set<Player> players) {
-        ObjectUpdated.ObjectUpdatedProto.Builder dataBuilder = ObjectUpdated.ObjectUpdatedProto.newBuilder();
+        Message.ObjectUpdated.Builder dataBuilder = Message.ObjectUpdated.newBuilder();
         dataBuilder.addAllObjects(Iterables.transform(players, playerToCreateObjectDto));
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
@@ -77,7 +76,7 @@ public class UpstreamMessageService {
      * @return The created UpstreamMessageProto.
      */
     public UpstreamMessageDto.UpstreamMessageProto getObjectUpdatedMessage(Player player) {
-        ObjectUpdated.ObjectUpdatedProto.Builder dataBuilder = ObjectUpdated.ObjectUpdatedProto.newBuilder();
+        Message.ObjectUpdated.Builder dataBuilder = Message.ObjectUpdated.newBuilder();
         dataBuilder.addObjects(objectService.getUpdateObject(player));
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
@@ -94,7 +93,7 @@ public class UpstreamMessageService {
      * @return The created UpstreamMessageProto.
      */
     public UpstreamMessageDto.UpstreamMessageProto getObjectDeletedMessage(Set<Player> players) {
-        ObjectUpdated.ObjectUpdatedProto.Builder dataBuilder = ObjectUpdated.ObjectUpdatedProto.newBuilder();
+        Message.ObjectUpdated.Builder dataBuilder = Message.ObjectUpdated.newBuilder();
         dataBuilder.addAllObjects(Iterables.transform(players, playerToDeleteObjectDto));
 
         UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();

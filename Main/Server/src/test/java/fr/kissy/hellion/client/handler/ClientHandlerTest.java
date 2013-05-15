@@ -17,8 +17,7 @@ package fr.kissy.hellion.client.handler;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import fr.kissy.hellion.proto.message.Authenticated;
-import fr.kissy.hellion.proto.message.ObjectUpdated;
+import fr.kissy.hellion.proto.Message;
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import org.jboss.netty.channel.Channel;
@@ -70,7 +69,7 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
         switch (message.getType()) {
             case AUTHENTICATED:
                 try {
-                    Authenticated.AuthenticatedProto authenticated = Authenticated.AuthenticatedProto.parseFrom(message.getData());
+                    Message.Authenticated authenticated = Message.Authenticated.parseFrom(message.getData());
                     LOGGER.debug("Received {} players \n{}", authenticated.getPlayersList().size(), authenticated.getPlayersList());
                 } catch (InvalidProtocolBufferException e) {
                     LOGGER.error("Cannot parse proto", e);
@@ -101,7 +100,7 @@ public class ClientHandlerTest extends SimpleChannelUpstreamHandler {
             case OBJECT_DELETED:
             case OBJECT_UPDATED:
                 try {
-                    ObjectUpdated.ObjectUpdatedProto spawned = ObjectUpdated.ObjectUpdatedProto.parseFrom(message.getData());
+                    Message.ObjectUpdated spawned = Message.ObjectUpdated.parseFrom(message.getData());
                     LOGGER.debug("Received {} objects around \n{}", spawned.getObjectsList().size(), spawned.getObjectsList());
                 } catch (InvalidProtocolBufferException e) {
                     LOGGER.error("Cannot parse proto", e);

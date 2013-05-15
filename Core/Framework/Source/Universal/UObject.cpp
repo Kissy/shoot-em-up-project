@@ -95,14 +95,14 @@ ISystemObject* UObject::Extend(ISystemScene* pSystemScene, std::string systemObj
     //
     // Add the system object to the list.
     //
-    System::Type SystemType = pSystemObject->GetSystemType();
+    Proto::SystemType SystemType = pSystemObject->GetSystemType();
     m_ObjectExtensions[SystemType] = pSystemObject;
 
     //
     // Set up the speed path for the geometry and graphics objects.
     //
     // TODO is it really usefull ?
-    /*if (SystemType == System::Types::Physic) {
+    /*if (SystemType == Proto::SystemType::Physic) {
         m_pGeometryObject = dynamic_cast<IGeometryObject*>(pSystemObject);
         ASSERT(m_pGeometryObject != NULL);
     }*/
@@ -118,7 +118,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     //
     // Get the iterator for the object.
     //
-    System::Type SystemType = pSystemScene->GetSystem()->GetSystemType();
+    Proto::SystemType SystemType = pSystemScene->GetSystem()->GetSystemType();
     SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;
@@ -171,7 +171,7 @@ const UObject::SystemObjects& UObject::GetExtensions(void) {
 /**
  * @inheritDoc
  */
-ISystemObject* UObject::GetExtension(System::Type SystemType) {
+ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
     ISystemObject* pSystemObject = nullptr;
 
     SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
@@ -185,11 +185,11 @@ ISystemObject* UObject::GetExtension(System::Type SystemType) {
 /**
  * @inheritDoc
  */
-void UObject::update(const ObjectProto* objectProto) {
+void UObject::update(const Proto::Object* object) {
     //
     // Update systems extension.
     //
-    for (auto objectProto : objectProto->systemobjects()) {
+    for (auto objectProto : object->systemobjects()) {
         ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
         ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());
 

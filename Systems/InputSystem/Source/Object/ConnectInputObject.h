@@ -68,16 +68,6 @@ public:
         return &m_keyboardButtonData;
     }
 
-    /**
-     * @inheritDoc
-     */
-    void setKey(ProtoStringList* values);
-
-    /**
-     * @inheritDoc
-     */
-    void getKey(ProtoStringList* values);
-
 private:
     std::string                     m_key;
     OISB::TriggerAction*            m_connectInputAction;

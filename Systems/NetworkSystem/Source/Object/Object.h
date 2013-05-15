@@ -44,8 +44,8 @@ class NetworkObject : public ISystemObject {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
-            return System::Types::Network;
+        Proto::SystemType GetSystemType(void) {
+            return Proto::SystemType::Network;
         }
 
 };

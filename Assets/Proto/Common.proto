@@ -2,17 +2,19 @@ option java_package = "fr.kissy.hellion.proto";
 option java_outer_classname = "Common";
 option java_generic_services = false;
 
+package Proto;
+
 enum SystemType {
-    None = 0;
+    Null = 0;
     Generic = 1;
     AI = 2;
-    Animation = 3;
-    Audio = 4;
-    Graphic = 5;
-    Gui = 6;
-    Input = 7;
-    Network = 8; 
-    Physic = 9;
+    Animation = 4;
+    Audio = 8;
+    Graphic = 16;
+    Gui = 32;
+    Input = 64;
+    Network = 128; 
+    Physic = 256;
 }
     
 message Property {

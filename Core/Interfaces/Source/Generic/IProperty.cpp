@@ -37,7 +37,7 @@ IProperty::~IProperty(void) {
 /**
  * @inheritDoc
  */
-void IProperty::setProperties(const ProtoPropertyList& properties) {
+void IProperty::setProperties(const Proto::RepeatedProperty& properties) {
     for (auto property : properties) {
         setProperty(property);
     }
@@ -46,24 +46,24 @@ void IProperty::setProperties(const ProtoPropertyList& properties) {
 /**
  * @inheritDoc
  */
-void IProperty::setProperty(const PropertyProto& property) {
-    PropertySetters::iterator setter = m_propertySetters.find(property.name());
+void IProperty::setProperty(const Proto::Property& property) {
+    auto setter = m_propertySetters.find(property.name());
     if (setter == m_propertySetters.end()) {
         //ASSERTMSG1(false, "Parser could not find the property named %s in the list given by the system.", prop->name().c_str());
         return;
     }
 
-    ProtoStringList proto = property.value();
+    Proto::RepeatedString proto = property.value();
     setter->second(&proto);
 };
 
 /**
  * @inheritDoc
  */
-ProtoPropertyList IProperty::getProperties(void) {
-    ProtoPropertyList propertyList;
+Proto::RepeatedProperty IProperty::getProperties(void) {
+    Proto::RepeatedProperty propertyList;
     for (auto getter : m_propertyGetters) {
-        PropertyProto* property = propertyList.Add();
+        Proto::Property* property = propertyList.Add();
         property->set_name(getter.first);
         getter.second(property->mutable_value());
     }
@@ -82,8 +82,8 @@ Error IProperty::initialize(void) {
 /**
  * @inheritDoc
  */
-void IProperty::setString(System::Changes::BitMask changeType, std::string* string, ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void IProperty::setString(System::Changes::BitMask changeType, std::string* string, Proto::RepeatedString* values) {
+    auto value = values->begin();
     string->assign(*value);
     propertyChanged(changeType);
 }
@@ -91,7 +91,7 @@ void IProperty::setString(System::Changes::BitMask changeType, std::string* stri
 /**
  * @inheritDoc
  */
-void IProperty::getString(std::string* string, ProtoStringList* values) {
+void IProperty::getString(std::string* string, Proto::RepeatedString* values) {
     std::string* value = nullptr;
     value = values->Add();
     value->append(*string);
@@ -100,8 +100,8 @@ void IProperty::getString(std::string* string, ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void IProperty::setVector3(System::Changes::BitMask changeType, Math::Vector3* vector3, ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void IProperty::setVector3(System::Changes::BitMask changeType, Math::Vector3* vector3, Proto::RepeatedString* values) {
+    auto value = values->begin();
     vector3->x = boost::lexical_cast<f32>(*value);
     vector3->y = boost::lexical_cast<f32>(*(++value));
     vector3->z = boost::lexical_cast<f32>(*(++value));
@@ -111,7 +111,7 @@ void IProperty::setVector3(System::Changes::BitMask changeType, Math::Vector3* v
 /**
  * @inheritDoc
  */
-void IProperty::getVector3(Math::Vector3* vector3, ProtoStringList* values) {
+void IProperty::getVector3(Math::Vector3* vector3, Proto::RepeatedString* values) {
     std::string* value = nullptr;
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(vector3->x));
@@ -124,8 +124,8 @@ void IProperty::getVector3(Math::Vector3* vector3, ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void IProperty::setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void IProperty::setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, Proto::RepeatedString* values) {
+    auto value = values->begin();
     vector4->x = boost::lexical_cast<f32>(*value);
     vector4->y = boost::lexical_cast<f32>(*(++value));
     vector4->z = boost::lexical_cast<f32>(*(++value));
@@ -136,7 +136,7 @@ void IProperty::setVector4(System::Changes::BitMask changeType, Math::Vector4* v
 /**
  * @inheritDoc
  */
-void IProperty::getVector4(Math::Vector4* vector4, ProtoStringList* values) {
+void IProperty::getVector4(Math::Vector4* vector4, Proto::RepeatedString* values) {
     std::string* value = nullptr;
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(vector4->x));
@@ -151,8 +151,8 @@ void IProperty::getVector4(Math::Vector4* vector4, ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void IProperty::setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void IProperty::setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, Proto::RepeatedString* values) {
+    auto value = values->begin();
     quaternion->x = boost::lexical_cast<f32>(*value);
     quaternion->y = boost::lexical_cast<f32>(*(++value));
     quaternion->z = boost::lexical_cast<f32>(*(++value));
@@ -163,7 +163,7 @@ void IProperty::setQuaternion(System::Changes::BitMask changeType, Math::Quatern
 /**
  * @inheritDoc
  */
-void IProperty::getQuaternion(Math::Quaternion* quaternion, ProtoStringList* values) {
+void IProperty::getQuaternion(Math::Quaternion* quaternion, Proto::RepeatedString* values) {
     std::string* value = nullptr;
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(quaternion->x));

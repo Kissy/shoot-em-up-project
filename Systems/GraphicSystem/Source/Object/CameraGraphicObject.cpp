@@ -167,16 +167,16 @@ Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setFOVy(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void CameraGraphicObject::setFOVy(Proto::RepeatedString* values) {
+    auto value = values->begin();
     m_pCamera->setFOVy(Ogre::Radian(boost::lexical_cast<f32>(*value)));
 }
 
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setClipDistances(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void CameraGraphicObject::setClipDistances(Proto::RepeatedString* values) {
+    auto value = values->begin();
     m_pCamera->setNearClipDistance(boost::lexical_cast<f32>(*value));
     m_pCamera->setFarClipDistance(boost::lexical_cast<f32>(*(++value)));
 }
@@ -184,8 +184,8 @@ void CameraGraphicObject::setClipDistances(ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void CameraGraphicObject::setPolygonMode(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void CameraGraphicObject::setPolygonMode(Proto::RepeatedString* values) {
+    auto value = values->begin();
 
     PolygonModes polygonMode = static_cast<PolygonModes>(boost::lexical_cast<i32>(*value));
     ASSERT(polygonMode > PolygonMode_Invalid);

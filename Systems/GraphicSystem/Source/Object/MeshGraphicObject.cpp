@@ -108,9 +108,9 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
 /**
  * @inheritDoc
  */
-void MeshGraphicObject::setMeshName(ProtoStringList* values) {
+void MeshGraphicObject::setMeshName(Proto::RepeatedString* values) {
     if (!m_bInitialized) {
-        ProtoStringList::const_iterator value = values->begin();
+        auto value = values->begin();
         m_pEntity = POGRESCENEMGR->createEntity(m_entity->getName(), *value);
         ASSERT(m_pEntity != NULL);
     }

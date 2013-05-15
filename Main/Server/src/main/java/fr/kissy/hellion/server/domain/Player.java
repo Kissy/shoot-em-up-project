@@ -2,7 +2,7 @@ package fr.kissy.hellion.server.domain;
 
 import com.google.common.collect.Sets;
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.proto.common.PropertyDto;
+import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.server.core.rtree.model.Box;
 import fr.kissy.hellion.server.core.rtree.model.BoxObject;
 import org.bson.types.ObjectId;
@@ -20,34 +20,34 @@ public class Player implements BoxObject {
 
     @Id
     private ObjectId id;
-    private PropertyDto.PropertyProto.Builder meshProperty;
-    private PropertyDto.PropertyProto.Builder positionProperty;
-    private PropertyDto.PropertyProto.Builder velocityProperty;
-    private PropertyDto.PropertyProto.Builder orientationProperty;
+    private Common.Property.Builder meshProperty;
+    private Common.Property.Builder positionProperty;
+    private Common.Property.Builder velocityProperty;
+    private Common.Property.Builder orientationProperty;
 
     // Local Instance
     private Channel channel;
     private Set<Player> nearPlayers = Sets.newHashSet();
 
     public Player(String image) {
-        meshProperty = PropertyDto.PropertyProto.newBuilder();
+        meshProperty = Common.Property.newBuilder();
         meshProperty.setName("Mesh");
         meshProperty.addValue(ByteString.copyFrom(image.getBytes()));
 
-        positionProperty = PropertyDto.PropertyProto.newBuilder();
+        positionProperty = Common.Property.newBuilder();
         positionProperty.setName("Position");
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         positionProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
 
-        orientationProperty = PropertyDto.PropertyProto.newBuilder();
+        orientationProperty = Common.Property.newBuilder();
         orientationProperty.setName("Orientation");
         orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         orientationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(1)));
 
-        velocityProperty = PropertyDto.PropertyProto.newBuilder();
+        velocityProperty = Common.Property.newBuilder();
         velocityProperty.setName("Velocity");
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
@@ -63,11 +63,11 @@ public class Player implements BoxObject {
         this.id = id;
     }
 
-    public PropertyDto.PropertyProto.Builder getPositionProperty() {
+    public Common.Property.Builder getPositionProperty() {
         return positionProperty;
     }
 
-    public PropertyDto.PropertyProto.Builder getMeshProperty() {
+    public Common.Property.Builder getMeshProperty() {
         return meshProperty;
     }
 
@@ -77,7 +77,7 @@ public class Player implements BoxObject {
         positionProperty.setValue(2, z);
     }
 
-    public PropertyDto.PropertyProto.Builder getVelocityProperty() {
+    public Common.Property.Builder getVelocityProperty() {
         return velocityProperty;
     }
 
@@ -88,7 +88,7 @@ public class Player implements BoxObject {
         velocityProperty.setValue(3, w);
     }
 
-    public PropertyDto.PropertyProto.Builder getOrientationProperty() {
+    public Common.Property.Builder getOrientationProperty() {
         return orientationProperty;
     }
 

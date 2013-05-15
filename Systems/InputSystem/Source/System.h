@@ -46,7 +46,7 @@ public:
     /**
      * @inheritDoc
      */
-    System::Type GetSystemType(void) {
-        return System::Types::Input;
+    Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Input;
     }
 };

@@ -22,21 +22,21 @@
 class UObject;
 class IChangeManager;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// Implements a universal scene for holding all the scenes of the different systems and acts as an
-//   interface into the CMM.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Implements a universal scene for holding all the scenes of the different systems and acts as
+ * an interface into the CMM.
+ *
+ * @sa  IObserver
+ */
 class UScene : public IObserver {
 public:
 
     // TODO move
-    typedef std::map<System::Type, ISystem*>                            Systems;
+    typedef std::map<Proto::SystemType, ISystem*>                       Systems;
     typedef Systems::iterator                                           SystemsIt;
     typedef Systems::const_iterator                                     SystemsConstIt;
 
-    typedef std::map<System::Type, ISystemScene*>                       SystemScenes;
+    typedef std::map<Proto::SystemType, ISystemScene*>                  SystemScenes;
     typedef SystemScenes::iterator                                      SystemScenesIt;
     typedef SystemScenes::const_iterator                                SystemScenesConstIt;
 
@@ -49,7 +49,6 @@ public:
         IObserver*              pObserver;
     };
     typedef std::list<ObjectLinkData>       ObjectLinks;
-    typedef ObjectLinks::iterator           ObjectLinksIt;
 
 public:
 
@@ -101,7 +100,7 @@ public:
      *
      * @return  The newly created object that has consequently been added to the scene.
      */
-    UObject* createObject(const ObjectProto* objectProto);
+    UObject* createObject(const Proto::Object* objectProto);
 
     /**
      * Destroys a UObject removing it from the scene.  It also deletes it's CCM.

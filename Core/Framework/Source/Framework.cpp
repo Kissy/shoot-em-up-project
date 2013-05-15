@@ -264,18 +264,7 @@ Error Framework::Execute(void) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // IService::ISystemAccess Implementations.
 
-Handle Framework::GetSystem(const char* pszSystemName) {
-    //
-    // Get the pointer to the system from the system manager.  Handle is just a void* so it will
-    //  convert with any problems.  If you're one of those guys that will think of just casting
-    //  the handle back you'd better not as you'll break the threading when you try to make calls
-    //  into this interface directly.
-    //
-    return Singletons::SystemManager.Get(pszSystemName);
-}
-
-
-Handle Framework::GetSystem(System::Type Type) {
+Handle Framework::GetSystem(Proto::SystemType Type) {
     //
     // Get the pointer to the system from the system manager.  Handle is just a void* so it will
     //  convert with any problems.  If you're one of those guys that will think of just casting
@@ -285,26 +274,7 @@ Handle Framework::GetSystem(System::Type Type) {
     return Singletons::SystemManager.Get(Type);
 }
 
-
-Handle Framework::GetScene(const char* pszSystemName) {
-    Handle hScene = NULL;
-    //
-    // Get the system from the system manager to get the type.
-    //
-    ISystem* pSystem = Singletons::SystemManager.Get(pszSystemName);
-
-    if (pSystem != NULL) {
-        //
-        // Get the scene based on the type.
-        //
-        hScene = GetScene(pSystem->GetSystemType());
-    }
-
-    return hScene;
-}
-
-
-Handle Framework::GetScene(System::Type Type) {
+Handle Framework::GetScene(Proto::SystemType Type) {
     Handle hScene = NULL;
     //
     // Find the scene extension in the universal scene.
@@ -318,23 +288,7 @@ Handle Framework::GetScene(System::Type Type) {
     return hScene;
 }
 
-
-Handle Framework::GetSystemObject(const char* pszSystemName, const char* pszName) {
-    Handle hObject = NULL;
-    //
-    // Get the system from the system manager to get the type.
-    //
-    ISystem* pSystem = Singletons::SystemManager.Get(pszSystemName);
-
-    if (pSystem != NULL) {
-        hObject = GetSystemObject(pSystem->GetSystemType(), pszName);
-    }
-
-    return hObject;
-}
-
-
-Handle Framework::GetSystemObject(System::Type Type, const char* pszName) {
+Handle Framework::GetSystemObject(Proto::SystemType Type, const char* pszName) {
     Handle hObject = NULL;
     //
     // Find the universal object in the scene.

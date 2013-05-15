@@ -42,7 +42,7 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Type GetSystemType(void) {
-        return System::Types::Input;
+    inline Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Input;
     }
 };

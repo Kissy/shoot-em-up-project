@@ -51,8 +51,8 @@ public:
     /**
      * @inheritDoc
      */
-    System::Type GetSystemType(void) {
-        return System::Types::Graphic;
+    Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Graphic;
     }
 
     /**
@@ -91,42 +91,42 @@ protected:
      *
      * @param   values  The values.
      */
-    void setResourceLocation(ProtoStringList* values);
+    void setResourceLocation(Proto::RepeatedString* values);
 
     /**
      * Sets the window name.
      *
      * @param   values  The values.
      */
-    void setWindowName(ProtoStringList* values);
+    void setWindowName(Proto::RepeatedString* values);
 
     /**
      * Sets the resolution.
      *
      * @param   values  The values.
      */
-    void setResolution(ProtoStringList* values);
+    void setResolution(Proto::RepeatedString* values);
 
     /**
      * Sets the fullscreen.
      *
      * @param   values  The values.
      */
-    void setFullScreen(ProtoStringList* values);
+    void setFullScreen(Proto::RepeatedString* values);
 
     /**
      * Sets the vertical sync.
      *
      * @param   values  The values.
      */
-    void setVerticalSync(ProtoStringList* values);
+    void setVerticalSync(Proto::RepeatedString* values);
 
     /**
      * Sets the anti aliasing.
      *
      * @param   values  The values.
      */
-    void setAntiAliasing(ProtoStringList* values);
+    void setAntiAliasing(Proto::RepeatedString* values);
 
 private:
     Ogre::Root*             m_pRoot;

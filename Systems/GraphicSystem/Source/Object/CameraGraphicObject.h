@@ -73,11 +73,11 @@ class CameraGraphicObject : public GraphicObject {
 
     protected:
 
-        void setFOVy(ProtoStringList* values);
+        void setFOVy(Proto::RepeatedString* values);
 
-        void setClipDistances(ProtoStringList* values);
+        void setClipDistances(Proto::RepeatedString* values);
 
-        void setPolygonMode(ProtoStringList* values);
+        void setPolygonMode(Proto::RepeatedString* values);
 
     private:
 

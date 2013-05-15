@@ -20,8 +20,8 @@
  * @inheritDoc
  */
 ISceneObject::ISceneObject(void) 
-    : m_createObjectQueue(new std::list<ObjectProto>())
-    , m_deleteObjectQueue(new std::list<ObjectProto>()) {
+    : m_createObjectQueue(new ObjectProtoQueue())
+    , m_deleteObjectQueue(new ObjectProtoQueue()) {
 }
 
 /**

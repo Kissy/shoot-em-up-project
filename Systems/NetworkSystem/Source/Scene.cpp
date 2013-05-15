@@ -77,7 +77,7 @@ void NetworkScene::Update(f32 DeltaTime) {
 /**
  * @inheritDoc
  */
-void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
+void NetworkScene::queueCreateObjects(Proto::RepeatedObject objectProtoList) {
     for (auto object : objectProtoList) {
         m_createObjectQueue->push_back(object);
     }
@@ -87,7 +87,7 @@ void NetworkScene::queueCreateObjects(ProtoObjectList objectProtoList) {
 /**
  * @inheritDoc
  */
-void NetworkScene::queueDeleteObjects(ProtoObjectList objectProtoList) {
+void NetworkScene::queueDeleteObjects(Proto::RepeatedObject objectProtoList) {
     for (auto object : objectProtoList) {
         m_deleteObjectQueue->push_back(object);
     }
@@ -97,7 +97,7 @@ void NetworkScene::queueDeleteObjects(ProtoObjectList objectProtoList) {
 /**
  * @inheritDoc
  */
-void NetworkScene::updateObjects(ProtoObjectList objectProtoList) {
+void NetworkScene::updateObjects(Proto::RepeatedObject objectProtoList) {
     for (auto object : objectProtoList) {
         auto systemObjectIterator = m_pObjects.find(object.name());
         // ignore updates if the object is not found

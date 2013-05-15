@@ -1,7 +1,6 @@
 package fr.kissy.hellion.server.service;
 
-import fr.kissy.hellion.proto.common.ObjectDto;
-import fr.kissy.hellion.proto.common.SystemDto;
+import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.server.domain.Player;
 
 /**
@@ -22,27 +21,28 @@ public class ObjectService {
      * @param isControllable Is the player controllable ?
      * @return The player Object created.
      */
-    public ObjectDto.ObjectProto getCreateObject(Player player, boolean isControllable) {
-        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
+    public Common.Object getCreateObject(Player player, boolean isControllable) {
+        Common.Object.Builder builder = Common.Object.newBuilder();
+        builder.setId(player.getId().toString());
         builder.setName(player.getId().toString());
 
-        ObjectDto.ObjectProto.SystemObjectProto.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
-        graphicSystemObject.setSystemType(SystemDto.SystemProto.Type.Graphic);
+        Common.SystemObject.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
+        graphicSystemObject.setSystemType(Common.SystemType.Graphic);
         graphicSystemObject.setType(MESH);
         graphicSystemObject.addProperties(player.getMeshProperty().build());
 
         if (isControllable) {
-            ObjectDto.ObjectProto.SystemObjectProto.Builder inputSystemObject = builder.addSystemObjectsBuilder();
-            inputSystemObject.setSystemType(SystemDto.SystemProto.Type.Input);
+            Common.SystemObject.Builder inputSystemObject = builder.addSystemObjectsBuilder();
+            inputSystemObject.setSystemType(Common.SystemType.Input);
             inputSystemObject.setType(PLAYER);
         }
 
-        ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = builder.addSystemObjectsBuilder();
-        networkSystemObject.setSystemType(SystemDto.SystemProto.Type.Network);
+        Common.SystemObject.Builder networkSystemObject = builder.addSystemObjectsBuilder();
+        networkSystemObject.setSystemType(Common.SystemType.Network);
         networkSystemObject.setType(isControllable ? PLAYER : UPDATABLE);
 
-        ObjectDto.ObjectProto.SystemObjectProto.Builder physicSystemObject = builder.addSystemObjectsBuilder();
-        physicSystemObject.setSystemType(SystemDto.SystemProto.Type.Physic);
+        Common.SystemObject.Builder physicSystemObject = builder.addSystemObjectsBuilder();
+        physicSystemObject.setSystemType(Common.SystemType.Physic);
         physicSystemObject.setType(MOVABLE);
         physicSystemObject.addProperties(player.getPositionProperty().build());
         physicSystemObject.addProperties(player.getOrientationProperty().build());
@@ -57,12 +57,13 @@ public class ObjectService {
      * @param player The player to convert.
      * @return The player Object created.
      */
-    public ObjectDto.ObjectProto getUpdateObject(Player player) {
-        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
+    public Common.Object getUpdateObject(Player player) {
+        Common.Object.Builder builder = Common.Object.newBuilder();
+        builder.setId(player.getId().toString());
         builder.setName(player.getId().toString());
         // Only network system update objects
-        ObjectDto.ObjectProto.SystemObjectProto.Builder networkSystemObject = builder.addSystemObjectsBuilder();
-        networkSystemObject.setSystemType(SystemDto.SystemProto.Type.Network);
+        Common.SystemObject.Builder networkSystemObject = builder.addSystemObjectsBuilder();
+        networkSystemObject.setSystemType(Common.SystemType.Network);
         networkSystemObject.setType(NETWORK);
         networkSystemObject.addProperties(player.getPositionProperty().build());
         networkSystemObject.addProperties(player.getOrientationProperty().build());
@@ -76,8 +77,9 @@ public class ObjectService {
      * @param player The player to convert.
      * @return The player Object created.
      */
-    public ObjectDto.ObjectProto getDeleteObject(Player player) {
-        ObjectDto.ObjectProto.Builder builder = ObjectDto.ObjectProto.newBuilder();
+    public Common.Object getDeleteObject(Player player) {
+        Common.Object.Builder builder = Common.Object.newBuilder();
+        builder.setId(player.getId().toString());
         builder.setName(player.getId().toString());
         return builder.build();
     }

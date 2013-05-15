@@ -126,11 +126,11 @@ public:
      * be appended.
      *
      * @param   jobType         u32 - The type of the job that has just completed; a member of
-     * 							System::Type.
+     * 							Proto::SystemType.
      * @param   jobCounterTicks i64 - The number of clock ticks, from _RDTSC, that this job used
      *                          during this frame.
      */
-    void CaptureJobCounterTicks(u32 jobType, i64 jobCounterTicks) {
+    void CaptureJobCounterTicks(Proto::SystemType jobType, i64 jobCounterTicks) {
         u32 jobIndex = System::Types::GetIndex(jobType);
         if (jobIndex < SystemProto::Type_MAX) {
             //******************************

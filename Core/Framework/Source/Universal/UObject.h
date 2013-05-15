@@ -34,7 +34,7 @@ class UScene;
 class UObject : public ISubject, public IObserver, public IEntity {
 public:
 
-    typedef std::map<System::Type, ISystemObject*>      SystemObjects;
+    typedef std::map<Proto::SystemType, ISystemObject*>      SystemObjects;
     typedef SystemObjects::iterator                     SystemObjectsIt;
     typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
@@ -86,7 +86,7 @@ public:
      *
      * @return  null if it fails, else the extension.
      */
-    ISystemObject* GetExtension(System::Type System);
+    ISystemObject* GetExtension(Proto::SystemType System);
 
     /**
      * Updates the object using an object proto.
@@ -94,7 +94,7 @@ public:
      * @param   objectProto The object prototype.
      */
     // TODO maybe move it to system scene instead ?
-    void update(const ObjectProto* objectProto);
+    void update(const Proto::Object* object);
 
     /**
      * @inheritDoc

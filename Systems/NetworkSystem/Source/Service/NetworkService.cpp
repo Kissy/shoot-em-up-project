@@ -20,8 +20,7 @@
 #include "MatchingVarintPrefix.h"
 #include "Scene.h"
 
-#include "Proto/Message/Authenticated.pb.h"
-#include "Proto/Message/ObjectUpdated.pb.h"
+#include "Proto/Message.pb.h"
 
 /**
  * @inheritDoc
@@ -142,10 +141,10 @@ void NetworkService::onRead(const boost::system::error_code& error) {
  * @inheritDoc
  */
 void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessageProto) {
-    AuthenticatedProto authenticatedProto;
-    authenticatedProto.ParseFromString(upstreamMessageProto.data());
-    if (authenticatedProto.players().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticatedProto.players());
+    Proto::Authenticated authenticated;
+    authenticated.ParseFromString(upstreamMessageProto.data());
+    if (authenticated.players().size() > 0) {
+        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticated.players());
     }
 }
 
@@ -153,10 +152,10 @@ void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessage
  * @inheritDoc
  */
 void NetworkService::onObjectCreated(const UpstreamMessageProto& upstreamMessageProto) {
-    ObjectUpdatedProto objectUpdatedProto;
-    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
-    if (objectUpdatedProto.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdatedProto.objects());
+    Proto::ObjectUpdated objectUpdated;
+    objectUpdated.ParseFromString(upstreamMessageProto.data());
+    if (objectUpdated.objects().size() > 0) {
+        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdated.objects());
     }
 }
 
@@ -164,10 +163,10 @@ void NetworkService::onObjectCreated(const UpstreamMessageProto& upstreamMessage
  * @inheritDoc
  */
 void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessageProto) {
-    ObjectUpdatedProto objectUpdatedProto;
-    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
-    if (objectUpdatedProto.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->updateObjects(objectUpdatedProto.objects());
+    Proto::ObjectUpdated objectUpdated;
+    objectUpdated.ParseFromString(upstreamMessageProto.data());
+    if (objectUpdated.objects().size() > 0) {
+        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->updateObjects(objectUpdated.objects());
     }
 }
 
@@ -175,9 +174,9 @@ void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessage
  * @inheritDoc
  */
 void NetworkService::onObjectDeleted(const UpstreamMessageProto& upstreamMessageProto) {
-    ObjectUpdatedProto objectUpdatedProto;
-    objectUpdatedProto.ParseFromString(upstreamMessageProto.data());
-    if (objectUpdatedProto.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueDeleteObjects(objectUpdatedProto.objects());
+    Proto::ObjectUpdated objectUpdated;
+    objectUpdated.ParseFromString(upstreamMessageProto.data());
+    if (objectUpdated.objects().size() > 0) {
+        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueDeleteObjects(objectUpdated.objects());
     }
 }

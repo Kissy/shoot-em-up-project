@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "Proto/Common/System.pb.h"
+#include "Proto.h"
 #include "Defines.h"
 #include "Logger.h"
 
@@ -38,44 +38,12 @@ class ITaskManager;
  */
 namespace System {
 
-    typedef u32 Type;
-
     /**
      * The Types namespace contains specifics about the system types.
      */
     namespace Types {
-
-        // Disabling the warning for using the non-standard scope operator with enums.
-#if defined( MSC_COMPILER )
-#pragma warning( push )
-#pragma warning( disable : 4482 )
-#endif
-        // A bit mask of the different systems available.  Not all need to be actual
-        // systems.  Custom systems can identify themselves by setting their bit in
-        // the upper 16-bits, and can use the MakeCustom() function to make a custom
-        // type ID.
-        static const u32 Null                   = 0;
-        static const u32 Generic                = (1 << SystemProto::Generic);
-        static const u32 Graphic                = (1 << SystemProto::Graphic);
-        static const u32 Input                  = (1 << SystemProto::Input);
-        static const u32 Network                = (1 << SystemProto::Network);
-        static const u32 Physic                 = (1 << SystemProto::Physic);
-
-        /*
-        static const u32 Scripting              = (1 << SystemProto::Scripting);
-        static const u32 Explosion              = (1 << SystemProto::Explosion);
-        static const u32 Water                  = (1 << SystemProto::Water);
-        */
-
-        // If you extend this list to add a new system, also update the rest of the type-related
-        // lists in this file as well as the PerformanceHints list in the TaskManager.
-
-        static const u32 All                    = static_cast<u32>(-1);
-        static const u32 MAX                    = 32;
-
-#if defined( MSC_COMPILER )
-#pragma warning( pop )
-#endif
+        static const u32 All = static_cast<u32>(-1);
+        static const u32 MAX = 32;
 
         /**
          * Get the index of the system with the given type ID.  Useful for looking up indexed properties.
@@ -84,10 +52,10 @@ namespace System {
          * @param   SystemType  Type - The type ID of a system.
          * @return  u32 - Index of this system.
          */
-        __forceinline u32 GetIndex(const System::Type SystemType) {
+        __forceinline u32 GetIndex(const Proto::SystemType systemType) {
             u32 Index = All;
 #if defined( MSC_COMPILER )
-            _BitScanForward((unsigned long*)&Index, SystemType);
+            _BitScanForward((unsigned long*)&Index, systemType);
 #elif defined( GCC_COMPILER )
             Index = __builtin_ffs(SystemType);
 #endif
@@ -100,28 +68,9 @@ namespace System {
          * @param   SystemType  Type of the system.
          * @return  The type.
          */
-        __forceinline u32 GetType(const SystemProto::Type SystemType) {
-            return (1 << SystemType);
+        __forceinline Proto::SystemType GetType(const u32 index) {
+            return (Proto::SystemType) (1 << index);
         }
-
-#ifdef DEBUG_BUILD
-        __forceinline std::string getName(const System::Type systemType) {
-            switch (systemType) {
-            case System::Types::Generic:
-                return "Generic";
-            case System::Types::Graphic:
-                return "Graphic";
-            case System::Types::Input:
-                return "Input";
-            case System::Types::Network:
-                return "Network";
-            case System::Types::Physic:
-                return "Physic";
-            default:
-                return "Default";
-            }
-        }
-#endif
 
         typedef u32 BitMask;
     }

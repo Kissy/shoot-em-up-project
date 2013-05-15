@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "google/protobuf/message.h"
-#include "Proto/Common/System.pb.h"
+#include "Proto/Common.pb.h"
 
 #include "Defines.h"
 #include "DataTypes.h"
@@ -80,7 +80,7 @@ class PlatformManager : public IPlatformManager, public Singleton {
                  *                      failure.
                  * @return  An error code.
                  */
-                Error LoadSystemLibrary(SystemProto::Type type, ISystem** ppSystem);
+                Error LoadSystemLibrary(Proto::SystemType type, ISystem** ppSystem);
 
                 /**
                  * Loads a Proto file and create a Proto object.

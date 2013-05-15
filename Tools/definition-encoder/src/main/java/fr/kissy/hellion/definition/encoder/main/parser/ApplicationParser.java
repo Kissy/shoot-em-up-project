@@ -4,6 +4,7 @@ import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.proto.Definition;
+import org.apache.commons.beanutils.MethodUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -48,15 +49,7 @@ public class ApplicationParser extends AbstractParser {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if ("Properties".equals(node.getNodeName())) {
-                        parseProperties((Element) node);
-                    } else if ("Systems".equals(node.getNodeName())) {
-                        parseSystems((Element) node);
-                    } else if ("Scenes".equals(node.getNodeName())) {
-                        parseScenes((Element) node);
-                    } else {
-                        AssertUtils.makeTest(false, "GDF files must contain Environment, Systems and Scenes children only");
-                    }
+                    MethodUtils.invokeExactMethod(this, "parse" + node.getNodeName(), new Object[]{node}, new Class[]{Element.class});
                 }
             }
 
@@ -73,7 +66,7 @@ public class ApplicationParser extends AbstractParser {
      * @param propertiesElement The properties element.
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
-    private void parseProperties(Element propertiesElement) throws XMLParseException {
+    public void parseProperties(Element propertiesElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
 
         NodeList properties = propertiesElement.getElementsByTagName("Property");
@@ -88,7 +81,7 @@ public class ApplicationParser extends AbstractParser {
      * @param systemsElement The Systems element.
      * @throws XMLParseException Exception if the document is malformed.
      */
-    private void parseSystems(Element systemsElement) throws XMLParseException {
+    public void parseSystems(Element systemsElement) throws XMLParseException {
         System.out.println("\t- Parsing Systems");
 
         NodeList systemList = systemsElement.getElementsByTagName("System");
@@ -117,7 +110,7 @@ public class ApplicationParser extends AbstractParser {
      * @param scenesElement The Scenes element.
      * @throws XMLParseException Exception if the document is malformed.
      */
-    private void parseScenes(Element scenesElement) throws XMLParseException {
+    public void parseScenes(Element scenesElement) throws XMLParseException {
         System.out.println("\t- Parsing Scenes");
 
         getApplicationBuilder().setStartupScene(ParseUtils.safeGetAttribute(scenesElement, "Startup"));

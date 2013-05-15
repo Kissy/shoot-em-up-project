@@ -2,9 +2,6 @@ package fr.kissy.hellion.server.actor;
 
 import akka.actor.UntypedActor;
 import com.google.common.collect.Sets;
-import fr.kissy.hellion.proto.common.ObjectDto;
-import fr.kissy.hellion.proto.common.SystemDto;
-import fr.kissy.hellion.proto.message.ObjectUpdated;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;

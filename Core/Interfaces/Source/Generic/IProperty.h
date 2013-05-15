@@ -27,10 +27,10 @@
 class IProperty {
 public:
     
-    typedef boost::function<void (ProtoStringList* propertiesValue)> PropertySetter;
+    typedef boost::function<void (Proto::RepeatedString* propertiesValue)> PropertySetter;
     typedef std::map<std::string, PropertySetter> PropertySetters;
     
-    typedef boost::function<void (ProtoStringList* propertiesValue)> PropertyGetter;
+    typedef boost::function<void (Proto::RepeatedString* propertiesValue)> PropertyGetter;
     typedef std::map<std::string, PropertyGetter> PropertyGetters;
 
     /**
@@ -55,21 +55,21 @@ public:
      *
      * @param   properties Property structure array to get values from.
      */
-    void setProperties(const ProtoPropertyList& properties);
+    void setProperties(const Proto::RepeatedProperty& properties);
         
     /**
      * Sets the property for this system.
      *
      * @param   property Property to get values from.
      */
-    void setProperty(const PropertyProto& property);
+    void setProperty(const Proto::Property& property);
 
     /**
      * Get the properties and their values for this system.
      * 
      * @return The map of properties associated with their values.
      */
-    ProtoPropertyList getProperties(void);
+    Proto::RepeatedProperty getProperties(void);
 
     /**
      * Sets a string.
@@ -78,7 +78,7 @@ public:
      * @param [in,out]  string  If non-null, the string.
      * @param [in,out]  values  If non-null, the values.
      */
-    void setString(System::Changes::BitMask changeType, std::string* string, ProtoStringList* values);
+    void setString(System::Changes::BitMask changeType, std::string* string, Proto::RepeatedString* values);
 
     /**
      * Gets a string.
@@ -86,7 +86,7 @@ public:
      * @param [in,out]  string  If non-null, the string.
      * @param [in,out]  values  If non-null, the values.
      */
-    void getString(std::string* string, ProtoStringList* values);
+    void getString(std::string* string, Proto::RepeatedString* values);
 
     /**
      * Sets vector 3.
@@ -95,7 +95,7 @@ public:
      * @param [in,out]  vector3 If non-null, the third vector.
      * @param [in,out]  values  If non-null, the values.
      */
-    void setVector3(System::Changes::BitMask changeType, Math::Vector3* vector3, ProtoStringList* values);
+    void setVector3(System::Changes::BitMask changeType, Math::Vector3* vector3, Proto::RepeatedString* values);
 
     /**
      * Gets vector 3.
@@ -103,7 +103,7 @@ public:
      * @param [in,out]  vector3 If non-null, the third vector.
      * @param [in,out]  values  If non-null, the values.
      */
-    void getVector3(Math::Vector3* vector3, ProtoStringList* values);
+    void getVector3(Math::Vector3* vector3, Proto::RepeatedString* values);
 
     /**
      * Sets vector 4.
@@ -112,7 +112,7 @@ public:
      * @param [in,out]  vector4 If non-null, the third vector.
      * @param [in,out]  values  If non-null, the values.
      */
-    void setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, ProtoStringList* values);
+    void setVector4(System::Changes::BitMask changeType, Math::Vector4* vector4, Proto::RepeatedString* values);
 
     /**
      * Gets vector 4.
@@ -120,7 +120,7 @@ public:
      * @param [in,out]  vector4 If non-null, the third vector.
      * @param [in,out]  values  If non-null, the values.
      */
-    void getVector4(Math::Vector4* vector4, ProtoStringList* values);
+    void getVector4(Math::Vector4* vector4, Proto::RepeatedString* values);
 
     /**
      * Sets a quaternion.
@@ -129,7 +129,7 @@ public:
      * @param [in,out]  quaternion  If non-null, the quaternion.
      * @param [in,out]  values      If non-null, the values.
      */
-    void setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, ProtoStringList* values);
+    void setQuaternion(System::Changes::BitMask changeType, Math::Quaternion* quaternion, Proto::RepeatedString* values);
 
     /**
      * Gets a quaternion.
@@ -137,7 +137,7 @@ public:
      * @param [in,out]  quaternion  If non-null, the quaternion.
      * @param [in,out]  values      If non-null, the values.
      */
-    void getQuaternion(Math::Quaternion* quaternion, ProtoStringList* values);
+    void getQuaternion(Math::Quaternion* quaternion, Proto::RepeatedString* values);
 
     /**
      * Method called to notify the object that a property has been changed.

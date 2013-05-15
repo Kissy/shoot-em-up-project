@@ -66,30 +66,12 @@ class Framework : public IServiceManager::ISystemAccess {
     protected:
 
         /**
-         * Gets a system.
-         * Implementation of IService::ISystemAccess::GetSystem.
-         *
-         * @param   pszSystemName   Name of the system.
-         * @return  The system.
-         */
-        virtual Handle GetSystem(const char* pszSystemName);
-
-        /**
          * Implementation of IService::ISystemAccess::GetSystem.
          *
          * @param   Type    The type.
          * @return  The system.
          */
-        virtual Handle GetSystem(System::Type Type);
-
-        /**
-         * Gets a scene.
-         * Implementation of IService::ISystemAccess::GetScene.
-         *
-         * @param   pszSystemName   Name of the system.
-         * @return  The scene.
-         */
-        virtual Handle GetScene(const char* pszSystemName);
+        virtual Handle GetSystem(Proto::SystemType Type);
 
         /**
          * Implementation of IService::ISystemAccess::GetScene.
@@ -97,17 +79,7 @@ class Framework : public IServiceManager::ISystemAccess {
          * @param   Type    The type.
          * @return  The scene.
          */
-        virtual Handle GetScene(System::Type Type);
-
-        /**
-         * Gets a system object.
-         * Implementation of IService::ISystemAccess::GetSystemObject.
-         *
-         * @param   pszSystemName   Name of the system.
-         * @param   pszName         The name.
-         * @return  The system object.
-         */
-        virtual Handle GetSystemObject(const char* pszSystemName, const char* pszName);
+        virtual Handle GetScene(Proto::SystemType Type);
 
         /**
          * Implementation of IService::ISystemAccess::GetSystemObject.
@@ -116,7 +88,7 @@ class Framework : public IServiceManager::ISystemAccess {
          * @param   pszName The name.
          * @return  The system object.
          */
-        virtual Handle GetSystemObject(System::Type Type, const char* pszName);
+        virtual Handle GetSystemObject(Proto::SystemType Type, const char* pszName);
 
         /**
          * Issues all the pending property changes.  This only occurs after the scheduler has

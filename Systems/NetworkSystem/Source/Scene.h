@@ -69,8 +69,8 @@ public:
     /**
      * @inheritDoc
      */
-    System::Type GetSystemType(void) {
-        return System::Types::Network;
+    Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Network;
     };
 
     /**
@@ -78,20 +78,20 @@ public:
      *
      * @param   objectProtoList List of object prototypes.
      */
-    void queueCreateObjects(ProtoObjectList objectProtoList);
+    void queueCreateObjects(Proto::RepeatedObject objectProtoList);
 
     /**
      * Queue delete objects.
      *
      * @param   objectProtoList List of object prototypes.
      */
-    void queueDeleteObjects(ProtoObjectList objectProtoList);
+    void queueDeleteObjects(Proto::RepeatedObject objectProtoList);
     
     /**
      * Updates the objects described by objectProtoList.
      *
      * @param   objectProtoList List of object prototypes.
      */
-    void updateObjects(ProtoObjectList objectProtoList);
+    void updateObjects(Proto::RepeatedObject objectProtoList);
 
 };

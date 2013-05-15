@@ -63,8 +63,8 @@ class PhysicScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
-            return System::Types::Physic;
+        Proto::SystemType GetSystemType(void) {
+            return Proto::SystemType::Physic;
         };
 
     protected:

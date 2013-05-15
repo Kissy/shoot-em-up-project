@@ -113,7 +113,7 @@ void PlayerInputObject::Update(f32 DeltaTime) {
 }
 
 void PlayerInputObject::createShot(void) {
-    ObjectProto shotProto;
+    Proto::Object shotProto;
     shotProto.set_name("Test");
     m_createObjectQueue->push_back(shotProto);
 }

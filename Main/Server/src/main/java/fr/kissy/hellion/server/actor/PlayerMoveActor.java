@@ -2,18 +2,14 @@ package fr.kissy.hellion.server.actor;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
-import fr.kissy.hellion.proto.common.PropertyDto;
-import fr.kissy.hellion.proto.message.ObjectUpdated;
-import fr.kissy.hellion.proto.server.UpstreamMessageDto;
+import fr.kissy.hellion.proto.Common;
+import fr.kissy.hellion.proto.Message;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
-import fr.kissy.hellion.server.service.WorldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import java.util.List;
 
 
 /**
@@ -33,9 +29,9 @@ public class PlayerMoveActor extends UntypedActor {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
-        ObjectUpdated.ObjectUpdatedProto updatedProto = ObjectUpdated.ObjectUpdatedProto.parseFrom(messageEvent.getMessage().getData());
+        Message.ObjectUpdated updatedProto = Message.ObjectUpdated.parseFrom(messageEvent.getMessage().getData());
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
-        for (PropertyDto.PropertyProto propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
+        for (Common.Property propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
             if (propertyProto.getName().equals("Position")) {
                 player.setPosition(
                     propertyProto.getValue(0),

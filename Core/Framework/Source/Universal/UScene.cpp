@@ -82,7 +82,7 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     //
     // Get the system's type.
     //
-    System::Type SystemType = pSystem->GetSystemType();
+    Proto::SystemType SystemType = pSystem->GetSystemType();
     ASSERTMSG(m_SystemScenes.find(SystemType) == m_SystemScenes.end(),
               "The new scene to create for the selected system type already exists.");
     //
@@ -122,7 +122,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     //
     // Get the system's type.
     //
-    System::Type SystemType = pSystem->GetSystemType();
+    Proto::SystemType SystemType = pSystem->GetSystemType();
     //
     // Find the system scene in the collection and remove it.
     //
@@ -144,7 +144,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
 /**
  * @inheritDoc
  */
-UObject* UScene::createObject(const ObjectProto* objectProto) {
+UObject* UScene::createObject(const Proto::Object* objectProto) {
     //
     // Create the new object.
     //

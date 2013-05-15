@@ -51,8 +51,8 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Type GetSystemType(void) {
-        return System::Types::Network;
+    inline Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Network;
     }
 
     /**

@@ -26,52 +26,52 @@ public final class Definition {
     com.google.protobuf.ByteString
         getStartupSceneBytes();
 
-    // repeated .Property properties = 2;
+    // repeated .Proto.Property properties = 2;
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Common.Property> 
         getPropertiesList();
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     fr.kissy.hellion.proto.Common.Property getProperties(int index);
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     int getPropertiesCount();
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Common.PropertyOrBuilder> 
         getPropertiesOrBuilderList();
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     fr.kissy.hellion.proto.Common.PropertyOrBuilder getPropertiesOrBuilder(
         int index);
 
-    // repeated .System systems = 3;
+    // repeated .Proto.System systems = 3;
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Common.System> 
         getSystemsList();
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     fr.kissy.hellion.proto.Common.System getSystems(int index);
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     int getSystemsCount();
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
         getSystemsOrBuilderList();
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
         int index);
@@ -97,7 +97,7 @@ public final class Definition {
         getScenesBytes(int index);
   }
   /**
-   * Protobuf type {@code Application}
+   * Protobuf type {@code Proto.Application}
    */
   public static final class Application extends
       com.google.protobuf.GeneratedMessage
@@ -199,12 +199,12 @@ public final class Definition {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Application_descriptor;
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Application_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Application_fieldAccessorTable
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Application_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               fr.kissy.hellion.proto.Definition.Application.class, fr.kissy.hellion.proto.Definition.Application.Builder.class);
     }
@@ -268,72 +268,72 @@ public final class Definition {
       }
     }
 
-    // repeated .Property properties = 2;
+    // repeated .Proto.Property properties = 2;
     public static final int PROPERTIES_FIELD_NUMBER = 2;
     private java.util.List<fr.kissy.hellion.proto.Common.Property> properties_;
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Common.Property> getPropertiesList() {
       return properties_;
     }
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Common.PropertyOrBuilder> 
         getPropertiesOrBuilderList() {
       return properties_;
     }
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     public int getPropertiesCount() {
       return properties_.size();
     }
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     public fr.kissy.hellion.proto.Common.Property getProperties(int index) {
       return properties_.get(index);
     }
     /**
-     * <code>repeated .Property properties = 2;</code>
+     * <code>repeated .Proto.Property properties = 2;</code>
      */
     public fr.kissy.hellion.proto.Common.PropertyOrBuilder getPropertiesOrBuilder(
         int index) {
       return properties_.get(index);
     }
 
-    // repeated .System systems = 3;
+    // repeated .Proto.System systems = 3;
     public static final int SYSTEMS_FIELD_NUMBER = 3;
     private java.util.List<fr.kissy.hellion.proto.Common.System> systems_;
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Common.System> getSystemsList() {
       return systems_;
     }
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
         getSystemsOrBuilderList() {
       return systems_;
     }
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     public int getSystemsCount() {
       return systems_.size();
     }
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     public fr.kissy.hellion.proto.Common.System getSystems(int index) {
       return systems_.get(index);
     }
     /**
-     * <code>repeated .System systems = 3;</code>
+     * <code>repeated .Proto.System systems = 3;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
         int index) {
@@ -525,19 +525,19 @@ public final class Definition {
       return builder;
     }
     /**
-     * Protobuf type {@code Application}
+     * Protobuf type {@code Proto.Application}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.Definition.ApplicationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Application_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Application_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Application_fieldAccessorTable
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Application_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 fr.kissy.hellion.proto.Definition.Application.class, fr.kissy.hellion.proto.Definition.Application.Builder.class);
       }
@@ -589,7 +589,7 @@ public final class Definition {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Application_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Application_descriptor;
       }
 
       public fr.kissy.hellion.proto.Definition.Application getDefaultInstanceForType() {
@@ -836,7 +836,7 @@ public final class Definition {
         return this;
       }
 
-      // repeated .Property properties = 2;
+      // repeated .Proto.Property properties = 2;
       private java.util.List<fr.kissy.hellion.proto.Common.Property> properties_ =
         java.util.Collections.emptyList();
       private void ensurePropertiesIsMutable() {
@@ -850,7 +850,7 @@ public final class Definition {
           fr.kissy.hellion.proto.Common.Property, fr.kissy.hellion.proto.Common.Property.Builder, fr.kissy.hellion.proto.Common.PropertyOrBuilder> propertiesBuilder_;
 
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.Property> getPropertiesList() {
         if (propertiesBuilder_ == null) {
@@ -860,7 +860,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public int getPropertiesCount() {
         if (propertiesBuilder_ == null) {
@@ -870,7 +870,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.Property getProperties(int index) {
         if (propertiesBuilder_ == null) {
@@ -880,7 +880,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.Common.Property value) {
@@ -897,7 +897,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder setProperties(
           int index, fr.kissy.hellion.proto.Common.Property.Builder builderForValue) {
@@ -911,7 +911,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder addProperties(fr.kissy.hellion.proto.Common.Property value) {
         if (propertiesBuilder_ == null) {
@@ -927,7 +927,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.Common.Property value) {
@@ -944,7 +944,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder addProperties(
           fr.kissy.hellion.proto.Common.Property.Builder builderForValue) {
@@ -958,7 +958,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder addProperties(
           int index, fr.kissy.hellion.proto.Common.Property.Builder builderForValue) {
@@ -972,7 +972,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder addAllProperties(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.Property> values) {
@@ -986,7 +986,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder clearProperties() {
         if (propertiesBuilder_ == null) {
@@ -999,7 +999,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public Builder removeProperties(int index) {
         if (propertiesBuilder_ == null) {
@@ -1012,14 +1012,14 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.Property.Builder getPropertiesBuilder(
           int index) {
         return getPropertiesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.PropertyOrBuilder getPropertiesOrBuilder(
           int index) {
@@ -1029,7 +1029,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Common.PropertyOrBuilder> 
            getPropertiesOrBuilderList() {
@@ -1040,14 +1040,14 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.Property.Builder addPropertiesBuilder() {
         return getPropertiesFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Common.Property.getDefaultInstance());
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.Property.Builder addPropertiesBuilder(
           int index) {
@@ -1055,7 +1055,7 @@ public final class Definition {
             index, fr.kissy.hellion.proto.Common.Property.getDefaultInstance());
       }
       /**
-       * <code>repeated .Property properties = 2;</code>
+       * <code>repeated .Proto.Property properties = 2;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.Property.Builder> 
            getPropertiesBuilderList() {
@@ -1076,7 +1076,7 @@ public final class Definition {
         return propertiesBuilder_;
       }
 
-      // repeated .System systems = 3;
+      // repeated .Proto.System systems = 3;
       private java.util.List<fr.kissy.hellion.proto.Common.System> systems_ =
         java.util.Collections.emptyList();
       private void ensureSystemsIsMutable() {
@@ -1090,7 +1090,7 @@ public final class Definition {
           fr.kissy.hellion.proto.Common.System, fr.kissy.hellion.proto.Common.System.Builder, fr.kissy.hellion.proto.Common.SystemOrBuilder> systemsBuilder_;
 
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.System> getSystemsList() {
         if (systemsBuilder_ == null) {
@@ -1100,7 +1100,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public int getSystemsCount() {
         if (systemsBuilder_ == null) {
@@ -1110,7 +1110,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.System getSystems(int index) {
         if (systemsBuilder_ == null) {
@@ -1120,7 +1120,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.Common.System value) {
@@ -1137,7 +1137,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -1151,7 +1151,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder addSystems(fr.kissy.hellion.proto.Common.System value) {
         if (systemsBuilder_ == null) {
@@ -1167,7 +1167,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.Common.System value) {
@@ -1184,7 +1184,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder addSystems(
           fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -1198,7 +1198,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -1212,7 +1212,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder addAllSystems(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.System> values) {
@@ -1226,7 +1226,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder clearSystems() {
         if (systemsBuilder_ == null) {
@@ -1239,7 +1239,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public Builder removeSystems(int index) {
         if (systemsBuilder_ == null) {
@@ -1252,14 +1252,14 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder getSystemsBuilder(
           int index) {
         return getSystemsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
           int index) {
@@ -1269,7 +1269,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
            getSystemsOrBuilderList() {
@@ -1280,14 +1280,14 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder addSystemsBuilder() {
         return getSystemsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Common.System.getDefaultInstance());
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder addSystemsBuilder(
           int index) {
@@ -1295,7 +1295,7 @@ public final class Definition {
             index, fr.kissy.hellion.proto.Common.System.getDefaultInstance());
       }
       /**
-       * <code>repeated .System systems = 3;</code>
+       * <code>repeated .Proto.System systems = 3;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.System.Builder> 
            getSystemsBuilderList() {
@@ -1409,7 +1409,7 @@ public final class Definition {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:Application)
+      // @@protoc_insertion_point(builder_scope:Proto.Application)
     }
 
     static {
@@ -1417,7 +1417,7 @@ public final class Definition {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:Application)
+    // @@protoc_insertion_point(class_scope:Proto.Application)
   }
 
   public interface SceneOrBuilder
@@ -1438,83 +1438,108 @@ public final class Definition {
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // repeated .System systems = 2;
+    // repeated .Proto.System systems = 2;
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Common.System> 
         getSystemsList();
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     fr.kissy.hellion.proto.Common.System getSystems(int index);
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     int getSystemsCount();
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
         getSystemsOrBuilderList();
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
         int index);
 
-    // repeated .Object objects = 3;
+    // repeated .Proto.Object templates = 3;
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    java.util.List<fr.kissy.hellion.proto.Common.Object> 
+        getTemplatesList();
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    fr.kissy.hellion.proto.Common.Object getTemplates(int index);
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    int getTemplatesCount();
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
+        getTemplatesOrBuilderList();
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    fr.kissy.hellion.proto.Common.ObjectOrBuilder getTemplatesOrBuilder(
+        int index);
+
+    // repeated .Proto.Object objects = 4;
+    /**
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Common.Object> 
         getObjectsList();
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     fr.kissy.hellion.proto.Common.Object getObjects(int index);
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     int getObjectsCount();
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
         getObjectsOrBuilderList();
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     fr.kissy.hellion.proto.Common.ObjectOrBuilder getObjectsOrBuilder(
         int index);
 
-    // repeated .Link links = 4;
+    // repeated .Proto.Link links = 5;
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     java.util.List<fr.kissy.hellion.proto.Definition.Link> 
         getLinksList();
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     fr.kissy.hellion.proto.Definition.Link getLinks(int index);
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     int getLinksCount();
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     java.util.List<? extends fr.kissy.hellion.proto.Definition.LinkOrBuilder> 
         getLinksOrBuilderList();
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     fr.kissy.hellion.proto.Definition.LinkOrBuilder getLinksOrBuilder(
         int index);
   }
   /**
-   * Protobuf type {@code Scene}
+   * Protobuf type {@code Proto.Scene}
    */
   public static final class Scene extends
       com.google.protobuf.GeneratedMessage
@@ -1579,16 +1604,24 @@ public final class Definition {
             }
             case 26: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                objects_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.Object>();
+                templates_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.Object>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              objects_.add(input.readMessage(fr.kissy.hellion.proto.Common.Object.PARSER, extensionRegistry));
+              templates_.add(input.readMessage(fr.kissy.hellion.proto.Common.Object.PARSER, extensionRegistry));
               break;
             }
             case 34: {
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                links_ = new java.util.ArrayList<fr.kissy.hellion.proto.Definition.Link>();
+                objects_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.Object>();
                 mutable_bitField0_ |= 0x00000008;
+              }
+              objects_.add(input.readMessage(fr.kissy.hellion.proto.Common.Object.PARSER, extensionRegistry));
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                links_ = new java.util.ArrayList<fr.kissy.hellion.proto.Definition.Link>();
+                mutable_bitField0_ |= 0x00000010;
               }
               links_.add(input.readMessage(fr.kissy.hellion.proto.Definition.Link.PARSER, extensionRegistry));
               break;
@@ -1605,9 +1638,12 @@ public final class Definition {
           systems_ = java.util.Collections.unmodifiableList(systems_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          objects_ = java.util.Collections.unmodifiableList(objects_);
+          templates_ = java.util.Collections.unmodifiableList(templates_);
         }
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          objects_ = java.util.Collections.unmodifiableList(objects_);
+        }
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
           links_ = java.util.Collections.unmodifiableList(links_);
         }
         this.unknownFields = unknownFields.build();
@@ -1616,12 +1652,12 @@ public final class Definition {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Scene_descriptor;
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Scene_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Scene_fieldAccessorTable
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Scene_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               fr.kissy.hellion.proto.Definition.Scene.class, fr.kissy.hellion.proto.Definition.Scene.Builder.class);
     }
@@ -1685,108 +1721,144 @@ public final class Definition {
       }
     }
 
-    // repeated .System systems = 2;
+    // repeated .Proto.System systems = 2;
     public static final int SYSTEMS_FIELD_NUMBER = 2;
     private java.util.List<fr.kissy.hellion.proto.Common.System> systems_;
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Common.System> getSystemsList() {
       return systems_;
     }
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
         getSystemsOrBuilderList() {
       return systems_;
     }
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     public int getSystemsCount() {
       return systems_.size();
     }
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     public fr.kissy.hellion.proto.Common.System getSystems(int index) {
       return systems_.get(index);
     }
     /**
-     * <code>repeated .System systems = 2;</code>
+     * <code>repeated .Proto.System systems = 2;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
         int index) {
       return systems_.get(index);
     }
 
-    // repeated .Object objects = 3;
-    public static final int OBJECTS_FIELD_NUMBER = 3;
+    // repeated .Proto.Object templates = 3;
+    public static final int TEMPLATES_FIELD_NUMBER = 3;
+    private java.util.List<fr.kissy.hellion.proto.Common.Object> templates_;
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    public java.util.List<fr.kissy.hellion.proto.Common.Object> getTemplatesList() {
+      return templates_;
+    }
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    public java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
+        getTemplatesOrBuilderList() {
+      return templates_;
+    }
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    public int getTemplatesCount() {
+      return templates_.size();
+    }
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    public fr.kissy.hellion.proto.Common.Object getTemplates(int index) {
+      return templates_.get(index);
+    }
+    /**
+     * <code>repeated .Proto.Object templates = 3;</code>
+     */
+    public fr.kissy.hellion.proto.Common.ObjectOrBuilder getTemplatesOrBuilder(
+        int index) {
+      return templates_.get(index);
+    }
+
+    // repeated .Proto.Object objects = 4;
+    public static final int OBJECTS_FIELD_NUMBER = 4;
     private java.util.List<fr.kissy.hellion.proto.Common.Object> objects_;
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Common.Object> getObjectsList() {
       return objects_;
     }
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
         getObjectsOrBuilderList() {
       return objects_;
     }
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     public int getObjectsCount() {
       return objects_.size();
     }
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     public fr.kissy.hellion.proto.Common.Object getObjects(int index) {
       return objects_.get(index);
     }
     /**
-     * <code>repeated .Object objects = 3;</code>
+     * <code>repeated .Proto.Object objects = 4;</code>
      */
     public fr.kissy.hellion.proto.Common.ObjectOrBuilder getObjectsOrBuilder(
         int index) {
       return objects_.get(index);
     }
 
-    // repeated .Link links = 4;
-    public static final int LINKS_FIELD_NUMBER = 4;
+    // repeated .Proto.Link links = 5;
+    public static final int LINKS_FIELD_NUMBER = 5;
     private java.util.List<fr.kissy.hellion.proto.Definition.Link> links_;
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     public java.util.List<fr.kissy.hellion.proto.Definition.Link> getLinksList() {
       return links_;
     }
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     public java.util.List<? extends fr.kissy.hellion.proto.Definition.LinkOrBuilder> 
         getLinksOrBuilderList() {
       return links_;
     }
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     public int getLinksCount() {
       return links_.size();
     }
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     public fr.kissy.hellion.proto.Definition.Link getLinks(int index) {
       return links_.get(index);
     }
     /**
-     * <code>repeated .Link links = 4;</code>
+     * <code>repeated .Proto.Link links = 5;</code>
      */
     public fr.kissy.hellion.proto.Definition.LinkOrBuilder getLinksOrBuilder(
         int index) {
@@ -1796,6 +1868,7 @@ public final class Definition {
     private void initFields() {
       name_ = "";
       systems_ = java.util.Collections.emptyList();
+      templates_ = java.util.Collections.emptyList();
       objects_ = java.util.Collections.emptyList();
       links_ = java.util.Collections.emptyList();
     }
@@ -1810,6 +1883,12 @@ public final class Definition {
       }
       for (int i = 0; i < getSystemsCount(); i++) {
         if (!getSystems(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      for (int i = 0; i < getTemplatesCount(); i++) {
+        if (!getTemplates(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -1839,11 +1918,14 @@ public final class Definition {
       for (int i = 0; i < systems_.size(); i++) {
         output.writeMessage(2, systems_.get(i));
       }
+      for (int i = 0; i < templates_.size(); i++) {
+        output.writeMessage(3, templates_.get(i));
+      }
       for (int i = 0; i < objects_.size(); i++) {
-        output.writeMessage(3, objects_.get(i));
+        output.writeMessage(4, objects_.get(i));
       }
       for (int i = 0; i < links_.size(); i++) {
-        output.writeMessage(4, links_.get(i));
+        output.writeMessage(5, links_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -1862,13 +1944,17 @@ public final class Definition {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, systems_.get(i));
       }
+      for (int i = 0; i < templates_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, templates_.get(i));
+      }
       for (int i = 0; i < objects_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, objects_.get(i));
+          .computeMessageSize(4, objects_.get(i));
       }
       for (int i = 0; i < links_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, links_.get(i));
+          .computeMessageSize(5, links_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1949,19 +2035,19 @@ public final class Definition {
       return builder;
     }
     /**
-     * Protobuf type {@code Scene}
+     * Protobuf type {@code Proto.Scene}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.Definition.SceneOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Scene_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Scene_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Scene_fieldAccessorTable
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Scene_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 fr.kissy.hellion.proto.Definition.Scene.class, fr.kissy.hellion.proto.Definition.Scene.Builder.class);
       }
@@ -1979,6 +2065,7 @@ public final class Definition {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getSystemsFieldBuilder();
+          getTemplatesFieldBuilder();
           getObjectsFieldBuilder();
           getLinksFieldBuilder();
         }
@@ -1997,15 +2084,21 @@ public final class Definition {
         } else {
           systemsBuilder_.clear();
         }
+        if (templatesBuilder_ == null) {
+          templates_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          templatesBuilder_.clear();
+        }
         if (objectsBuilder_ == null) {
           objects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000008);
         } else {
           objectsBuilder_.clear();
         }
         if (linksBuilder_ == null) {
           links_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
         } else {
           linksBuilder_.clear();
         }
@@ -2018,7 +2111,7 @@ public final class Definition {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Scene_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Scene_descriptor;
       }
 
       public fr.kissy.hellion.proto.Definition.Scene getDefaultInstanceForType() {
@@ -2050,19 +2143,28 @@ public final class Definition {
         } else {
           result.systems_ = systemsBuilder_.build();
         }
-        if (objectsBuilder_ == null) {
+        if (templatesBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            objects_ = java.util.Collections.unmodifiableList(objects_);
+            templates_ = java.util.Collections.unmodifiableList(templates_);
             bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.templates_ = templates_;
+        } else {
+          result.templates_ = templatesBuilder_.build();
+        }
+        if (objectsBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            objects_ = java.util.Collections.unmodifiableList(objects_);
+            bitField0_ = (bitField0_ & ~0x00000008);
           }
           result.objects_ = objects_;
         } else {
           result.objects_ = objectsBuilder_.build();
         }
         if (linksBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
             links_ = java.util.Collections.unmodifiableList(links_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000010);
           }
           result.links_ = links_;
         } else {
@@ -2115,11 +2217,37 @@ public final class Definition {
             }
           }
         }
+        if (templatesBuilder_ == null) {
+          if (!other.templates_.isEmpty()) {
+            if (templates_.isEmpty()) {
+              templates_ = other.templates_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureTemplatesIsMutable();
+              templates_.addAll(other.templates_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.templates_.isEmpty()) {
+            if (templatesBuilder_.isEmpty()) {
+              templatesBuilder_.dispose();
+              templatesBuilder_ = null;
+              templates_ = other.templates_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              templatesBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getTemplatesFieldBuilder() : null;
+            } else {
+              templatesBuilder_.addAllMessages(other.templates_);
+            }
+          }
+        }
         if (objectsBuilder_ == null) {
           if (!other.objects_.isEmpty()) {
             if (objects_.isEmpty()) {
               objects_ = other.objects_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000008);
             } else {
               ensureObjectsIsMutable();
               objects_.addAll(other.objects_);
@@ -2132,7 +2260,7 @@ public final class Definition {
               objectsBuilder_.dispose();
               objectsBuilder_ = null;
               objects_ = other.objects_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000008);
               objectsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getObjectsFieldBuilder() : null;
@@ -2145,7 +2273,7 @@ public final class Definition {
           if (!other.links_.isEmpty()) {
             if (links_.isEmpty()) {
               links_ = other.links_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
             } else {
               ensureLinksIsMutable();
               links_.addAll(other.links_);
@@ -2158,7 +2286,7 @@ public final class Definition {
               linksBuilder_.dispose();
               linksBuilder_ = null;
               links_ = other.links_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000010);
               linksBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getLinksFieldBuilder() : null;
@@ -2178,6 +2306,12 @@ public final class Definition {
         }
         for (int i = 0; i < getSystemsCount(); i++) {
           if (!getSystems(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        for (int i = 0; i < getTemplatesCount(); i++) {
+          if (!getTemplates(i).isInitialized()) {
             
             return false;
           }
@@ -2290,7 +2424,7 @@ public final class Definition {
         return this;
       }
 
-      // repeated .System systems = 2;
+      // repeated .Proto.System systems = 2;
       private java.util.List<fr.kissy.hellion.proto.Common.System> systems_ =
         java.util.Collections.emptyList();
       private void ensureSystemsIsMutable() {
@@ -2304,7 +2438,7 @@ public final class Definition {
           fr.kissy.hellion.proto.Common.System, fr.kissy.hellion.proto.Common.System.Builder, fr.kissy.hellion.proto.Common.SystemOrBuilder> systemsBuilder_;
 
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.System> getSystemsList() {
         if (systemsBuilder_ == null) {
@@ -2314,7 +2448,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public int getSystemsCount() {
         if (systemsBuilder_ == null) {
@@ -2324,7 +2458,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.System getSystems(int index) {
         if (systemsBuilder_ == null) {
@@ -2334,7 +2468,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.Common.System value) {
@@ -2351,7 +2485,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder setSystems(
           int index, fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -2365,7 +2499,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder addSystems(fr.kissy.hellion.proto.Common.System value) {
         if (systemsBuilder_ == null) {
@@ -2381,7 +2515,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.Common.System value) {
@@ -2398,7 +2532,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder addSystems(
           fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -2412,7 +2546,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder addSystems(
           int index, fr.kissy.hellion.proto.Common.System.Builder builderForValue) {
@@ -2426,7 +2560,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder addAllSystems(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.System> values) {
@@ -2440,7 +2574,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder clearSystems() {
         if (systemsBuilder_ == null) {
@@ -2453,7 +2587,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public Builder removeSystems(int index) {
         if (systemsBuilder_ == null) {
@@ -2466,14 +2600,14 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder getSystemsBuilder(
           int index) {
         return getSystemsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemOrBuilder getSystemsOrBuilder(
           int index) {
@@ -2483,7 +2617,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Common.SystemOrBuilder> 
            getSystemsOrBuilderList() {
@@ -2494,14 +2628,14 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder addSystemsBuilder() {
         return getSystemsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Common.System.getDefaultInstance());
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public fr.kissy.hellion.proto.Common.System.Builder addSystemsBuilder(
           int index) {
@@ -2509,7 +2643,7 @@ public final class Definition {
             index, fr.kissy.hellion.proto.Common.System.getDefaultInstance());
       }
       /**
-       * <code>repeated .System systems = 2;</code>
+       * <code>repeated .Proto.System systems = 2;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.System.Builder> 
            getSystemsBuilderList() {
@@ -2530,13 +2664,253 @@ public final class Definition {
         return systemsBuilder_;
       }
 
-      // repeated .Object objects = 3;
+      // repeated .Proto.Object templates = 3;
+      private java.util.List<fr.kissy.hellion.proto.Common.Object> templates_ =
+        java.util.Collections.emptyList();
+      private void ensureTemplatesIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          templates_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.Object>(templates_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          fr.kissy.hellion.proto.Common.Object, fr.kissy.hellion.proto.Common.Object.Builder, fr.kissy.hellion.proto.Common.ObjectOrBuilder> templatesBuilder_;
+
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public java.util.List<fr.kissy.hellion.proto.Common.Object> getTemplatesList() {
+        if (templatesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(templates_);
+        } else {
+          return templatesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public int getTemplatesCount() {
+        if (templatesBuilder_ == null) {
+          return templates_.size();
+        } else {
+          return templatesBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public fr.kissy.hellion.proto.Common.Object getTemplates(int index) {
+        if (templatesBuilder_ == null) {
+          return templates_.get(index);
+        } else {
+          return templatesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder setTemplates(
+          int index, fr.kissy.hellion.proto.Common.Object value) {
+        if (templatesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTemplatesIsMutable();
+          templates_.set(index, value);
+          onChanged();
+        } else {
+          templatesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder setTemplates(
+          int index, fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
+        if (templatesBuilder_ == null) {
+          ensureTemplatesIsMutable();
+          templates_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          templatesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder addTemplates(fr.kissy.hellion.proto.Common.Object value) {
+        if (templatesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTemplatesIsMutable();
+          templates_.add(value);
+          onChanged();
+        } else {
+          templatesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder addTemplates(
+          int index, fr.kissy.hellion.proto.Common.Object value) {
+        if (templatesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureTemplatesIsMutable();
+          templates_.add(index, value);
+          onChanged();
+        } else {
+          templatesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder addTemplates(
+          fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
+        if (templatesBuilder_ == null) {
+          ensureTemplatesIsMutable();
+          templates_.add(builderForValue.build());
+          onChanged();
+        } else {
+          templatesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder addTemplates(
+          int index, fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
+        if (templatesBuilder_ == null) {
+          ensureTemplatesIsMutable();
+          templates_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          templatesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder addAllTemplates(
+          java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.Object> values) {
+        if (templatesBuilder_ == null) {
+          ensureTemplatesIsMutable();
+          super.addAll(values, templates_);
+          onChanged();
+        } else {
+          templatesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder clearTemplates() {
+        if (templatesBuilder_ == null) {
+          templates_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          templatesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public Builder removeTemplates(int index) {
+        if (templatesBuilder_ == null) {
+          ensureTemplatesIsMutable();
+          templates_.remove(index);
+          onChanged();
+        } else {
+          templatesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public fr.kissy.hellion.proto.Common.Object.Builder getTemplatesBuilder(
+          int index) {
+        return getTemplatesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public fr.kissy.hellion.proto.Common.ObjectOrBuilder getTemplatesOrBuilder(
+          int index) {
+        if (templatesBuilder_ == null) {
+          return templates_.get(index);  } else {
+          return templatesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
+           getTemplatesOrBuilderList() {
+        if (templatesBuilder_ != null) {
+          return templatesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(templates_);
+        }
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public fr.kissy.hellion.proto.Common.Object.Builder addTemplatesBuilder() {
+        return getTemplatesFieldBuilder().addBuilder(
+            fr.kissy.hellion.proto.Common.Object.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public fr.kissy.hellion.proto.Common.Object.Builder addTemplatesBuilder(
+          int index) {
+        return getTemplatesFieldBuilder().addBuilder(
+            index, fr.kissy.hellion.proto.Common.Object.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .Proto.Object templates = 3;</code>
+       */
+      public java.util.List<fr.kissy.hellion.proto.Common.Object.Builder> 
+           getTemplatesBuilderList() {
+        return getTemplatesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          fr.kissy.hellion.proto.Common.Object, fr.kissy.hellion.proto.Common.Object.Builder, fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
+          getTemplatesFieldBuilder() {
+        if (templatesBuilder_ == null) {
+          templatesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              fr.kissy.hellion.proto.Common.Object, fr.kissy.hellion.proto.Common.Object.Builder, fr.kissy.hellion.proto.Common.ObjectOrBuilder>(
+                  templates_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          templates_ = null;
+        }
+        return templatesBuilder_;
+      }
+
+      // repeated .Proto.Object objects = 4;
       private java.util.List<fr.kissy.hellion.proto.Common.Object> objects_ =
         java.util.Collections.emptyList();
       private void ensureObjectsIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
           objects_ = new java.util.ArrayList<fr.kissy.hellion.proto.Common.Object>(objects_);
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000008;
          }
       }
 
@@ -2544,7 +2918,7 @@ public final class Definition {
           fr.kissy.hellion.proto.Common.Object, fr.kissy.hellion.proto.Common.Object.Builder, fr.kissy.hellion.proto.Common.ObjectOrBuilder> objectsBuilder_;
 
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.Object> getObjectsList() {
         if (objectsBuilder_ == null) {
@@ -2554,7 +2928,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public int getObjectsCount() {
         if (objectsBuilder_ == null) {
@@ -2564,7 +2938,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.Object getObjects(int index) {
         if (objectsBuilder_ == null) {
@@ -2574,7 +2948,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder setObjects(
           int index, fr.kissy.hellion.proto.Common.Object value) {
@@ -2591,7 +2965,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder setObjects(
           int index, fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
@@ -2605,7 +2979,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder addObjects(fr.kissy.hellion.proto.Common.Object value) {
         if (objectsBuilder_ == null) {
@@ -2621,7 +2995,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder addObjects(
           int index, fr.kissy.hellion.proto.Common.Object value) {
@@ -2638,7 +3012,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder addObjects(
           fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
@@ -2652,7 +3026,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder addObjects(
           int index, fr.kissy.hellion.proto.Common.Object.Builder builderForValue) {
@@ -2666,7 +3040,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder addAllObjects(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Common.Object> values) {
@@ -2680,12 +3054,12 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder clearObjects() {
         if (objectsBuilder_ == null) {
           objects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000008);
           onChanged();
         } else {
           objectsBuilder_.clear();
@@ -2693,7 +3067,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public Builder removeObjects(int index) {
         if (objectsBuilder_ == null) {
@@ -2706,14 +3080,14 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.Object.Builder getObjectsBuilder(
           int index) {
         return getObjectsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.ObjectOrBuilder getObjectsOrBuilder(
           int index) {
@@ -2723,7 +3097,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Common.ObjectOrBuilder> 
            getObjectsOrBuilderList() {
@@ -2734,14 +3108,14 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.Object.Builder addObjectsBuilder() {
         return getObjectsFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Common.Object.getDefaultInstance());
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.Object.Builder addObjectsBuilder(
           int index) {
@@ -2749,7 +3123,7 @@ public final class Definition {
             index, fr.kissy.hellion.proto.Common.Object.getDefaultInstance());
       }
       /**
-       * <code>repeated .Object objects = 3;</code>
+       * <code>repeated .Proto.Object objects = 4;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Common.Object.Builder> 
            getObjectsBuilderList() {
@@ -2762,7 +3136,7 @@ public final class Definition {
           objectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               fr.kissy.hellion.proto.Common.Object, fr.kissy.hellion.proto.Common.Object.Builder, fr.kissy.hellion.proto.Common.ObjectOrBuilder>(
                   objects_,
-                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
                   isClean());
           objects_ = null;
@@ -2770,13 +3144,13 @@ public final class Definition {
         return objectsBuilder_;
       }
 
-      // repeated .Link links = 4;
+      // repeated .Proto.Link links = 5;
       private java.util.List<fr.kissy.hellion.proto.Definition.Link> links_ =
         java.util.Collections.emptyList();
       private void ensureLinksIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
           links_ = new java.util.ArrayList<fr.kissy.hellion.proto.Definition.Link>(links_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000010;
          }
       }
 
@@ -2784,7 +3158,7 @@ public final class Definition {
           fr.kissy.hellion.proto.Definition.Link, fr.kissy.hellion.proto.Definition.Link.Builder, fr.kissy.hellion.proto.Definition.LinkOrBuilder> linksBuilder_;
 
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Definition.Link> getLinksList() {
         if (linksBuilder_ == null) {
@@ -2794,7 +3168,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public int getLinksCount() {
         if (linksBuilder_ == null) {
@@ -2804,7 +3178,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public fr.kissy.hellion.proto.Definition.Link getLinks(int index) {
         if (linksBuilder_ == null) {
@@ -2814,7 +3188,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder setLinks(
           int index, fr.kissy.hellion.proto.Definition.Link value) {
@@ -2831,7 +3205,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder setLinks(
           int index, fr.kissy.hellion.proto.Definition.Link.Builder builderForValue) {
@@ -2845,7 +3219,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder addLinks(fr.kissy.hellion.proto.Definition.Link value) {
         if (linksBuilder_ == null) {
@@ -2861,7 +3235,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder addLinks(
           int index, fr.kissy.hellion.proto.Definition.Link value) {
@@ -2878,7 +3252,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder addLinks(
           fr.kissy.hellion.proto.Definition.Link.Builder builderForValue) {
@@ -2892,7 +3266,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder addLinks(
           int index, fr.kissy.hellion.proto.Definition.Link.Builder builderForValue) {
@@ -2906,7 +3280,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder addAllLinks(
           java.lang.Iterable<? extends fr.kissy.hellion.proto.Definition.Link> values) {
@@ -2920,12 +3294,12 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder clearLinks() {
         if (linksBuilder_ == null) {
           links_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000010);
           onChanged();
         } else {
           linksBuilder_.clear();
@@ -2933,7 +3307,7 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public Builder removeLinks(int index) {
         if (linksBuilder_ == null) {
@@ -2946,14 +3320,14 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public fr.kissy.hellion.proto.Definition.Link.Builder getLinksBuilder(
           int index) {
         return getLinksFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public fr.kissy.hellion.proto.Definition.LinkOrBuilder getLinksOrBuilder(
           int index) {
@@ -2963,7 +3337,7 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public java.util.List<? extends fr.kissy.hellion.proto.Definition.LinkOrBuilder> 
            getLinksOrBuilderList() {
@@ -2974,14 +3348,14 @@ public final class Definition {
         }
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public fr.kissy.hellion.proto.Definition.Link.Builder addLinksBuilder() {
         return getLinksFieldBuilder().addBuilder(
             fr.kissy.hellion.proto.Definition.Link.getDefaultInstance());
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public fr.kissy.hellion.proto.Definition.Link.Builder addLinksBuilder(
           int index) {
@@ -2989,7 +3363,7 @@ public final class Definition {
             index, fr.kissy.hellion.proto.Definition.Link.getDefaultInstance());
       }
       /**
-       * <code>repeated .Link links = 4;</code>
+       * <code>repeated .Proto.Link links = 5;</code>
        */
       public java.util.List<fr.kissy.hellion.proto.Definition.Link.Builder> 
            getLinksBuilderList() {
@@ -3002,7 +3376,7 @@ public final class Definition {
           linksBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               fr.kissy.hellion.proto.Definition.Link, fr.kissy.hellion.proto.Definition.Link.Builder, fr.kissy.hellion.proto.Definition.LinkOrBuilder>(
                   links_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000010) == 0x00000010),
                   getParentForChildren(),
                   isClean());
           links_ = null;
@@ -3010,7 +3384,7 @@ public final class Definition {
         return linksBuilder_;
       }
 
-      // @@protoc_insertion_point(builder_scope:Scene)
+      // @@protoc_insertion_point(builder_scope:Proto.Scene)
     }
 
     static {
@@ -3018,7 +3392,7 @@ public final class Definition {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:Scene)
+    // @@protoc_insertion_point(class_scope:Proto.Scene)
   }
 
   public interface LinkOrBuilder
@@ -3054,28 +3428,28 @@ public final class Definition {
     com.google.protobuf.ByteString
         getObserverBytes();
 
-    // required .SystemType subjectSystemType = 3;
+    // required .Proto.SystemType subjectSystemType = 3;
     /**
-     * <code>required .SystemType subjectSystemType = 3;</code>
+     * <code>required .Proto.SystemType subjectSystemType = 3;</code>
      */
     boolean hasSubjectSystemType();
     /**
-     * <code>required .SystemType subjectSystemType = 3;</code>
+     * <code>required .Proto.SystemType subjectSystemType = 3;</code>
      */
     fr.kissy.hellion.proto.Common.SystemType getSubjectSystemType();
 
-    // required .SystemType observerSystemType = 4;
+    // required .Proto.SystemType observerSystemType = 4;
     /**
-     * <code>required .SystemType observerSystemType = 4;</code>
+     * <code>required .Proto.SystemType observerSystemType = 4;</code>
      */
     boolean hasObserverSystemType();
     /**
-     * <code>required .SystemType observerSystemType = 4;</code>
+     * <code>required .Proto.SystemType observerSystemType = 4;</code>
      */
     fr.kissy.hellion.proto.Common.SystemType getObserverSystemType();
   }
   /**
-   * Protobuf type {@code Link}
+   * Protobuf type {@code Proto.Link}
    */
   public static final class Link extends
       com.google.protobuf.GeneratedMessage
@@ -3171,12 +3545,12 @@ public final class Definition {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Link_descriptor;
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Link_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return fr.kissy.hellion.proto.Definition.internal_static_Link_fieldAccessorTable
+      return fr.kissy.hellion.proto.Definition.internal_static_Proto_Link_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               fr.kissy.hellion.proto.Definition.Link.class, fr.kissy.hellion.proto.Definition.Link.Builder.class);
     }
@@ -3283,33 +3657,33 @@ public final class Definition {
       }
     }
 
-    // required .SystemType subjectSystemType = 3;
+    // required .Proto.SystemType subjectSystemType = 3;
     public static final int SUBJECTSYSTEMTYPE_FIELD_NUMBER = 3;
     private fr.kissy.hellion.proto.Common.SystemType subjectSystemType_;
     /**
-     * <code>required .SystemType subjectSystemType = 3;</code>
+     * <code>required .Proto.SystemType subjectSystemType = 3;</code>
      */
     public boolean hasSubjectSystemType() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required .SystemType subjectSystemType = 3;</code>
+     * <code>required .Proto.SystemType subjectSystemType = 3;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemType getSubjectSystemType() {
       return subjectSystemType_;
     }
 
-    // required .SystemType observerSystemType = 4;
+    // required .Proto.SystemType observerSystemType = 4;
     public static final int OBSERVERSYSTEMTYPE_FIELD_NUMBER = 4;
     private fr.kissy.hellion.proto.Common.SystemType observerSystemType_;
     /**
-     * <code>required .SystemType observerSystemType = 4;</code>
+     * <code>required .Proto.SystemType observerSystemType = 4;</code>
      */
     public boolean hasObserverSystemType() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>required .SystemType observerSystemType = 4;</code>
+     * <code>required .Proto.SystemType observerSystemType = 4;</code>
      */
     public fr.kissy.hellion.proto.Common.SystemType getObserverSystemType() {
       return observerSystemType_;
@@ -3318,8 +3692,8 @@ public final class Definition {
     private void initFields() {
       subject_ = "";
       observer_ = "";
-      subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
-      observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+      subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
+      observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3465,19 +3839,19 @@ public final class Definition {
       return builder;
     }
     /**
-     * Protobuf type {@code Link}
+     * Protobuf type {@code Proto.Link}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
        implements fr.kissy.hellion.proto.Definition.LinkOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Link_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Link_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Link_fieldAccessorTable
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Link_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 fr.kissy.hellion.proto.Definition.Link.class, fr.kissy.hellion.proto.Definition.Link.Builder.class);
       }
@@ -3506,9 +3880,9 @@ public final class Definition {
         bitField0_ = (bitField0_ & ~0x00000001);
         observer_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+        subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
         bitField0_ = (bitField0_ & ~0x00000004);
-        observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+        observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
@@ -3519,7 +3893,7 @@ public final class Definition {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return fr.kissy.hellion.proto.Definition.internal_static_Link_descriptor;
+        return fr.kissy.hellion.proto.Definition.internal_static_Proto_Link_descriptor;
       }
 
       public fr.kissy.hellion.proto.Definition.Link getDefaultInstanceForType() {
@@ -3777,22 +4151,22 @@ public final class Definition {
         return this;
       }
 
-      // required .SystemType subjectSystemType = 3;
-      private fr.kissy.hellion.proto.Common.SystemType subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+      // required .Proto.SystemType subjectSystemType = 3;
+      private fr.kissy.hellion.proto.Common.SystemType subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
       /**
-       * <code>required .SystemType subjectSystemType = 3;</code>
+       * <code>required .Proto.SystemType subjectSystemType = 3;</code>
        */
       public boolean hasSubjectSystemType() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required .SystemType subjectSystemType = 3;</code>
+       * <code>required .Proto.SystemType subjectSystemType = 3;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemType getSubjectSystemType() {
         return subjectSystemType_;
       }
       /**
-       * <code>required .SystemType subjectSystemType = 3;</code>
+       * <code>required .Proto.SystemType subjectSystemType = 3;</code>
        */
       public Builder setSubjectSystemType(fr.kissy.hellion.proto.Common.SystemType value) {
         if (value == null) {
@@ -3804,31 +4178,31 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>required .SystemType subjectSystemType = 3;</code>
+       * <code>required .Proto.SystemType subjectSystemType = 3;</code>
        */
       public Builder clearSubjectSystemType() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+        subjectSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
         onChanged();
         return this;
       }
 
-      // required .SystemType observerSystemType = 4;
-      private fr.kissy.hellion.proto.Common.SystemType observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+      // required .Proto.SystemType observerSystemType = 4;
+      private fr.kissy.hellion.proto.Common.SystemType observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
       /**
-       * <code>required .SystemType observerSystemType = 4;</code>
+       * <code>required .Proto.SystemType observerSystemType = 4;</code>
        */
       public boolean hasObserverSystemType() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required .SystemType observerSystemType = 4;</code>
+       * <code>required .Proto.SystemType observerSystemType = 4;</code>
        */
       public fr.kissy.hellion.proto.Common.SystemType getObserverSystemType() {
         return observerSystemType_;
       }
       /**
-       * <code>required .SystemType observerSystemType = 4;</code>
+       * <code>required .Proto.SystemType observerSystemType = 4;</code>
        */
       public Builder setObserverSystemType(fr.kissy.hellion.proto.Common.SystemType value) {
         if (value == null) {
@@ -3840,16 +4214,16 @@ public final class Definition {
         return this;
       }
       /**
-       * <code>required .SystemType observerSystemType = 4;</code>
+       * <code>required .Proto.SystemType observerSystemType = 4;</code>
        */
       public Builder clearObserverSystemType() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.None;
+        observerSystemType_ = fr.kissy.hellion.proto.Common.SystemType.Null;
         onChanged();
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:Link)
+      // @@protoc_insertion_point(builder_scope:Proto.Link)
     }
 
     static {
@@ -3857,24 +4231,24 @@ public final class Definition {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:Link)
+    // @@protoc_insertion_point(class_scope:Proto.Link)
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Application_descriptor;
+    internal_static_Proto_Application_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Application_fieldAccessorTable;
+      internal_static_Proto_Application_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Scene_descriptor;
+    internal_static_Proto_Scene_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Scene_fieldAccessorTable;
+      internal_static_Proto_Scene_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Link_descriptor;
+    internal_static_Proto_Link_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Link_fieldAccessorTable;
+      internal_static_Proto_Link_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3884,40 +4258,42 @@ public final class Definition {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\026Proto/Definition.proto\032\022Proto/Common.p" +
-      "roto\"l\n\013Application\022\024\n\014startupScene\030\001 \002(" +
-      "\t\022\035\n\nproperties\030\002 \003(\0132\t.Property\022\030\n\007syst" +
-      "ems\030\003 \003(\0132\007.System\022\016\n\006scenes\030\004 \003(\t\"_\n\005Sc" +
-      "ene\022\014\n\004name\030\001 \002(\t\022\030\n\007systems\030\002 \003(\0132\007.Sys" +
-      "tem\022\030\n\007objects\030\003 \003(\0132\007.Object\022\024\n\005links\030\004" +
-      " \003(\0132\005.Link\"z\n\004Link\022\017\n\007subject\030\001 \002(\t\022\020\n\010" +
-      "observer\030\002 \002(\t\022&\n\021subjectSystemType\030\003 \002(" +
-      "\0162\013.SystemType\022\'\n\022observerSystemType\030\004 \002" +
-      "(\0162\013.SystemTypeB\'\n\026fr.kissy.hellion.prot",
-      "oB\nDefinition\210\001\000"
+      "\n\026Proto/Definition.proto\022\005Proto\032\022Proto/C" +
+      "ommon.proto\"x\n\013Application\022\024\n\014startupSce" +
+      "ne\030\001 \002(\t\022#\n\nproperties\030\002 \003(\0132\017.Proto.Pro" +
+      "perty\022\036\n\007systems\030\003 \003(\0132\r.Proto.System\022\016\n" +
+      "\006scenes\030\004 \003(\t\"\223\001\n\005Scene\022\014\n\004name\030\001 \002(\t\022\036\n" +
+      "\007systems\030\002 \003(\0132\r.Proto.System\022 \n\ttemplat" +
+      "es\030\003 \003(\0132\r.Proto.Object\022\036\n\007objects\030\004 \003(\013" +
+      "2\r.Proto.Object\022\032\n\005links\030\005 \003(\0132\013.Proto.L" +
+      "ink\"\206\001\n\004Link\022\017\n\007subject\030\001 \002(\t\022\020\n\010observe" +
+      "r\030\002 \002(\t\022,\n\021subjectSystemType\030\003 \002(\0162\021.Pro",
+      "to.SystemType\022-\n\022observerSystemType\030\004 \002(" +
+      "\0162\021.Proto.SystemTypeB\'\n\026fr.kissy.hellion" +
+      ".protoB\nDefinition\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Application_descriptor =
+          internal_static_Proto_Application_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_Application_fieldAccessorTable = new
+          internal_static_Proto_Application_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Application_descriptor,
+              internal_static_Proto_Application_descriptor,
               new java.lang.String[] { "StartupScene", "Properties", "Systems", "Scenes", });
-          internal_static_Scene_descriptor =
+          internal_static_Proto_Scene_descriptor =
             getDescriptor().getMessageTypes().get(1);
-          internal_static_Scene_fieldAccessorTable = new
+          internal_static_Proto_Scene_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Scene_descriptor,
-              new java.lang.String[] { "Name", "Systems", "Objects", "Links", });
-          internal_static_Link_descriptor =
+              internal_static_Proto_Scene_descriptor,
+              new java.lang.String[] { "Name", "Systems", "Templates", "Objects", "Links", });
+          internal_static_Proto_Link_descriptor =
             getDescriptor().getMessageTypes().get(2);
-          internal_static_Link_fieldAccessorTable = new
+          internal_static_Proto_Link_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Link_descriptor,
+              internal_static_Proto_Link_descriptor,
               new java.lang.String[] { "Subject", "Observer", "SubjectSystemType", "ObserverSystemType", });
           return null;
         }

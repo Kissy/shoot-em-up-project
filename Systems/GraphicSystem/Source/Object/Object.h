@@ -42,8 +42,8 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Type GetSystemType(void) {
-        return System::Types::Graphic;
+    inline Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Graphic;
     }
 
 protected:

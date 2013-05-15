@@ -47,8 +47,8 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Type GetSystemType(void) {
-        return System::Types::Physic;
+    inline Proto::SystemType GetSystemType(void) {
+        return Proto::SystemType::Physic;
     }
 
     /**

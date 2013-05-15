@@ -77,12 +77,12 @@ PlatformManager::FileSystem::~FileSystem(
 }
 
 
-Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  ISystem** ppSystem) {
+Error PlatformManager::FileSystem::LoadSystemLibrary(Proto::SystemType type,  ISystem** ppSystem) {
     Error Err = Errors::Failure;
     //
     // Load the dll.
     //
-    std::string libraryName = SystemProto::Type_Name(type) + "System";
+    std::string libraryName = Proto::SystemType_Name(type) + "System";
     HMODULE hLib = LoadLibraryA(libraryName.c_str());
 
     if (hLib != NULL) {
@@ -115,8 +115,8 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(SystemProto::Type type,  IS
                 //
                 // Verify that there's no duplicate system type.
                 //
-                System::Type SystemType = pSystem->GetSystemType();
-                ISystem* pCurrSystem = Singletons::SystemManager.Get(SystemType);
+                Proto::SystemType systemType = pSystem->GetSystemType();
+                ISystem* pCurrSystem = Singletons::SystemManager.Get(systemType);
 
                 if (pCurrSystem == NULL) {
                     //

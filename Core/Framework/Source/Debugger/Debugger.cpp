@@ -87,8 +87,8 @@ void Debugger::setScene(const UScene* pUScene) {
     for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
         DebugEntityProto* debugEntityProto = debugProto.add_entities();
-        debugEntityProto->set_id(System::Types::getName(pScene->GetSystemType()));
-        debugEntityProto->set_name(System::Types::getName(pScene->GetSystemType()));
+        debugEntityProto->set_id(Proto::SystemType_Name(pScene->GetSystemType()));
+        debugEntityProto->set_name(Proto::SystemType_Name(pScene->GetSystemType()));
         debugEntityProto->set_category(System::getComponentName(System::Components::Scene));
         m_pSceneCCM->Register(pScene, System::Changes::All, m_pSceneChangesDebugger);
     }
@@ -189,9 +189,9 @@ void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
     for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
         ISystemObject* systemObject = it->second;
         DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-        debugPropertyProto->set_category(System::Types::getName(systemObject->GetSystemType()));
-        const ProtoPropertyList properties = systemObject->getProperties();
-        debugPropertyProto->mutable_properties()->CopyFrom(properties);
+        debugPropertyProto->set_category(Proto::SystemType_Name(systemObject->GetSystemType()));
+        const auto properties = systemObject->getProperties();
+        //debugPropertyProto->mutable_properties()->CopyFrom(properties);
         m_pObjectCCM->Register(systemObject, System::Changes::All, m_pObjectChangesDebugger);
     }
 }
@@ -206,10 +206,10 @@ void Debugger::debugObject(ISystemObject* object, DebugProto& debugProto) {
     debugEntityProto->set_category(System::getComponentName(System::Components::Object));
 
     DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
-    debugPropertyProto->set_category(System::Types::getName(object->GetSystemType()));
+    debugPropertyProto->set_category(Proto::SystemType_Name(object->GetSystemType()));
     
-    const ProtoPropertyList properties = object->getProperties();
-    debugPropertyProto->mutable_properties()->CopyFrom(properties);
+    const auto properties = object->getProperties();
+    //debugPropertyProto->mutable_properties()->CopyFrom(properties);
 }
 
 #endif

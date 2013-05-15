@@ -3,6 +3,7 @@ package fr.kissy.hellion.definition.encoder.main.parser;
 import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
 import fr.kissy.hellion.proto.Common;
+import org.apache.commons.beanutils.MethodUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -43,11 +44,7 @@ public class ObjectParser extends AbstractParser {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if ("Properties".equals(node.getNodeName())) {
-                        parseSystemProperties((Element) node);
-                    } else {
-                        AssertUtils.makeTest(true, "ODF files must contain Properties children only");
-                    }
+                    MethodUtils.invokeExactMethod(this, "parse" + node.getNodeName(), new Object[]{node}, new Class[]{Element.class});
                 }
             }
 
@@ -64,7 +61,7 @@ public class ObjectParser extends AbstractParser {
      * @param propertiesElement The Properties element.
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
-    private void parseSystemProperties(Element propertiesElement) throws XMLParseException {
+    private void parseProperties(Element propertiesElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
 
         // Object properties

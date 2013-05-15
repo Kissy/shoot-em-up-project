@@ -64,7 +64,7 @@ protected:
 
     bool                            m_bBenchmarkingEnabled;
 
-    typedef std::map<System::Type, ISystemScene*>   SceneExecs;
+    typedef std::map<Proto::SystemType, ISystemScene*>   SceneExecs;
     typedef SceneExecs::iterator                    SceneExecsIt;
 
     SceneExecs                      m_SceneExecs;

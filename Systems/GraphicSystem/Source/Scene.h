@@ -76,8 +76,8 @@ class GraphicScene : public ISystemScene {
         /**
          * @inheritDoc
          */
-        System::Type GetSystemType(void) {
-            return System::Types::Graphic;
+        Proto::SystemType GetSystemType(void) {
+            return Proto::SystemType::Graphic;
         };
         
         /// <summary cref="OGREGraphicsScene::Update">
@@ -98,7 +98,7 @@ class GraphicScene : public ISystemScene {
         
     protected:
 
-        void setAmbientLight(ProtoStringList* values);
+        void setAmbientLight(Proto::RepeatedString* values);
 
     protected:
         Ogre::SceneManager*                 m_pSceneManager;

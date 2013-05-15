@@ -45,7 +45,7 @@
 #if defined(STATISTICS_BY_JOB_TYPE)
 
 #define DECLARE_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent ) \
-     , u32 jobType                                       \
+     , Proto::SystemType jobType                                       \
      DECLARE_TP_EVENT_ARG( tpEvent )
 
 #define PASS_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent )    \
@@ -103,7 +103,7 @@ namespace local {
             void* m_pParam;
 
 #if defined(STATISTICS_BY_JOB_TYPE)
-            u32 m_jobType;
+            Proto::SystemType m_jobType;
 #endif
 
 #if defined(USE_THREAD_PROFILER)
@@ -384,8 +384,8 @@ inline PerformanceHint GetPerformanceHint(ISystemTask* pTask) {
         Task_NoPerformanceHint, // 30: Not used
         Task_NoPerformanceHint  // 31: Not used
     };
-    u32 jobType = System::Types::GetIndex(pTask->GetSystemType());
-    return hints[jobType];
+    u32 jobIndex = System::Types::GetIndex(pTask->GetSystemType());
+    return hints[jobIndex];
 }
 
 void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, f32 fDeltaTime) {
@@ -526,7 +526,7 @@ TaskManager::ParallelFor(
     u32 minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
-    u32 jobType = pSystemTask ? pSystemTask->GetSystemType() : System::Types::Null;
+    Proto::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Proto::SystemType::Null;
 #endif
 #if defined(USE_THREAD_PROFILER)
     __itt_event tpEvent = GetSupportForSystemTask(pSystemTask).m_tpeSystemTaskJob;
@@ -648,7 +648,7 @@ TaskManager::GetSupportForSystemTask(
                 InitTpEventsForSystem("Audio", 5);
                 break;
 
-            case (System::Types::Input):
+            case (Proto::SystemType::Input):
                 InitTpEventsForSystem("Input", 5);
                 break;
 

@@ -139,8 +139,8 @@ void GraphicScene::ProcessRange(u32 begin, u32 end) {
 /**
  * @inheritDoc
  */
-void GraphicScene::setAmbientLight(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void GraphicScene::setAmbientLight(Proto::RepeatedString* values) {
+    auto value = values->begin();
     m_ambientLight.r = boost::lexical_cast<f32>(*value);
     m_ambientLight.g = boost::lexical_cast<f32>(*(++value));
     m_ambientLight.b = boost::lexical_cast<f32>(*(++value));

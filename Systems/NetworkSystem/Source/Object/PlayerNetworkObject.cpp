@@ -20,7 +20,7 @@
 #include "Object/Object.h"
 #include "Object/PlayerNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
-#include "Proto/Message/ObjectUpdated.pb.h"
+#include "Proto/Message.pb.h"
 
 /**
  * @inheritDoc
@@ -87,26 +87,28 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
             m_heartbeat.start();
         }
         
-        ObjectUpdatedProto objectUpdatedProto;
-        ObjectProto* object = objectUpdatedProto.add_objects();
+        Proto::ObjectUpdated objectUpdated;
+        Proto::Object* object = objectUpdated.add_objects();
+        object->set_id(m_entity->getId());
         object->set_name(m_entity->getName());
-        ObjectProto_SystemObjectProto* systemObject = object->add_systemobjects();
-        systemObject->set_systemtype(SystemProto_Type_Geometry);
-        PropertyProto* velocityProperty = systemObject->add_properties();
+        Proto::SystemObject* systemObject = object->add_systemobjects();
+        systemObject->set_type(Proto::SystemType_Name(Proto::SystemType::Network));
+        systemObject->set_systemtype(Proto::SystemType::Network);
+        Proto::Property* velocityProperty = systemObject->add_properties();
         velocityProperty->set_name("Velocity");
         getVector4(&m_velocity, velocityProperty->mutable_value());
-        PropertyProto* orientationProperty = systemObject->add_properties();
+        Proto::Property* orientationProperty = systemObject->add_properties();
         orientationProperty->set_name("Orientation");
         getQuaternion(&m_orientation, orientationProperty->mutable_value());
-        PropertyProto* positionProperty = systemObject->add_properties();
+        Proto::Property* positionProperty = systemObject->add_properties();
         positionProperty->set_name("Position");
         getVector3(&m_position, positionProperty->mutable_value());
 
         std::string data;
-        objectUpdatedProto.AppendToString(&data);
-        DownstreamMessageProto downstreamMessageProto;
-        downstreamMessageProto.set_type(DownstreamMessageProto::PLAYER_MOVE);
-        downstreamMessageProto.set_data(data);
-        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessageProto);
+        objectUpdated.AppendToString(&data);
+        DownstreamMessageProto downstreamMessage;
+        downstreamMessage.set_type(DownstreamMessageProto::PLAYER_MOVE);
+        downstreamMessage.set_data(data);
+        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);
     }
 }

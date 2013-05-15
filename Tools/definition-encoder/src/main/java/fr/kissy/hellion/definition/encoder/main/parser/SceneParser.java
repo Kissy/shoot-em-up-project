@@ -5,6 +5,7 @@ import fr.kissy.hellion.definition.encoder.main.utils.AssertUtils;
 import fr.kissy.hellion.definition.encoder.main.utils.ParseUtils;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.proto.Definition;
+import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.w3c.dom.Element;
@@ -14,6 +15,7 @@ import org.w3c.dom.NodeList;
 import javax.management.modelmbean.XMLParseException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,17 +72,7 @@ public class SceneParser extends AbstractParser {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    if ("Properties".equals(node.getNodeName())) {
-                        parseSystemProperties((Element) node);
-                    } else if ("Objects".equals(node.getNodeName())) {
-                        parseObjects((Element) node);
-                    } else if ("Links".equals(node.getNodeName())) {
-                        parseLinks((Element) node);
-                    } else if ("Include".equals(node.getNodeName())) {
-                        parseInclude((Element) node);
-                    } else {
-                        AssertUtils.makeTest(true, "SDF files must contain Properties, Objects and Links children only");
-                    }
+                    MethodUtils.invokeExactMethod(this, "parse" + node.getNodeName(), new Object[] {node}, new Class[] {Element.class});
                 }
             }
 
@@ -97,7 +89,7 @@ public class SceneParser extends AbstractParser {
      * @param node The include node.
      * @throws javax.management.modelmbean.XMLParseException The exception.
      */
-    private void parseInclude(Element node) throws XMLParseException {
+    public void parseInclude(Element node) throws XMLParseException {
         SceneParser includeParser = new SceneParser(xmlFile.getParent() + "\\" + ParseUtils.safeGetAttribute(node, "SDF") + ".sdf",
                 outputFile.getAbsolutePath(), systems, true);
         Definition.Scene.Builder builder = (Definition.Scene.Builder) includeParser.getBuilder();
@@ -112,7 +104,7 @@ public class SceneParser extends AbstractParser {
      * @param documentElement The document element.
      * @throws javax.management.modelmbean.XMLParseException The exception.
      */
-    private void parseScene(Element documentElement) throws XMLParseException {
+    public void parseScene(Element documentElement) throws XMLParseException {
         System.out.println("\t- Parsing Scene");
 
         getSceneDefinitionBuilder().setName(ParseUtils.safeGetAttribute(documentElement, "Name"));
@@ -124,7 +116,7 @@ public class SceneParser extends AbstractParser {
      * @param propertiesElement The Properties element.
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
-    private void parseSystemProperties(Element propertiesElement) throws XMLParseException {
+    public void parseProperties(Element propertiesElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
 
         Common.System.Builder systems = ParseUtils.parseSystemProperties(propertiesElement);
@@ -139,18 +131,38 @@ public class SceneParser extends AbstractParser {
      * @param objectsElement The Objects element.
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
-    private void parseObjects(Element objectsElement) throws XMLParseException {
+    public void parseObjects(Element objectsElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
+        internalParseObjects(objectsElement);
+    }
 
+    /**
+     * Parse the templates.
+     *
+     * @param templatesElement The Templates element.
+     * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
+     */
+    public void parseTemplates(Element templatesElement) throws XMLParseException {
+        System.out.println("\t- Parsing Templates");
+        internalParseObjects(templatesElement);
+    }
+
+    /**
+     * Parse all Object elements contained either in Objects or Templates elements.
+     *
+     * @param parentElement The element containing Object elements.
+     * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
+     */
+    private void internalParseObjects(Element parentElement) throws XMLParseException {
         // Store object properties (used because ODF / Object properties can be the same)
         Map<String, Common.SystemObject> propertiesMap = new HashMap<>();
 
         // Object properties
-        NodeList objects = objectsElement.getElementsByTagName("Object");
+        NodeList objects = parentElement.getElementsByTagName("Object");
         for (int i = 0; i < objects.getLength(); i++) {
             Common.Object.Builder objectBuilder = Common.Object.newBuilder();
             Element objectElement = (Element) objects.item(i);
-            
+
             // Object name
             String id = objectElement.getAttribute("Id");
             objectBuilder.setId(StringUtils.isNotBlank(id) ? id : new ObjectId().toString());
@@ -165,13 +177,13 @@ public class SceneParser extends AbstractParser {
                 try {
                     objectParser.writeBuilder();
                 } catch (IOException ignored) {}
-                
+
                 // Fill the properties map
                 for (Common.SystemObject properties : objectBuilder.getSystemObjectsList()) {
                     propertiesMap.put(properties.getType(), properties);
                 }
             }
-    
+
             // Object properties
             NodeList properties = objectElement.getElementsByTagName("Properties");
             for (int j = 0; j < properties.getLength(); j++) {
@@ -189,10 +201,10 @@ public class SceneParser extends AbstractParser {
                     objectBuilder.addSystemObjects(propertiesBuilder);
                 }
             }
-            
+
             // Add the object to the list
             this.objects.add(objectBuilder.getName());
-    
+
             getSceneDefinitionBuilder().addObjects(objectBuilder);
         }
     }
@@ -232,11 +244,11 @@ public class SceneParser extends AbstractParser {
 
     /**
      * Parse the links.
-     * 
+     *
      * @param linksElement The Links element.
      * @throws javax.management.modelmbean.XMLParseException The exception.
      */
-    private void parseLinks(Element linksElement) throws XMLParseException {
+    public void parseLinks(Element linksElement) throws XMLParseException {
         System.out.println("\t- Parsing Links");
 
         // Object properties
@@ -244,7 +256,7 @@ public class SceneParser extends AbstractParser {
         for (int i = 0; i < links.getLength(); i++) {
             Definition.Link.Builder linkBuilder = Definition.Link.newBuilder();
             Element linkElement = (Element) links.item(i);
-            
+
             linkBuilder.setSubject(ParseUtils.safeGetAttribute(linkElement, "Subject"));
             linkBuilder.setObserver(ParseUtils.safeGetAttribute(linkElement, "Observer"));
             String subjectSystemType = ParseUtils.safeGetAttribute(linkElement, "SubjectSystem");
@@ -260,7 +272,7 @@ public class SceneParser extends AbstractParser {
                     linkBuilder.getSubjectSystemType() + " is not a known systemType");
             AssertUtils.makeTest(systems.contains(linkBuilder.getObserverSystemType()),
                     linkBuilder.getObserverSystemType() + " is not a known systemType");
-            
+
             getSceneDefinitionBuilder().addLinks(linkBuilder);
         }
     }

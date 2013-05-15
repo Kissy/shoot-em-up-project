@@ -147,9 +147,9 @@ void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setResourceLocation(ProtoStringList* values) {
+void GraphicSystem::setResourceLocation(Proto::RepeatedString* values) {
     ASSERT(!m_bInitialized);
-    ProtoStringList::const_iterator value = values->begin();
+    auto value = values->begin();
 
     const std::string name = *value;
     const std::string locationType = *(++value);
@@ -164,17 +164,17 @@ void GraphicSystem::setResourceLocation(ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setWindowName(ProtoStringList* values) {
+void GraphicSystem::setWindowName(Proto::RepeatedString* values) {
     ASSERT(!m_bInitialized);
-    ProtoStringList::const_iterator value = values->begin();
+    auto value = values->begin();
     m_RenderWindowDescription.name = *value;
 }
 
 /**
  * @inheritDoc
  */
-void GraphicSystem::setResolution(ProtoStringList* values) {
-    ProtoStringList::const_iterator value = values->begin();
+void GraphicSystem::setResolution(Proto::RepeatedString* values) {
+    auto value = values->begin();
 
     u32 width  = boost::lexical_cast<u32>(*value);
     u32 height = boost::lexical_cast<u32>(*(++value));
@@ -190,9 +190,9 @@ void GraphicSystem::setResolution(ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setFullScreen(ProtoStringList* values) {
+void GraphicSystem::setFullScreen(Proto::RepeatedString* values) {
     ASSERT(!m_bInitialized);
-    ProtoStringList::const_iterator value = values->begin();
+    auto value = values->begin();
 
     m_RenderWindowDescription.useFullScreen = boost::lexical_cast<bool>(*value);
 }
@@ -200,9 +200,9 @@ void GraphicSystem::setFullScreen(ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setVerticalSync(ProtoStringList* values) {
+void GraphicSystem::setVerticalSync(Proto::RepeatedString* values) {
     ASSERT(!m_bInitialized);
-    ProtoStringList::const_iterator value = values->begin();
+    auto value = values->begin();
 
     m_RenderWindowDescription.miscParams["verticalSync"] = boost::lexical_cast<bool>(*value);
 }
@@ -210,9 +210,9 @@ void GraphicSystem::setVerticalSync(ProtoStringList* values) {
 /**
  * @inheritDoc
  */
-void GraphicSystem::setAntiAliasing(ProtoStringList* values) {
+void GraphicSystem::setAntiAliasing(Proto::RepeatedString* values) {
     ASSERT(!m_bInitialized);
-    ProtoStringList::const_iterator value = values->begin();
+    auto value = values->begin();
 
     m_RenderWindowDescription.miscParams["FSAA"] = *(value++);
     m_RenderWindowDescription.miscParams["FSAAQuality"] = *value;

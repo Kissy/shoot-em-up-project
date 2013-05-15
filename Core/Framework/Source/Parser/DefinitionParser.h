@@ -73,7 +73,7 @@ class DefinitionParser {
 
     protected:
 
-        GlobalDefinitionProto                           m_gdProto;
+        Proto::Application                              m_gdProto;
 
         UScene*                                         m_pScene;
         ISystem*                                        m_pSystem;

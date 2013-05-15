@@ -70,13 +70,6 @@ class ISystem : public IComponent, public IProperty {
         }
 
         /**
-         * Gets the name of the system.
-         *
-         * @return  The name of the system.
-         */
-        const char* GetName(void);
-
-        /**
          * Returns the CPU Utilization.
          *
          * @return  CPU Utilization (0-100f)

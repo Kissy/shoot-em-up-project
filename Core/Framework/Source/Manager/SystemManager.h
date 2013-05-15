@@ -52,7 +52,7 @@ class SystemManager : public Singleton {
          * @param   SystemType  The system type to remove.
          * @return  An error code.
          */
-        Error Remove(const System::Type SystemType);
+        Error Remove(const Proto::SystemType SystemType);
 
         /**
          * Gets a specific system from the collection based on its type.
@@ -60,23 +60,7 @@ class SystemManager : public Singleton {
          * @param   SystemType  The type of system to get.
          * @return  A pointer to the system.
          */
-        ISystem* Get(const SystemProto::Type SystemType);
-
-        /**
-         * Gets a specific system from the collection based on its type.
-         *
-         * @param   SystemType  The type of system to get.
-         * @return  A pointer to the system.
-         */
-        ISystem* Get(const System::Type SystemType);
-
-        /**
-         * Gets a specific system from the collection base on its name.
-         *
-         * @param   pszName The name of system to get.
-         * @return  A pointer to the system or <c>NULL</c> of failure.
-         */
-        ISystem* Get(const char* pszName);
+        ISystem* Get(const Proto::SystemType SystemType);
 
         //
         // TODO: These need to be defined better.  Maybe use something like the stl
