@@ -32,6 +32,8 @@ class UScene : public IObserver {
 public:
 
     // TODO move
+    typedef std::map<std::string, Proto::Object*>                       Templates;
+
     typedef std::map<Proto::SystemType, ISystem*>                       Systems;
     typedef Systems::iterator                                           SystemsIt;
     typedef Systems::const_iterator                                     SystemsConstIt;
@@ -91,6 +93,13 @@ public:
     const SystemScenes& GetSystemScenes(void) const {
         return m_SystemScenes;
     }
+
+    /**
+     * Adds the templates.
+     *
+     * @param   objects If non-null, the objects.
+     */
+    void addTemplates(const Proto::RepeatedObject* objects);
 
     /**
      * Creates a new UObject that gets attached to this scene.
@@ -166,7 +175,9 @@ protected:
     IChangeManager*                         m_pObjectCCM;
 
     SystemScenes                            m_SystemScenes;
+    Templates                               m_templates;
     Objects                                 m_Objects;
     ObjectLinks                             m_ObjectLinks;
+
 
 };

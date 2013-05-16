@@ -85,6 +85,11 @@ void DefinitionParser::ParseScene(std::string sScene) {
     ASSERT(result == Errors::Success);
 
     //
+    // Initialize the scene templates.
+    //
+    m_pScene->addTemplates(&scene.templates());
+
+    //
     // Initialize the System scenes.
     //
     for (auto system : scene.systems()) {

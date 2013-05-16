@@ -148,7 +148,7 @@ public class SceneParser extends AbstractParser {
      */
     public void parseObjects(Element objectsElement) throws XMLParseException {
         System.out.println("\t- Parsing Properties");
-        internalParseObjects(objectsElement);
+        internalParseObjects(objectsElement, true);
     }
 
     /**
@@ -159,16 +159,17 @@ public class SceneParser extends AbstractParser {
      */
     public void parseTemplates(Element templatesElement) throws XMLParseException {
         System.out.println("\t- Parsing Templates");
-        internalParseObjects(templatesElement);
+        internalParseObjects(templatesElement, false);
     }
 
     /**
      * Parse all Object elements contained either in Objects or Templates elements.
      *
      * @param parentElement The element containing Object elements.
+     * @param object True if we are parsing real objects, false if we are parsing templates.
      * @throws javax.management.modelmbean.XMLParseException Exception if the document is malformed.
      */
-    private void internalParseObjects(Element parentElement) throws XMLParseException {
+    private void internalParseObjects(Element parentElement, boolean object) throws XMLParseException {
         // Object properties
         NodeList objects = parentElement.getElementsByTagName("Object");
         for (int i = 0; i < objects.getLength(); i++) {
@@ -189,10 +190,13 @@ public class SceneParser extends AbstractParser {
                 objectBuilder.addSystemObjects(propertiesBuilder);
             }
 
-            // Add the object to the list
-            this.objects.add(objectBuilder.getName());
-
-            getSceneDefinitionBuilder().addObjects(objectBuilder);
+            if (object) {
+                // Add the object to the list
+                this.objects.add(objectBuilder.getName());
+                getSceneDefinitionBuilder().addObjects(objectBuilder);
+            } else {
+                getSceneDefinitionBuilder().addTemplates(objectBuilder);
+            }
         }
     }
 

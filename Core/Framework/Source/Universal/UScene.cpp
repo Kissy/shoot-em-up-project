@@ -141,6 +141,20 @@ Error UScene::Unextend(ISystemScene* pScene) {
     return Errors::Success;
 }
 
+void UScene::addTemplates(const Proto::RepeatedObject* objects) {
+    for (auto template_ : *objects) {
+        Templates::iterator it = m_templates.find(template_.name());
+        ASSERTMSG(it == m_templates.end(), "The template to add to the scene already exists.");
+        if (it == m_templates.end()) {
+            continue;
+        }
+        
+        Proto::Object newTemplate;
+        newTemplate.CopyFrom(template_);
+        m_templates.insert(std::pair<std::string, Proto::Object*>(*(newTemplate.mutable_name()), &newTemplate));
+    }
+}
+
 /**
  * @inheritDoc
  */
