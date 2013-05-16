@@ -98,9 +98,9 @@ Error GraphicSystem::initialize(void) {
 
     // Install the particle fx plugin
 #ifdef DEBUG_BUILD
-    //m_pRoot->loadPlugin("Plugin_ParticleFX_d");
+    m_pRoot->loadPlugin("Plugin_ParticleFX_d");
 #else
-    //m_pRoot->loadPlugin("Plugin_ParticleFX");
+    m_pRoot->loadPlugin("Plugin_ParticleFX");
 #endif
 
     // Note: createRenderWindow() is now called directly so that a render winow is created.  The old calling steps

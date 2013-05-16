@@ -85,7 +85,16 @@
 				<Property Name="CapsuleB" Value1="0.0" Value2="1.70" Value3="0.0"/>
 				<Property Name="Radius" Value1="0.3"/>- - >
 			</Properties>
-		</Object>-->
+		</Object>
+		<Object Name="Shot">
+			<Properties SystemType="Graphic" ObjectType="Particle">
+				< ! - -<Property Name="Mesh" Value1="bloodelffemale.mesh"/>- - >
+			</Properties>
+			<Properties SystemType="Physic" ObjectType="Movable">
+				<Property Name="Position" Value1="0" Value2="0" Value3="0"/>
+			</Properties>
+		</Object>
+		-->
 	</Objects>
 	<Links>
 		<!--<Link Subject="Player" Observer="MainCamera" SubjectSystemType="Physic" ObserverSystemType="Graphic"/>-->

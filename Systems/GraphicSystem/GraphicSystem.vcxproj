@@ -101,6 +101,7 @@
     <ClCompile Include="Source\Object\LightGraphicObject.cpp" />
     <ClCompile Include="Source\Object\MeshGraphicObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
+    <ClCompile Include="Source\Object\ParticleGraphicObject.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\Task.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Source\Object\LightGraphicObject.h" />
     <ClInclude Include="Source\Object\MeshGraphicObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
+    <ClInclude Include="Source\Object\ParticleGraphicObject.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\Task.h" />

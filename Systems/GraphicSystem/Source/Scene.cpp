@@ -27,6 +27,7 @@
 #include "Object/Object.h"
 #include "Object/ImageObject.h"
 #include "Object/LightGraphicObject.h"
+#include "Object/ParticleGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
 
@@ -59,6 +60,7 @@ GraphicScene::GraphicScene(ISystem* pSystem)
     
     m_propertySetters["AmbientLight"] = boost::bind(&GraphicScene::setAmbientLight, this, _1);
     
+    m_ObjectFactories["Particle"] = boost::factory<ParticleGraphicObject*>();
     m_ObjectFactories["Camera"] = boost::factory<CameraGraphicObject*>();
     m_ObjectFactories["Light"] = boost::factory<LightGraphicObject*>();
     m_ObjectFactories["Image"] = boost::factory<ImageGraphicObject*>();

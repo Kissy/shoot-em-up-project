@@ -63,6 +63,7 @@ public class AuthenticateActor extends UntypedActor {
         // Fetch player & add it to world
         Player player = new Player(/*"SpaceShip" + username + ".png"*/ "RZR/RZR-002.mesh");
         player.setId(new ObjectId());
+        player.setName((String) messageEvent.getSubject().getPrincipal());
         player.setChannel(messageEvent.getChannel());
         player.setPosition(
             ByteString.copyFrom(String.valueOf(0).getBytes()),

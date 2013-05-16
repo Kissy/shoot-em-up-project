@@ -68,10 +68,21 @@ Error PlayerInputObject::initialize(void) {
  */
 Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
+    
+    if (ChangeType & System::Changes::Physic::Position) {
+        m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
+    }
+
+    if (ChangeType & System::Changes::Physic::Orientation) {
+        m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
+    }
 
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
 void PlayerInputObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
@@ -102,7 +113,9 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         m_velocity.w += m_leftRotateInputAction->isActive() ? 1 : -1;
     }
     if (m_shotInputAction->hasChanged()) {
-        
+        if (m_shotInputAction->isActive()) {
+            createShot();
+        }
         mModified |= System::Changes::Input::Keyboard;
         m_shotKeyboardButtonData->down = m_shotInputAction->isActive();
     }
@@ -112,8 +125,31 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     }
 }
 
+/**
+ * @inheritDoc
+ */
 void PlayerInputObject::createShot(void) {
     Proto::Object shotProto;
+    shotProto.set_id("shot_id");
     shotProto.set_name("Test");
+    auto graphicSystemObject = shotProto.add_systemobjects();
+    graphicSystemObject->set_systemtype(Proto::SystemType::Graphic);
+    graphicSystemObject->set_type("Particle");
+    auto physicSystemObject = shotProto.add_systemobjects();
+    physicSystemObject->set_systemtype(Proto::SystemType::Physic);
+    physicSystemObject->set_type("Movable");
+    auto velocityProperty = physicSystemObject->add_properties();
+    velocityProperty->set_name("Velocity");
+    velocityProperty->add_value("0");
+    velocityProperty->add_value("-1");
+    velocityProperty->add_value("0");
+    velocityProperty->add_value("0");
+    auto positionProperty = physicSystemObject->add_properties();
+    positionProperty->set_name("Position");
+    getVector3(&m_position, positionProperty->mutable_value());
+    auto orientationProperty = physicSystemObject->add_properties();
+    orientationProperty->set_name("Orientation");
+    getQuaternion(&m_orientation, orientationProperty->mutable_value());
     m_createObjectQueue->push_back(shotProto);
+    PostChanges(System::Changes::Generic::CreateObject);
 }

@@ -172,6 +172,11 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
             ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
             ASSERT(pSystemObject != NULL);
 
+            //
+            // Register all changes made by the scene (this allow objects to create objects)
+            //
+            m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
+
             if (pSystemObject != NULL) {
                 pSystemObject->setProperties(objectProto.properties());
                 pSystemObject->initialize();

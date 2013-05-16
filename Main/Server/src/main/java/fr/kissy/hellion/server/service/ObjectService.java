@@ -24,7 +24,7 @@ public class ObjectService {
     public Common.Object getCreateObject(Player player, boolean isControllable) {
         Common.Object.Builder builder = Common.Object.newBuilder();
         builder.setId(player.getId().toString());
-        builder.setName(player.getId().toString());
+        builder.setName(player.getName());
 
         Common.SystemObject.Builder graphicSystemObject = builder.addSystemObjectsBuilder();
         graphicSystemObject.setSystemType(Common.SystemType.Graphic);

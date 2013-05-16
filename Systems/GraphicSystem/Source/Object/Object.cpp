@@ -23,7 +23,7 @@
 GraphicObject::GraphicObject(ISystemScene* pSystemScene, IEntity* entity) 
     : ISystemObject(pSystemScene, entity)
     , m_sceneManager(reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager()) {
-    m_pNode = m_sceneManager->createSceneNode(m_entity->getName() + "_SceneNode");
+    m_pNode = m_sceneManager->createSceneNode(m_entity->getId() + "_SceneNode");
     ASSERT(m_pNode != NULL);
     m_sceneManager->getRootSceneNode()->addChild(m_pNode);
 }

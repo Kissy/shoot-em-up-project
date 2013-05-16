@@ -52,7 +52,6 @@ LightGraphicObject::~LightGraphicObject(void) {
 Error LightGraphicObject::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    GraphicObject::initialize();
     m_pLight = POGRESCENEMGR->createLight(m_entity->getName());
     
     // TODO make it properties

@@ -75,12 +75,10 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
     if (m_velocity != Math::Vector4::Zero) {
         // Rotation
         if (m_velocity.w != 0) {
-            m_rotation += m_velocity.w * m_speed_multiplier * DeltaTime * 10;
-            m_rotation = fmod(m_rotation, 360.0f);
-            if(m_rotation < 0) {
-                m_rotation += 360.0f;
-            }
-            m_orientation.Set(Math::Vector3::UnitZ, Math::Angle::Deg2Rad(m_rotation));
+            m_rotation = m_velocity.w * m_speed_multiplier * DeltaTime * 10;
+            Math::Quaternion additionalOrientation;
+            additionalOrientation.Set(Math::Vector3::UnitZ, Math::Angle::Deg2Rad(m_rotation));
+            m_orientation *= additionalOrientation;
             modified |= System::Changes::Physic::Orientation;
         }
 

@@ -20,6 +20,7 @@ public class Player implements BoxObject {
 
     @Id
     private ObjectId id;
+    private String name;
     private Common.Property.Builder meshProperty;
     private Common.Property.Builder positionProperty;
     private Common.Property.Builder velocityProperty;
@@ -61,6 +62,14 @@ public class Player implements BoxObject {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Common.Property.Builder getPositionProperty() {

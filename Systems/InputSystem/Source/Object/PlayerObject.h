@@ -17,6 +17,8 @@
 #include <OISB.h>
 
 #include "System.h"
+#include "Object/IMoveObject.h"
+#include "Object/IGeometryObject.h"
 #include "Object/ISceneObject.h"
 #include "Object/Object.h"
 
@@ -29,7 +31,7 @@ struct KeyboardButtonData;
  *
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IMoveObject, public ISceneObject {
+class PlayerInputObject : public InputObject, public IMoveObject, public IGeometryObject, public ISceneObject {
 public:
 
     /**
@@ -51,14 +53,14 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Generic::CreateObject | System::Changes::Input::Keyboard;
+        return System::Changes::Generic::CreateObject | System::Changes::Physic::Velocity | System::Changes::Input::Keyboard;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::None;
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
@@ -83,6 +85,27 @@ public:
      */
     void createShot(void);
 
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetPosition(void) {
+        return &m_position;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Quaternion* GetOrientation(void) {
+        return &m_orientation;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline const Math::Vector3* GetScale(void) {
+        return NULL;
+    }
+
 private:
     OISB::TriggerAction*    m_upInputAction;
     OISB::TriggerAction*    m_rightInputAction;
@@ -93,5 +116,8 @@ private:
     OISB::TriggerAction*    m_shotInputAction;
 
     KeyboardButtonData*     m_shotKeyboardButtonData;
+
+    Math::Vector3       m_position;
+    Math::Quaternion    m_orientation;
 
 };

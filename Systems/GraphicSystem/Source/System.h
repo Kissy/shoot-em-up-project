@@ -14,7 +14,8 @@
 
 #pragma once
 
-#include "OgreWindowEventUtilities.h"
+#include <OgreWindowEventUtilities.h>
+#include <OgreRenderWindow.h>
 
 #include "Errors.h"
 #include "System.h"
