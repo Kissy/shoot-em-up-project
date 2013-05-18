@@ -141,17 +141,20 @@ Error UScene::Unextend(ISystemScene* pScene) {
     return Errors::Success;
 }
 
+/**
+ * @inheritDoc
+ */
 void UScene::addTemplates(const Proto::RepeatedObject* objects) {
     for (auto template_ : *objects) {
         Templates::iterator it = m_templates.find(template_.name());
         ASSERTMSG(it == m_templates.end(), "The template to add to the scene already exists.");
-        if (it == m_templates.end()) {
+        if (it != m_templates.end()) {
             continue;
         }
         
-        Proto::Object newTemplate;
-        newTemplate.CopyFrom(template_);
-        m_templates.insert(std::pair<std::string, Proto::Object*>(*(newTemplate.mutable_name()), &newTemplate));
+        Proto::Object* newTemplate = new Proto::Object();
+        newTemplate->CopyFrom(template_);
+        m_templates.insert(std::pair<std::string, Proto::Object*>(*(newTemplate->mutable_name()), newTemplate));
     }
 }
 
@@ -169,33 +172,58 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     //
     m_Objects.push_back(pObject);
     Objects objects = m_Objects;
+    
+    //
+    // Start by the template object.
+    // 
+    Templates::iterator templateIt = m_templates.find(objectProto->template_());
+    if (templateIt != m_templates.end()) {
+        for (auto objectProto : (*templateIt).second->systemobjects()) {
+            //
+            // Create object.
+            //
+            ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
+            UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
+            ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
+            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
+            ASSERT(pSystemObject != NULL);
+            m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
+            pSystemObject->setProperties(objectProto.properties());
+        }
+    }
 
     //
     // Added systems extension.
     //
     for (auto objectProto : objectProto->systemobjects()) {
-        ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
-        ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());
-
-        if (m_pSystem != NULL) {
+        ISystemObject* pSystemObject;
+        
+        //
+        // Get or Create object.
+        //
+        UObject::SystemObjects extensions = pObject->GetExtensions();
+        if (extensions.find(objectProto.systemtype()) == extensions.end()) {
+            ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
             UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            //
-            // Create object.
-            //
-            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
+            pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
             ASSERT(pSystemObject != NULL);
-
-            //
-            // Register all changes made by the scene (this allow objects to create objects)
-            //
             m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
-
-            if (pSystemObject != NULL) {
-                pSystemObject->setProperties(objectProto.properties());
-                pSystemObject->initialize();
-            }
+        } else {
+            pSystemObject = pObject->GetExtension(objectProto.systemtype());
+            ASSERT(pSystemObject != NULL);
         }
+
+        pSystemObject->setProperties(objectProto.properties());
+    }
+
+    //
+    // Init everything
+    // 
+    for (auto systemObject : pObject->GetExtensions()) {
+        systemObject.second->initialize();
     }
     return pObject;
 }
