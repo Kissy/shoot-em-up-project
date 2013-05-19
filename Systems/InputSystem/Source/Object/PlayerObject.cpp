@@ -19,6 +19,7 @@
 #include "Object.h"
 #include "Object/PlayerObject.h"
 #include "Object/IKeyboardObject.h"
+#include "ObjectId.h"
 
 /**
  * @inheritDoc
@@ -57,7 +58,7 @@ Error PlayerInputObject::initialize(void) {
     m_leftInputAction->bind("Keyboard/E");
     m_rightRotateInputAction->bind("Keyboard/DROITE");
     m_leftRotateInputAction->bind("Keyboard/GAUCHE");
-    m_shotInputAction->bind("Keyboard/ESPACE");
+    m_shotInputAction->bind("Keyboard/J");
 
     m_bInitialized = true;
     return Errors::Success;
@@ -130,8 +131,8 @@ void PlayerInputObject::Update(f32 DeltaTime) {
  */
 void PlayerInputObject::createShot(void) {
     Proto::Object shotProto;
-    shotProto.set_id("shot_id");
-    shotProto.set_name("Test");
+    shotProto.set_id(ObjectId::gen().str());
+    shotProto.set_name("Shot");
     shotProto.set_template_("ShotTemplate");
     auto physicSystemObject = shotProto.add_systemobjects();
     physicSystemObject->set_systemtype(Proto::SystemType::Physic);

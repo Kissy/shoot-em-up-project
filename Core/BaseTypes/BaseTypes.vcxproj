@@ -86,10 +86,13 @@
   <ItemGroup>
     <ClInclude Include="Source\Assert.h" />
     <ClInclude Include="Source\DataTypes.h" />
+    <ClInclude Include="Source\Date_t.h" />
+    <ClInclude Include="Source\Hex.h" />
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Defines.h" />
     <ClInclude Include="Source\Errors.h" />
     <ClInclude Include="Source\MathUtils.h" />
+    <ClInclude Include="Source\ObjectId.h" />
     <ClInclude Include="Source\Proto.h" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\SpinMutex.h" />
@@ -99,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\MathUtils.cpp" />
+    <ClCompile Include="Source\ObjectId.cpp" />
     <ClCompile Include="Source\Singleton.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

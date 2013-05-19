@@ -36,7 +36,6 @@ NetworkTask::~NetworkTask(void) {
  * @inheritDoc
  */
 void NetworkTask::Update(f32 DeltaTime) {
-    static_cast<NetworkScene*>(GetSystemScene())->resetObjectQueues();
     static_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->receive();
     m_pSystemScene->Update(DeltaTime);
 }

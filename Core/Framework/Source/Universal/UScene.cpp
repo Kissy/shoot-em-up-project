@@ -91,20 +91,18 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     pSystem->createScene();
     ISystemScene* pScene = pSystem->getSystemScene();
     ASSERT(pScene != NULL);
-
-    if (pScene != NULL) {
-        //
-        // Create the associated task.
-        pScene->createTask();
-        //
-        // Register all changes made by the scene.
-        //
-        m_pSceneCCM->Register(pScene, System::Changes::Generic::All, this);
-        //
-        // Add the scene to the collection.
-        //
-        m_SystemScenes[SystemType] = pScene;
-    }
+    
+    //
+    // Create the associated task.
+    pScene->createTask();
+    //
+    // Register all changes made by the scene.
+    //
+    m_pSceneCCM->Register(pScene, System::Changes::Generic::All, this);
+    //
+    // Add the scene to the collection.
+    //
+    m_SystemScenes[SystemType] = pScene;
 
     return pScene;
 }
@@ -127,8 +125,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     // Find the system scene in the collection and remove it.
     //
     SystemScenesIt it = m_SystemScenes.find(SystemType);
-    ASSERTMSG(it != m_SystemScenes.end(),
-              "The scene to delete for its system type doesn't exist.");
+    ASSERTMSG(it != m_SystemScenes.end(), "The scene to delete for its system type doesn't exist.");
     m_SystemScenes.erase(it);
     //
     // Unregister the scene from the CCM.
@@ -165,7 +162,7 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, objectProto->name(), objectProto->name());
+    UObject* pObject = new UObject(this, objectProto->id(), objectProto->name());
     ASSERT(pObject != NULL);
     //
     // Add the object to the collection.
@@ -186,7 +183,7 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
             ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
             UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
+            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type());
             ASSERT(pSystemObject != NULL);
             m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
             pSystemObject->setProperties(objectProto.properties());
@@ -208,7 +205,7 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
             ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
             UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            pSystemObject = pObject->Extend(it->second, objectProto.type().c_str());
+            pSystemObject = pObject->Extend(it->second, objectProto.type());
             ASSERT(pSystemObject != NULL);
             m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
         } else {
@@ -311,10 +308,11 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             const ISceneObject::ObjectProtoQueue objectsToCreate = *pScene->getCreateObjects();
             for (auto objectProto : objectsToCreate) {
-                ASSERT(FindObject(objectProto.name().c_str()) == NULL);
+                ASSERT(FindObject(objectProto.id()) == NULL);
                 UObject* pObject = createObject(&objectProto);
                 ASSERT(pObject != NULL);
             }
+            pScene->resetCreateObjectQueues();
             break;
         }
 
@@ -322,10 +320,11 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
             ISceneObject* pScene = dynamic_cast<ISceneObject*>(pSubject);
             const ISceneObject::ObjectProtoQueue objectsToDestroy = *pScene->getDeleteObjects();
             for (auto objectProto : objectsToDestroy) {
-                UObject* pObject = FindObject(objectProto.name().c_str());
+                UObject* pObject = FindObject(objectProto.id());
                 ASSERT(pObject != NULL);
                 DestroyObject(pObject);
             }
+            pScene->resetDeleteObjectQueues();
             break;
         }
     }

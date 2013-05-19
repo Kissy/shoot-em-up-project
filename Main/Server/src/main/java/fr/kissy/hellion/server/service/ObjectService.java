@@ -60,7 +60,7 @@ public class ObjectService {
     public Common.Object getUpdateObject(Player player) {
         Common.Object.Builder builder = Common.Object.newBuilder();
         builder.setId(player.getId().toString());
-        builder.setName(player.getId().toString());
+        builder.setName(player.getName());
         // Only network system update objects
         Common.SystemObject.Builder networkSystemObject = builder.addSystemObjectsBuilder();
         networkSystemObject.setSystemType(Common.SystemType.Network);
@@ -80,7 +80,7 @@ public class ObjectService {
     public Common.Object getDeleteObject(Player player) {
         Common.Object.Builder builder = Common.Object.newBuilder();
         builder.setId(player.getId().toString());
-        builder.setName(player.getId().toString());
+        builder.setName(player.getName());
         return builder.build();
     }
 }

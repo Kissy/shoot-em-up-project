@@ -40,9 +40,14 @@ public:
     virtual ~ISceneObject();
     
     /**
-     * Resets the create & delete object lists.
+     * Resets the create object lists.
      */
-    void resetObjectQueues(void);
+    void resetCreateObjectQueues(void);
+    
+    /**
+     * Resets the delete object lists.
+     */
+    void resetDeleteObjectQueues(void);
 
     /**
      * Gets create objects.

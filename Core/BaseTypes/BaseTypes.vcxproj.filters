@@ -51,6 +51,15 @@
     <ClInclude Include="Source\System\Changes.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ObjectId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Date_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MathUtils.cpp">
@@ -60,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -35,7 +35,13 @@ ISceneObject::~ISceneObject(void) {
 /**
  * @inheritDoc
  */
-void ISceneObject::resetObjectQueues(void) {
+void ISceneObject::resetCreateObjectQueues(void) {
     m_createObjectQueue->clear();
+}
+
+/**
+ * @inheritDoc
+ */
+void ISceneObject::resetDeleteObjectQueues(void) {
     m_deleteObjectQueue->clear();
 }
