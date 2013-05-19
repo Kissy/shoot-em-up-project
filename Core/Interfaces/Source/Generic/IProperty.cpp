@@ -82,11 +82,35 @@ Error IProperty::initialize(void) {
 /**
  * @inheritDoc
  */
+template<typename T> void IProperty::setSimpleType(System::Changes::BitMask changeType, T* value, Proto::RepeatedString* values) {
+    auto stringValue = values->begin();
+    *value = boost::lexical_cast<T>(*stringValue);
+    propertyChanged(changeType);
+};
+
+template void IProperty::setSimpleType<bool>(System::Changes::BitMask changeType, bool* value, Proto::RepeatedString* values);
+template void IProperty::setSimpleType<f32>(System::Changes::BitMask changeType, f32* value, Proto::RepeatedString* values);
+
+/**
+ * @inheritDoc
+ */
+template<typename T> void IProperty::getSimpleType(T* value, Proto::RepeatedString* values) {
+    std::string* stringValue = nullptr;
+    stringValue = values->Add();
+    stringValue->append(boost::lexical_cast<std::string>(*value));
+};
+
+template void IProperty::getSimpleType<bool>(bool* value, Proto::RepeatedString* values);
+template void IProperty::getSimpleType<f32>(f32* value, Proto::RepeatedString* values);
+
+/**
+ * @inheritDoc
+ */
 void IProperty::setString(System::Changes::BitMask changeType, std::string* string, Proto::RepeatedString* values) {
     auto value = values->begin();
     string->assign(*value);
     propertyChanged(changeType);
-}
+};
 
 /**
  * @inheritDoc
@@ -95,7 +119,7 @@ void IProperty::getString(std::string* string, Proto::RepeatedString* values) {
     std::string* value = nullptr;
     value = values->Add();
     value->append(*string);
-}
+};
 
 /**
  * @inheritDoc
@@ -106,7 +130,7 @@ void IProperty::setVector3(System::Changes::BitMask changeType, Math::Vector3* v
     vector3->y = boost::lexical_cast<f32>(*(++value));
     vector3->z = boost::lexical_cast<f32>(*(++value));
     propertyChanged(changeType);
-}
+};
 
 /**
  * @inheritDoc
@@ -119,7 +143,7 @@ void IProperty::getVector3(Math::Vector3* vector3, Proto::RepeatedString* values
     value->append(boost::lexical_cast<std::string>(vector3->y));
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(vector3->z));
-}
+};
 
 /**
  * @inheritDoc
@@ -131,7 +155,7 @@ void IProperty::setVector4(System::Changes::BitMask changeType, Math::Vector4* v
     vector4->z = boost::lexical_cast<f32>(*(++value));
     vector4->w = boost::lexical_cast<f32>(*(++value));
     propertyChanged(changeType);
-}
+};
 
 /**
  * @inheritDoc
@@ -146,7 +170,7 @@ void IProperty::getVector4(Math::Vector4* vector4, Proto::RepeatedString* values
     value->append(boost::lexical_cast<std::string>(vector4->z));
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(vector4->w));
-}
+};
 
 /**
  * @inheritDoc
@@ -158,7 +182,7 @@ void IProperty::setQuaternion(System::Changes::BitMask changeType, Math::Quatern
     quaternion->z = boost::lexical_cast<f32>(*(++value));
     quaternion->w = boost::lexical_cast<f32>(*(++value));
     propertyChanged(changeType);
-}
+};
 
 /**
  * @inheritDoc
@@ -173,7 +197,7 @@ void IProperty::getQuaternion(Math::Quaternion* quaternion, Proto::RepeatedStrin
     value->append(boost::lexical_cast<std::string>(quaternion->z));
     value = values->Add();
     value->append(boost::lexical_cast<std::string>(quaternion->w));
-}
+};
 
 
 /**
@@ -181,4 +205,4 @@ void IProperty::getQuaternion(Math::Quaternion* quaternion, Proto::RepeatedStrin
  */
 void IProperty::propertyChanged(System::Changes::BitMask uInChangedBits) {
     // NOOP
-}
+};

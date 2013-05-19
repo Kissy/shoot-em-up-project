@@ -72,6 +72,25 @@ public:
     Proto::RepeatedProperty getProperties(void);
 
     /**
+     * Sets simple type.
+     *
+     * @tparam  T   Generic type parameter.
+     * @param   changeType      Type of the change.
+     * @param [in,out]  value   If non-null, the value.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    template<typename T> void setSimpleType(System::Changes::BitMask changeType, T* value, Proto::RepeatedString* values);
+
+    /**
+     * Gets f32.
+     *
+     * @tparam  T   Generic type parameter.
+     * @param [in,out]  value   The value to fill.
+     * @param [in,out]  values  If non-null, the values.
+     */
+    template<typename T> void getSimpleType(T* value, Proto::RepeatedString* values);
+
+    /**
      * Sets a string.
      *
      * @param   changeType      Type of the change.

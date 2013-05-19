@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/bind.hpp>
+
 #include "Interface.h"
 
 #include "Scene.h"
@@ -19,14 +21,18 @@
 #include "Generic/IEntity.h"
 #include "Object/MovablePhysicObject.h"
 
-const f32 MovablePhysicObject::m_speed_multiplier = 40;
-
 /**
  * @inheritDoc
  */
 MovablePhysicObject::MovablePhysicObject(ISystemScene* pSystemScene, IEntity* entity) 
-    : PhysicObject(pSystemScene, entity) {
-    
+    : PhysicObject(pSystemScene, entity)
+    , m_constraint_position(true)
+    , m_speed_multiplier(40) {
+    m_propertySetters["SpeedMultiplier"] = boost::bind(&IProperty::setSimpleType<f32>, this, System::Changes::None, &m_speed_multiplier, _1);
+    m_propertyGetters["SpeedMultiplier"] = boost::bind(&IProperty::getSimpleType<f32>, this, &m_speed_multiplier, _1);
+
+    m_propertySetters["ConstraintPosition"] = boost::bind(&IProperty::setSimpleType<bool>, this, System::Changes::None, &m_constraint_position, _1);
+    m_propertyGetters["ConstraintPosition"] = boost::bind(&IProperty::getSimpleType<bool>, this, &m_constraint_position, _1);
 }
 
 /**
@@ -91,8 +97,8 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
             m_position.y += normalizedVelocity.y * m_speed_multiplier * DeltaTime;
             m_position.z += normalizedVelocity.z * m_speed_multiplier * DeltaTime;
 
-            m_position.x = m_position.x > 35 ? 35 : (m_position.x < -35 ? -35 : m_position.x);
-            m_position.y = m_position.y > 25 ? 25 : (m_position.y < -25 ? -25 : m_position.y);
+            m_position.x = (m_constraint_position && m_position.x > 35) ? 35 : ((m_constraint_position && m_position.x < -35) ? -35 : m_position.x);
+            m_position.y = (m_constraint_position && m_position.y > 25) ? 25 : ((m_constraint_position && m_position.y < -25) ? -25 : m_position.y);
         
             modified |= System::Changes::Physic::Position;
         }

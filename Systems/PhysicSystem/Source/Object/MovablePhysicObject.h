@@ -70,6 +70,7 @@ public:
     void Update(f32 DeltaTime);
 
 private:
-    static const f32     m_speed_multiplier;
+    bool    m_constraint_position;
+    f32     m_speed_multiplier;
 
 };
