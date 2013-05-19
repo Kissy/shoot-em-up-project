@@ -1,7 +1,7 @@
 particle_system LaserShot
 {
 	material Particles/Classic.000
-	particle_width 1.0
+	particle_width 0.5
 	particle_height 5.0
 	quota 1
 	local_space true

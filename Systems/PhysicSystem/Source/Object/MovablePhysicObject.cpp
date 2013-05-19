@@ -91,8 +91,8 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
             m_position.y += normalizedVelocity.y * m_speed_multiplier * DeltaTime;
             m_position.z += normalizedVelocity.z * m_speed_multiplier * DeltaTime;
 
-            //m_position.x = m_position.x > 780.0f ? 780.0f : (m_position.x < 40.0f ? 40.0f : m_position.x);
-            //m_position.y = m_position.y > 570.0f ? 570.0f : (m_position.y < 40.0f ? 40.0f : m_position.y);
+            m_position.x = m_position.x > 35 ? 35 : (m_position.x < -35 ? -35 : m_position.x);
+            m_position.y = m_position.y > 25 ? 25 : (m_position.y < -25 ? -25 : m_position.y);
         
             modified |= System::Changes::Physic::Position;
         }
