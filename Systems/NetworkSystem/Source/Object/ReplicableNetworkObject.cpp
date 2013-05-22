@@ -99,16 +99,9 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
 
         std::string data;
         objectUpdated.AppendToString(&data);
-<<<<<<< HEAD
-        DownstreamMessageProto downstreamMessage;
-        downstreamMessage.set_type(DownstreamMessageProto::PLAYER_MOVE);
-        downstreamMessage.set_data(data);
-        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);
-=======
         /*DownstreamMessageProto downstreamMessage;
         downstreamMessage.set_type(DownstreamMessageProto::PLAYER_MOVE);
         downstreamMessage.set_data(data);
         reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);*/
->>>>>>> Objects are removed when it's leaving the screen.
     }
 }
