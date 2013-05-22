@@ -22,7 +22,7 @@
 class PhysicSystem;
 class PhysicObject;
 
-class PhysicScene : public ISystemScene {
+class PhysicScene : public ISystemScene, public ISceneObject {
 
     public:
         
@@ -50,7 +50,7 @@ class PhysicScene : public ISystemScene {
          * @inheritDoc
          */
         System::Changes::BitMask GetPotentialSystemChanges(void) {
-            return System::Changes::None;
+            return System::Changes::Generic::DeleteObject;
         };
 
         /**

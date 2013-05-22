@@ -30,6 +30,7 @@
 #include "Object/Object.h"
 #include "Object/ConnectNetworkObject.h"
 #include "Object/PlayerNetworkObject.h"
+#include "Object/ReplicableNetworkObject.h"
 #include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 
@@ -45,6 +46,7 @@ NetworkScene::NetworkScene(ISystem* pSystem)
     
     m_ObjectFactories["Connect"] = boost::factory<ConnectNetworkObject*>();
     m_ObjectFactories["Player"] = boost::factory<PlayerNetworkObject*>();
+    m_ObjectFactories["Replicable"] = boost::factory<ReplicableNetworkObject*>();
     m_ObjectFactories["Updatable"] = boost::factory<UpdatableNetworkObject*>();
 }
 
@@ -99,7 +101,7 @@ void NetworkScene::queueDeleteObjects(Proto::RepeatedObject objectProtoList) {
  */
 void NetworkScene::updateObjects(Proto::RepeatedObject objectProtoList) {
     for (auto object : objectProtoList) {
-        auto systemObjectIterator = m_pObjects.find(object.name());
+        auto systemObjectIterator = m_pObjects.find(object.id());
         // ignore updates if the object is not found
         if (systemObjectIterator != m_pObjects.end()) {
             systemObjectIterator->second->setProperties(object.systemobjects().Get(0).properties());

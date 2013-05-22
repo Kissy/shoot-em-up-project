@@ -89,8 +89,8 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         }
 
         // Position
-        Math::Vector3 normalizedVelocity = Math::Vector3(m_velocity.x, m_velocity.y, m_velocity.z);
-        if (normalizedVelocity != Math::Vector3::Zero) {
+        if (m_velocity != Math::Vector3::Zero) {
+            Math::Vector3 normalizedVelocity = Math::Vector3(m_velocity.x, m_velocity.y, m_velocity.z);
             m_orientation.Rotate(normalizedVelocity);
             normalizedVelocity.Normalize();
             m_position.x += normalizedVelocity.x * m_speed_multiplier * DeltaTime;
@@ -99,7 +99,7 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
 
             m_position.x = (m_constraint_position && m_position.x > 35) ? 35 : ((m_constraint_position && m_position.x < -35) ? -35 : m_position.x);
             m_position.y = (m_constraint_position && m_position.y > 25) ? 25 : ((m_constraint_position && m_position.y < -25) ? -25 : m_position.y);
-        
+            
             modified |= System::Changes::Physic::Position;
         }
     }

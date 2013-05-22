@@ -56,7 +56,16 @@ Error PhysicScene::initialize(void) {
  */
 void PhysicScene::Update(f32 DeltaTime) {
     for (auto object : m_pObjects) {
+        // TODO handle the modified / postChanges differently
         PhysicObject* pObject = static_cast<PhysicObject*>(object.second);
         pObject->Update(DeltaTime);
+
+        if (!pObject->GetPosition()->x > 40 || pObject->GetPosition()->x < -40 || pObject->GetPosition()->y > 30 || pObject->GetPosition()->y < -30) {
+            Proto::Object object;
+            object.set_id(pObject->getEntity()->getId());
+            object.set_name(pObject->getEntity()->getName());
+            m_deleteObjectQueue->push_back(object);
+            PostChanges(System::Changes::Generic::DeleteObject);
+        }
     }
 }
