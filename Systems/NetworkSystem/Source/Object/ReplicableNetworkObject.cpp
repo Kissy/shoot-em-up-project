@@ -84,12 +84,10 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
         Proto::Object* object = objectUpdated.add_objects();
         object->set_id(m_entity->getId());
         object->set_name(m_entity->getName());
+        object->set_template_("ShotTemplate");
         Proto::SystemObject* systemObject = object->add_systemobjects();
-        systemObject->set_type(Proto::SystemType_Name(Proto::SystemType::Network));
-        systemObject->set_systemtype(Proto::SystemType::Network);
-        Proto::Property* velocityProperty = systemObject->add_properties();
-        velocityProperty->set_name("Velocity");
-        getVector4(&m_velocity, velocityProperty->mutable_value());
+        systemObject->set_type("Movable");
+        systemObject->set_systemtype(Proto::SystemType::Physic);
         Proto::Property* orientationProperty = systemObject->add_properties();
         orientationProperty->set_name("Orientation");
         getQuaternion(&m_orientation, orientationProperty->mutable_value());
@@ -99,9 +97,9 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
 
         std::string data;
         objectUpdated.AppendToString(&data);
-        /*DownstreamMessageProto downstreamMessage;
-        downstreamMessage.set_type(DownstreamMessageProto::PLAYER_MOVE);
+        DownstreamMessageProto downstreamMessage;
+        downstreamMessage.set_type(DownstreamMessageProto::PLAYER_SHOT);
         downstreamMessage.set_data(data);
-        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);*/
+        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);
     }
 }

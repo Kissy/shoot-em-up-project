@@ -154,6 +154,10 @@ public final class DownstreamMessageDto {
        * <code>PLAYER_MOVE = 3;</code>
        */
       PLAYER_MOVE(2, 3),
+      /**
+       * <code>PLAYER_SHOT = 4;</code>
+       */
+      PLAYER_SHOT(3, 4),
       ;
 
       /**
@@ -168,6 +172,10 @@ public final class DownstreamMessageDto {
        * <code>PLAYER_MOVE = 3;</code>
        */
       public static final int PLAYER_MOVE_VALUE = 3;
+      /**
+       * <code>PLAYER_SHOT = 4;</code>
+       */
+      public static final int PLAYER_SHOT_VALUE = 4;
 
 
       public final int getNumber() { return value; }
@@ -177,6 +185,7 @@ public final class DownstreamMessageDto {
           case 1: return AUTHENTICATE;
           case 2: return ENTER_WORLD;
           case 3: return PLAYER_MOVE;
+          case 4: return PLAYER_SHOT;
           default: return null;
         }
       }
@@ -610,13 +619,13 @@ public final class DownstreamMessageDto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n$Proto/Server/DownstreamMessage.proto\"\216" +
+      "\n$Proto/Server/DownstreamMessage.proto\"\237" +
       "\001\n\026DownstreamMessageProto\022*\n\004type\030\001 \002(\0162" +
       "\034.DownstreamMessageProto.Type\022\014\n\004data\030\002 " +
-      "\001(\014\":\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\017\n\013ENTER_W" +
-      "ORLD\020\002\022\017\n\013PLAYER_MOVE\020\003B8\n\035fr.kissy.hell" +
-      "ion.proto.serverB\024DownstreamMessageDto\210\001" +
-      "\000"
+      "\001(\014\"K\n\004Type\022\020\n\014AUTHENTICATE\020\001\022\017\n\013ENTER_W" +
+      "ORLD\020\002\022\017\n\013PLAYER_MOVE\020\003\022\017\n\013PLAYER_SHOT\020\004" +
+      "B8\n\035fr.kissy.hellion.proto.serverB\024Downs" +
+      "treamMessageDto\210\001\000"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

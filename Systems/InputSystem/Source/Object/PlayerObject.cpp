@@ -143,6 +143,9 @@ void PlayerInputObject::createShot(void) {
     auto orientationProperty = physicSystemObject->add_properties();
     orientationProperty->set_name("Orientation");
     getQuaternion(&m_orientation, orientationProperty->mutable_value());
+    auto networkSystemObject = shotProto.add_systemobjects();
+    networkSystemObject->set_systemtype(Proto::SystemType::Network);
+    networkSystemObject->set_type("Replicable");
     m_createObjectQueue->push_back(shotProto);
     PostChanges(System::Changes::Generic::CreateObject);
 }

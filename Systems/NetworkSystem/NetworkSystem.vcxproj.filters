@@ -54,6 +54,9 @@
     <ClCompile Include="Source\Object\UpdatableNetworkObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object\ReplicableNetworkObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scene.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\UpdatableNetworkObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object\ReplicableNetworkObject.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

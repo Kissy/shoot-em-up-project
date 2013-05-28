@@ -4,11 +4,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import fr.kissy.hellion.proto.server.DownstreamMessageDto;
-import fr.kissy.hellion.server.actor.AuthenticateActor;
-import fr.kissy.hellion.server.actor.AutowireUntypedActorFactory;
-import fr.kissy.hellion.server.actor.DisconnectActor;
-import fr.kissy.hellion.server.actor.PlayerMoveActor;
-import fr.kissy.hellion.server.actor.SynchronizeActor;
+import fr.kissy.hellion.server.actor.*;
 import fr.kissy.hellion.server.config.bus.MessageEventBus;
 import fr.kissy.hellion.server.config.bus.StateEventBus;
 import org.jboss.netty.channel.ChannelState;
@@ -65,6 +61,13 @@ public class ActorConfig {
     public ActorRef moveActorRef() {
         ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, PlayerMoveActor.class)));
         messageEventBus().subscribe(actorRef, DownstreamMessageDto.DownstreamMessageProto.Type.PLAYER_MOVE);
+        return actorRef;
+    }
+
+    @Bean
+    public ActorRef shotActorRef() {
+        ActorRef actorRef = actorSystem().actorOf(new Props(new AutowireUntypedActorFactory(beanFactory, PlayerShotActor.class)));
+        messageEventBus().subscribe(actorRef, DownstreamMessageDto.DownstreamMessageProto.Type.PLAYER_SHOT);
         return actorRef;
     }
 

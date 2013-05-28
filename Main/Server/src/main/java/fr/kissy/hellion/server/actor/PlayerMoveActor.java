@@ -29,8 +29,8 @@ public class PlayerMoveActor extends UntypedActor {
         AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
-        Message.ObjectUpdated updatedProto = Message.ObjectUpdated.parseFrom(messageEvent.getMessage().getData());
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
+        Message.ObjectUpdated updatedProto = Message.ObjectUpdated.parseFrom(messageEvent.getMessage().getData());
         for (Common.Property propertyProto : updatedProto.getObjects(0).getSystemObjects(0).getPropertiesList()) {
             if (propertyProto.getName().equals("Position")) {
                 player.setPosition(

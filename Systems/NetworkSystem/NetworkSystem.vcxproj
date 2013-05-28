@@ -96,6 +96,7 @@
     <ClCompile Include="Source\Object\ConnectNetworkObject.cpp" />
     <ClCompile Include="Source\Object\Object.cpp" />
     <ClCompile Include="Source\Object\PlayerNetworkObject.cpp" />
+    <ClCompile Include="Source\Object\ReplicableNetworkObject.cpp" />
     <ClCompile Include="Source\Object\UpdatableNetworkObject.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Service\NetworkService.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Source\Object\ConnectNetworkObject.h" />
     <ClInclude Include="Source\Object\Object.h" />
     <ClInclude Include="Source\Object\PlayerNetworkObject.h" />
+    <ClInclude Include="Source\Object\ReplicableNetworkObject.h" />
     <ClInclude Include="Source\Object\UpdatableNetworkObject.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Service\MatchingVarintPrefix.h" />

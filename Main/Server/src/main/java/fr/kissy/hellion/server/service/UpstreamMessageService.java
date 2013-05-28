@@ -2,6 +2,7 @@ package fr.kissy.hellion.server.service;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
+import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.Message;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
@@ -42,6 +43,17 @@ public class UpstreamMessageService {
 
     /**
      * Get the OBJECT_CREATED UpstreamMessageProto
+     * from the given player.
+     *
+     * @param player The player to convert.
+     * @return The created UpstreamMessageProto.
+     */
+    public UpstreamMessageDto.UpstreamMessageProto getObjectCreatedMessage(Player player) {
+        return getObjectCreatedMessage(Sets.newHashSet(player));
+    }
+
+    /**
+     * Get the OBJECT_CREATED UpstreamMessageProto
      * from the Set of players.
      *
      * @param players The set of players to convert.
@@ -50,22 +62,21 @@ public class UpstreamMessageService {
     public UpstreamMessageDto.UpstreamMessageProto getObjectCreatedMessage(Set<Player> players) {
         Message.ObjectUpdated.Builder dataBuilder = Message.ObjectUpdated.newBuilder();
         dataBuilder.addAllObjects(Iterables.transform(players, playerToCreateObjectDto));
-
-        UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
-        builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.OBJECT_CREATED);
-        builder.setData(dataBuilder.build().toByteString());
-        return builder.build();
+        return getObjectCreatedMessage(dataBuilder.build().toByteString());
     }
 
     /**
      * Get the OBJECT_CREATED UpstreamMessageProto
      * from the given player.
      *
-     * @param player The player to convert.
+     * @param data The data to send as ByteString.
      * @return The created UpstreamMessageProto.
      */
-    public UpstreamMessageDto.UpstreamMessageProto getObjectCreatedMessage(Player player) {
-        return getObjectCreatedMessage(Sets.newHashSet(player));
+    public UpstreamMessageDto.UpstreamMessageProto getObjectCreatedMessage(ByteString data) {
+        UpstreamMessageDto.UpstreamMessageProto.Builder builder = UpstreamMessageDto.UpstreamMessageProto.newBuilder();
+        builder.setType(UpstreamMessageDto.UpstreamMessageProto.Type.OBJECT_CREATED);
+        builder.setData(data);
+        return builder.build();
     }
 
     /**

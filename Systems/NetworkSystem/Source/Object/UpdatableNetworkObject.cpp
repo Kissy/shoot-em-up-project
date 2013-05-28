@@ -22,7 +22,7 @@
 #include "Object/Object.h"
 #include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
-#include "Proto/Message/ObjectUpdated.pb.h"
+#include "Proto/Message.pb.h"
 
 /**
  * @inheritDoc

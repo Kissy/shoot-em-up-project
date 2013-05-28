@@ -16,8 +16,6 @@
 		<Object Name="ShotTemplate">
 			<Properties SystemType="Graphic" ObjectType="Particle">
 			</Properties>
-			<Properties SystemType="Network" ObjectType="Player">
-			</Properties>
 			<Properties SystemType="Physic" ObjectType="Movable">
 				<Property Name="SpeedMultiplier" value1="80" />
 				<Property Name="ConstraintPosition" value1="0" />
