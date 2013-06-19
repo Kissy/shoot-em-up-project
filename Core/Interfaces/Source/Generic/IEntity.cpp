@@ -31,3 +31,12 @@ IEntity::IEntity(std::string id, std::string name, IEntity* parent)
  */
 IEntity::~IEntity() {
 }
+
+/**
+ * Copy constructor.
+ *
+ * @param [in,out]  entity  If non-null, the entity.
+ */
+void IEntity::addChildren(IEntity* entity) {
+    m_children.push_back(entity);
+}

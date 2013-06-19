@@ -66,7 +66,14 @@ public:
     inline std::list<IEntity*> getChildren(void) {
         return m_children;
     }
-    
+
+    /**
+     * Adds a children.
+     *
+     * @param [in,out]  entity  If non-null, the entity.
+     */
+    void addChildren(IEntity* entity);
+
 protected:
     std::string			    m_id;
     std::string			    m_name;

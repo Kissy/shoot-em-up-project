@@ -68,6 +68,9 @@ void ConnectInputObject::Update(f32 DeltaTime) {
         m_keyboardButtonData.type = 0;
         m_keyboardButtonData.down = m_connectInputAction->isActive();
         modified |= System::Changes::Input::Keyboard;
+        Proto::Object objectProto;
+        objectProto.set_id(this->getEntity()->getParent()->getId());
+        static_cast<InputScene*>(m_pSystemScene)->queueDeleteObject(objectProto);
     }
     
     PostChanges(modified);

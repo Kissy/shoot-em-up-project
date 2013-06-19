@@ -41,7 +41,7 @@
 				<Property Name="Position" Value1="0" Value2="0" Value3="100" />
 			</Properties>
 		</Object>
-		<Object Name="Connect"></Object>
+		<Object Id="Connect" Name="Connect"></Object>
 		<Object Name="Connect1" Parent="Connect">
 			<Properties SystemType="Input" ObjectType="Connect">
 				<Property Name="Key" Value1="Keyboard/F1" />
@@ -75,7 +75,8 @@
 			</Properties>
 		</Object>
 		
-		<!--<Object Name="Player">
+		<!--
+		<Object Name="Player">
 			<Properties SystemType="Graphic" ObjectType="Mesh">
 				<Property Name="Mesh" Value1="bloodelffemale.mesh"/>
 				< ! - -<Property Name="Skeleton" Value1="characters/bloodelffemale.skeleton"/>- - >

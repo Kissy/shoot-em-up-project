@@ -172,7 +172,7 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     //
     m_Objects.push_back(pObject);
     if (parent != nullptr) {
-        parent->getChildren().push_back(pObject);
+        parent->addChildren(pObject);
     }
     
     //
@@ -234,11 +234,11 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
  * @inheritDoc
  */
 Error UScene::DestroyObject(UObject* pObject) {
-    ASSERT(pObject != NULL);
+    ASSERT(pObject != nullptr);
     // Delete all childrens
     for (auto children : pObject->getChildren()) {
         UObject* object = FindObject(children->getId());
-        if (object) {
+        if (object != nullptr) {
             DestroyObject(object);
         }
     }
@@ -252,11 +252,11 @@ Error UScene::DestroyObject(UObject* pObject) {
  * @inheritDoc
  */
 UObject* UScene::FindObject(std::string id) {
-    UObject* pObject = NULL;
+    UObject* pObject = nullptr;
 
-    for (UScene::ObjectsConstIt it = m_Objects.begin(); it != m_Objects.end(); it++) {
-        if (id == (*it)->getId()) {
-            pObject = *it;
+    for (auto object : m_Objects) {
+        if (id == object->getId()) {
+            pObject = object;
             break;
         }
     }

@@ -31,7 +31,9 @@ extern ManagerInterfaces   g_Managers;
 /**
  * @inheritDoc
  */
-InputScene::InputScene(ISystem* pSystem) : ISystemScene(pSystem) {
+InputScene::InputScene(ISystem* pSystem)
+    : ISystemScene(pSystem)
+    , ISceneObject() {
     m_TaskFactory = boost::factory<InputTask*>();
 
     m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
@@ -73,4 +75,12 @@ void InputScene::Update(f32 DeltaTime) {
         InputObject* pObject = static_cast<InputObject*>(object.second);
         pObject->Update(DeltaTime);
     }
+}
+
+/**
+ * @inheritDoc
+ */
+void InputScene::queueDeleteObject(Proto::Object object) {
+    m_deleteObjectQueue->push_back(object);
+    PostChanges(System::Changes::Generic::DeleteObject);
 }

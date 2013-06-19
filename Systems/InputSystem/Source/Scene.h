@@ -19,6 +19,7 @@
 #include "Errors.h"
 #include "System/ISystem.h"
 #include "System/ISystemScene.h"
+#include "Object/ISceneObject.h"
 
 class InputTask;
 class InputObject;
@@ -30,7 +31,7 @@ class InputAction;
  *
  * @sa  ISystemScene
  */
-class InputScene : public ISystemScene {
+class InputScene : public ISystemScene, public ISceneObject {
 public:
 
     /**
@@ -57,7 +58,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Velocity;
+        return System::Changes::Generic::DeleteObject;
     };
 
     /**
@@ -82,6 +83,13 @@ public:
     OISB::ActionSchema* getDefaultSchema(void) const {
         return m_defaultSchema;
     };
+    
+    /**
+     * Queue delete objects.
+     *
+     * @param   object Object prototypes to delete.
+     */
+    void queueDeleteObject(Proto::Object object);
 
 private:
     OISB::ActionSchema*             m_defaultSchema;
