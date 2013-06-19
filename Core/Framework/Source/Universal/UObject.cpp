@@ -22,9 +22,9 @@
 /**
  * @inheritDoc
  */
-UObject::UObject(UScene* pScene, std::string id, std::string name)
+UObject::UObject(UScene* pScene, std::string id, std::string name, IEntity* parent)
     : ISubject()
-    , IEntity(id, name)
+    , IEntity(id, name, parent)
     , m_pScene(pScene)
     , m_pObjectCCM(pScene->getObjectCCM()) {
 }

@@ -45,7 +45,7 @@ public:
      * @param   id      The universal id of the object.
      * @param   name      The name of the object.
      */
-    UObject(UScene* pScene, std::string id, std::string name);
+    UObject(UScene* pScene, std::string id, std::string name, IEntity* parent);
 
     /**
      * Destructor.

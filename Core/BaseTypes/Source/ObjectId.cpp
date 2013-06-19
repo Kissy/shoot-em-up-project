@@ -18,7 +18,6 @@
 #include <boost/random/uniform_int.hpp>  // for uniform_int
 #include <limits>                       // for numeric_limits
 
-#include "/home/webadmin/shoot-em-up-project/Core/BaseTypes/Source/DataTypes.h"
 #include "Assert.h"                     // for ASSERT
 #include "Date_t.h"                     // for Date_t
 #include "Hex.h"                        // for fromHex

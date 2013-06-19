@@ -1,10 +1,7 @@
 package fr.kissy.hellion.server.actor;
 
-import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import com.google.protobuf.ByteString;
-import fr.kissy.hellion.proto.Common;
-import fr.kissy.hellion.proto.Message;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
 import fr.kissy.hellion.server.domain.Player;
 import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
@@ -13,7 +10,6 @@ import fr.kissy.hellion.server.service.WorldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 

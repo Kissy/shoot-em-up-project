@@ -159,16 +159,23 @@ void UScene::addTemplates(const Proto::RepeatedObject* objects) {
  * @inheritDoc
  */
 UObject* UScene::createObject(const Proto::Object* objectProto) {
+    IEntity* parent = nullptr;
+    if (objectProto->has_parent()) {
+        parent = FindObject(objectProto->parent());
+    }
+
     //
     // Create the new object.
     //
-    UObject* pObject = new UObject(this, objectProto->id(), objectProto->name());
+    UObject* pObject = new UObject(this, objectProto->id(), objectProto->name(), parent);
     ASSERT(pObject != NULL);
     //
     // Add the object to the collection.
     //
     m_Objects.push_back(pObject);
-    Objects objects = m_Objects;
+    if (parent != nullptr) {
+        parent->getChildren().push_back(pObject);
+    }
     
     //
     // Start by the template object.

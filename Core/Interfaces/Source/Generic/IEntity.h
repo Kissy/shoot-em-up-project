@@ -15,6 +15,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 #include "Errors.h"
 #include "System/Changes.h"
@@ -28,7 +29,7 @@ public:
     /**
      * Default constructor.
      */
-    IEntity(std::string id, std::string name);
+    IEntity(std::string id, std::string name, IEntity* parent);
 
     /**
      * Destructor.
@@ -50,8 +51,26 @@ public:
         return m_name;
     }
     
+    /**
+     * Get the entity parent.
+     */
+    inline IEntity* getParent(void) {
+        return m_parent;
+    }
+
+    /**
+     * Gets the children of this item.
+     *
+     * @return  null if it fails, else the children.
+     */
+    inline std::list<IEntity*> getChildren(void) {
+        return m_children;
+    }
+    
 protected:
-    std::string			m_id;
-    std::string			m_name;
+    std::string			    m_id;
+    std::string			    m_name;
+    IEntity*                m_parent;
+    std::list<IEntity*>     m_children;
     
 };

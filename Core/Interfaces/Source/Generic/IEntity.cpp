@@ -19,9 +19,11 @@
 /**
  * @inheritDoc
  */
-IEntity::IEntity(std::string id, std::string name)
+IEntity::IEntity(std::string id, std::string name, IEntity* parent)
     : m_id(id)
-    , m_name(name) {
+    , m_name(name)
+    , m_parent(parent)
+    , m_children() {
 }
 
 /**
