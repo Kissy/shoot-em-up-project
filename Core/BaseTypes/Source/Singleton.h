@@ -14,8 +14,6 @@
 
 #pragma once
 
-#include "Defines.h"
-
 /**
  * Base case for all singleton classes.
  */

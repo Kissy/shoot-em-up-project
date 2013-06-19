@@ -47,12 +47,18 @@
         <extensions>true</extensions>
         <configuration>
           <cpp>
-            <debug>true</debug>
             <sourceDirectory>${basedir}/Source</sourceDirectory>
             <options>
-              <option>-Wno-unused-value</option>
+              <option>-Wno-unknown-pragmas</option>
+              <option>-std=c++11</option>
             </options>
+            <clearDefaultOptions>true</clearDefaultOptions>
           </cpp>
+          <libraries>
+            <library>
+              <type>static</type>
+            </library>
+          </libraries>
         </configuration>
       </plugin>
     </plugins>

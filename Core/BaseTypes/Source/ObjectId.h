@@ -17,11 +17,15 @@
 
 #pragma once
 
-#include <boost/random.hpp>
-#include <string>
+#include <boost/random/mersenne_twister.hpp>  // for mt19937_64
+#include <stddef.h>                     // for size_t
+#include <string.h>                     // for memcmp, memcpy
+#include <time.h>                       // for time_t
+#include <iosfwd>                       // for ostream
+#include <string>                       // for string
 
-#include "Date_t.h"
-#include "Hex.h"
+#include "Date_t.h"                     // for Date_t
+#include "Hex.h"                        // for toHexLower
 
 #pragma pack(1)
 /** Object ID type.

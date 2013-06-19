@@ -13,15 +13,16 @@
  *    limitations under the License.
  */
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/functional/hash.hpp>
+#include <boost/functional/hash/hash.hpp>  // for hash_combine
 #include <boost/interprocess/detail/os_thread_functions.hpp>
+#include <boost/random/uniform_int.hpp>  // for uniform_int
+#include <limits>                       // for numeric_limits
 
-#include "Defines.h"
-#include "Assert.h"
+#include "/home/webadmin/shoot-em-up-project/Core/BaseTypes/Source/DataTypes.h"
+#include "Assert.h"                     // for ASSERT
+#include "Date_t.h"                     // for Date_t
+#include "Hex.h"                        // for fromHex
 #include "ObjectId.h"
-#include "Date_t.h"
-#include "Hex.h"
 
 //BOOST_STATIC_ASSERT( sizeof(ObjectId) == ObjectId::kOIdSize );
 //BOOST_STATIC_ASSERT( sizeof(ObjectId) == 12 );
