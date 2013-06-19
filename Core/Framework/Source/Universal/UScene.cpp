@@ -31,9 +31,7 @@ UScene::UScene(IChangeManager* pSceneCCM, IChangeManager* pObjectCCM)
 /**
  * @inheritDoc
  */
-UScene::~UScene(
-    void
-) {
+UScene::~UScene(void) {
     //
     // Send "pre-destroying objects" message to the scene extensions.
     //
@@ -237,6 +235,14 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
  */
 Error UScene::DestroyObject(UObject* pObject) {
     ASSERT(pObject != NULL);
+    // Delete all childrens
+    for (auto children : pObject->getChildren()) {
+        UObject* object = FindObject(children->getId());
+        if (object) {
+            DestroyObject(object);
+        }
+    }
+    // Delete object
     m_Objects.remove(pObject);
     delete pObject;
     return Errors::Success;
