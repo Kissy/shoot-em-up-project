@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Assert.h"
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "Interface.h"

@@ -14,6 +14,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include "Assert.h"
 #include "Errors.h"
 #include "MathUtils.h"
 #include "System/Changes.h"

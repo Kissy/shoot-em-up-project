@@ -48,6 +48,9 @@
         <configuration>
           <cpp>
             <sourceDirectory>${basedir}/Source</sourceDirectory>
+            <includePaths>
+              <includePath>${basedir}/Source</includePath>
+            </includePaths>
             <options>
               <option>-Wno-unknown-pragmas</option>
               <option>-std=c++11</option>

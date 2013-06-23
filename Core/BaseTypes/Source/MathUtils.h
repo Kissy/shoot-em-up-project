@@ -29,35 +29,35 @@ namespace Math {
 
             static float Deg2Rad(f32 Degrees) {
                 return Degrees * (Pi / 180.0f);
-            }
+            };
 
             static float Rad2Deg(f32 radian) {
                 return radian * (180.0f / Pi);
-            }
+            };
 
             static f32 Sin(f32 Rad) {
                 return sin(Rad);
-            }
+            };
 
             static f32 Cos(f32 Rad) {
                 return cos(Rad);
-            }
+            };
 
             static f32 Tan(f32 Rad) {
                 return tan(Rad);
-            }
+            };
 
             static f32 ASin(f32 Rad) {
                 return asin(Rad);
-            }
+            };
 
             static f32 ACos(f32 Rad) {
                 return acos(Rad);
-            }
+            };
 
             static f32 ATan(f32 Rad) {
                 return atan(Rad);
-            }
+            };
 
 
         public:
@@ -102,7 +102,7 @@ namespace Math {
         /// <returns>A pointer to the matrix array.</returns>
         operator f32* (void) {
             return &x;
-        }
+        };
 
         /// <summary>
         ///   Provides a cast to a constant f32 pointer.
@@ -111,7 +111,7 @@ namespace Math {
         /// <returns>A pointer to the constant matrix array.</returns>
         operator const f32* (void) const {
             return &x;
-        }
+        };
 
         /// <summary>
         ///   Functionality for adding two vectors with assignment.
@@ -124,7 +124,7 @@ namespace Math {
             y += Vector.y;
             z += Vector.z;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for subtracting two vectors with assignment.
@@ -137,7 +137,7 @@ namespace Math {
             y -= Vector.y;
             z -= Vector.z;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for doing a straight multipy between two vectors with assignment.
@@ -150,7 +150,7 @@ namespace Math {
             y *= Vector.y;
             z *= Vector.z;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying a vector with a scalar with assignment.
@@ -163,7 +163,7 @@ namespace Math {
             y *= Scalar;
             z *= Scalar;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for dividing a vector with a scalar with assignment.
@@ -182,7 +182,7 @@ namespace Math {
             }
 
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for adding two vectors.
@@ -193,7 +193,7 @@ namespace Math {
         Vector3 operator+(const Vector3& Vector) const {
             Vector3 v(x + Vector.x, y + Vector.y, z + Vector.z);
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for subtracting two vectors.
@@ -204,7 +204,7 @@ namespace Math {
         Vector3 operator-(const Vector3& Vector) const {
             Vector3 v(x - Vector.x, y - Vector.y, z - Vector.z);
             return v;
-        }
+        };
 
 
         //Vector3 operator/(const f32 &v)const
@@ -224,7 +224,7 @@ namespace Math {
         /// <returns>The new negative vector created by this operation.</returns>
         Vector3 operator-() const {
             return Vector3(-x, -y, -z);
-        }
+        };
 
         /// <summary>
         ///   Functionality for doing a straight multipy between two vectors.
@@ -235,7 +235,7 @@ namespace Math {
         Vector3 operator*(Vector3 Vector) const {
             Vector3 v(x * Vector.x, y * Vector.y, z * Vector.z);
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying a vector with a scalar.
@@ -246,7 +246,7 @@ namespace Math {
         Vector3 operator*(f32 Scalar) const {
             Vector3 v(x * Scalar, y * Scalar, z * Scalar);
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for dividing a vector with a scalar.
@@ -265,7 +265,7 @@ namespace Math {
             }
 
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for equals.
@@ -274,7 +274,7 @@ namespace Math {
         /// <returns>The result of the comparison.</returns>
         bool operator==(const Vector3& a) const {
             return (x == a.x) && (y == a.y) && (z == a.z);
-        }
+        };
 
         /// <summary>
         ///   Functionality for not equals.
@@ -283,7 +283,7 @@ namespace Math {
         /// <returns>The result of the comparison.</returns>
         bool operator!=(const Vector3& a) const {
             return (x != a.x) || (y != a.y) || (z != a.z);
-        }
+        };
 
         /// <summary>
         ///   Returns the magnitude of the vector.
@@ -291,7 +291,7 @@ namespace Math {
         /// <returns>The magnitude of the vector.</returns>
         f32 Magnitude(void) const {
             return sqrtf(x * x + y * y + z * z);
-        }
+        };
 
         /// <summary>
         ///   Normalizes this vector.
@@ -308,7 +308,7 @@ namespace Math {
             }
 
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Returns the dot product of 2 vectors.
@@ -317,7 +317,7 @@ namespace Math {
         /// <returns>The dot product.</returns>
         f32 Dot(const Vector3& a) const {
             return x * a.x + y * a.y + z * a.z;
-        }
+        };
 
         /// <summary>
         ///   Returns the cross product of 2 vectors.
@@ -327,7 +327,7 @@ namespace Math {
         Vector3 Cross(const Vector3& a) const {
             Vector3 r(y * a.z - z * a.y, z * a.x - x * a.z, x * a.y - y * a.x);
             return r;
-        }
+        };
 
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Math {
             x = _x;
             y = _y;
             z = _z;
-        }
+        };
 
         /// <summary>
         ///   Construct a vector from one float
@@ -350,7 +350,7 @@ namespace Math {
         /// <returns>The constructed Vector3.</returns>
         Vector3(f32 _v) {
             x = y = z = _v;
-        }
+        };
 
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Math {
             : x(0)
             , y(0)
             , z(0) {
-        }
+        };
 
         f32             x;
         f32             y;
@@ -389,7 +389,7 @@ namespace Math {
         /// <returns>A pointer to the matrix array.</returns>
         operator f32* (void) {
             return &x;
-        }
+        };
 
         /// <summary>
         ///   Provides a cast to a constant f32 pointer.
@@ -398,7 +398,7 @@ namespace Math {
         /// <returns>A pointer to the constant matrix array.</returns>
         operator const f32* (void) const {
             return &x;
-        }
+        };
 
         /// <summary>
         ///   Functionality for adding two vectors with assignment.
@@ -412,7 +412,7 @@ namespace Math {
             z += Vector.z;
             w += Vector.w;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for subtracting two vectors with assignment.
@@ -426,7 +426,7 @@ namespace Math {
             z -= Vector.z;
             w -= Vector.w;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for a straight multiply between two vectors with assignment.
@@ -440,7 +440,7 @@ namespace Math {
             z *= Vector.z;
             w *= Vector.w;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying a vector with a scalar with assignment.
@@ -454,7 +454,7 @@ namespace Math {
             z *= Scalar;
             w *= Scalar;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for dividing a vector with a scalar with assignment.
@@ -474,7 +474,7 @@ namespace Math {
             }
 
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Functionality for adding two vectors.
@@ -485,7 +485,7 @@ namespace Math {
         Vector4 operator+(const Vector4& Vector) const {
             Vector4 v = { x + Vector.x, y + Vector.y, z + Vector.z, w + Vector.w };
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for subtracting two vectors.
@@ -496,7 +496,7 @@ namespace Math {
         Vector4 operator-(const Vector4& Vector) const {
             Vector4 v = { x - Vector.x, y - Vector.y, z - Vector.z, w - Vector.w };
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for a straight multiply between two vectors.
@@ -507,7 +507,7 @@ namespace Math {
         Vector4 operator*(Vector4 Vector) const {
             Vector4 v = { x * Vector.x, y * Vector.y, z * Vector.z, w * Vector.w };
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying a vector with a scalar.
@@ -518,7 +518,7 @@ namespace Math {
         Vector4 operator*(f32 Scalar) const {
             Vector4 v = { x * Scalar, y * Scalar, z * Scalar, w * Scalar };
             return v;
-        }
+        };
 
         /// <summary>
         ///   Functionality for dividing a vector with a scalar.
@@ -538,7 +538,7 @@ namespace Math {
             }
 
             return r;
-        }
+        };
         
         /// <summary>
         ///   Functionality for equals.
@@ -547,7 +547,7 @@ namespace Math {
         /// <returns>The result of the comparison.</returns>
         bool operator==(const Vector4& a) const {
             return (x == a.x) && (y == a.y) && (z == a.z) && (w == a.w);
-        }
+        };
 
         /// <summary>
         ///   Functionality for not equals.
@@ -556,7 +556,7 @@ namespace Math {
         /// <returns>The result of the comparison.</returns>
         bool operator!=(const Vector4& a) const {
             return (x != a.x) || (y != a.y) || (z != a.z) || (w != a.w);
-        }
+        };
 
         f32             x;
         f32             y;
@@ -583,14 +583,14 @@ namespace Math {
         /// <remarks>Inlined for performance.</remarks>
         /// <param name="a">The quaternion to add to this quaternion.</param>
         /// <returns>The new quaternion created by this operation.</returns>
-        Quaternion operator+(const Quaternion& a) const {
+        inline Quaternion operator+(const Quaternion& a) const {
             Quaternion r;
             r.x = x + a.x;
             r.y = y + a.y;
             r.z = z + a.z;
             r.w = w + a.w;
             return r;
-        }
+        };
 
         /// <summary>
         ///   Functionality for subtracting two quaternions.
@@ -598,14 +598,14 @@ namespace Math {
         /// <remarks>Inlined for performance.</remarks>
         /// <param name="a">The quaternion to subtract from this quaternion.</param>
         /// <returns>The new quaternion created by this operation.</returns>
-        Quaternion operator-(const Quaternion& a) const {
+        inline Quaternion operator-(const Quaternion& a) const {
             Quaternion r;
             r.x = x - a.x;
             r.y = y - a.y;
             r.z = z - a.z;
             r.w = w - a.w;
             return r;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying two quaternions.
@@ -613,14 +613,14 @@ namespace Math {
         /// <remarks>Inlined for performance.</remarks>
         /// <param name="a">The quaternion to multiply to this quaterion.</param>
         /// <returns>The new quaternion.</returns>
-        Quaternion operator*(Quaternion& a) const {
+        inline Quaternion operator*(Quaternion& a) const {
             Quaternion r;
             r.x = w * a.x + x * a.w + y * a.z - z * a.y;
             r.y = w * a.y + y * a.w + z * a.x - x * a.z;
             r.z = w * a.z + z * a.w + x * a.y - y * a.x;
             r.w = w * a.w - x * a.x - y * a.y - z * a.z;
             return r;
-        }
+        };
 
         /// <summary>
         ///   Functionality for multiplying two quaternions with assignment.
@@ -628,7 +628,7 @@ namespace Math {
         /// <remarks>Inlined for performance.</remarks>
         /// <param name="a">The quaternion to multiply to this quaterion.</param>
         /// <returns>A reference to this quaternion.</returns>
-        Quaternion& operator*=(Quaternion& a) {
+        inline Quaternion& operator*=(Quaternion& a) {
             Quaternion r;
             r.x = w * a.x + x * a.w + y * a.z - z * a.y;
             r.y = w * a.y + y * a.w + z * a.x - x * a.z;
@@ -636,7 +636,7 @@ namespace Math {
             r.w = w * a.w - x * a.x - y * a.y - z * a.z;
             *this = r;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Sets a quaternion using rotation axis and angle.
@@ -676,31 +676,31 @@ namespace Math {
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
         /// <returns>The magnitude.</returns>
-        f32 Magnitude(void) const {
+        inline f32 Magnitude(void) const {
             return sqrtf(x * x + y * y + z * z + w * w);
-        }
+        };
 
         /// <summary>
         ///   Calculates the conjugate or inverse of a quaternion.
         /// </summary>
         /// <remarks>Inlined for performance.</remarks>
-        void Conjugate(void) {
+        inline void Conjugate(void) {
             x = -x;
             y = -y;
             z = -z;
-        }
+        };
 
         /// <summary>
         ///   Calculates the conjugate or inverse of a quaternion.
         /// </summary>
         /// <param name="r">The quaternion to set as the inverse of this quaternion.</param>
         /// <remarks>Inlined for performance.</remarks>
-        void Conjugate(Quaternion& r) {
+        inline void Conjugate(Quaternion& r) {
             r.x = -x;
             r.y = -y;
             r.z = -z;
             r.w = w;
-        }
+        };
 
         /// <summary>
         ///   Rotates the given vector by this quaternion.
@@ -797,7 +797,7 @@ namespace Math {
         const Matrix4x4& SetTranslation(const Vector3& Translation) {
             *reinterpret_cast<Vector3*>(m + 12) = Translation;
             return *this;
-        }
+        };
 
         /// <summary>
         ///   Sets the Orientation of this matrix.
@@ -852,7 +852,7 @@ namespace Math {
         /// <returns>A pointer to the matrix array.</returns>
         operator f32* (void) {
             return m;
-        }
+        };
 
         /// <summary>
         ///   Provides a cast to a f32 pointer.
@@ -861,7 +861,7 @@ namespace Math {
         /// <returns>A pointer to the constant matrix array.</returns>
         operator const f32* (void) const {
             return m;
-        }
+        };
 
         f32 m[ 16 ];
     };
