@@ -18,9 +18,6 @@
 
 #include "DataTypes.h"
 
-#define MIN(x,y) ( ( (x) < (y) ) ? (x) : (y) )
-#define MAX(x,y) ( ( (x) > (y) ) ? (x) : (y) )
-
 namespace Math {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
@@ -587,7 +584,11 @@ namespace Math {
         /// <param name="a">The quaternion to add to this quaternion.</param>
         /// <returns>The new quaternion created by this operation.</returns>
         Quaternion operator+(const Quaternion& a) const {
-            Quaternion r = { x + a.x, y + a.y, z + a.z, w + a.w };
+            Quaternion r;
+            r.x = x + a.x;
+            r.y = y + a.y;
+            r.z = z + a.z;
+            r.w = w + a.w;
             return r;
         }
 
@@ -598,7 +599,11 @@ namespace Math {
         /// <param name="a">The quaternion to subtract from this quaternion.</param>
         /// <returns>The new quaternion created by this operation.</returns>
         Quaternion operator-(const Quaternion& a) const {
-            Quaternion r = { x - a.x, y - a.y, z - a.z, w - a.w };
+            Quaternion r;
+            r.x = x - a.x;
+            r.y = y - a.y;
+            r.z = z - a.z;
+            r.w = w - a.w;
             return r;
         }
 

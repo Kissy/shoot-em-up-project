@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "Proto.h"
+#include "Proto/Common.pb.h"
 #include "Defines.h"
 #include "Logger.h"
 
@@ -57,7 +57,7 @@ namespace System {
 #if defined( MSC_COMPILER )
             _BitScanForward((unsigned long*)&Index, systemType);
 #elif defined( GCC_COMPILER )
-            Index = __builtin_ffs(SystemType);
+            Index = __builtin_ffs(systemType);
 #endif
             return Index;
         };
@@ -131,7 +131,7 @@ extern "C" {
      * @return   The newly created system.
      */
     ISystem* __attribute__((__stdcall)) CreateSystemFunction(
-        Debug::Debugger* p_Debugger
+        Log::Logger* p_logger
     );
 
     /**

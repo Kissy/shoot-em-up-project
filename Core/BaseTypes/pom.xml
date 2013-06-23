@@ -15,4 +15,29 @@
   <name>ShootEmUpProject - Core - BaseTypes</name>
   <packaging>nar</packaging>
 
+  <dependencies>
+    <dependency>
+      <groupId>fr.kissy.shoot-em-up-project</groupId>
+      <artifactId>seup-core-generated</artifactId>
+      <version>${project.version}</version>
+      <type>nar</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-nar-plugin</artifactId>
+        <configuration>
+          <libraries>
+            <library>
+              <type>static</type>
+            </library>
+          </libraries>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

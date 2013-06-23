@@ -15,6 +15,7 @@
   </modules>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven-nar-version>2.1-SNAPSHOT</maven-nar-version>
   </properties>
 
@@ -35,7 +36,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-nar-plugin</artifactId>
-          <version>2.1-SNAPSHOT</version>
+          <version>${maven-nar-version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -43,7 +44,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-nar-plugin</artifactId>
-        <version>${maven-nar-version}</version>
         <extensions>true</extensions>
         <configuration>
           <cpp>
@@ -54,11 +54,6 @@
             </options>
             <clearDefaultOptions>true</clearDefaultOptions>
           </cpp>
-          <libraries>
-            <library>
-              <type>static</type>
-            </library>
-          </libraries>
         </configuration>
       </plugin>
     </plugins>

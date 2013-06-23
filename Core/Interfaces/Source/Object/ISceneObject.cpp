@@ -14,6 +14,7 @@
 
 #include <list>
 
+#include "Proto/Common.pb.h"
 #include "Object/ISceneObject.h"
 
 /**
