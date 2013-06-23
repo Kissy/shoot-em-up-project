@@ -15,7 +15,7 @@
 #pragma once
 
 #include "boost/function.hpp"
-#include "Proto/Common/System.pb.h"
+#include "Proto/Common.pb.h"
 
 #include "Errors.h"
 #include "System/Definitions.h"

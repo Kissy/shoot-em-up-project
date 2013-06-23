@@ -21,7 +21,7 @@ class ISystemObject;
 
 #include "MathUtils.h"
 
-#include "Proto/Common/System.pb.h"
+#include "Proto/Common.pb.h"
 #include "Service/Collision.h"
 #include "System/Definitions.h"
 
