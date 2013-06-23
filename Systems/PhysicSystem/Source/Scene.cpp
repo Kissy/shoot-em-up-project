@@ -60,7 +60,7 @@ void PhysicScene::Update(f32 DeltaTime) {
         PhysicObject* pObject = static_cast<PhysicObject*>(object.second);
         pObject->Update(DeltaTime);
 
-        if (!pObject->GetPosition()->x > 40 || pObject->GetPosition()->x < -40 || pObject->GetPosition()->y > 30 || pObject->GetPosition()->y < -30) {
+        if (pObject->GetPosition()->x > 40 || pObject->GetPosition()->x < -40 || pObject->GetPosition()->y > 30 || pObject->GetPosition()->y < -30) {
             Proto::Object object;
             object.set_id(pObject->getEntity()->getId());
             object.set_name(pObject->getEntity()->getName());
