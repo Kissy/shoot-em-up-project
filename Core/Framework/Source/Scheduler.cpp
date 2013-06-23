@@ -50,11 +50,11 @@ void Scheduler::SetScene(const UScene* pScene) {
     //
     // Wait for any executing scenes to finish and clear out the list.
     //
-    ISystemTask* aScenesToWaitFor[ SystemProto::Type_MAX ];
+    ISystemTask* aScenesToWaitFor[Proto::SystemType_MAX];
     u32 cScenesToWaitFor = 0;
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToWaitFor < SystemProto::Type_MAX);
+        ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
         aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask();
     }
 
@@ -116,11 +116,11 @@ void Scheduler::Execute(void) {
     //
     // Schedule the scenes that are ready for execution.
     //
-    ISystemTask* aScenesToExecute[ SystemProto::Type_MAX ];
+    ISystemTask* aScenesToExecute[Proto::SystemType_MAX];
     u32 cScenesToExecute = 0;
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
-        ASSERT(cScenesToExecute < SystemProto::Type_MAX);
+        ASSERT(cScenesToExecute < Proto::SystemType_MAX);
         aScenesToExecute[ cScenesToExecute++ ] = it->second->GetSystemTask();
     }
 

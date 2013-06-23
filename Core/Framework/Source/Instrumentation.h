@@ -132,7 +132,7 @@ public:
      */
     void CaptureJobCounterTicks(Proto::SystemType jobType, i64 jobCounterTicks) {
         u32 jobIndex = System::Types::GetIndex(jobType);
-        if (jobIndex < SystemProto::Type_MAX) {
+        if (jobIndex < Proto::SystemType_MAX) {
             //******************************
             // GDC - LAB 4 - Activity 3
             //
@@ -156,7 +156,7 @@ public:
      * @return  i32 - Max number of job types.
      */
     i32 getJobCount() {
-        return (i32) SystemProto::Type_MAX;
+        return (i32) Proto::SystemType_MAX;
     }
 
     /**
@@ -167,7 +167,7 @@ public:
      *                      getJobCount.
      */
     void getJobRatios(f32* jobRatios) {
-        for (int i = SystemProto::Type_MIN; i < SystemProto::Type_MAX; i++) {
+        for (int i = Proto::SystemType_MAX; i < Proto::SystemType_MAX; i++) {
             jobRatios[i] = m_pLastFrameRatio[i];
         }
     }

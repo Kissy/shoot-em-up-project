@@ -54,7 +54,7 @@ UScene::~UScene(void) {
     //
     Objects objects = m_Objects;
     for (auto object : objects) {
-        DestroyObject(object);
+        delete object;
     }
     m_Objects.clear();
 
