@@ -144,7 +144,7 @@ void NetworkService::onAuthenticated(const UpstreamMessageProto& upstreamMessage
     Proto::Authenticated authenticated;
     authenticated.ParseFromString(upstreamMessageProto.data());
     if (authenticated.players().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(authenticated.players());
+        m_pSystem->getSystemScene<NetworkScene>()->queueCreateObjects(authenticated.players());
     }
 }
 
@@ -155,7 +155,7 @@ void NetworkService::onObjectCreated(const UpstreamMessageProto& upstreamMessage
     Proto::ObjectUpdated objectUpdated;
     objectUpdated.ParseFromString(upstreamMessageProto.data());
     if (objectUpdated.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueCreateObjects(objectUpdated.objects());
+        m_pSystem->getSystemScene<NetworkScene>()->queueCreateObjects(objectUpdated.objects());
     }
 }
 
@@ -166,7 +166,7 @@ void NetworkService::onObjectUpdated(const UpstreamMessageProto& upstreamMessage
     Proto::ObjectUpdated objectUpdated;
     objectUpdated.ParseFromString(upstreamMessageProto.data());
     if (objectUpdated.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->updateObjects(objectUpdated.objects());
+        m_pSystem->getSystemScene<NetworkScene>()->updateObjects(objectUpdated.objects());
     }
 }
 
@@ -177,6 +177,6 @@ void NetworkService::onObjectDeleted(const UpstreamMessageProto& upstreamMessage
     Proto::ObjectUpdated objectUpdated;
     objectUpdated.ParseFromString(upstreamMessageProto.data());
     if (objectUpdated.objects().size() > 0) {
-        static_cast<NetworkScene*>(m_pSystem->getSystemScene())->queueDeleteObjects(objectUpdated.objects());
+        m_pSystem->getSystemScene<NetworkScene>()->queueDeleteObjects(objectUpdated.objects());
     }
 }

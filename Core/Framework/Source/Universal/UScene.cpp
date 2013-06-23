@@ -87,7 +87,7 @@ ISystemScene* UScene::Extend(ISystem* pSystem) {
     // Have the system create it's scene.
     //
     pSystem->createScene();
-    ISystemScene* pScene = pSystem->getSystemScene();
+    ISystemScene* pScene = pSystem->getSystemScene<ISystemScene>();
     ASSERT(pScene != NULL);
     
     //

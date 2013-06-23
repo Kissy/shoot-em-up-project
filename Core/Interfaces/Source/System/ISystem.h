@@ -32,57 +32,57 @@ class ISystemScene;
  * @sa  IProperty
  */
 class ISystem : public IComponent, public IProperty {
+public:
 
-    public:
+    /**
+     * Constructor.
+     */
+    ISystem(void);
 
-        /**
-         * Constructor.
-         */
-        ISystem(void);
+    /**
+     * Destructor.
+     * Interface have virtual destructors.
+     */
+    virtual ~ISystem(void);
 
-        /**
-         * Destructor.
-         * Interface have virtual destructors.
-         */
-        virtual ~ISystem(void);
+    /**
+     * Creates a system scene for containing system objects.
+     */
+    void createScene(void);
 
-        /**
-         * Creates a system scene for containing system objects.
-         */
-        void createScene(void);
+    /**
+     * Destroys a system scene.
+     *
+     * @param [in,out]  pSystemScene    The scene to destroy. Any objects within are destroyed.
+     *
+     * @return  An error code.
+     */
+    Error DestroyScene(ISystemScene* pSystemScene);
 
-        /**
-         * Destroys a system scene.
-         *
-         * @param [in,out]  pSystemScene    The scene to destroy. Any objects within are destroyed.
-         *
-         * @return  An error code.
-         */
-        Error DestroyScene(ISystemScene* pSystemScene);
+    /**
+     * Gets system scene.
+     *
+     * @return  null if it fails, else the system scene.
+     */
+    template <typename TSystemScene>
+    inline TSystemScene* getSystemScene(void) {
+        return static_cast<TSystemScene*>(m_pSystemScene);
+    }
 
-        /**
-         * Gets system scene.
-         *
-         * @return  null if it fails, else the system scene.
-         */
-        inline ISystemScene* getSystemScene(void) {
-            return m_pSystemScene;
-        }
+    /**
+     * Returns the CPU Utilization.
+     *
+     * @return  CPU Utilization (0-100f)
+     */
+    virtual f32 GetCPUUsage(void) {
+        return 0;
+    }
 
-        /**
-         * Returns the CPU Utilization.
-         *
-         * @return  CPU Utilization (0-100f)
-         */
-        virtual f32 GetCPUUsage(void) {
-            return 0;
-        }
-
-    protected:
+protected:
         
-        typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
+    typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
 
-        SceneFactory                            m_SceneFactory;
-        ISystemScene*                           m_pSystemScene;
+    SceneFactory                            m_SceneFactory;
+    ISystemScene*                           m_pSystemScene;
 
 };
