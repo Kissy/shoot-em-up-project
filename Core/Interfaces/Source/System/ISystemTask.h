@@ -25,43 +25,42 @@ class ISystemScene;
  *  system's task and spawning off new tasks as need be.
  */
 class ISystemTask : public IComponent, public IUpdatable {
+public:
 
-    public:
+    /**
+     * Constructor.
+     *
+     * @param [in,out]  pSystemScene    If non-null, the system scene.
+     */
+    ISystemTask(ISystemScene* pSystemScene);
 
-        /**
-         * Constructor.
-         *
-         * @param [in,out]  pSystemScene    If non-null, the system scene.
-         */
-        ISystemTask(ISystemScene* pSystemScene);
+    /**
+     * Destructor.
+     */
+    virtual ~ISystemTask(void);
 
-        /**
-         * Destructor.
-         */
-        virtual ~ISystemTask(void);
-
-        /**
-         * Query if this ISystemTask is primary thread only.
-         * Implementing tasks should return true to indicate that their <c>Update</c> function should
-         * only be called from the primary thread.  false allows their <c>Update</c> function to be
-         * called from an arbitrary thread.
-         *
-         * @return  true if primary thread only, false if not.
-         */
-        virtual bool IsPrimaryThreadOnly(void) = 0;
+    /**
+     * Query if this ISystemTask is primary thread only.
+     * Implementing tasks should return true to indicate that their <c>Update</c> function should
+     * only be called from the primary thread.  false allows their <c>Update</c> function to be
+     * called from an arbitrary thread.
+     *
+     * @return  true if primary thread only, false if not.
+     */
+    virtual bool IsPrimaryThreadOnly(void) = 0;
         
-        /**
-         * Gets the system scene.
-         * Gets the scene for this task.
-         *
-         * @return  The scene for this task.
-         */
-        ISystemScene* GetSystemScene(void) {
-            return m_pSystemScene;
-        }
+    /**
+     * Gets the system scene.
+     * Gets the scene for this task.
+     *
+     * @return  The scene for this task.
+     */
+    template <typename TSystemScene>
+    TSystemScene* GetSystemScene(void) {
+        return static_cast<TSystemScene*>(m_pSystemScene);
+    }
 
-    protected:
-
-        ISystemScene*               m_pSystemScene;
+protected:
+    ISystemScene*               m_pSystemScene;
 
 };

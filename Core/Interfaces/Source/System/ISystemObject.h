@@ -60,8 +60,9 @@ public:
      *
      * @return  A pointer to the system.
      */
+    template <typename TSystemScene>
     inline ISystemScene* GetSystemScene(void) {
-        return m_pSystemScene;
+        return static_cast<TSystemScene*>(m_pSystemScene);
     }
 
     /**

@@ -15,6 +15,7 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "Scene.h"
 #include "Generic/IEntity.h"
 #include "System/ISystemScene.h"
 #include "ConnectNetworkObject.h"
@@ -57,7 +58,7 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
             DownstreamMessageProto downstreamMessageProto;
             downstreamMessageProto.set_type(DownstreamMessageProto::AUTHENTICATE);
             downstreamMessageProto.set_data(boost::lexical_cast<std::string>(m_username));
-            reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessageProto);
+            GetSystemScene<NetworkScene>()->GetSystem<NetworkSystem>()->getNetworkService()->send(downstreamMessageProto);
         }
     }
 
@@ -69,5 +70,4 @@ Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::
  */
 void ConnectNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
-
 }

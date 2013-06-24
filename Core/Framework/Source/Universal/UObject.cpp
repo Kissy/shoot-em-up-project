@@ -39,7 +39,7 @@ UObject::~UObject(void) {
     SystemObjects SysObjs = m_ObjectExtensions;
 
     for (SystemObjectsIt it = SysObjs.begin(); it != SysObjs.end(); it++) {
-        Unextend(it->second->GetSystemScene());
+        Unextend(it->second->GetSystemScene<ISystemScene>());
     }
 
     m_ObjectExtensions.clear();
@@ -118,7 +118,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     //
     // Get the iterator for the object.
     //
-    Proto::SystemType SystemType = pSystemScene->GetSystem()->GetSystemType();
+    Proto::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
     SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;

@@ -55,7 +55,7 @@ void Scheduler::SetScene(const UScene* pScene) {
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
-        aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask();
+        aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
     }
 
     m_SceneExecs.clear();
@@ -73,7 +73,7 @@ void Scheduler::SetScene(const UScene* pScene) {
         //
         // Make sure the system has a task.
         //
-        if (it->second->GetSystemTask() != NULL) {
+        if (it->second->GetSystemTask<ISystemTask>() != NULL) {
             m_SceneExecs[ it->first ] = it->second;
         }
     }
@@ -121,7 +121,7 @@ void Scheduler::Execute(void) {
 
     for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToExecute < Proto::SystemType_MAX);
-        aScenesToExecute[ cScenesToExecute++ ] = it->second->GetSystemTask();
+        aScenesToExecute[ cScenesToExecute++ ] = it->second->GetSystemTask<ISystemTask>();
     }
 
     m_pTaskManager->IssueJobsForSystemTasks(aScenesToExecute, cScenesToExecute, DeltaTime);

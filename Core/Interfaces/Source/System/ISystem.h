@@ -79,7 +79,6 @@ public:
     }
 
 protected:
-        
     typedef boost::function<ISystemScene*(ISystem* pSystem)> SceneFactory;
 
     SceneFactory                            m_SceneFactory;

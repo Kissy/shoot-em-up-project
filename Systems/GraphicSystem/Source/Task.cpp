@@ -36,7 +36,7 @@ __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
  */
 GraphicTask::GraphicTask(ISystemScene* pScene) 
     : ISystemTask((ISystemScene*)pScene) {
-    m_pRoot = reinterpret_cast<GraphicSystem*>(pScene->GetSystem())->getRoot(); 
+    m_pRoot = pScene->GetSystem<GraphicSystem>()->getRoot(); 
     ASSERT(m_pRoot != NULL);
 }
 

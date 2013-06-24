@@ -109,8 +109,9 @@ public:
      *
      * @return  A pointer to the system.
      */
-    ISystem* GetSystem(void) {
-        return m_pSystem;
+    template <typename TSystem>
+    TSystem* GetSystem(void) {
+        return static_cast<TSystem*>(m_pSystem);
     }
 
     /**
@@ -118,12 +119,12 @@ public:
      *
      * @return  The task for this scene.
      */
-    ISystemTask* GetSystemTask(void) {
-        return m_pSystemTask;
+    template <typename TSystemTask>
+    TSystemTask* GetSystemTask(void) {
+        return static_cast<TSystemTask*>(m_pSystemTask);
     }
 
 protected:
-    
     typedef boost::container::flat_map<std::string, ISystemObject*> ObjectsList;
     typedef boost::function<ISystemTask*(ISystemScene* pSystemScene)> TaskFactory;
     typedef boost::function<ISystemObject*(ISystemScene* pSystemScene, IEntity* entity)> ObjectFactory;

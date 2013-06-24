@@ -100,6 +100,6 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
         DownstreamMessageProto downstreamMessage;
         downstreamMessage.set_type(DownstreamMessageProto::PLAYER_SHOT);
         downstreamMessage.set_data(data);
-        reinterpret_cast<NetworkSystem*>(GetSystemScene()->GetSystem())->getNetworkService()->send(downstreamMessage);
+        GetSystemScene<NetworkScene>()->GetSystem<NetworkSystem>()->getNetworkService()->send(downstreamMessage);
     }
 }

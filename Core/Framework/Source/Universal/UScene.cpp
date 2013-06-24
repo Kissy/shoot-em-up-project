@@ -113,7 +113,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     //
     // Get the system.
     //
-    ISystem* pSystem = pScene->GetSystem();
+    ISystem* pSystem = pScene->GetSystem<ISystem>();
     ASSERT(pSystem != NULL);
     //
     // Get the system's type.

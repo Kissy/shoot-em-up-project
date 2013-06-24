@@ -27,7 +27,7 @@
 #include "CameraGraphicObject.h"
 
 #define PSCENE          (reinterpret_cast<GraphicScene*>(m_pSystemScene))
-#define PSYSTEM         (reinterpret_cast<GraphicSystem*>(m_pSystemScene->GetSystem()))
+#define PSYSTEM         (m_pSystemScene->GetSystem<GraphicSystem>())
 #define POGRESCENEMGR   (PSCENE->getSceneManager())
 
 /**
