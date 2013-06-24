@@ -25,7 +25,7 @@
  */
 PhysicObject::PhysicObject(ISystemScene* pSystemScene, IEntity* entity) 
     : ISystemObject(pSystemScene, entity)
-    , m_position(Math::Vector3::Zero) {
+    , IGeometryObject() {
     m_orientation.Set(Math::Vector3::UnitZ, 0);
 
     m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector4, this, System::Changes::Physic::Velocity, &m_velocity, _1);

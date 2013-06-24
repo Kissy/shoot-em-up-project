@@ -29,7 +29,6 @@ public:
      * Destructor.
      */
     ~ConnectNetworkObject(void);
-
     
     /**
      * @inheritDoc
@@ -39,14 +38,14 @@ public:
     /**
      * @inheritDoc
      */
-    System::Changes::BitMask GetPotentialSystemChanges(void) {
+    inline System::Changes::BitMask GetPotentialSystemChanges(void) {
         return System::Changes::None;
     };
 
     /**
      * @inheritDoc
      */
-    System::Types::BitMask GetDesiredSystemChanges(void) {
+    inline System::Types::BitMask GetDesiredSystemChanges(void) {
         return System::Changes::Input::Keyboard;
     };
 

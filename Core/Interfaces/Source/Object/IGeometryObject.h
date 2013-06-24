@@ -24,23 +24,51 @@ class IGeometryObject {
 public:
 
     /**
+     * Default constructor.
+     */
+    IGeometryObject()
+        : m_position(Math::Vector3::Zero)
+        , m_orientation(Math::Quaternion::Zero)
+        , m_scale(Math::Vector3::Zero) {
+    }
+
+    /**
+     * Destructor.
+     */
+    virtual ~IGeometryObject() {
+    }
+
+
+    /**
      * Gets the position of the object.
      *
      * @return  A constant pointer to the position.
      */
-    virtual const Math::Vector3* GetPosition(void) = 0;
+    inline const Math::Vector3* GetPosition(void) {
+        return &m_position;
+    };
 
     /**
      * Gets the orientation of the object.
      *
      * @return  A constant pointer to the orientation.
      */
-    virtual const Math::Quaternion* GetOrientation(void) = 0;
+    inline const Math::Quaternion* GetOrientation(void) {
+        return &m_orientation;
+    };
 
     /**
      * Gets the scale of the object.
      *
      * @return  A constant pointer to the scle.
      */
-    virtual const Math::Vector3* GetScale(void) = 0;
+    inline const Math::Vector3* GetScale(void) {
+        return &m_scale;
+    };
+    
+protected:
+    Math::Vector3       m_position;
+    Math::Quaternion    m_orientation;
+    Math::Vector3       m_scale;
+
 };

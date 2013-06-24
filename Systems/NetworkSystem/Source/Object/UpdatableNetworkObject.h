@@ -73,29 +73,4 @@ public:
      */
     void Update(f32 DeltaTime);
 
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetPosition(void) {
-        return &m_position;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Quaternion* GetOrientation(void) {
-        return &m_orientation;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetScale(void) {
-        return NULL;
-    }
-
-private:
-    Math::Quaternion                m_orientation;
-    Math::Vector3                   m_position;
-
 };

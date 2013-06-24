@@ -21,8 +21,8 @@
 #include "System/Definitions.h"
 
 /**
- * <c>IGenericScene</c> is an interface for providing generic scene related functionality.  Any
- *  objects that modify scene information are required to implement this class.
+ * <c>IGenericScene</c> is an interface for providing generic scene related functionality. Any
+ *  objects that modify scene information are required to implement this class. Should be added to Scenes only.
  */
 class ISceneObject {
 public:

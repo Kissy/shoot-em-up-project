@@ -26,7 +26,8 @@
  */
 PlayerInputObject::PlayerInputObject(ISystemScene* pSystemScene, IEntity* entity) 
     : InputObject(pSystemScene, entity)
-    , ISceneObject() {
+    , ISceneObject()
+    , IGeometryObject() {
     
     m_shotKeyboardButtonData = new KeyboardButtonData();
     InputScene* inputScene = reinterpret_cast<InputScene*>(pSystemScene);

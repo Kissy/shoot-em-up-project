@@ -85,27 +85,6 @@ public:
      */
     void createShot(void);
 
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetPosition(void) {
-        return &m_position;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Quaternion* GetOrientation(void) {
-        return &m_orientation;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetScale(void) {
-        return NULL;
-    }
-
 private:
     OISB::TriggerAction*    m_upInputAction;
     OISB::TriggerAction*    m_rightInputAction;
@@ -116,8 +95,5 @@ private:
     OISB::TriggerAction*    m_shotInputAction;
 
     KeyboardButtonData*     m_shotKeyboardButtonData;
-
-    Math::Vector3       m_position;
-    Math::Quaternion    m_orientation;
 
 };

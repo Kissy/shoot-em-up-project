@@ -51,30 +51,7 @@ public:
         return Proto::SystemType::Physic;
     }
 
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetPosition(void) {
-        return &m_position;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Quaternion* GetOrientation(void) {
-        return &m_orientation;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline const Math::Vector3* GetScale(void) {
-        return NULL;
-    }
-
 protected:
     f32                 m_rotation;
-    Math::Vector3       m_position;
-    Math::Quaternion    m_orientation;
 
 };
