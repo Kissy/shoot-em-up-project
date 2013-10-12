@@ -21,12 +21,9 @@
  */
 package fr.kissy.hellion.server;
 
-import fr.kissy.hellion.server.config.AppConfig;
-import org.jboss.netty.bootstrap.ServerBootstrap;
+import fr.kissy.hellion.server.config.ApplicationConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.net.InetSocketAddress;
 
 public class Main {
 
@@ -34,12 +31,9 @@ public class Main {
 
 	public static void main(String[] args) {
         context = new AnnotationConfigApplicationContext();
-        context.register(AppConfig.class);
+        context.register(ApplicationConfig.class);
         context.scan("fr.kissy.hellion.server.repository");
         context.refresh();
-
-        ServerBootstrap serverBootstrap = context.getBean(ServerBootstrap.class);
-        serverBootstrap.bind(context.getBean(InetSocketAddress.class));
 	}
 
     /**

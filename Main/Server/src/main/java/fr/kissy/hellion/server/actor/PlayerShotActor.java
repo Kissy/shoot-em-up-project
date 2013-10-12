@@ -3,8 +3,8 @@ package fr.kissy.hellion.server.actor;
 import akka.actor.UntypedActor;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
+import fr.kissy.hellion.server.bus.event.MessageEvent;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import org.slf4j.Logger;
@@ -29,16 +29,16 @@ public class PlayerShotActor extends UntypedActor {
 
     @Override
     public void onReceive(Object o) throws Exception {
-        AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
+        MessageEvent messageEvent = (MessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
         ByteString data = messageEvent.getMessage().getData();
-        Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
         UpstreamMessageDto.UpstreamMessageProto upstreamMessage = upstreamMessageService.getObjectCreatedMessage(data);
 
+        Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
         List<Player> nearPlayers = worldService.getNearPlayers(player);
         for (Player nearPlayer : nearPlayers) {
-            nearPlayer.getChannel().write(upstreamMessage);
+            nearPlayer.getSessionActor().tell(upstreamMessage, getSelf());
         }
     }
 

@@ -3,8 +3,8 @@ package fr.kissy.hellion.server.actor;
 import akka.actor.UntypedActor;
 import com.google.common.collect.Sets;
 import fr.kissy.hellion.proto.server.UpstreamMessageDto;
+import fr.kissy.hellion.server.bus.event.MessageEvent;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import fr.kissy.hellion.server.service.UpstreamMessageService;
 import fr.kissy.hellion.server.service.WorldService;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class SynchronizeActor extends UntypedActor {
 
     @Override
     public void onReceive(Object o) throws Exception {
-        AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
+        MessageEvent messageEvent = (MessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());
@@ -63,10 +63,10 @@ public class SynchronizeActor extends UntypedActor {
         // Current player can have either created or deleted object
         LOGGER.debug("Number of player to create for user {} is {}", player.getId(), createdPlayers.size());
         if (createdPlayers.size() > 0) {
-            player.getChannel().write(upstreamMessageService.getObjectCreatedMessage(createdPlayers));
+            player.getSessionActor().tell(upstreamMessageService.getObjectCreatedMessage(createdPlayers), getSelf());
             UpstreamMessageDto.UpstreamMessageProto playerCreateMessage = upstreamMessageService.getObjectCreatedMessage(player);
             for (Player nearPlayer : createdPlayers) {
-                nearPlayer.getChannel().write(playerCreateMessage);
+                nearPlayer.getSessionActor().tell(playerCreateMessage, getSelf());
             }
         }
         LOGGER.debug("Number of player to update for user {} is {}", player.getId(), updatedPlayers.size());
@@ -74,15 +74,15 @@ public class SynchronizeActor extends UntypedActor {
             // Do not send the update to the current player
             UpstreamMessageDto.UpstreamMessageProto playerUpdateMessage = upstreamMessageService.getObjectUpdatedMessage(player);
             for (Player nearPlayer : updatedPlayers) {
-                nearPlayer.getChannel().write(playerUpdateMessage);
+                nearPlayer.getSessionActor().tell(playerUpdateMessage, getSelf());
             }
         }
         LOGGER.debug("Number of player to delete for user {} is {}", player.getId(), deletedPlayers.size());
         if (deletedPlayers.size() > 0) {
-            player.getChannel().write(upstreamMessageService.getObjectDeletedMessage(deletedPlayers));
+            player.getSessionActor().tell(upstreamMessageService.getObjectDeletedMessage(deletedPlayers), getSelf());
             UpstreamMessageDto.UpstreamMessageProto playerDeleteMessage = upstreamMessageService.getObjectDeletedMessage(player);
             for (Player nearPlayer : deletedPlayers) {
-                nearPlayer.getChannel().write(playerDeleteMessage);
+                nearPlayer.getSessionActor().tell(playerDeleteMessage, getSelf());
             }
         }
     }

@@ -4,8 +4,8 @@ import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.proto.Message;
+import fr.kissy.hellion.server.bus.event.MessageEvent;
 import fr.kissy.hellion.server.domain.Player;
-import fr.kissy.hellion.server.handler.event.AuthenticatedMessageEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PlayerMoveActor extends UntypedActor {
 
     @Override
     public void onReceive(Object o) throws Exception {
-        AuthenticatedMessageEvent messageEvent = (AuthenticatedMessageEvent) o;
+        MessageEvent messageEvent = (MessageEvent) o;
         LOGGER.debug("Received event {} for user {}", messageEvent.getMessage().getType(), messageEvent.getSubject().getPrincipal());
 
         Player player = (Player) messageEvent.getSubject().getSession().getAttribute(Player.class.getSimpleName());

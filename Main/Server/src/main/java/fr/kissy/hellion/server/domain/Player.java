@@ -1,12 +1,12 @@
 package fr.kissy.hellion.server.domain;
 
+import akka.actor.ActorRef;
 import com.google.common.collect.Sets;
 import com.google.protobuf.ByteString;
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.server.core.rtree.model.Box;
 import fr.kissy.hellion.server.core.rtree.model.BoxObject;
 import org.bson.types.ObjectId;
-import org.jboss.netty.channel.Channel;
 import org.springframework.data.annotation.Id;
 
 import java.beans.Transient;
@@ -27,7 +27,7 @@ public class Player implements BoxObject {
     private Common.Property.Builder orientationProperty;
 
     // Local Instance
-    private Channel channel;
+    private ActorRef sessionActor;
     private Set<Player> nearPlayers = Sets.newHashSet();
 
     public Player(String image) {
@@ -109,12 +109,12 @@ public class Player implements BoxObject {
     }
 
     @Transient
-    public Channel getChannel() {
-        return channel;
+    public ActorRef getSessionActor() {
+        return sessionActor;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    public void setSessionActor(ActorRef sessionActor) {
+        this.sessionActor = sessionActor;
     }
 
     @Transient

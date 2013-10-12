@@ -16,7 +16,6 @@ import java.util.Set;
  * @author Guillaume LE BILLER
  */
 public class UpstreamMessageService {
-
     @Autowired
     private PlayerToCreateObjectDto playerToCreateObjectDto;
     @Autowired

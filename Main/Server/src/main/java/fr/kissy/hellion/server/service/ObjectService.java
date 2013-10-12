@@ -7,7 +7,6 @@ import fr.kissy.hellion.server.domain.Player;
  * @author Guillaume LE BILLER
  */
 public class ObjectService {
-
     private static final String MOVABLE = "Movable";
     private static final String PLAYER = "Player";
     private static final String MESH = "Mesh";

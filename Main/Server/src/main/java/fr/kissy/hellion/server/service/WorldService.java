@@ -12,7 +12,6 @@ import java.util.List;
  * @version $Id$
  */
 public class WorldService {
-
     @Autowired
     private World world;
 

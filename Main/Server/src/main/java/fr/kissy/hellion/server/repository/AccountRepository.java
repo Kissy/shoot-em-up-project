@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.repository.support.DefaultEntityInformationCreator;
+import org.springframework.data.mongodb.repository.query.MongoEntityInformation;
+import org.springframework.data.mongodb.repository.support.MongoRepositoryFactory;
 import org.springframework.data.mongodb.repository.support.SimpleMongoRepository;
 import org.springframework.stereotype.Repository;
  
@@ -16,17 +17,21 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AccountRepository extends SimpleMongoRepository<Account, String> {
- 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRepository.class);
+
+    /**
+     * Default constructor.
+     */
+    public AccountRepository(MongoEntityInformation<Account, String> metadata, MongoOperations mongoOperations) {
+        super(metadata, mongoOperations);
+    }
 
     /**
      * @inheritDoc
      */
     @Autowired
-    public AccountRepository(MongoOperations mongoOperations) {
-        super(new DefaultEntityInformationCreator(mongoOperations.getConverter().getMappingContext())
-                .<Account, String>getEntityInformation(Account.class),
-                mongoOperations);
+    public AccountRepository(MongoRepositoryFactory factory, MongoOperations mongoOperations) {
+        this(factory.<Account, String>getEntityInformation(Account.class), mongoOperations);
     }
 
     /**
