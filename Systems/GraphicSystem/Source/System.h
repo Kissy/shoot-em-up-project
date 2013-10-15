@@ -16,9 +16,10 @@
 
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
+#include <Overlay/OgreOverlaySystem.h>
 
 #include "Errors.h"
-#include "System.h"
+#include "System.h" 
 #include "System/ISystem.h"
 
 class GraphicScene;
@@ -52,7 +53,7 @@ public:
     /**
      * @inheritDoc
      */
-    Proto::SystemType GetSystemType(void) {
+    inline Proto::SystemType GetSystemType(void) {
         return Proto::SystemType::Graphic;
     }
 
@@ -62,7 +63,7 @@ public:
      *
      * @return  Ogre::Root* - A pointer to the Ogre root.
      */
-    Ogre::Root* getRoot(void) {
+    inline Ogre::Root* getRoot(void) {
         return m_pRoot;
     }
 
@@ -72,8 +73,17 @@ public:
      *
      * @return  Ogre::RenderWindow* - A pointer to the Ogre render window.
      */
-    Ogre::RenderWindow* getRenderWindow(void) {
+    inline Ogre::RenderWindow* getRenderWindow(void) {
         return m_pRenderWindow;
+    }
+
+    /**
+     * Gets overlay system.
+     *
+     * @return  null if it fails, else the overlay system.
+     */
+    inline Ogre::OverlaySystem* getOverlaySystem(void) {
+        return m_pOverlaySystem;
     }
 
     /**
@@ -130,11 +140,12 @@ protected:
     void setAntiAliasing(Proto::RepeatedString* values);
 
 private:
-    Ogre::Root*             m_pRoot;
+    Ogre::Root*                         m_pRoot;
 
     Ogre::ResourceGroupManager*         m_pResourceGroupManager;
     Ogre::MaterialManager*              m_pMaterialManager;
     Ogre::RenderSystem*                 m_pRenderSystem;
+    Ogre::OverlaySystem*                m_pOverlaySystem;
 
     Ogre::RenderWindowDescription       m_RenderWindowDescription;
     Ogre::RenderWindow*                 m_pRenderWindow;

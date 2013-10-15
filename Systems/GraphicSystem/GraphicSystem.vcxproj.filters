@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{e4941ce5-caf1-47ad-b166-cf47fb643540}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Browser">
+      <UniqueIdentifier>{39e52989-dd47-401c-b5a8-6d95fa26849c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Browser">
+      <UniqueIdentifier>{1108e9ad-edc2-452b-8f9b-f0eac634f8a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="GraphicSystem.def">
@@ -56,6 +62,12 @@
     <ClCompile Include="Source\Object\ParticleGraphicObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Browser\BrowserClient.cpp">
+      <Filter>Source Files\Browser</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Browser\RenderHandler.cpp">
+      <Filter>Source Files\Browser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Task.h">
@@ -84,6 +96,12 @@
     </ClInclude>
     <ClInclude Include="Source\Object\ParticleGraphicObject.h">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Browser\BrowserClient.h">
+      <Filter>Header Files\Browser</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Browser\RenderHandler.h">
+      <Filter>Header Files\Browser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

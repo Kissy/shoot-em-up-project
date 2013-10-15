@@ -15,6 +15,7 @@
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
+#include <include/cef_app.h>
 
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
@@ -23,10 +24,9 @@
 #include <OgreWindowEventUtilities.h>
 #pragma warning( pop )
 
+#include "Manager/IEnvironmentManager.h"
 #include "Defines.h"
 #include "Interface.h"
-
-#include "Manager/IEnvironmentManager.h"
 #include "System.h"
 #include "Scene.h"
 
@@ -51,6 +51,10 @@ GraphicSystem::GraphicSystem(void)
 
     m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
     m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
+    m_pOverlaySystem = new Ogre::OverlaySystem();
+    
+    CefMainArgs main_args;
+    CefExecuteProcess(main_args, nullptr);
 }
 
 /**
@@ -70,6 +74,8 @@ GraphicSystem::~GraphicSystem(void) {
         // m_pRoot->unloadPlugin("Plugin_ParticleFX");
         // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
     }
+
+    CefShutdown();
 
     m_pRoot->shutdown();
     delete m_pRoot;
@@ -131,6 +137,14 @@ Error GraphicSystem::initialize(void) {
     m_pResourceGroupManager->addResourceLocation("../../Assets/Media/Graphic", "FileSystem", "Default", true);
     m_pResourceGroupManager->initialiseResourceGroup("Default");
     m_pResourceGroupManager->loadResourceGroup("Default");
+
+    {
+        CefSettings settings;
+        settings.pack_loading_disabled = 1;
+        CefString(&settings.log_file).FromASCII("logs/interface.log");
+        CefMainArgs main_args;
+        CefInitialize(main_args, settings, nullptr);
+    }
 
     m_bInitialized = true;
     return Errors::Success;

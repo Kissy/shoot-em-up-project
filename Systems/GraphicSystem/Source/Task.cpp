@@ -12,18 +12,16 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <include/cef_app.h>
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include "Ogre.h"
+#include <Ogre.h>
 #pragma warning( pop )
 
 #include "Interface.h"
-
 #include "Scene.h"
 #include "Task.h"
-
 #include "Object/Object.h"
-
 #include "IttNotify.h"
 
 
@@ -68,4 +66,6 @@ void GraphicTask::Update(f32 DeltaTime) {
     // Update objects for next frame
     //
     m_pSystemScene->Update(DeltaTime);
+    // Update GUI
+    CefDoMessageLoopWork();
 }

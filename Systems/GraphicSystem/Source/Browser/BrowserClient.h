@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,54 +14,39 @@
 
 #pragma once
 
-#pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include "Ogre.h"
-#pragma warning( pop )
+#include <include/cef_client.h>
+#include <include/cef_render_handler.h>
 
-#include "System/ISystemScene.h"
-
-class GraphicScene;
+#include "RenderHandler.h"
 
 /**
- * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
- * definition of the class and its functions.
- *
- * @sa  ISystemTask
- */
-class GraphicTask : public ISystemTask {
+* Implementation of the Surface.
+*/
+class BrowserClient : public CefClient {
 public:
 
     /**
-     * @inheritDoc
+     * Default constructor.
      */
-    GraphicTask(ISystemScene* pScene);
+    BrowserClient(RenderHandler *renderHandler);
 
     /**
-     * @inheritDoc
+     * Destructor.
      */
-    ~GraphicTask(void);
+    ~BrowserClient(void);
 
     /**
-     * @inheritDoc
+     * Handler, called when the get render.
+     *
+     * @return  The render handler.
      */
-    void Update(f32 DeltaTime);
-
-    /**
-     * @inheritDoc
-     */
-    bool IsPrimaryThreadOnly(void) {
-        return true;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    Proto::SystemType GetSystemType(void) {
-        return Proto::SystemType::Graphic;
+    virtual inline CefRefPtr<CefRenderHandler> GetRenderHandler() {
+        return m_renderHandler;
     }
 
+    IMPLEMENT_REFCOUNTING(BrowserClient);
+
 private:
-    Ogre::Root*                         m_pRoot;
+    CefRefPtr<CefRenderHandler>     m_renderHandler;
 
 };

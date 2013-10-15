@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,54 +14,40 @@
 
 #pragma once
 
-#pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include "Ogre.h"
-#pragma warning( pop )
-
-#include "System/ISystemScene.h"
-
-class GraphicScene;
+#include <Overlay/OgreOverlay.h>
+#include <OgreTexture.h>
+#include <include/cef_render_handler.h>
 
 /**
- * Implementation of the ISystemTask interface for OGRE graphics. See Interfaces\System.h for a
- * definition of the class and its functions.
- *
- * @sa  ISystemTask
- */
-class GraphicTask : public ISystemTask {
+* Implementation of the Surface.
+*/
+class RenderHandler : public CefRenderHandler {
 public:
 
     /**
-     * @inheritDoc
+     * Default constructor.
      */
-    GraphicTask(ISystemScene* pScene);
+    RenderHandler();
+
+    /**
+     * Destructor.
+     */
+    ~RenderHandler(void);
 
     /**
      * @inheritDoc
      */
-    ~GraphicTask(void);
-
+    bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect);
+    
     /**
      * @inheritDoc
      */
-    void Update(f32 DeltaTime);
-
-    /**
-     * @inheritDoc
-     */
-    bool IsPrimaryThreadOnly(void) {
-        return true;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    Proto::SystemType GetSystemType(void) {
-        return Proto::SystemType::Graphic;
-    }
+    void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height);
+    
+    IMPLEMENT_REFCOUNTING(RenderHandler);
 
 private:
-    Ogre::Root*                         m_pRoot;
+    Ogre::TexturePtr        m_texture;
+    Ogre::Overlay*          m_overlay;
 
 };

@@ -14,9 +14,10 @@
 
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
+#include <include/cef_client.h>
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
-#include "Ogre.h"
+#include <Ogre.h>
 #pragma warning( pop )
 
 #include "Interface.h"
@@ -30,6 +31,7 @@
 #include "Object/ParticleGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
+#include "Browser/BrowserClient.h"
 
 extern ManagerInterfaces       g_Managers;
 
@@ -92,6 +94,27 @@ Error GraphicScene::initialize(void) {
 
     m_pSceneManager->setAmbientLight(m_ambientLight);
     m_pSceneManager->setSkyBox(true, "nebula");
+    m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
+    
+    m_renderHandler = new RenderHandler();
+
+    {
+        CefWindowInfo window_info;
+        window_info.SetTransparentPainting(true);
+        CefBrowserSettings browserSettings;
+
+        // in linux set a gtk widget, in windows a hwnd. If not available set nullptr - may cause some render errors, in context-menu and plugins.
+        window_info.SetAsOffScreen(nullptr);
+
+        m_browserClient = new BrowserClient(m_renderHandler);
+        m_browser = CefBrowserHost::CreateBrowserSync(window_info, m_browserClient.get(), "file://D:/My Documents/GitHub/shoot-em-up-project/Assets/Media/Gui/index.html", browserSettings);
+        
+        // inject user-input by calling
+        // browser->GetHost()->SendKeyEvent(...);
+        // browser->GetHost()->SendMouseMoveEvent(...);
+        // browser->GetHost()->SendMouseClickEvent(...);
+        // browser->GetHost()->SendMouseWheelEvent(...);
+    }
     
     m_bInitialized = true;
     return Errors::Success;
