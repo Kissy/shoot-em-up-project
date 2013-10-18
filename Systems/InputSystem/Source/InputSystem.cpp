@@ -52,8 +52,7 @@ InitializeInputSystem(
 
 
 extern "C" ISystem* __stdcall
-CreateInputSystem(Log::Logger* p_logger) {
-    Log::Init(p_logger);
+CreateInputSystem() {
     return new InputSystem();
 }
 

@@ -140,6 +140,4 @@ private:
 
 };
 
-DeclareSingleton(Debugger);
-
 #endif

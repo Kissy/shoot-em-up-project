@@ -15,7 +15,6 @@
 #include <boost/bind.hpp>
 #include <google/protobuf/io/coded_stream.h>
 
-#include "Logger.h"
 #include "NetworkService.h"
 #include "MatchingVarintPrefix.h"
 #include "Scene.h"

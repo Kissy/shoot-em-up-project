@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,53 +14,41 @@
 
 #pragma once
 
+#include "Manager/IPlatformManager.h"
+#include "Manager/IEnvironmentManager.h"
+#include "Manager/IServiceManager.h"
+#include "Manager/ITaskManager.h"
+
 /**
- * Base case for all singleton classes.
+ * The list of managers interfaces.
  */
-class Singleton {
+class IManagerInterfaces {
 public:
-
     /**
-     * Default constructor.
-     */
-    Singleton(void);
-
-    /**
-     * Destructor.
-     */
-    virtual ~Singleton(void);
-
-#ifdef DEBUG_BUILD
-    /**
-     * Overrid new operator.
+     * Gets platform manager.
      *
-     * @param   The object size.
-     * @return  void*.
+     * @return  null if it fails, else the platform manager.
      */
-    void* operator new(size_t);
+    virtual IPlatformManager* getPlatformManager(void) = 0;
 
     /**
-     * Overrid new[] operator.
+     * Gets environment manager.
      *
-     * @param   The object size.
-     * @return  void*.
+     * @return  null if it fails, else the environment manager.
      */
-    void* operator new[](size_t);
+    virtual IEnvironmentManager* getEnvironmentManager(void) = 0;
 
     /**
-     * Overrid delete operator.
+     * Gets service manager.
      *
-     * @param [in,out]  void*.
+     * @return  null if it fails, else the service manager.
      */
-    void operator delete(void*);
+    virtual IServiceManager* getServiceManager(void) = 0;
 
     /**
-     * Overrid delete[] operator.
+     * Gets task manager.
      *
-     * @param [in,out]  void*.
+     * @return  null if it fails, else the task manager.
      */
-    void operator delete[](void*);
-#endif
-
+    virtual ITaskManager* getTaskManager(void) = 0;
 };
-

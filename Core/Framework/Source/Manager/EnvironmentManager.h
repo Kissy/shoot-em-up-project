@@ -164,6 +164,3 @@ class EnvironmentManager : public IEnvironmentManager, public IEnvironmentManage
             return *this;
         }
 };
-
-
-DeclareSingleton(EnvironmentManager);

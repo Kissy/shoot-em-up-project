@@ -51,7 +51,7 @@ class PlatformManager : public IPlatformManager, public Singleton {
         /**
          * Provides OS file system functionality.
          */
-        class FileSystem {
+        class FileSystem : public IPlatformManager::IFileSystem {
                 friend class PlatformManager;
 
             protected:
@@ -71,7 +71,6 @@ class PlatformManager : public IPlatformManager, public Singleton {
                 ~FileSystem(void);
 
             public:
-
                 /**
                  * Loads a system library and returns pointers to the system.
                  *
@@ -80,7 +79,7 @@ class PlatformManager : public IPlatformManager, public Singleton {
                  *                      failure.
                  * @return  An error code.
                  */
-                Error LoadSystemLibrary(Proto::SystemType type, ISystem** ppSystem);
+                virtual Error LoadSystemLibrary(Proto::SystemType type, ISystem** ppSystem);
 
                 /**
                  * Loads a Proto file and create a Proto object.
@@ -90,8 +89,9 @@ class PlatformManager : public IPlatformManager, public Singleton {
                  *                          untouched on failure.
                  * @return  An error code.
                  */
-                Error LoadProto(const char* pszFile, google::protobuf::Message* proto);
+                virtual Error LoadProto(const char* pszFile, google::protobuf::Message* proto);
 
+            private:
                 /**
                  * Verfies the existence of a file for read access.
                  *
@@ -100,25 +100,13 @@ class PlatformManager : public IPlatformManager, public Singleton {
                  */
                 bool FileExists(In char* pszFileName);
 
-                /**
-                 * Sets the current directory to the location of a file.
-                 *
-                 * @param   pszFileName     The file name to look for.
-                 * @param   apszLocations   A null terminated array of relative search directories.
-                 * @param   pszCurrentDir   Location to store the new current directory or NULL.
-                 * @param   BufferSize      The size of <c>pszCurrentDir</c>.
-                 * @return  true if successful, otherwise false.
-                 */
-                bool SetCurrentDirToFileLocation(In char* pszFileName, In char* apszLocations[], Out char* pszCurrentDir = NULL, u32 BufferSize = 0);
-
-
-            protected:
-
+            private:
                 struct SystemLib {
                     Handle                              hLib;
                     ISystem*                            pSystem;
                 };
                 std::vector<SystemLib>                  m_SystemLibs;
+
         };
 
         /**
@@ -310,7 +298,7 @@ class PlatformManager : public IPlatformManager, public Singleton {
          *
          * @return  A reference to the FileSystem class.
          */
-        FileSystem& FileSystem(void) {
+        virtual IFileSystem& FileSystem(void) {
             return m_FileSystem;
         }
 
@@ -362,5 +350,3 @@ class PlatformManager : public IPlatformManager, public Singleton {
         }
 
 };
-
-DeclareSingleton(PlatformManager);

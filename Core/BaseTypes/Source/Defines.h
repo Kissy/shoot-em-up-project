@@ -56,9 +56,12 @@
 // In Out InOut Inline
 //
 #ifdef MSC_COMPILER
-    #define In                              __in const
-    #define Out                             __out
-    #define InOut                           __inout
+    //#define In                              __in const
+    //#define Out                             __out
+    //#define InOut                           __inout
+    #define In                              const
+    #define Out                             
+    #define InOut                           
 #else
     #define In                              const
     #define Out

@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,29 +12,26 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#pragma once
+#include "Manager/ManagerInterfaces.h"
 
-#include "Singleton.h"
-
-/*******************************************************************************
-* CLASS: MemoryManager
-*
-* DESCRIPTION:
-* Responsible for managing memory.
-*******************************************************************************/
-class MemoryManager : public Singleton {
-    public:
-
-        //
-        // Constructor.
-        //
-        MemoryManager(void);
-
-        //
-        // Destructor.
-        //
-        ~MemoryManager(void);
-
-    public:
-
+/**
+ * @inheritDoc
+ */
+ManagerInterfaces::ManagerInterfaces() : IManagerInterfaces() {
+    pPlatform = new PlatformManager();
+    pEnvironment = new EnvironmentManager();
+    pService = new ServiceManager();
+    pTask = new TaskManager();
 };
+
+/**
+ * @inheritDoc
+ */
+ManagerInterfaces::~ManagerInterfaces() {
+    delete pPlatform;
+    delete pEnvironment;
+    delete pService;
+    delete pTask;
+};
+
+

@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include "Defines.h"
 #include "DataTypes.h"
 
 /**

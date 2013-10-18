@@ -14,7 +14,10 @@
 
 #pragma once
 
+#include "Proto/Common.pb.h"
 #include "DataTypes.h"
+
+class ISystem;
 
 /**
  * An interface for accessing platform specific functionality for things like the OS and
@@ -22,6 +25,38 @@
  */
 class IPlatformManager {
     public:
+        /**
+         * Provides OS file system functionality.
+         */
+        class IFileSystem {
+            public:
+                /**
+                 * Loads a system library and returns pointers to the system.
+                 *
+                 * @param   type        The system type to load.
+                 * @param   ppSystem    Returned pointer to the ISystem implementation. Remains untouched on
+                 *                      failure.
+                 * @return  An error code.
+                 */
+                virtual Error LoadSystemLibrary(Proto::SystemType type, ISystem** ppSystem) = 0;
+
+                /**
+                 * Loads a Proto file and create a Proto object.
+                 *
+                 * @param   pszFile         Filename of the Proto file to load.
+                 * @param [in,out]  proto   Return the pointer to the Proto implementation object. Remains
+                 *                          untouched on failure.
+                 * @return  An error code.
+                 */
+                virtual Error LoadProto(const char* pszFile, google::protobuf::Message* proto) = 0;
+        };
+
+        /**
+         * Gets a reference to the IProcessor class.
+         *
+         * @return  A reference to the IProcessor class.
+         */
+        virtual IFileSystem& FileSystem(void) = 0;
 
         /**
          * An interface for accessing processor information.

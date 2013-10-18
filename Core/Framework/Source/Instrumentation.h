@@ -201,5 +201,3 @@ private:
     // Take a guess at how long the name could be in all languages of the "Processor" counter object.
     static const i32    m_processorObjectNameMaxSize = 128;
 };
-
-DeclareSingleton(Instrumentation);

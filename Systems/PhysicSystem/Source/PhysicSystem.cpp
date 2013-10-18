@@ -61,8 +61,7 @@ InitializePhysicSystem(
 ///////////////////////////////////////////////////////////////////////////////
 // CreateAISystem - Create the PhysicsCollisionHavok system
 extern "C" ISystem* __stdcall
-CreatePhysicSystem(Log::Logger* p_logger) {
-    Log::Init(p_logger);
+CreatePhysicSystem() {
     return new PhysicSystem();;
 }
 

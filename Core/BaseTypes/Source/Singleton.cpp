@@ -20,14 +20,7 @@
 Singleton::Singleton(void) {
 }
 
-/**
- *  @inheritDoc
- */
-Singleton::~Singleton(void) {
-}
-
 #ifdef DEBUG_BUILD
-
 /**
  *  @inheritDoc
  */
@@ -57,5 +50,4 @@ void Singleton::operator delete(void*) {
 void Singleton::operator delete[](void*) {
     ASSERTMSG(false, "Not allowed to dynamically free a singleton.");
 }
-
 #endif

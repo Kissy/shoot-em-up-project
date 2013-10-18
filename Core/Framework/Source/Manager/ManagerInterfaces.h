@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,53 +14,59 @@
 
 #pragma once
 
-/**
- * Base case for all singleton classes.
- */
-class Singleton {
-public:
+#include "Manager/IManagerInterfaces.h"
+#include "Manager/PlatformManager.h"
+#include "Manager/EnvironmentManager.h"
+#include "Manager/ServiceManager.h"
+#include "Manager/TaskManager.h"
 
+/**
+ * The list of managers interfaces.
+ */
+class ManagerInterfaces : public IManagerInterfaces {
+public:
     /**
      * Default constructor.
      */
-    Singleton(void);
+    ManagerInterfaces();
 
     /**
      * Destructor.
      */
-    virtual ~Singleton(void);
-
-#ifdef DEBUG_BUILD
-    /**
-     * Overrid new operator.
-     *
-     * @param   The object size.
-     * @return  void*.
-     */
-    void* operator new(size_t);
+    ~ManagerInterfaces();
 
     /**
-     * Overrid new[] operator.
-     *
-     * @param   The object size.
-     * @return  void*.
+     * @inheritDoc
      */
-    void* operator new[](size_t);
+    inline IPlatformManager* getPlatformManager(void) {
+        return pPlatform;
+    }
 
     /**
-     * Overrid delete operator.
-     *
-     * @param [in,out]  void*.
+     * @inheritDoc
      */
-    void operator delete(void*);
+    inline IEnvironmentManager* getEnvironmentManager(void) {
+        return pEnvironment;
+    }
 
     /**
-     * Overrid delete[] operator.
-     *
-     * @param [in,out]  void*.
+     * @inheritDoc
      */
-    void operator delete[](void*);
-#endif
+    inline IServiceManager* getServiceManager(void) {
+        return pService;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    inline ITaskManager* getTaskManager(void) {
+        return pTask;
+    }
+    
+private:
+    PlatformManager*       pPlatform;
+    EnvironmentManager*    pEnvironment;
+    ServiceManager*        pService;
+    TaskManager*           pTask;
 
 };
-
