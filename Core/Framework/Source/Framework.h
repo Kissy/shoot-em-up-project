@@ -14,8 +14,9 @@
 
 #pragma once
 
-#include "System/Definitions.h"
-#include "FrameworkAPI.h"
+#include "System/Types.h"
+#include "Manager/ManagerInterfaces.h"
+#include "Manager/IServiceManager.h"
 
 class Scheduler;
 class ChangeManager;
@@ -29,86 +30,81 @@ class Gdf;
  * loading and parsing of the global definition file (gdf).
  * 
  * @sa  IService::ISystemAccess
- * @sa  IService::ISystemAccess
  */
 class Framework : public IServiceManager::ISystemAccess {
-    public:
+public:
+    /**
+     * Default constructor.
+     */
+    Framework(void) throw(...);
 
-        /**
-         * Default constructor.
-         */
-        Framework(void) throw(...);
+    /**
+     * Destructor.
+     */
+    ~Framework(void);
 
-        /**
-         * Destructor.
-         */
-        ~Framework(void);
+    /**
+     * Initializes this :.
+     *
+     * @return  Error status.
+     */
+    Error Initialize(void);
 
-        /**
-         * Initializes this :.
-         *
-         * @return  Error status.
-         */
-        Error Initialize(void);
+    /**
+     * Shuts down this : and frees any resources it is using.
+     */
+    void Shutdown(void);
 
-        /**
-         * Shuts down this : and frees any resources it is using.
-         */
-        void Shutdown(void);
+    /**
+     * Executes the framework..
+     *
+     * @return An error code.
+     */
+    Error Execute(void) throw(...);
 
-        /**
-         * Executes the framework..
-         *
-         * @return An error code.
-         */
-        Error Execute(void) throw(...);
+protected:
+    /**
+     * Implementation of IService::ISystemAccess::GetSystem.
+     *
+     * @param   Type    The type.
+     * @return  The system.
+     */
+    virtual Handle GetSystem(Proto::SystemType Type);
 
-    protected:
+    /**
+     * Implementation of IService::ISystemAccess::GetScene.
+     *
+     * @param   Type    The type.
+     * @return  The scene.
+     */
+    virtual Handle GetScene(Proto::SystemType Type);
 
-        /**
-         * Implementation of IService::ISystemAccess::GetSystem.
-         *
-         * @param   Type    The type.
-         * @return  The system.
-         */
-        virtual Handle GetSystem(Proto::SystemType Type);
+    /**
+     * Implementation of IService::ISystemAccess::GetSystemObject.
+     *
+     * @param   Type    The type.
+     * @param   pszName The name.
+     * @return  The system object.
+     */
+    virtual Handle GetSystemObject(Proto::SystemType Type, const char* pszName);
 
-        /**
-         * Implementation of IService::ISystemAccess::GetScene.
-         *
-         * @param   Type    The type.
-         * @return  The scene.
-         */
-        virtual Handle GetScene(Proto::SystemType Type);
+    /**
+     * Issues all the pending property changes.  This only occurs after the scheduler has
+     *  executed all the waiting items.
+     *
+     * @param   SystemTypes The system types of the system that can accept property changes.
+     */
+    void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
+    
+private:
+    ManagerInterfaces*                      m_pManagerInterfaces;
+    Scheduler*                              m_pScheduler;
+    TaskManager*                            m_pTaskManager;
+    ChangeManager*                          m_pSceneCCM;
+    ChangeManager*                          m_pObjectCCM;
+    UScene*                                 m_pScene;
 
-        /**
-         * Implementation of IService::ISystemAccess::GetSystemObject.
-         *
-         * @param   Type    The type.
-         * @param   pszName The name.
-         * @return  The system object.
-         */
-        virtual Handle GetSystemObject(Proto::SystemType Type, const char* pszName);
-
-        /**
-         * Issues all the pending property changes.  This only occurs after the scheduler has
-         *  executed all the waiting items.
-         *
-         * @param   SystemTypes The system types of the system that can accept property changes.
-         */
-        void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
-
-    protected:
-
-        Scheduler*                              m_pScheduler;
-        ChangeManager*                          m_pSceneCCM;
-        ChangeManager*                          m_pObjectCCM;
-        UScene*                                 m_pScene;
-
-        bool                                    m_bExecuteLoop;
-
-    private:
-
-        std::string                             m_sNextScene;
+    bool                                    m_bExecuteLoop;
+    std::string                             m_sNextScene;
 
 };

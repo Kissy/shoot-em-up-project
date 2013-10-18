@@ -17,6 +17,7 @@
 
 #include "Interface.h"
 
+#include "System/SystemInterface.h"
 #include "PlatformManager.h"
 #include "SystemManager.h"
 #include "EnvironmentManager.h"
@@ -25,32 +26,22 @@
 
 #include <fstream>
 
-extern TaskManager*     g_pTaskManager;
-
-PlatformManager::PlatformManager(
-    void
-) {
+PlatformManager::PlatformManager(void) {
 }
 
 
-PlatformManager::~PlatformManager(
-    void
-) {
+PlatformManager::~PlatformManager(void) {
 }
 
 
 #if defined ( WIN32 ) || defined ( WIN64 )
 #define _WIN32_WINNT    0x0400
 
-PlatformManager::FileSystem::FileSystem(
-    void
-) {
+PlatformManager::FileSystem::FileSystem(void) {
 }
 
 
-PlatformManager::FileSystem::~FileSystem(
-    void
-) {
+PlatformManager::FileSystem::~FileSystem(void) {
     //
     // Iterate through all the loaded libraries.
     //
@@ -109,7 +100,7 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(Proto::SystemType type,  IS
             //
             // Create the system.
             //
-            ISystem* pSystem = fnCreateSystem(Log::GetLogger());
+            ISystem* pSystem = fnCreateSystem();
 
             if (pSystem != NULL) {
                 //
@@ -136,33 +127,22 @@ Error PlatformManager::FileSystem::LoadSystemLibrary(Proto::SystemType type,  IS
     return Err;
 }
 
-Error
-PlatformManager::FileSystem::LoadProto(
-    const char* pszFile,
-    google::protobuf::Message* proto
-) {
-    Error   Err = Errors::Failure;
-
-    //
-    // Get the file
-    //
-    if (FileExists(pszFile)) {
-        // Read file
-        std::fstream input(pszFile, std::ios::in | std::ios::binary);
-        // Build proto
-        proto->Clear();
-        proto->ParseFromIstream(&input);
-        Err = Errors::Success;
+Error PlatformManager::FileSystem::LoadProto(const char* pszFile, google::protobuf::Message* proto) {
+    if (!FileExists(pszFile)) {
+        return Errors::Failure;
     }
+    
+    // Read file
+    std::fstream input(pszFile, std::ios::in | std::ios::binary);
 
-    return Err;
+    // Build proto
+    proto->Clear();
+    proto->ParseFromIstream(&input);
+    return Errors::Success;
 }
 
 
-bool
-PlatformManager::FileSystem::FileExists(
-    In const char* pszFileName
-) {
+bool PlatformManager::FileSystem::FileExists(In const char* pszFileName) {
     bool bFound = false;
     //
     // Open the file for read access.
@@ -182,77 +162,13 @@ PlatformManager::FileSystem::FileExists(
 }
 
 
-bool
-PlatformManager::FileSystem::SetCurrentDirToFileLocation(
-    In const char* pszFileName,
-    In const char* apszLocations[],
-    Out char* pszCurrentDir,
-    u32 BufferSize
-) {
-    bool bDirectorySet = false;
-
-    //
-    // Check the current directory.
-    //
-    if (!FileExists(pszFileName)) {
-        //
-        // Save the original current directory.
-        //
-        char szCurrentDir[ _MAX_PATH ];
-        GetCurrentDirectoryA(_MAX_PATH, szCurrentDir);
-
-        for (int i = 0; apszLocations[ i ] != NULL; i++) {
-            //
-            // Switch to the directory.
-            //
-            if (SetCurrentDirectoryA(apszLocations[ i ])) {
-                //
-                // If it worked checked for file existence.
-                //
-                if (FileExists(pszFileName)) {
-                    //
-                    // We found it.  The break will keep the original directory from being reset.
-                    //
-                    bDirectorySet = true;
-                    break;
-                }
-            }
-
-            //
-            // Restore the original directory for the next loop iteration.
-            //
-            SetCurrentDirectoryA(szCurrentDir);
-        }
-    } else {
-        bDirectorySet = true;
-    }
-
-    //
-    // Return the just set current directory if the user requested it.
-    //
-    if (bDirectorySet && pszCurrentDir != NULL && BufferSize > 0) {
-        GetCurrentDirectoryA(BufferSize, pszCurrentDir);
-    }
-
-    return bDirectorySet;
+PlatformManager::WindowSystem::WindowSystem(void) 
+    : m_WindowHnd(NULL) {
 }
 
 
-PlatformManager::WindowSystem::WindowSystem(
-    void
-) : m_WindowHnd(NULL) {
-}
-
-
-void
-PlatformManager::WindowSystem::ProcessMessages(
-    void
-) {
-    //
-    // Process all messages in the queue.
-    //
-    MSG    Msg;
-
+void PlatformManager::WindowSystem::ProcessMessages(void) {
+    MSG Msg;
     while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
         TranslateMessage(&Msg);
         DispatchMessage(&Msg);
@@ -304,10 +220,7 @@ PlatformManager::Timers::GetGranularity(
 }
 
 
-Handle
-PlatformManager::Timers::Create(
-    f32 Interval
-) {
+Handle PlatformManager::Timers::Create(f32 Interval) {
     WindowsTimerData* pTimerData = new WindowsTimerData;
     ASSERT(pTimerData != NULL);
     //
@@ -324,10 +237,7 @@ PlatformManager::Timers::Create(
 }
 
 
-void
-PlatformManager::Timers::Destroy(
-    Handle hTimer
-) {
+void PlatformManager::Timers::Destroy(Handle hTimer) {
     WindowsTimerData* pTimerData = reinterpret_cast<WindowsTimerData*>(hTimer);
     CloseHandle(pTimerData->hTimer);
     SAFE_DELETE(pTimerData);

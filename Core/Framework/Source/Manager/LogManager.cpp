@@ -12,14 +12,18 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <windows.h>
-#include <tchar.h>
+#include <Manager/LogManager.h>
 
-#include "Defines.h"
-#include "Interface.h"
-#include "Main.h"
+/**
+ * @inheritDoc
+ */
+LogManager::LogManager() {
+    LOGOG_INITIALIZE();
+}
 
-int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {
-    ExecuteFramework();
-    return 0;
+/**
+ * @inheritDoc
+ */
+LogManager::~LogManager() {
+    LOGOG_SHUTDOWN();
 }

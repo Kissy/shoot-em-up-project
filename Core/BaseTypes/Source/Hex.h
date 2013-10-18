@@ -29,27 +29,9 @@ inline int fromHex( char c ) {
     ASSERT( false );
     return 0xff;
 }
+
 inline char fromHex( const char *c ) {
     return (char)(( fromHex( c[ 0 ] ) << 4 ) | fromHex( c[ 1 ] ));
-}
-/*inline char fromHex( const StringData& c ) {
-    return (char)(( fromHex( c[ 0 ] ) << 4 ) | fromHex( c[ 1 ] ));
-}*/
-
-inline std::string toHex(const void* inRaw, int len) {
-    static const char hexchars[] = "0123456789ABCDEF";
-
-    std::string out;
-    const char* in = reinterpret_cast<const char*>(inRaw);
-    for (int i=0; i<len; ++i) {
-        char c = in[i];
-        char hi = hexchars[(c & 0xF0) >> 4];
-        char lo = hexchars[(c & 0x0F)];
-
-        out += hi += lo;
-    }
-
-    return out;
 }
 
 inline std::string toHexLower(const void* inRaw, int len) {

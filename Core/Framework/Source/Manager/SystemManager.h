@@ -17,7 +17,7 @@
 #include "Errors.h"
 #include "Singleton.h"
 #include "Universal/UScene.h"
-#include "System/Definitions.h"
+#include "System/Types.h"
 
 class ISystem;
 
@@ -77,7 +77,3 @@ class SystemManager : public Singleton {
         UScene::SystemsIt                   m_SystemIt;
 
 };
-
-
-
-DeclareSingleton(SystemManager);

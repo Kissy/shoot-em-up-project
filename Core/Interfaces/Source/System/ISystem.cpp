@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/checked_delete.hpp>
+
 #include "DataTypes.h"
 #include "Assert.h"
 #include "Errors.h"

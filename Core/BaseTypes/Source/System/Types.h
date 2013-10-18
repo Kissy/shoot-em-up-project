@@ -14,30 +14,20 @@
 
 #pragma once
 
-#include "Proto/Common.pb.h"
 #include "Defines.h"
-#include "Logger.h"
-
+#include "DataTypes.h"
+#include "Proto/Common.pb.h"
 
 #if defined( MSC_COMPILER )
 #include <intrin.h>
 #pragma intrinsic(_BitScanForward)
 #endif
 
-
-class ISystem;
-class IPlatformManager;
-class IEnvironmentManager;
-class IServiceManager;
-class ITaskManager;
-
-
 /**
  * The System namespace contains meta-data about the various sytems,
  * and various enums, datatypes and helper functions for system types.
  */
 namespace System {
-
     /**
      * The Types namespace contains specifics about the system types.
      */
@@ -74,74 +64,4 @@ namespace System {
 
         typedef u32 BitMask;
     }
-}
-
-/**
- * Function type definitions for communicating with the system DLL.
- */
-extern "C" {
-    /**
-     * The list of managers interfaces.
-     */
-    struct ManagerInterfaces {
-        IPlatformManager*       pPlatform;
-        IEnvironmentManager*    pEnvironment;
-        IServiceManager*        pService;
-        ITaskManager*           pTask;
-    };
-
-#if defined( MSC_COMPILER )
-
-    /**
-     * Function definition for calling into a system library for initializing a system.
-     */
-    typedef void (__stdcall* InitializeSystemLibFunction)(
-        ManagerInterfaces* pManagers
-    );
-
-    /**
-     * Function definition for calling into a system library for creating a system.
-     * 
-     * @return   The newly created system.
-     */
-    typedef ISystem* (__stdcall* CreateSystemFunction)(
-        Log::Logger* p_logger
-    );
-
-    /**
-     * Function definition for calling into a system library for destroying a system.
-     * 
-     * @param    pSystem The system to destroy.
-     */
-    typedef void (__stdcall* DestroySystemFunction)(
-        ISystem* pSystem
-    );
-
-#elif defined( GCC_COMPILER )
-    /**
-     * Function definition for calling into a system library for initializing a system.
-     */
-    void __attribute__((__stdcall)) InitializeSystemLibFunction(
-        ManagerInterfaces* pManagers
-    );
-
-    /**
-     * Function definition for calling into a system library for creating a system.
-     * 
-     * @return   The newly created system.
-     */
-    ISystem* __attribute__((__stdcall)) CreateSystemFunction(
-        Log::Logger* p_logger
-    );
-
-    /**
-     * Function definition for calling into a system library for destroying a system.
-     * 
-     * @param    pSystem The system to destroy.
-     */
-    void __attribute__((__stdcall)) DestroySystemFunction(
-        ISystem* pSystem
-    );    
-#endif
-
 }

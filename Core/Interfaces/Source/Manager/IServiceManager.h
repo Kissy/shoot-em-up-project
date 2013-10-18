@@ -23,7 +23,7 @@ class ISystemObject;
 
 #include "Proto/Common.pb.h"
 #include "Service/Collision.h"
-#include "System/Definitions.h"
+#include "System/Types.h"
 
 /**
  * Interface class for providing services to the systems.

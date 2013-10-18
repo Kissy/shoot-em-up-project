@@ -22,9 +22,6 @@
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{b919bb46-79a8-4885-a963-07771fd3ad97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Service\API">
-      <UniqueIdentifier>{76a5d91b-3c39-49f7-8c3b-0959d1785d60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{cbb66fba-2a03-431e-abc3-ab7d718a73f0}</UniqueIdentifier>
     </Filter>
@@ -44,9 +41,6 @@
   <ItemGroup>
     <ClInclude Include="Source\Interface.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\API\Collision.h">
-      <Filter>Header Files\Service\API</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\IGeometryObject.h">
       <Filter>Header Files\Object</Filter>
@@ -70,9 +64,6 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\ISystemTask.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\System\Definitions.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object\ISceneObject.h">
@@ -110,6 +101,15 @@
     </ClInclude>
     <ClInclude Include="Source\Generic\IEntity.h">
       <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\Collision.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\SystemInterface.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\IManagerInterfaces.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

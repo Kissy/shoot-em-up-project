@@ -18,7 +18,7 @@
 
 #include "Proto.h"
 
-#include "System/Definitions.h"
+#include "System/Types.h"
 
 /**
  * <c>IGenericScene</c> is an interface for providing generic scene related functionality. Any

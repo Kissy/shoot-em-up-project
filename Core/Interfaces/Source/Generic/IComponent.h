@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "System/Definitions.h"
+#include "System/Types.h"
 
 class ISubject;
 

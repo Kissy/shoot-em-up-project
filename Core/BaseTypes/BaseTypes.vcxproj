@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;C:\Program Files (x86)\SDK\Boost\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\Generated\Source;C:\Program Files (x86)\SDK\Boost\include</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
@@ -88,7 +88,6 @@
     <ClInclude Include="Source\DataTypes.h" />
     <ClInclude Include="Source\Date_t.h" />
     <ClInclude Include="Source\Hex.h" />
-    <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Defines.h" />
     <ClInclude Include="Source\Errors.h" />
     <ClInclude Include="Source\MathUtils.h" />
@@ -98,12 +97,17 @@
     <ClInclude Include="Source\SpinMutex.h" />
     <ClInclude Include="Source\System\Changes.h" />
     <ClInclude Include="Source\System\Components.h" />
+    <ClInclude Include="Source\System\Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\MathUtils.cpp" />
     <ClCompile Include="Source\ObjectId.cpp" />
     <ClCompile Include="Source\Singleton.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Generated\Generated.vcxproj">
+      <Project>{46157db7-4b71-41a0-8d52-122c1f22a505}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

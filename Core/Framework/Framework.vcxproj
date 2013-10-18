@@ -16,8 +16,11 @@
     <ClCompile Include="Source\Debugger\SceneChangesDebugger.cpp" />
     <ClCompile Include="Source\Framework.cpp" />
     <ClCompile Include="Source\Instrumentation.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp" />
     <ClCompile Include="Source\Manager\EnvironmentManager.cpp" />
+    <ClCompile Include="Source\Manager\LogManager.cpp" />
+    <ClCompile Include="Source\Manager\ManagerInterfaces.cpp" />
     <ClCompile Include="Source\Manager\MemoryManager.cpp" />
     <ClCompile Include="Source\Manager\PlatformManager.cpp" />
     <ClCompile Include="Source\Manager\ServiceManager.cpp" />
@@ -34,11 +37,13 @@
     <ClInclude Include="Source\Debugger\ObjectChangesDebugger.h" />
     <ClInclude Include="Source\Debugger\SceneChangesDebugger.h" />
     <ClInclude Include="Source\Framework.h" />
-    <ClInclude Include="Source\FrameworkAPI.h" />
+    <ClInclude Include="Source\Main.h" />
     <ClInclude Include="Source\Instrumentation.h" />
     <ClInclude Include="Source\IttNotify.h" />
     <ClInclude Include="Source\Manager\ChangeControlManager.h" />
     <ClInclude Include="Source\Manager\EnvironmentManager.h" />
+    <ClInclude Include="Source\Manager\LogManager.h" />
+    <ClInclude Include="Source\Manager\ManagerInterfaces.h" />
     <ClInclude Include="Source\Manager\MemoryManager.h" />
     <ClInclude Include="Source\Manager\PlatformManager.h" />
     <ClInclude Include="Source\Manager\ServiceManager.h" />
@@ -105,7 +110,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\BaseTypes\Source;..\Interfaces\Source;..\Generated\Source;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\BaseTypes\Source;..\Interfaces\Source;..\Generated\Source;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\TBB\include;C:\Program Files (x86)\SDK\ZeroMQ\include;D:\My Documents\SDK\logog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>

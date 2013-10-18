@@ -27,7 +27,7 @@
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
 #include "Generic/IUpdatable.h"
-#include "System/Definitions.h"
+#include "System/Types.h"
 
 class ISystem;
 class ISystemTask;

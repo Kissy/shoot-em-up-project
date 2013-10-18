@@ -14,8 +14,8 @@
 
 #include <windows.h>
 
+#include "System/SystemInterface.h"
 #include "Interface.h"
-
 #include "System.h"
 
 //
@@ -57,8 +57,7 @@ InitializeGraphicSystem(
 
 
 extern "C" ISystem* __stdcall
-CreateGraphicSystem(Log::Logger* p_logger) {
-    Log::Init(p_logger);
+CreateGraphicSystem() {
     return new GraphicSystem();
 }
 

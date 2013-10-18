@@ -31,52 +31,23 @@
 #include "Instrumentation.h"
 #include "Framework.h"
 
-#ifdef DEBUG_BUILD
-CreateSingleton(Debugger);
-#endif
-
-CreateSingleton(MemoryManager);
+/*CreateSingleton(MemoryManager);
 CreateSingleton(EnvironmentManager);
 CreateSingleton(PlatformManager);
 CreateSingleton(SystemManager);
 CreateSingleton(ServiceManager);
-CreateSingleton(Instrumentation);
-
-TaskManager*    g_pTaskManager = NULL;
+CreateSingleton(Instrumentation);*/
 
 /**
  * @inheritDoc
  */
-void ExecuteFramework(void) {
-#ifndef DEBUG_BUILD
-    try
-#endif
-    {
-        Framework Framework;
-        if (Framework.Initialize() == Errors::Success) {
-            Framework.Execute();
-            Framework.Shutdown();
-        }
-    }
-#ifndef DEBUG_BUILD
-    catch (...) {
-        // Display an error message.
-    }
-#endif
-}
+Framework::Framework(void) 
+    : m_bExecuteLoop(true) {
+    m_pManagerInterfaces = new ManagerInterfaces();
+    m_pManagerInterfaces->init<PlatformManager>();
 
-/**
- * @inheritDoc
- */
-Framework::Framework(void) : 
-    m_bExecuteLoop(true)
-    , m_pScheduler(NULL)
-    , m_pSceneCCM(NULL)
-    , m_pObjectCCM(NULL) {
-    //
-    // g_pTaskManager and m_pScheduler are instantiated after the environment variables
-    // in the config file are parsed
-    //
+    m_pTaskManager = new TaskManager();
+    m_pScheduler = new Scheduler(m_pTaskManager);
     m_pSceneCCM = new ChangeManager();
     m_pObjectCCM = new ChangeManager();
 }
@@ -85,8 +56,9 @@ Framework::Framework(void) :
  * @inheritDoc
  */
 Framework::~Framework(void) {
+    delete m_pManagerInterfaces;
+    delete m_pTaskManager;
     delete m_pScheduler;
-    delete g_pTaskManager;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
 }
@@ -99,12 +71,6 @@ Error Framework::Initialize(void) {
     // Set the current directory to the location of the GDF.
     //
     static const char* apszFile = "Application.gdf.bin";
-    static const char* apszLocations[] = { ".\\." };
-
-    if (!Singletons::PlatformManager.FileSystem().SetCurrentDirToFileLocation(apszFile, apszLocations)) {
-        ASSERT(false, "Framework could not locate the GDF file Application.gdf.");
-        return Errors::File::NotFound;
-    }
 
     //
     // Create the initial universal scene.
@@ -140,18 +106,7 @@ Error Framework::Initialize(void) {
     //
     // Instantiate the task manager.
     //
-    g_pTaskManager = new TaskManager();
     g_pTaskManager->Init();
-    
-    //
-    // Instantiate the scheduler.
-    //
-    m_pScheduler = new Scheduler(g_pTaskManager);
-    ASSERT(m_pScheduler != NULL);
-
-    if (m_pScheduler == NULL) {
-        return Errors::Memory::OutOfMemory;
-    }
 
     //
     // Complete the parsing of the GDF and the initial scene.

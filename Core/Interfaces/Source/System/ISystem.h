@@ -18,7 +18,7 @@
 #include "Proto/Common.pb.h"
 
 #include "Errors.h"
-#include "System/Definitions.h"
+#include "System/Types.h"
 #include "Generic/IProperty.h"
 #include "Generic/IComponent.h"
 
