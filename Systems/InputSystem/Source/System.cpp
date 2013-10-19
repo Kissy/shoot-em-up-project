@@ -21,8 +21,7 @@
 #include "System.h"
 #include "Scene.h"
 
-extern ManagerInterfaces    g_Managers;
-
+extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -46,7 +45,7 @@ InputSystem::~InputSystem(void) {
 Error InputSystem::initialize(void) {
     ASSERT(!m_bInitialized);
     
-    size_t hWnd = g_Managers.pPlatform->Window().GetHandle();
+    size_t hWnd = g_serviceManager->getWindowService()->getHandle();
     ASSERTMSG(hWnd != 0, "Window handle should not be null !");
 
     OIS::ParamList paramList;

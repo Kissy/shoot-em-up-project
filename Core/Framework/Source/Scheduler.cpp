@@ -12,39 +12,56 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <boost/thread/thread.hpp>
+#include <boost/timer/timer.hpp>
+
 #include "Interface.h"
 
-#include "Manager/EnvironmentManager.h"
-#include "Manager/ServiceManager.h"
-#include "Universal/UScene.h"
-#include "Manager/PlatformManager.h"
+#include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
+#include "Universal/UScene.h"
 #include "Scheduler.h"
-#include "Instrumentation.h"
 #include "Debugger/Debugger.h"
 
-const f32 Scheduler::sm_DefaultClockFrequency = 1.0f / 120.0f;      // Set the timer to 120Hz
+// Set the timer to 120Hz
+const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost::timer::nanosecond_type(1000000000LL / 120);
 
-Scheduler::Scheduler(TaskManager* pTaskManager)
-    : m_pTaskManager(pTaskManager)
-    , m_ClockFrequency(sm_DefaultClockFrequency)
-    , m_hExecutionTimer(NULL) {
-    m_hExecutionTimer = Singletons::PlatformManager.Timers().Create(m_ClockFrequency);
-    m_bBenchmarkingEnabled = Singletons::EnvironmentManager.Variables().GetAsBool("Scheduler::Benchmarking", false);
+/**
+ * @inheritDoc
+ */
+Scheduler::Scheduler()
+    : m_runtimeService(IServiceManager::get()->getRuntimeService()) {
+    ISettingService* settingService = IServiceManager::get()->getSettingService();
+    m_benchmarkingEnabled = settingService->getBool("Scheduler::Benchmarking");
+    m_pTaskManager = new TaskManager(settingService->getInt("TaskManager::Threads"));
+    IServiceManager::get()->setTaskManager(m_pTaskManager);
+    m_executionTimer.start();
 }
 
-
+/**
+ * @inheritDoc
+ */
 Scheduler::~Scheduler(void) {
-    Singletons::PlatformManager.Timers().Destroy(m_hExecutionTimer);
+    m_pTaskManager->Shutdown();
+    delete m_pTaskManager;
 }
 
+/**
+ * Initialises this object.
+ */
+void Scheduler::init(void) {
+    m_pTaskManager->Init();
+}
 
+/**
+ * @inheritDoc
+ */
 void Scheduler::SetScene(const UScene* pScene) {
     //
     // Setup the Debugger
     // 
 #ifdef DEBUG_BUILD
-    Singletons::Debugger.setScene(pScene);
+    //Singletons::Debugger.setScene(pScene);
 #endif
 
     //
@@ -53,7 +70,7 @@ void Scheduler::SetScene(const UScene* pScene) {
     ISystemTask* aScenesToWaitFor[Proto::SystemType_MAX];
     u32 cScenesToWaitFor = 0;
 
-    for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
+    for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToWaitFor < Proto::SystemType_MAX);
         aScenesToWaitFor[ cScenesToWaitFor++ ] = it->second->GetSystemTask<ISystemTask>();
     }
@@ -68,11 +85,7 @@ void Scheduler::SetScene(const UScene* pScene) {
     // Copy over all the system scenes.
     //
     const UScene::SystemScenes& SystemScenes = pScene->GetSystemScenes();
-
-    for (UScene::SystemScenesConstIt it = SystemScenes.begin(); it != SystemScenes.end(); it++) {
-        //
-        // Make sure the system has a task.
-        //
+    for (auto it = SystemScenes.begin(); it != SystemScenes.end(); it++) {
         if (it->second->GetSystemTask<ISystemTask>() != NULL) {
             m_SceneExecs[ it->first ] = it->second;
         }
@@ -81,36 +94,43 @@ void Scheduler::SetScene(const UScene* pScene) {
     //
     // Re-create the timer as a scene load may have taken a long time.
     //
-    Singletons::PlatformManager.Timers().Destroy(m_hExecutionTimer);
-    m_hExecutionTimer = Singletons::PlatformManager.Timers().Create(m_ClockFrequency);
+    m_executionTimer.start();
 }
 
-
+/**
+ * @inheritDoc
+ */
 void Scheduler::Execute(void) {
     //
     // Get the delta time; seconds since last Execute call.
     //
-    f32 DeltaTime = Singletons::PlatformManager.Timers().Wait(m_hExecutionTimer, !m_bBenchmarkingEnabled);
+    if (!m_benchmarkingEnabled) {
+        boost::chrono::nanoseconds waitFor = boost::chrono::nanoseconds(sm_defaultClockFrequency - m_executionTimer.elapsed().wall);
+        if (waitFor.count() >= 0) {
+            boost::this_thread::sleep_for(waitFor);
+        }
+    }
+    f32 deltaTime = boost::chrono::duration<f32>(boost::chrono::nanoseconds(m_executionTimer.elapsed().wall)).count();
+    m_executionTimer.start();
 
     //
     // Update instrumentation for this frame.
     // If we do this here, there's no thread sync to worry about since we're single-threaded here.
     //
-    // TODO : maybe disable it when not used ?
-    Singletons::ServiceManager.Instrumentation().UpdatePeriodicData(DeltaTime);
+    m_pTaskManager->updatePeriodicData(deltaTime);
     
 #ifdef DEBUG_BUILD
     //
     // Update the debugger
     // 
-    Singletons::Debugger.update(DeltaTime);
+    //Singletons::Debugger.update(DeltaTime);
 #endif
 
     //
     // Check if the execution is paused, and set delta time to 0 if so.
     //
-    if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironmentManager::IRuntime::Status::Paused) {
-        DeltaTime = 0.0f;
+    if (m_runtimeService->isPaused()) {
+        deltaTime = 0.0f;
     }
 
     //
@@ -119,16 +139,15 @@ void Scheduler::Execute(void) {
     ISystemTask* aScenesToExecute[Proto::SystemType_MAX];
     u32 cScenesToExecute = 0;
 
-    for (SceneExecsIt it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
+    for (auto it = m_SceneExecs.begin(); it != m_SceneExecs.end(); it++) {
         ASSERT(cScenesToExecute < Proto::SystemType_MAX);
-        aScenesToExecute[ cScenesToExecute++ ] = it->second->GetSystemTask<ISystemTask>();
+        aScenesToExecute[cScenesToExecute++] = it->second->GetSystemTask<ISystemTask>();
     }
 
-    m_pTaskManager->IssueJobsForSystemTasks(aScenesToExecute, cScenesToExecute, DeltaTime);
+    m_pTaskManager->IssueJobsForSystemTasks(aScenesToExecute, cScenesToExecute, deltaTime);
 
     //
     // Wait for the scenes that will be completing execution in this frame.
     //
     m_pTaskManager->WaitForSystemTasks(aScenesToExecute, cScenesToExecute);
-
 }

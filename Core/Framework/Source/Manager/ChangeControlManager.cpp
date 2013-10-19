@@ -20,7 +20,6 @@
 
 #include "ChangeControlManager.h"
 #include "IttNotify.h"
-#include "PlatformManager.h"
 
 // Declare Thread Profiler events
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);
@@ -390,34 +389,30 @@ ChangeManager::DistributeRange(u32 begin, u32 end) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetTaskManager - Set TaskManager and init associated data
 Error
-ChangeManager::SetTaskManager(
-    ITaskManager* pTaskManager
-) {
-    if (!pTaskManager)
-    { return Errors::Undefined; }
+ChangeManager::SetTaskManager(ITaskManager* pTaskManager) {
+    if (!pTaskManager) {
+        return Errors::Undefined;
+    }
 
     ASSERT(!m_pTaskManager && "ChangeManager: Call ResetTaskManager before using SetTaskManager to set the new task manager");
 
     // Set up prethread NotiftyList
-    //if (m_tlsNotifyList.get()) {
-    if ( m_tlsNotifyList != TLS_OUT_OF_INDEXES ) {
-        // Store TaskManager
-        m_pTaskManager = pTaskManager;
-        // Make each thread call InitThreadLocalData
-        m_pTaskManager->NonStandardPerThreadCallback(InitThreadLocalData, this);
-        return Errors::Success;
+    if (m_tlsNotifyList == TLS_OUT_OF_INDEXES) {
+        return Errors::Failure;
     }
-
-    return Errors::Failure;
+    
+    // Store TaskManager
+    m_pTaskManager = pTaskManager;
+    // Make each thread call InitThreadLocalData
+    m_pTaskManager->NonStandardPerThreadCallback(InitThreadLocalData, this);
+    return Errors::Success;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // ResetTaskManager - Init thread specific data
 // (Must be called before the previously set task manager has been shut down)
-void ChangeManager::ResetTaskManager(
-    void
-) {
+void ChangeManager::ResetTaskManager(void) {
     // Free all data associated with m_pTaskManager
     if (m_pTaskManager) {
         // Make each thread call FreeThreadLocalData
@@ -426,7 +421,6 @@ void ChangeManager::ResetTaskManager(
         m_pTaskManager = NULL;
         // Restore main (this) thread data
         NotifyList* pList = new NotifyList();
-        //m_tlsNotifyList.reset(pList);
         ::TlsSetValue(m_tlsNotifyList, pList);
         m_NotifyLists.push_back(pList);
     }
@@ -435,21 +429,16 @@ void ChangeManager::ResetTaskManager(
 
 ///////////////////////////////////////////////////////////////////////////////
 // InitThreadLocalData - Init thread specific data
-void
-ChangeManager::InitThreadLocalData(
-    void* arg
-) {
+void ChangeManager::InitThreadLocalData(void* arg) {
     ASSERT(arg && "ChangeManager: No manager pointer passed to InitThreadLocalNotifyList");
     ChangeManager* mgr = (ChangeManager*)arg;
 
     // Check if we have allocated a NotifyList for this thread.
     // The notify list is keep in tls (thread local storage).
-    //if (!mgr->m_tlsNotifyList.get()) {
-    if( NULL == ::TlsGetValue(mgr->m_tlsNotifyList) ) {
+    if(NULL == ::TlsGetValue(mgr->m_tlsNotifyList)) {
         // Reserve some reasonable space to avoid delays because of multiple reallocations
         NotifyList* pList = new NotifyList();
         pList->reserve(8192);
-        //mgr->m_tlsNotifyList.reset(pList);
         ::TlsSetValue(mgr->m_tlsNotifyList, pList);
         // Lock out the updates and add this NotifyList to m_NotifyLists
         SCOPED_SPIN_LOCK(mgr->m_swUpdate);
@@ -460,10 +449,7 @@ ChangeManager::InitThreadLocalData(
 
 ///////////////////////////////////////////////////////////////////////////////
 // FreeThreadLocalData - Free thread specific data
-void
-ChangeManager::FreeThreadLocalData(
-    void* arg
-) {
+void ChangeManager::FreeThreadLocalData(void* arg) {
     ASSERT(arg && "ChangeManager: No manager pointer passed to FreeThreadLocalNotifyList");
     ChangeManager* mgr = (ChangeManager*)arg;
 

@@ -12,32 +12,23 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
 #include <windows.h>
 
-#include "Interface.h"
-#include <Manager/ServiceManager.h>
-
-#include "Collision.h"
+#include "System/ISystem.h"
+#include "Manager/IServiceManager.h"
+#include "SystemInterface.h"
 #include "System.h"
 
-//
-// global variables
-//
-ManagerInterfaces   g_Managers;
+IServiceManager*        g_serviceManager;
+HINSTANCE               g_hInstance;
 
-///////////////////////////////////////////////////////////////////////////////
-// DllMain - API entry point for SystemPhysicsCollisionHavok DLL
-BOOL APIENTRY
-DllMain(
-    HMODULE hModule,
-    DWORD Reason,
-    LPVOID pReserved
-) {
-    UNREFERENCED_PARAM(hModule);
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     UNREFERENCED_PARAM(pReserved);
-
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
+            g_hInstance = hModule;
+            break;
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:
@@ -47,32 +38,14 @@ DllMain(
     return TRUE;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// InitializeNewtonPhysicsCollision - Initialize the PhysicsCollisionHavok system
-extern "C" void __stdcall
-InitializePhysicSystem(
-    ManagerInterfaces* pManagers
-) {
-    g_Managers = *pManagers;
+extern "C" void __stdcall InitializePhysicSystem(IServiceManager* serviceManager) {
+    g_serviceManager = serviceManager;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// CreateAISystem - Create the PhysicsCollisionHavok system
-extern "C" ISystem* __stdcall
-CreatePhysicSystem() {
-    return new PhysicSystem();;
+extern "C" ISystem* __stdcall CreatePhysicSystem() {
+    return new PhysicSystem();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// DestroyHavokPhysicsCollisionSystem - Free the given PhysicsCollisionHavok system
-extern "C" void __stdcall
-DestroyPhysicSystem(
-    ISystem* pSystem
-) {
-    PhysicSystem* pHavokSystem = reinterpret_cast<PhysicSystem*>(pSystem);
-    // Delete scene
-    delete pHavokSystem;
+extern "C" void __stdcall DestroyPhysicSystem(ISystem* pSystem) {
+    delete reinterpret_cast<PhysicSystem*>(pSystem);
 }

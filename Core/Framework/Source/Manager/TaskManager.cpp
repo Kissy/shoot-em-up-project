@@ -14,10 +14,7 @@
 
 #include "Defines.h"
 #include "Manager/TaskManager.h"
-#include "Manager/EnvironmentManager.h"
-#include "Manager/PlatformManager.h"
 #include "Manager/ServiceManager.h"
-
 #include "Instrumentation.h"
 
 #if defined(MSC_COMPILER)
@@ -56,10 +53,10 @@
      __ITT_EVENT_START( tpEvent, PROFILE_TASKMANAGER );               \
      {                                           \
          i64 counter = __rdtsc();
-
+    
 #define JOB_TASK_FINISHED( jobType, tpEvent )     \
          counter = __rdtsc() - counter;          \
-         Singletons::Instrumentation.CaptureJobCounterTicks( jobType, counter ); \
+         m_instrumentation->CaptureJobCounterTicks( jobType, counter ); \
      }                                           \
      __ITT_EVENT_END( tpEvent, PROFILE_TASKMANAGER );
 
@@ -87,10 +84,11 @@ namespace local {
     /// </summary>
     class GenericCallbackData {
         public:
-            GenericCallbackData(void* pParam
+            GenericCallbackData(Instrumentation* instrumentation, void* pParam
                                 DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
                                )
-                : m_pParam(pParam)
+                : m_instrumentation(instrumentation)
+                , m_pParam(pParam)
 #if defined(STATISTICS_BY_JOB_TYPE)
                 , m_jobType(jobType)
 #endif
@@ -100,14 +98,15 @@ namespace local {
             {}
 
         protected:
-            void* m_pParam;
+            Instrumentation*    m_instrumentation;
+            void*               m_pParam;
 
 #if defined(STATISTICS_BY_JOB_TYPE)
-            Proto::SystemType m_jobType;
+            Proto::SystemType   m_jobType;
 #endif
 
 #if defined(USE_THREAD_PROFILER)
-            __itt_event m_tpEvent;
+            __itt_event         m_tpEvent;
 #endif
 
     }; // template class GenericCallbackTask
@@ -119,10 +118,10 @@ namespace local {
     template<class Fptr>
     class GenericCallbackTask : public tbb::task, public GenericCallbackData {
         public:
-            GenericCallbackTask(Fptr fFunc, void* pParam
+            GenericCallbackTask(Instrumentation* instrumentation, Fptr fFunc, void* pParam
                                 DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
                                )
-                : GenericCallbackData(pParam
+                : GenericCallbackData(instrumentation, pParam
                                       PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
                 , m_fFunc(fFunc)
             {}
@@ -138,7 +137,7 @@ namespace local {
             }
 
         protected:
-            Fptr m_fFunc;
+            Fptr                m_fFunc;
 
     }; // template class GenericCallbackTask
 
@@ -236,8 +235,22 @@ namespace local {
 
 using namespace local;
 
-void
-TaskManager::AddStallTask(void) {
+TaskManager::TaskManager(u32 requestedNumberOfThreads) 
+    : m_instrumentation(new Instrumentation())
+    , m_bTimeToQuit(false)
+    , m_uMaxNumberOfThreads(0)
+    , m_uNumberOfThreads(0)
+    , m_uTargetNumberOfThreads(0)
+    , m_uPrimaryThreadID(tbb::this_tbb_thread::get_id())
+    , m_uRequestedNumberOfThreads(requestedNumberOfThreads) {
+
+}
+
+TaskManager::~TaskManager(void) {
+    delete m_instrumentation;
+}
+
+void TaskManager::AddStallTask(void) {
     ASSERT(m_pStallPoolParent != NULL);
     tbb::task* pStallTask = new(m_pStallPoolParent->allocate_additional_child_of(*m_pStallPoolParent))
     StallTask(this, m_hStallPoolSemaphore);
@@ -245,26 +258,20 @@ TaskManager::AddStallTask(void) {
     m_pStallPoolParent->spawn(*pStallTask);
 }
 
-void
-TaskManager::SystemTaskCallback(void* pData) {
+void TaskManager::SystemTaskCallback(void* pData) {
     ISystemTask* pTask = static_cast<ISystemTask*>(pData);
     pTask->Update(g_pTaskManager->m_fDeltaTime);
 }
 
-void
-TaskManager::InitAffinityData(void* mgr) {
+void TaskManager::InitAffinityData(void* mgr) {
     TaskManager* pThis = static_cast<TaskManager*>(mgr);
     SCOPED_SPIN_LOCK(pThis->m_spinMutex);
     pThis->m_affinityIDs.push_back(tbb::task::self().affinity());
 }
 
-void
-TaskManager::Init(void) {
+void TaskManager::Init(void) {
     // Call this from the primary thread before calling any other TaskManager methods.
     g_pTaskManager = this;
-    m_uPrimaryThreadID = tbb::this_tbb_thread::get_id();
-    m_bTimeToQuit = false;
-    m_uRequestedNumberOfThreads = Singletons::EnvironmentManager.Variables().GetAsInt("TaskManager::Threads", 0);
 
     if (m_uRequestedNumberOfThreads == 0) {
         // IMPLEMENTATION NOTE
@@ -278,18 +285,16 @@ TaskManager::Init(void) {
         m_uRequestedNumberOfThreads = tbb::task_scheduler_init::default_num_threads();
     }
 
-    m_uMaxNumberOfThreads = 0;
-    m_uNumberOfThreads = 0;
-    m_uTargetNumberOfThreads = 0;
     m_pStallPoolParent = NULL;
 #if defined(MSC_COMPILER)
     m_hStallPoolSemaphore = CreateSemaphore(NULL, 0, m_uRequestedNumberOfThreads, NULL);
     SynchronizeTask::m_hAllCallbacksInvokedEvent = CreateEvent(NULL, true, false, NULL);
 #endif
 #if defined(USE_THREAD_PROFILER)
-    m_bTPEventsForTasks = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForTasks", false);
-    m_bTPEventsForJobs = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForJobs", false);
-    m_bTPEventsForSynchronize = Singletons::EnvironmentManager.Variables().GetAsBool("TaskManager::TPEventsForSynchronize", false);
+    ISettingService* settingService = IServiceManager::get()->getSettingService();
+    m_bTPEventsForTasks = settingService->getBool("TaskManager::TPEventsForTasks");
+    m_bTPEventsForJobs = settingService->getBool("TaskManager::TPEventsForJobs");
+    m_bTPEventsForSynchronize = settingService->getBool("TaskManager::TPEventsForSynchronize");
 
     if (m_bTPEventsForSynchronize) {
         m_tSynchronizeTPEvent = __itt_event_createA("Synchronize", 11);
@@ -303,12 +308,12 @@ TaskManager::Init(void) {
     m_pTbbScheduler = new tbb::task_scheduler_init(m_uRequestedNumberOfThreads);
     m_pSystemTasksRoot = new(tbb::task::allocate_root()) tbb::empty_task;
     NonStandardPerThreadCallback(InitAffinityData, this);
-    // Cache the thread count for display.
-    Singletons::Instrumentation.setActiveThreadCount(m_uTargetNumberOfThreads);
+#ifdef STATISTICS_BY_JOB_TYPE
+    m_instrumentation->setActiveThreadCount(m_uRequestedNumberOfThreads);
+#endif
 } // TaskManager::Init
 
-void
-TaskManager::Shutdown(void) {
+void TaskManager::Shutdown(void) {
     // Call this from the primary thread as the last TaskManager call.
     ASSERT(IsPrimaryThread());
     // get the callback thread to exit
@@ -331,6 +336,12 @@ TaskManager::Shutdown(void) {
     m_SupportForSystemTasks.clear();
 #endif
 } // TaskManager::Shutdown
+
+void TaskManager::updatePeriodicData(f32 deltaTime) {
+#ifdef STATISTICS_BY_JOB_TYPE
+    m_instrumentation->UpdatePeriodicData(deltaTime);
+#endif
+}
 
 // PerformanceHint is used to modify the order that tasks are sent to the scheduler.
 // The order of definition is the order of scheduling.
@@ -418,7 +429,8 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
                 if (GetPerformanceHint(pTasks[i]) == (PerformanceHint)h) {
                     // this task can be run on an arbitrary thread -- allocate it
                     SystemTask* pSystemTask = new(m_pSystemTasksRoot->allocate_additional_child_of(*m_pSystemTasksRoot))
-                    SystemTask(SystemTaskCallback, pTasks[i] PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
+                    SystemTask(m_instrumentation, SystemTaskCallback, pTasks[i] 
+                        PASS_JOB_AND_TP_EVENT_ARGS(pTasks[i]->GetSystemType(), GetSupportForSystemTask(pTasks[i]).m_tpeSystemTask));
                     // affinity will increase the chances that each SystemTask will be assigned
                     // to a unique thread, regardless of PerformanceHint
                     ASSERT(pSystemTask != NULL);
@@ -436,11 +448,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
 } // TaskManager::IssueJobsForSystemTasks
 
 
-void
-TaskManager::NonStandardPerThreadCallback(
-    JobFunction pfnCallback,
-    void* pData
-) {
+void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pData) {
     // This method triggers a synchronized callback to be called once by each thread used
     // by the TaskManager.  This method waits until all callbacks have executed.
     // only one at a time here
@@ -480,10 +488,7 @@ TaskManager::NonStandardPerThreadCallback(
 } // TaskManager::NonStandardPerThreadCallback
 
 
-u32
-TaskManager::GetRecommendedJobCount(
-    ITaskManager::JobCountInstructionHints Hints
-) {
+u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints) {
     // Call this method to determine the ideal number of tasks to submit to the TaskManager
     // for maximum performance.
     //
@@ -496,10 +501,10 @@ TaskManager::GetRecommendedJobCount(
 
 class ParallelForBody : public GenericCallbackData {
     public:
-        ParallelForBody(ITaskManager::ParallelForFunction pfn, void* pParam
+        ParallelForBody(Instrumentation* instrumentation, ITaskManager::ParallelForFunction pfn, void* pParam
                         DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
                        )
-            : GenericCallbackData(pParam
+            : GenericCallbackData(instrumentation, pParam
                                   PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
             , m_pfnCallback(pfn)
         {}
@@ -516,14 +521,7 @@ class ParallelForBody : public GenericCallbackData {
 }; // class ParallelForBody
 
 
-void
-TaskManager::ParallelFor(
-    ISystemTask* pSystemTask,
-    ParallelForFunction pfnJobFunction,
-    void* pParam,
-    u32 begin,
-    u32 end,
-    u32 minGrainSize) {
+void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
     Proto::SystemType jobType = pSystemTask ? pSystemTask->GetSystemType() : Proto::SystemType::Null;
@@ -531,7 +529,7 @@ TaskManager::ParallelFor(
 #if defined(USE_THREAD_PROFILER)
     __itt_event tpEvent = GetSupportForSystemTask(pSystemTask).m_tpeSystemTaskJob;
 #endif
-    ParallelForBody body(pfnJobFunction, pParam
+    ParallelForBody body(m_instrumentation, pfnJobFunction, pParam
                          PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent));
 
     if (m_uNumberOfThreads != 1) {
@@ -581,17 +579,13 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
 }
 
 
-u32 TaskManager::GetNumberOfThreads(
-    void
-) {
+u32 TaskManager::GetNumberOfThreads(void) {
     // Call this method to get the number of threads in the thread pool which are active for running work.
     return m_uNumberOfThreads;
 }
 
 
-void TaskManager::SetNumberOfThreads(
-    u32 uNumberOfThreads
-) {
+void TaskManager::SetNumberOfThreads(u32 uNumberOfThreads) {
     // This method constrains the number of threads used by the TaskManager.
     u32 uTargetNumberOfThreads = uNumberOfThreads;
 
@@ -733,7 +727,8 @@ void TaskManager::UpdateThreadPoolSize(void) {
 
         m_pStallPoolParent->spawn(tList);
         m_uNumberOfThreads = m_uTargetNumberOfThreads;
-        // Cache the thread count for display.
-        Singletons::Instrumentation.setActiveThreadCount(m_uTargetNumberOfThreads);
+#ifdef STATISTICS_BY_JOB_TYPE
+        m_instrumentation->setActiveThreadCount(m_uTargetNumberOfThreads);
+#endif
     }
 }

@@ -16,12 +16,12 @@
 #include <boost/lexical_cast.hpp>
 #include <include/cef_client.h>
 #pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include <Ogre.h>
 #pragma warning( pop )
 
 #include "Interface.h"
 
+#include "Manager/IServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
@@ -33,7 +33,7 @@
 #include "Object/MeshGraphicObject.h"
 #include "Browser/BrowserClient.h"
 
-extern ManagerInterfaces       g_Managers;
+extern IServiceManager* g_serviceManager;
 
 // We use SM2.0 instancing. Since we do normal mapping on the instanced geometry, we
 // need to pass both the world matrix and the inverse world matrix for each instance.
@@ -124,12 +124,12 @@ Error GraphicScene::initialize(void) {
  * @inheritDoc
  */
 void GraphicScene::Update(f32 DeltaTime) {
-    m_bPause = g_Managers.pEnvironment->Runtime().GetStatus() == IEnvironmentManager::IRuntime::Status::Paused;
+    m_bPause = g_serviceManager->getRuntimeService()->isPaused();
     m_fDeltaTime = DeltaTime;
 
     u32 size = (u32)m_pObjects.size();
-    if (g_Managers.pTask != NULL && UpdateGrainSize < size) {
-        g_Managers.pTask->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
+    if (g_serviceManager->getTaskManager() != NULL && UpdateGrainSize < size) {
+        g_serviceManager->getTaskManager()->ParallelFor(m_pSystemTask, UpdateCallback, this, 0, size, UpdateGrainSize);
     } else {
         ProcessRange(0, size);
     }

@@ -12,24 +12,23 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#define WIN32_LEAN_AND_MEAN
+#include "Defines.h"
 #include <windows.h>
 
-#include "Interface.h"
-
+#include "System/ISystem.h"
+#include "Manager/IServiceManager.h"
+#include "SystemInterface.h"
 #include "System.h"
 
+IServiceManager*        g_serviceManager;
+HINSTANCE               g_hInstance;
 
-ManagerInterfaces   g_Managers;
-
-
-BOOL APIENTRY
-DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
-    UNREFERENCED_PARAM(hModule);
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     UNREFERENCED_PARAM(pReserved);
-
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
+            g_hInstance = hModule;
+            break;
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:
@@ -39,19 +38,14 @@ DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     return TRUE;
 }
 
-
-extern "C" void __stdcall
-InitializeNetworkSystem(ManagerInterfaces* pManagers) {
-    g_Managers = *pManagers;
+extern "C" void __stdcall InitializeNetworkSystem(IServiceManager* serviceManager) {
+    g_serviceManager = serviceManager;
 }
 
-extern "C" ISystem* __stdcall
-CreateNetworkSystem() {
+extern "C" ISystem* __stdcall CreateNetworkSystem() {
     return new NetworkSystem();
 }
 
-extern "C" void __stdcall
-DestroyNetworkSystem(ISystem* pSystem) {
+extern "C" void __stdcall DestroyNetworkSystem(ISystem* pSystem) {
     delete reinterpret_cast<NetworkSystem*>(pSystem);
 }
-

@@ -17,7 +17,7 @@
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Object/ISceneObject.h"
-#include "Manager/SystemManager.h"
+#include "Service/SystemService.h"
 
 /**
  * @inheritDoc
@@ -38,7 +38,7 @@ UObject::~UObject(void) {
     //
     SystemObjects SysObjs = m_ObjectExtensions;
 
-    for (SystemObjectsIt it = SysObjs.begin(); it != SysObjs.end(); it++) {
+    for (auto it = SysObjs.begin(); it != SysObjs.end(); it++) {
         Unextend(it->second->GetSystemScene<ISystemScene>());
     }
 
@@ -119,7 +119,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     // Get the iterator for the object.
     //
     Proto::SystemType SystemType = pSystemScene->GetSystem<ISystem>()->GetSystemType();
-    SystemObjectsIt SysObjIt = m_ObjectExtensions.find(SystemType);
+    auto SysObjIt = m_ObjectExtensions.find(SystemType);
     ASSERTMSG(SysObjIt != m_ObjectExtensions.end(), "The object to delete doesn't exist in the scene.");
     ISystemObject* pSystemObject = SysObjIt->second;
 
@@ -143,7 +143,7 @@ void UObject::Unextend(ISystemScene* pSystemScene) {
     // Unregister each object with scenes that cared about the object's changes.
     //
     UScene::SystemScenes pScenes = m_pScene->GetSystemScenes();
-    for (UScene::SystemScenesIt it = pScenes.begin(); it != pScenes.end(); it++) {
+    for (auto it = pScenes.begin(); it != pScenes.end(); it++) {
         ISystemScene* pScene = it->second;
 
         if (pSystemObject->GetPotentialSystemChanges() & pScene->GetDesiredSystemChanges()) {
@@ -174,7 +174,7 @@ const UObject::SystemObjects& UObject::GetExtensions(void) {
 ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
     ISystemObject* pSystemObject = nullptr;
 
-    SystemObjectsConstIt it = m_ObjectExtensions.find(SystemType);
+    auto it = m_ObjectExtensions.find(SystemType);
     if (it != m_ObjectExtensions.end()) {
         pSystemObject = it->second;
     }
@@ -186,11 +186,9 @@ ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
  * @inheritDoc
  */
 void UObject::update(const Proto::Object* object) {
-    //
-    // Update systems extension.
-    //
+    ISystemService* systemService = IServiceManager::get()->getSystemService();
     for (auto objectProto : object->systemobjects()) {
-        ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+        ISystem* m_pSystem = systemService->get(objectProto.systemtype());
         ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());
 
         if (m_pSystem != NULL) {

@@ -16,6 +16,12 @@
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{981baefe-69ae-404e-b638-99075e913b80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectId">
+      <UniqueIdentifier>{c488f035-1c3e-41ec-9810-d12b506b83a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectId">
+      <UniqueIdentifier>{f30a9ca7-ecc8-491a-a24f-2e0552d6172f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Assert.h">
@@ -36,9 +42,6 @@
     <ClInclude Include="Source\Proto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SpinMutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,28 +51,25 @@
     <ClInclude Include="Source\System\Changes.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ObjectId.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Date_t.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Hex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\System\Types.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectId\Date_t.h">
+      <Filter>Header Files\ObjectId</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectId\ObjectId.h">
+      <Filter>Header Files\ObjectId</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectId\Hex.h">
+      <Filter>Header Files\ObjectId</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MathUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Singleton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ObjectId.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\ObjectId\ObjectId.cpp">
+      <Filter>Source Files\ObjectId</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

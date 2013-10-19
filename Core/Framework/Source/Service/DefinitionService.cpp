@@ -12,41 +12,47 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include <Windows.h>
+
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+
 #include "Proto.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
-#include "Manager/PlatformManager.h"
-#include "Manager/EnvironmentManager.h"
-#include "Manager/SystemManager.h"
-#include "DefinitionParser.h"
+#include "Manager/ServiceManager.h"
+#include "Service/SettingService.h"
+#include "SystemInterface.h"
+#include "Service/DefinitionService.h"
+
 
 /**
  * @inheritDoc
  */
-DefinitionParser::DefinitionParser(UScene* pScene, std::string sGDF)
+DefinitionService::DefinitionService(UScene* pScene, std::string sGDF)
     : m_pScene(pScene) {
-    Error result = Singletons::PlatformManager.FileSystem().LoadProto(sGDF.c_str(), &m_gdProto);
+    Error result = loadProto(sGDF.c_str(), &m_gdProto);
     ASSERT(result == Errors::Success);
 }
 
 /**
  * @inheritDoc
  */
-void DefinitionParser::ParseEnvironment(void) {
+void DefinitionService::parseEnvironment(void) {
     ASSERT(m_gdProto.IsInitialized());
+    ISettingService* settingService = IServiceManager::get()->getSettingService();
     for (auto property : m_gdProto.properties()) {
-        // Environment properties only have one value
-        Singletons::EnvironmentManager.Variables().Add(property.name().c_str(), property.value().Get(0).c_str());
+        settingService->add(property);
     }
 }
 
 /**
  * @inheritDoc
  */
-void DefinitionParser::ParseSystems(void) {
+void DefinitionService::parseSystems(void) {
     ASSERT(m_gdProto.systems_size() > 0);
     for (auto system : m_gdProto.systems()) {
-        Singletons::PlatformManager.FileSystem().LoadSystemLibrary(system.type(), &m_pSystem);
+        loadSystemLibrary(system.type(), &m_pSystem);
         ASSERT(m_pSystem != NULL);
 
         // Get the default properties from system, then Initialize it
@@ -60,28 +66,27 @@ void DefinitionParser::ParseSystems(void) {
 /**
  * @inheritDoc
  */
-void DefinitionParser::ParseScene(std::string sScene) {
+void DefinitionService::parseScene(std::string sScene) {
     const auto& scenes = m_gdProto.scenes();
     auto sceneIt = std::find(scenes.begin(), scenes.end(), sScene);
     if (sceneIt == scenes.end()) {
         return;
     }
     
+    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    
     //
     // Create the initial scene for each system.
     //
-    ISystem* pSystem = Singletons::SystemManager.GetFirst();
-    while (pSystem != NULL) {
-        m_pScene->Extend(pSystem);
-        pSystem = Singletons::SystemManager.GetNext();
+    for (auto it : systemService->get()) {
+        m_pScene->Extend(it.second);
     }
 
     //
     // Parse the SDF file
     //
     Proto::Scene scene;
-    std::string sceneProtoFile = *sceneIt + ".sdf.bin";
-    Error result = Singletons::PlatformManager.FileSystem().LoadProto(sceneProtoFile.c_str(), &scene);
+    Error result = loadProto(*sceneIt + ".sdf.bin", &scene);
     ASSERT(result == Errors::Success);
 
     //
@@ -93,11 +98,11 @@ void DefinitionParser::ParseScene(std::string sScene) {
     // Initialize the System scenes.
     //
     for (auto system : scene.systems()) {
-        m_pSystem = Singletons::SystemManager.Get(system.type());
+        m_pSystem = systemService->get(system.type());
         ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", Proto::SystemType_Name(system.type()));
 
         if (m_pSystem != NULL) {
-            UScene::SystemScenesConstIt it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
+            auto it = m_pScene->GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != m_pScene->GetSystemScenes().end(), "Parser was unable to find a scene for system %s.", Proto::SystemType_Name(system.type()));
             m_pSystemScene = it->second;
             ASSERT(m_pSystemScene != NULL);
@@ -145,6 +150,68 @@ void DefinitionParser::ParseScene(std::string sScene) {
     }
 }
 
-std::string DefinitionParser::StartupScene(void) {
+std::string DefinitionService::getStartupScene(void) {
     return m_gdProto.startupscene();
+}
+
+/**
+ * @inheritDoc
+ */
+Error DefinitionService::loadProto(std::string file, google::protobuf::Message* proto) {
+    boost::filesystem::path filePath(file);
+    if (!boost::filesystem::exists(filePath)) {
+        return Errors::Failure;
+    }
+    
+    // Read file
+    std::fstream input(file, std::ios::in | std::ios::binary);
+
+    // Build proto
+    proto->Clear();
+    proto->ParseFromIstream(&input);
+    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+Error DefinitionService::loadSystemLibrary(Proto::SystemType type,  ISystem** ppSystem) {
+    Error Err = Errors::Failure;
+
+    std::string libraryName = Proto::SystemType_Name(type) + "System";
+    HMODULE hLib = LoadLibraryA(libraryName.c_str());
+    if (hLib == NULL) {
+        ASSERTMSG1(false, "Failed to load system %s", libraryName);
+        return Err;
+    }
+    
+    InitializeSystemLibFunction fnInitSystemLib = reinterpret_cast<InitializeSystemLibFunction>(GetProcAddress(hLib, "InitializeSystemLib"));
+    if (fnInitSystemLib != NULL) {
+        fnInitSystemLib(IServiceManager::get());
+    }
+    
+    CreateSystemFunction fnCreateSystem = reinterpret_cast<CreateSystemFunction>(GetProcAddress(hLib, "CreateSystem"));
+    if (fnCreateSystem == NULL) {
+        return Err;
+    }
+    
+    ISystem* pSystem = fnCreateSystem();
+    if (pSystem == NULL) {
+        return Err;
+    }
+
+    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    Proto::SystemType systemType = pSystem->GetSystemType();
+    ISystem* pCurrSystem = systemService->get(systemType);
+    if (pCurrSystem != NULL) {
+        return Err;
+    }
+
+    systemService->add(pSystem);
+    // TODO
+    /*SystemLib sl = { reinterpret_cast<Handle>(hLib), pSystem };
+    m_SystemLibs.push_back(sl);*/
+
+    *ppSystem = pSystem;
+    return Errors::Success;
 }

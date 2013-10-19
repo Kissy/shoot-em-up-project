@@ -14,6 +14,7 @@
 
 #pragma once
 
+class IRuntimeService;
 class TaskManager;
 
 /**
@@ -27,7 +28,7 @@ public:
      *
      * @param [in,out]  pTaskManager    A pointer to the task manager.
      */
-    Scheduler(TaskManager* pTaskManager);
+    Scheduler();
 
     /**
      * Destructor.
@@ -35,13 +36,9 @@ public:
     ~Scheduler(void);
 
     /**
-     * Turns benchmarking on or off.
-     *
-     * @param   bEnable (Optional) the enable.
+     * Initialises this object.
      */
-    void EnableBenchmarking(bool bEnable = true) {
-        m_bBenchmarkingEnabled = bEnable;
-    }
+    void init(void);
 
     /**
      * Sets the UScene to schedule execution of.
@@ -55,18 +52,23 @@ public:
      */
     void Execute(void);
 
+    /**
+     * Gets task manager.
+     *
+     * @return  null if it fails, else the task manager.
+     */
+    inline TaskManager* getTaskManager(void) {
+        return m_pTaskManager;
+    }
+
 protected:
-    static const f32                sm_DefaultClockFrequency;
-    TaskManager*                    m_pTaskManager;
+    static const boost::timer::nanosecond_type          sm_defaultClockFrequency;
 
-    f32                             m_ClockFrequency;
-    Handle                          m_hExecutionTimer;
-
-    bool                            m_bBenchmarkingEnabled;
-
-    typedef std::map<Proto::SystemType, ISystemScene*>   SceneExecs;
-    typedef SceneExecs::iterator                    SceneExecsIt;
-
-    SceneExecs                      m_SceneExecs;
+    IRuntimeService*                                    m_runtimeService;
+    TaskManager*                                        m_pTaskManager;
+    
+    bool                                                m_benchmarkingEnabled;
+    boost::timer::cpu_timer                             m_executionTimer;
+    std::map<Proto::SystemType, ISystemScene*>          m_SceneExecs;
 
 };

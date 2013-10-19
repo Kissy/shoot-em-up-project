@@ -17,6 +17,7 @@
 
 #include "Interface.h"
 
+#include "Manager/IServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
@@ -24,9 +25,7 @@
 #include "Object/PlayerObject.h"
 #include "Object/ConnectInputObject.h"
 
-
-extern ManagerInterfaces   g_Managers;
-
+extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -67,7 +66,7 @@ Error InputScene::initialize(void) {
  */
 void InputScene::Update(f32 DeltaTime) {
     if (m_quitInputAction->isActive()) {
-        g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
+        g_serviceManager->getRuntimeService()->setStatus(IRuntimeService::Status::Quit);
         return;
     }
 

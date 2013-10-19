@@ -14,7 +14,6 @@
 
 #include <boost/bind.hpp>
 #pragma warning( push, 0 )
-#pragma warning( disable : 6326 6385 )
 #include <OgreSceneNode.h>
 #pragma warning( pop )
 

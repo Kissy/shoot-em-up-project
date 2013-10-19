@@ -19,106 +19,79 @@
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Debugger/Debugger.h"
-#include "Manager/MemoryManager.h"
-#include "Manager/SystemManager.h"
-#include "Manager/PlatformManager.h"
 #include "Manager/ChangeControlManager.h"
-#include "Manager/EnvironmentManager.h"
 #include "Manager/ServiceManager.h"
 #include "Manager/TaskManager.h"
-#include "Parser/DefinitionParser.h"
+#include "Service/DefinitionService.h"
 #include "Scheduler.h"
 #include "Instrumentation.h"
 #include "Framework.h"
 
-/*CreateSingleton(MemoryManager);
-CreateSingleton(EnvironmentManager);
-CreateSingleton(PlatformManager);
-CreateSingleton(SystemManager);
-CreateSingleton(ServiceManager);
-CreateSingleton(Instrumentation);*/
-
 /**
  * @inheritDoc
  */
-Framework::Framework(void) 
-    : m_bExecuteLoop(true) {
-    m_pManagerInterfaces = new ManagerInterfaces();
-    m_pManagerInterfaces->init<PlatformManager>();
-
-    m_pTaskManager = new TaskManager();
-    m_pScheduler = new Scheduler(m_pTaskManager);
-    m_pSceneCCM = new ChangeManager();
-    m_pObjectCCM = new ChangeManager();
+Framework::Framework(void)
+    : m_serviceManager(new ServiceManager())
+    , m_pSceneCCM(new ChangeManager())
+    , m_pObjectCCM(new ChangeManager()) {
+    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
+    m_pScheduler = new Scheduler();
 }
 
 /**
  * @inheritDoc
  */
 Framework::~Framework(void) {
-    delete m_pManagerInterfaces;
-    delete m_pTaskManager;
+    delete m_pScene;
     delete m_pScheduler;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
+    delete m_serviceManager;
 }
 
 /**
  * @inheritDoc
  */
 Error Framework::Initialize(void) {
-    //
-    // Set the current directory to the location of the GDF.
-    //
-    static const char* apszFile = "Application.gdf.bin";
-
-    //
-    // Create the initial universal scene.
-    //
-    m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
-    ASSERT(m_pScene != NULL);
-
-    if (m_pScene == NULL) {
-        return Errors::Memory::OutOfMemory;
-    }
-
-    //
-    // Instantiate the parser, parse the environment variables in the GDF.
-    //
-    DefinitionParser Parser(m_pScene, apszFile);
-    Parser.ParseEnvironment();
+    DefinitionService definitionService(m_pScene, "Application.gdf.bin");
+    definitionService.parseEnvironment();
     
     //
     // Init debugger
     // 
 #ifdef DEBUG_BUILD
-    bool debuggerActive = Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false);
-    Singletons::Debugger.initialize(debuggerActive);
-    Singletons::Debugger.setChangeManagers(m_pSceneCCM, m_pObjectCCM);
+    //bool debuggerActive = Singletons::EnvironmentManager.Variables().GetAsBool("Framework::DebugWindow", false);
+    //Singletons::Debugger.initialize(debuggerActive);
+    //Singletons::Debugger.setChangeManagers(m_pSceneCCM, m_pObjectCCM);
 #endif
     
     //
     // Register the framework as the system access provider.  The system access provider gives the
     //  ability for systems to set the properties in other systems.
     //
-    Singletons::ServiceManager.RegisterSystemAccessProvider(this);
+    //Singletons::ServiceManager.RegisterSystemAccessProvider(this);
     
-    //
-    // Instantiate the task manager.
-    //
-    g_pTaskManager->Init();
+    m_pScheduler->init();
 
     //
     // Complete the parsing of the GDF and the initial scene.
     //
-    Parser.ParseSystems();
-    m_sNextScene = Parser.StartupScene();
-    Parser.ParseScene(m_sNextScene);
-    
-    //
-    // Set the initial scene for the scheduler.
-    //
+    definitionService.parseSystems();
+    m_sNextScene = definitionService.getStartupScene();
+    definitionService.parseScene(m_sNextScene);
+
     m_pScheduler->SetScene(m_pScene);
+
+    //
+    // Initialize resources necessary for parallel change distribution.
+    //
+    m_pObjectCCM->SetTaskManager(m_pScheduler->getTaskManager());
+    m_pSceneCCM->SetTaskManager(m_pScheduler->getTaskManager());
+
+    //
+    // Init Scene
+    // 
+    m_pScene->init();
 
     return Errors::Success;
 }
@@ -129,137 +102,43 @@ void Framework::Shutdown(void) {
     // Clean debugger
     //
 #ifdef DEBUG_BUILD
-    Singletons::Debugger.clean();
+    //Singletons::Debugger.clean();
 #endif
-    //
-    // Get rid of the scene.
-    //
-    delete m_pScene;
     //
     // De-register the framework as the system access provider.
     //
-    Singletons::ServiceManager.UnregisterSystemAccessProvider(this);
+    //Singletons::ServiceManager.UnregisterSystemAccessProvider(this);
     //
     // Free resources used for parallel execution by the change manager.
     //
     m_pObjectCCM->ResetTaskManager();
     m_pSceneCCM->ResetTaskManager();
-
-    //
-    // Free the task manager.
-    //
-    if (g_pTaskManager != NULL) {
-        g_pTaskManager->Shutdown();
-        delete g_pTaskManager;
-        g_pTaskManager = NULL;
-    }
 }
 
 
 Error Framework::Execute(void) {
-    //
-    // Process the link messages in the CCMs first, for both the object and scene CCMs.
-    // The link needs to be established before any other messages come through.
-    //
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+    IServiceManager::get()->getRuntimeService()->setStatus(IRuntimeService::Status::Running);
 
-    //
-    // Distribute changes for object and scene CCMs.
-    // The UObject propagates some object messages up to the scene so it needs to go first.
-    //
-    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-
-    //
-    // Set the runtime status to running.
-    //
-    Singletons::EnvironmentManager.Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Running);
-
-    //
-    // Initialize resources necessary for parallel change distribution.
-    //
-    m_pObjectCCM->SetTaskManager(g_pTaskManager);
-    m_pSceneCCM->SetTaskManager(g_pTaskManager);
-
-    while (m_bExecuteLoop) {
-        //
-        // Process any pending window messages.
-        //
-        Singletons::PlatformManager.WindowSystem().ProcessMessages();
-        //
-        // Call the scheduler to have the systems internally update themselves.
-        //
+    while (true) {
+        processMessages();
         m_pScheduler->Execute();
+        m_pScene->update();
         
-        // Process first the object creation messages alone since it will 
-        // generate some object messages that need to be processed by the object CCM.
-        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
-        //
-        // Distribute changes for object and scene CCMs.  The UObject propagates some object
-        // messages up to the scene CCM so it needs to go first.
-        m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
-        m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All ^ System::Changes::Generic::CreateObject);
-        
-        //
-        // Check with the environment manager if there is a change in the runtime status to quit.
-        //
-        if (Singletons::EnvironmentManager.Runtime().GetStatus() == IEnvironmentManager::IRuntime::Status::Quit) {
-            //
-            // Time to quit looping.
-            //
-            m_bExecuteLoop = false;
+        if (IServiceManager::get()->getRuntimeService()->isQuit()) {
+            break;
         }
     }
 
     return Errors::Success;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// IService::ISystemAccess Implementations.
-
-Handle Framework::GetSystem(Proto::SystemType Type) {
-    //
-    // Get the pointer to the system from the system manager.  Handle is just a void* so it will
-    //  convert with any problems.  If you're one of those guys that will think of just casting
-    //  the handle back you'd better not as you'll break the threading when you try to make calls
-    //  into this interface directly.
-    //
-    return Singletons::SystemManager.Get(Type);
-}
-
-Handle Framework::GetScene(Proto::SystemType Type) {
-    Handle hScene = NULL;
-    //
-    // Find the scene extension in the universal scene.
-    //
-    UScene::SystemScenes::const_iterator it = m_pScene->GetSystemScenes().find(Type);
-
-    if (it != m_pScene->GetSystemScenes().end()) {
-        hScene = it->second;
+/**
+ * @inheritDoc
+ */
+void Framework::processMessages(void) {
+    MSG Msg;
+    while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
+        TranslateMessage(&Msg);
+        DispatchMessage(&Msg);
     }
-
-    return hScene;
-}
-
-Handle Framework::GetSystemObject(Proto::SystemType Type, const char* pszName) {
-    Handle hObject = NULL;
-    //
-    // Find the universal object in the scene.
-    //
-    UObject* pUObject = m_pScene->FindObject(pszName);
-
-    if (pUObject != NULL) {
-        //
-        // Get the system object extension of the universal object using the system type.
-        //
-        ISystemObject* pObject = pUObject->GetExtension(Type);
-
-        if (pObject != NULL) {
-            hObject = pObject;
-        }
-    }
-
-    return hObject;
 }

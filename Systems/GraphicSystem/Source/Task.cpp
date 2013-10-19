@@ -25,7 +25,6 @@
 #include "IttNotify.h"
 
 
-extern ManagerInterfaces   g_Managers;
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
 
 

@@ -92,7 +92,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\Object\MovablePhysicObject.cpp" />
     <ClCompile Include="Source\Object\PhysicObject.cpp" />
     <ClCompile Include="Source\PhysicSystem.cpp" />
@@ -101,7 +100,6 @@
     <ClCompile Include="Source\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\Object\MovablePhysicObject.h" />
     <ClInclude Include="Source\Object\PhysicObject.h" />
     <ClInclude Include="Source\Scene.h" />

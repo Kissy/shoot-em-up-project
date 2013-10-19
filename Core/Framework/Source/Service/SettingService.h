@@ -14,59 +14,42 @@
 
 #pragma once
 
-#include "Manager/IManagerInterfaces.h"
-#include "Manager/PlatformManager.h"
-#include "Manager/EnvironmentManager.h"
-#include "Manager/ServiceManager.h"
-#include "Manager/TaskManager.h"
+#include <map>
+
+#include "Proto/Common.pb.h"
+#include "Service/ISettingService.h"
 
 /**
- * The list of managers interfaces.
+ * An interface for environment runtime functionality.
  */
-class ManagerInterfaces : public IManagerInterfaces {
+class SettingService : public ISettingService {
 public:
     /**
-     * Default constructor.
-     */
-    ManagerInterfaces();
-
-    /**
-     * Destructor.
-     */
-    ~ManagerInterfaces();
-
-    /**
      * @inheritDoc
      */
-    inline IPlatformManager* getPlatformManager(void) {
-        return pPlatform;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline IEnvironmentManager* getEnvironmentManager(void) {
-        return pEnvironment;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline IServiceManager* getServiceManager(void) {
-        return pService;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    inline ITaskManager* getTaskManager(void) {
-        return pTask;
-    }
+    void add(Proto::Property propertyValue);
     
+    /**
+     * @inheritDoc
+     */
+    Proto::Property get(std::string propertyName);
+    
+    /**
+     * @inheritDoc
+     */
+    std::string getString(std::string propertyName);
+    
+    /**
+     * @inheritDoc
+     */
+    int getInt(std::string propertyName);
+    
+    /**
+     * @inheritDoc
+     */
+    bool getBool(std::string propertyName);
+
 private:
-    PlatformManager*       pPlatform;
-    EnvironmentManager*    pEnvironment;
-    ServiceManager*        pService;
-    TaskManager*           pTask;
+    std::map<std::string, Proto::Property>         m_settings;
 
 };

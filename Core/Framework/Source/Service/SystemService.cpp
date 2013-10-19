@@ -12,38 +12,58 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "boost/functional/factory.hpp"
-#include "boost/bind.hpp"
-
-#include "Interface.h"
-
-#include "System.h"
-#include "Scene.h"
+#include "SystemService.h"
 
 /**
  * @inheritDoc
  */
-PhysicSystem::PhysicSystem(void) : ISystem() {
-    m_SceneFactory = boost::factory<PhysicScene*>();
-
-    //m_propertySetters["Imageset"] = boost::bind(&GuiSystem::setImagesetResourceGroup, this, _1);
+SystemService::SystemService(void) {
 }
 
 /**
  * @inheritDoc
  */
-PhysicSystem::~PhysicSystem(void) {
-    if (m_bInitialized) {
-
-    }
+SystemService::~SystemService(void) {
 }
 
 /**
  * @inheritDoc
  */
-Error PhysicSystem::initialize(void) {
-    ASSERT(!m_bInitialized);
-    
-    m_bInitialized = true;
+Error SystemService::add(ISystem* pSystem) {
+    Proto::SystemType systemType = pSystem->GetSystemType();
+    ASSERT(m_systems.find(systemType) == m_systems.end());
+    m_systems[systemType] = pSystem;
     return Errors::Success;
 }
+
+/**
+ * @inheritDoc
+ */
+Error SystemService::remove(const Proto::SystemType SystemType) {
+    Error Err = Errors::Success;
+    auto it = m_systems.find(SystemType);
+    if (it != m_systems.end()) {
+        m_systems.erase(it);
+    }
+    return Err;
+}
+
+/**
+ * @inheritDoc
+ */
+ISystem* SystemService::get(const Proto::SystemType SystemType) {
+    ISystem* pSystem = nullptr;
+    auto it = m_systems.find(SystemType);
+    if (it != m_systems.end()) {
+        pSystem = (*it).second;
+    }
+    return pSystem;
+}
+
+/**
+ * @inheritDoc
+ */
+std::map<Proto::SystemType, ISystem*> SystemService::get(void) {
+    return m_systems;
+}
+

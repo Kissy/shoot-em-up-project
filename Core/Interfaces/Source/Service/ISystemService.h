@@ -14,41 +14,43 @@
 
 #pragma once
 
-#include "Manager/IPlatformManager.h"
-#include "Manager/IEnvironmentManager.h"
-#include "Manager/IServiceManager.h"
-#include "Manager/ITaskManager.h"
+#include "System/ISystem.h"
+#include "Proto/Common.pb.h"
 
 /**
- * The list of managers interfaces.
+ * Interface class for providing access to other systems' ISystem.
  */
-class IManagerInterfaces {
+class ISystemService {
 public:
     /**
-     * Gets platform manager.
+     * Adds a new system to the collection.  Called by the ISystem constructor.
      *
-     * @return  null if it fails, else the platform manager.
+     * @param   pSystem A pointer to the system to add.
+     * @return  An error code.
      */
-    virtual IPlatformManager* getPlatformManager(void) = 0;
+    virtual Error add(ISystem* pSystem) = 0;
 
     /**
-     * Gets environment manager.
+     * Removes a system from the collection.  Called by the ISystem destructor.
      *
-     * @return  null if it fails, else the environment manager.
+     * @param   SystemType  The system type to remove.
+     * @return  An error code.
      */
-    virtual IEnvironmentManager* getEnvironmentManager(void) = 0;
+    virtual Error remove(const Proto::SystemType SystemType) = 0;
 
     /**
-     * Gets service manager.
+     * Gets a specific system from the collection based on its type.
      *
-     * @return  null if it fails, else the service manager.
+     * @param   SystemType  The type of system to get.
+     * @return  A pointer to the system.
      */
-    virtual IServiceManager* getServiceManager(void) = 0;
+    virtual ISystem* get(const Proto::SystemType SystemType) = 0;
 
     /**
-     * Gets task manager.
+     * Gets the system iterator.
      *
-     * @return  null if it fails, else the task manager.
+     * @return  null if it fails, else.
      */
-    virtual ITaskManager* getTaskManager(void) = 0;
+    virtual std::map<Proto::SystemType, ISystem*> get(void) = 0;
+
 };

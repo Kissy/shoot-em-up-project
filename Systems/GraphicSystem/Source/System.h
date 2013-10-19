@@ -14,9 +14,11 @@
 
 #pragma once
 
+#pragma warning( push, 0 )
 #include <OgreWindowEventUtilities.h>
 #include <OgreRenderWindow.h>
 #include <Overlay/OgreOverlaySystem.h>
+#pragma warning( pop )
 
 #include "Errors.h"
 #include "System.h" 

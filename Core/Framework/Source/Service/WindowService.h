@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,53 +14,35 @@
 
 #pragma once
 
+#include "Service/IWindowService.h"
+
 /**
- * Base case for all singleton classes.
+ * An interface for environment runtime functionality.
  */
-class Singleton {
+class WindowService : public IWindowService {
 public:
-
     /**
-     * Default constructor.
+     * @inheritDoc
      */
-    Singleton(void);
-
+    void setHandle(size_t handle);
+    
     /**
-     * Destructor.
+     * @inheritDoc
      */
-    virtual ~Singleton(void);
-
-#ifdef DEBUG_BUILD
+    size_t getHandle(void);
+    
     /**
-     * Overrid new operator.
-     *
-     * @param   The object size.
-     * @return  void*.
+     * @inheritDoc
      */
-    void* operator new(size_t);
-
+    void setRenderWindow(Handle renderWindow);
+    
     /**
-     * Overrid new[] operator.
-     *
-     * @param   The object size.
-     * @return  void*.
+     * @inheritDoc
      */
-    void* operator new[](size_t);
+    Handle getRenderWindow(void);
 
-    /**
-     * Overrid delete operator.
-     *
-     * @param [in,out]  void*.
-     */
-    void operator delete(void*);
-
-    /**
-     * Overrid delete[] operator.
-     *
-     * @param [in,out]  void*.
-     */
-    void operator delete[](void*);
-#endif
+private:
+    size_t          m_handle;
+    Handle          m_renderWindow;
 
 };
-

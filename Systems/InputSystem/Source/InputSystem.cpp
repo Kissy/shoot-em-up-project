@@ -12,27 +12,24 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-
+#include "Defines.h"
 #include <windows.h>
 
-#include "Interface.h"
+#include "System/ISystem.h"
+#include "Manager/IServiceManager.h"
+#include "SystemInterface.h"
 #include "System.h"
 
+IServiceManager*        g_serviceManager;
+HINSTANCE               g_hInstance;
 
-ManagerInterfaces   g_Managers;
 
-
-BOOL APIENTRY
-DllMain(
-    HMODULE hModule,
-    DWORD Reason,
-    LPVOID pReserved
-) {
-    UNREFERENCED_PARAM(hModule);
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     UNREFERENCED_PARAM(pReserved);
-
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
+            g_hInstance = hModule;
+            break;
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:
@@ -42,25 +39,14 @@ DllMain(
     return TRUE;
 }
 
-
-extern "C" void __stdcall
-InitializeInputSystem(
-    ManagerInterfaces* pManagers
-) {
-    g_Managers = *pManagers;
+extern "C" void __stdcall InitializeInputSystem(IServiceManager* serviceManager) {
+    g_serviceManager = serviceManager;
 }
 
-
-extern "C" ISystem* __stdcall
-CreateInputSystem() {
+extern "C" ISystem* __stdcall CreateInputSystem() {
     return new InputSystem();
 }
 
-
-extern "C" void __stdcall
-DestroyInputSystem(
-    ISystem* pSystem
-) {
+extern "C" void __stdcall DestroyInputSystem(ISystem* pSystem) {
     delete reinterpret_cast<InputSystem*>(pSystem);
 }
-

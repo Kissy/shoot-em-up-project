@@ -34,8 +34,6 @@
 #include "Object/UpdatableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 
-extern ManagerInterfaces   g_Managers;
-
 /**
  * @inheritDoc
  */

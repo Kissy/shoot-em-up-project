@@ -14,19 +14,14 @@
 
 #pragma once
 
-#include "Singleton.h"
-
 /**
 * The Instrumentation class collects and records performance stats about the various parts of
 * the system.
 * It is hooked in to the framework and is updated from within the scheduler. It caches
 * performance stats until they are needed for display.
 * This class implements the service Instrumentation interface, and is a Singleton.
-*
-* @sa Singleton
-* @sa IService::Instrumentation
 */
-class Instrumentation : public IServiceManager::IInstrumentation, public Singleton {
+class Instrumentation {
 public:
 
     /**

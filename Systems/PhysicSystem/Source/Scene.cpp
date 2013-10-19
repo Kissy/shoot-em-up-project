@@ -16,17 +16,11 @@
 
 #include "Interface.h"
 
-#include "Collision.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
 #include "Object/PhysicObject.h"
 #include "Object/MovablePhysicObject.h"
-
-//
-// global variables
-//
-extern ManagerInterfaces    g_Managers;
 
 ///////////////////////////////////////////////////////////////////////////////
 // HavokPhysicsScene - Default constructor

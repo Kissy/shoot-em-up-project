@@ -17,12 +17,7 @@
 #include "Scene.h"
 #include "Object/PhysicObject.h"
 #include "Task.h"
-#include "Collision.h"
 #include "System.h"
-
-#include "Collision.h"
-
-extern ManagerInterfaces    g_Managers;
 
 // Grain sizes of the parallel jobs. The less is the grainsize the better is
 // the load balance, and the higher is the parallel overhead.

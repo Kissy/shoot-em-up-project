@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,35 +12,41 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Interface.h"
+#pragma once
 
-#include "Manager/ServiceManager.h"
-#include "Manager/IServiceManager.h"
-#include "Manager/TaskManager.h"
-#include "Service/RuntimeService.h"
-#include "Service/SettingService.h"
-#include "Service/SystemService.h"
-#include "Service/WindowService.h"
+#include "DataTypes.h"
 
 /**
- * @inheritDoc
- */
-ServiceManager::ServiceManager(void)
-    : IServiceManager()
-    , m_runtimeService(new RuntimeService())
-    , m_settingService(new SettingService())
-    , m_systemService(new SystemService())
-    , m_windowService(new WindowService()) {
-}
+* An interface for accessing window information.
+*/
+class IWindowService {
+public:
+    /**
+     * Sets the window handle.
+     *
+     * @param   windowHnd   The window handle to set.
+     */
+    virtual void setHandle(size_t windowHnd) = 0;
 
-/**
- * @inheritDoc
- */
-ServiceManager::~ServiceManager(void) {
-    delete m_runtimeService;
-    delete m_settingService;
-    delete m_systemService;
-    delete m_windowService;
-}
+    /**
+     * Returns the window handle.
+     *
+     * @return  The window handle.
+     */
+    virtual size_t getHandle(void) = 0;
 
-IServiceManager* ServiceManager::sm_instance = nullptr;
+    /**
+     * Sets a render window.
+     *
+     * @param   renderWindow    Handle of the render window.
+     */
+    virtual void setRenderWindow(Handle renderWindow) = 0;
+
+    /**
+     * Gets the render window.
+     *
+     * @return  The render window.
+     */
+    virtual Handle getRenderWindow(void) = 0;
+
+};

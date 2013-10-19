@@ -15,7 +15,6 @@
 #pragma once
 
 #pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include "Ogre.h"
 #pragma warning( pop )
 

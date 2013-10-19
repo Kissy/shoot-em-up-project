@@ -78,9 +78,6 @@
     <ClInclude Include="Source\Manager\IPlatformManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\IEnvironmentManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manager\IChangeManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
@@ -102,14 +99,17 @@
     <ClInclude Include="Source\Generic\IEntity.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Service\Collision.h">
+    <ClInclude Include="Source\Service\ISystemService.h">
       <Filter>Header Files\Service</Filter>
     </ClInclude>
-    <ClInclude Include="Source\System\SystemInterface.h">
-      <Filter>Header Files\System</Filter>
+    <ClInclude Include="Source\Service\IRuntimeService.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\IManagerInterfaces.h">
-      <Filter>Header Files\Manager</Filter>
+    <ClInclude Include="Source\Service\ISettingService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\IWindowService.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,11 +15,7 @@
 #include <Windows.h>
 
 #include "Interface.h"
-
-#include "Manager/PlatformManager.h"
-
 #include "ThreadPool.h"
-
 
 void
 BasicThreadPool::Initialize(

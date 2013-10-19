@@ -12,26 +12,45 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Manager/ManagerInterfaces.h"
+#pragma once
 
 /**
- * @inheritDoc
+ * An interface for environment runtime functionality.
  */
-ManagerInterfaces::ManagerInterfaces() : IManagerInterfaces() {
-    pPlatform = new PlatformManager();
-    pEnvironment = new EnvironmentManager();
-    pService = new ServiceManager();
-    pTask = new TaskManager();
+class IRuntimeService {
+public:
+    /**
+     * Values that represent Status.
+     */
+    enum Status {
+        Unknown, Running, Paused, NextScene, Quit
+    };
+
+    /**
+     * Returns the status of execution.
+     *
+     * @return  The execution status.
+     */
+    virtual Status getStatus(void) = 0;
+
+    /**
+     * Sets the status of execution.
+     *
+     * @param   Status  The execution status.
+     */
+    virtual void setStatus(Status Status) = 0;
+
+    /**
+     * Query if this object is paused.
+     *
+     * @return  true if paused, false if not.
+     */
+    virtual bool isPaused(void) = 0;
+
+    /**
+     * Query if this object is quit.
+     *
+     * @return  true if quit, false if not.
+     */
+    virtual bool isQuit(void) = 0;
 };
-
-/**
- * @inheritDoc
- */
-ManagerInterfaces::~ManagerInterfaces() {
-    delete pPlatform;
-    delete pEnvironment;
-    delete pService;
-    delete pTask;
-};
-
-

@@ -12,29 +12,33 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#pragma once
+#include "Service/WindowService.h"
 
-#include "Singleton.h"
+/**
+ * @inheritDoc
+ */
+void WindowService::setHandle(size_t handle) {
+    m_handle = handle;
+}
 
-/*******************************************************************************
-* CLASS: MemoryManager
-*
-* DESCRIPTION:
-* Responsible for managing memory.
-*******************************************************************************/
-class MemoryManager : public Singleton {
-    public:
+/**
+ * @inheritDoc
+ */
+size_t WindowService::getHandle(void) {
+    return m_handle;
+}
 
-        //
-        // Constructor.
-        //
-        MemoryManager(void);
+/**
+ * @inheritDoc
+ */
+void WindowService::setRenderWindow(Handle renderWindow) {
+    m_renderWindow = renderWindow;
+}
 
-        //
-        // Destructor.
-        //
-        ~MemoryManager(void);
+/**
+ * @inheritDoc
+ */
+Handle WindowService::getRenderWindow(void) {
+    return m_renderWindow;
+}
 
-    public:
-
-};

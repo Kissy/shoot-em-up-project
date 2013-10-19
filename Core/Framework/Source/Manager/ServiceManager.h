@@ -15,78 +15,77 @@
 #pragma once
 
 #include "Manager/IServiceManager.h"
-#include "Singleton.h"
+#include "Manager/TaskManager.h"
+#include "Service/RuntimeService.h"
+#include "Service/SettingService.h"
+#include "Service/SystemService.h"
+#include "Service/WindowService.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Managerial class for providing services to the systems.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-class ServiceManager : public IServiceManager, public Singleton {
+/**
+ * Managerial class for providing services to the systems.
+ *
+ * @sa  IServiceManager
+ */
+class ServiceManager : public IServiceManager {
 public:
-
-    /// <summary>
-    ///   Constructor.
-    /// </summary>
+    /**
+     * Constructor.
+     */
     ServiceManager(void);
 
-    /// <summary>
-    ///   Destructor.
-    /// </summary>
+    /**
+     * Destructor.
+     */
     ~ServiceManager(void);
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // IService Implementations.
+    /**
+     * @inheritDoc
+     */
+    ITaskManager* getTaskManager(void) {
+        return m_taskManager;
+    };
 
-    /// <summary cref="IService::SystemAccess">
-    ///   Implementation of IService::SystemAccess.
-    /// </summary>
-    virtual IServiceManager::ISystemAccess& SystemAccess(void);
+    /**
+     * @inheritDoc
+     */
+    void setTaskManager(ITaskManager* taskManager) {
+        m_taskManager = taskManager;
+    };
 
-    /// <summary cref="IService::RegisterSystemAccessProvider">
-    ///   Implementation of IService::RegisterSystemAccessProvider.
-    /// </summary>
-    virtual void RegisterSystemAccessProvider(ISystemAccess* pSystemAccess);
+    /**
+     * @inheritDoc
+     */
+    IRuntimeService* getRuntimeService(void) {
+        return m_runtimeService;
+    };
 
-    /// <summary cref="IService::UnregisterSystemAccessProvider">
-    ///   Implementation of IService::UnregisterSystemAccessProvider.
-    /// </summary>
-    virtual void UnregisterSystemAccessProvider(ISystemAccess* pSystemAccess);
+    /**
+     * @inheritDoc
+     */
+    ISettingService* getSettingService(void) {
+        return m_settingService;
+    };
 
-    /// <summary cref="IService::Collision">
-    ///   Implementation of IService::Collision.
-    /// </summary>
-    virtual IServiceManager::ICollision& Collision(void);
+    /**
+     * @inheritDoc
+     */
+    ISystemService* getSystemService(void) {
+        return m_systemService;
+    };
 
-    /// <summary cref="IService::RegisterCollisionProvider">
-    ///   Implementation of IService::RegisterCollisionProvider.
-    /// </summary>
-    virtual void RegisterCollisionProvider(ICollision* pCollision);
+    /**
+     * @inheritDoc
+     */
+    IWindowService* getWindowService(void) {
+        return m_windowService;
+    };
 
-    /// <summary cref="IService::UnregisterCollisionProvider">
-    ///   Implementation of IService::UnregisterCollisionProvider.
-    /// </summary>
-    virtual void UnregisterCollisionProvider(ICollision* pCollision);
-
-    /// <summary cref="IService::IInstrumentation">
-    ///   Implementation of IService::IInstrumentation.
-    /// </summary>
-    virtual IServiceManager::IInstrumentation& Instrumentation(void);
-
-    /// <summary cref="IService::RegisterInstrumentationProvider">
-    ///   Implementation of IService::RegisterInstrumentationProvider.
-    /// </summary>
-    virtual void RegisterInstrumentationProvider(IInstrumentation* pInstrumentation);
-
-    /// <summary cref="IService::UnregisterInstrumentationProvider">
-    ///   Implementation of IService::UnregisterInstrumentationProvider.
-    /// </summary>
-    virtual void UnregisterInstrumentationProvider(IInstrumentation* pInstrumentation);
-
-protected:
-    IServiceManager::ISystemAccess*            m_pSystemAccess;
-    IServiceManager::ICollision*               m_pCollision;
-    IServiceManager::IInstrumentation*         m_pInstrumentation;
+private:
+    ITaskManager*               m_taskManager;
+    RuntimeService*             m_runtimeService;
+    SettingService*             m_settingService;
+    SystemService*              m_systemService;
+    WindowService*              m_windowService;
 
 };
 

@@ -12,32 +12,23 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
 #include <windows.h>
 
-#include "System/SystemInterface.h"
-#include "Interface.h"
+#include "System/ISystem.h"
+#include "Manager/IServiceManager.h"
+#include "SystemInterface.h"
 #include "System.h"
 
-//
-// Global variables
-//
-ManagerInterfaces       g_Managers;
+IServiceManager*        g_serviceManager;
 HINSTANCE               g_hInstance;
 
-
-BOOL APIENTRY
-DllMain(
-    HMODULE hModule,
-    DWORD Reason,
-    LPVOID pReserved
-) {
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     UNREFERENCED_PARAM(pReserved);
-
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
             g_hInstance = hModule;
             break;
-
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:
@@ -47,25 +38,15 @@ DllMain(
     return TRUE;
 }
 
-
-extern "C" void __stdcall
-InitializeGraphicSystem(
-    ManagerInterfaces* pManagers
-) {
-    g_Managers = *pManagers;
+extern "C" void __stdcall InitializeGraphicSystem(IServiceManager* serviceManager) {
+    g_serviceManager = serviceManager;
 }
 
-
-extern "C" ISystem* __stdcall
-CreateGraphicSystem() {
+extern "C" ISystem* __stdcall CreateGraphicSystem() {
     return new GraphicSystem();
 }
 
-
-extern "C" void __stdcall
-DestroyGraphicSystem(
-    ISystem* pSystem
-) {
+extern "C" void __stdcall DestroyGraphicSystem(ISystem* pSystem) {
     delete reinterpret_cast<GraphicSystem*>(pSystem);
 }
 

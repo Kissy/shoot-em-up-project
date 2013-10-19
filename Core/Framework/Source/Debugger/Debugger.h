@@ -20,7 +20,6 @@
 #include "Proto/Debug/Debug.pb.h"
 
 #include "Defines.h"
-#include "Singleton.h"
 #include "SceneChangesDebugger.h"
 #include "ObjectChangesDebugger.h"
 
@@ -38,7 +37,7 @@ class UObject;
  *
  * @sa  Singleton
  */
-class Debugger : public Singleton {
+class Debugger {
 public:
 
     /**

@@ -33,10 +33,7 @@ class UScene;
  */
 class UObject : public ISubject, public IObserver, public IEntity {
 public:
-
     typedef std::map<Proto::SystemType, ISystemObject*>      SystemObjects;
-    typedef SystemObjects::iterator                     SystemObjectsIt;
-    typedef SystemObjects::const_iterator               SystemObjectsConstIt;
 
     /**
      * Constructor.

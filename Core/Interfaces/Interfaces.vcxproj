@@ -92,8 +92,6 @@
     <ClInclude Include="Source\Generic\IUpdatable.h" />
     <ClInclude Include="Source\Interface.h" />
     <ClInclude Include="Source\Manager\IChangeManager.h" />
-    <ClInclude Include="Source\Manager\IEnvironmentManager.h" />
-    <ClInclude Include="Source\Manager\IManagerInterfaces.h" />
     <ClInclude Include="Source\Manager\IPlatformManager.h" />
     <ClInclude Include="Source\Manager\IServiceManager.h" />
     <ClInclude Include="Source\Manager\ITaskManager.h" />
@@ -102,12 +100,14 @@
     <ClInclude Include="Source\Object\IMouseObject.h" />
     <ClInclude Include="Source\Object\IMoveObject.h" />
     <ClInclude Include="Source\Object\ISceneObject.h" />
-    <ClInclude Include="Source\Service\Collision.h" />
+    <ClInclude Include="Source\Service\IRuntimeService.h" />
+    <ClInclude Include="Source\Service\ISettingService.h" />
+    <ClInclude Include="Source\Service\ISystemService.h" />
+    <ClInclude Include="Source\Service\IWindowService.h" />
     <ClInclude Include="Source\System\ISystem.h" />
     <ClInclude Include="Source\System\ISystemObject.h" />
     <ClInclude Include="Source\System\ISystemScene.h" />
     <ClInclude Include="Source\System\ISystemTask.h" />
-    <ClInclude Include="Source\System\SystemInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Generic\IEntity.cpp" />

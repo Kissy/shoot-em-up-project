@@ -12,42 +12,54 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Singleton.h"
+#pragma once
+
+#include <map>
+
+#include "Errors.h"
+#include "System/ISystem.h"
+#include "System/Types.h"
+#include "Service/ISystemService.h"
+
+class ISystem;
 
 /**
- *  @inheritDoc
+ * Provides a single location for access to the different systems that are available for use.
+ * @sa  Singleton
  */
-Singleton::Singleton(void) {
-}
+class SystemService : public ISystemService {
+public:
+    /**
+     * Constructor.
+     */
+    SystemService(void);
 
-#ifdef DEBUG_BUILD
-/**
- *  @inheritDoc
- */
-void* Singleton::operator new(size_t) {
-    ASSERTMSG(false, "Not allowed to dynamically allocate a singleton.");
-    return NULL;
-}
+    /**
+     * Destructor.
+     */
+    ~SystemService(void);
 
-/**
- *  @inheritDoc
- */
-void* Singleton::operator new[](size_t) {
-    ASSERTMSG(false, "Not allowed to dynamically allocate a singleton.");
-    return NULL;
-}
+    /**
+     * @inheritDoc
+     */
+    Error add(ISystem* pSystem);
+    
+    /**
+     * @inheritDoc
+     */
+    Error remove(const Proto::SystemType SystemType);
+    
+    /**
+     * @inheritDoc
+     */
+    ISystem* get(const Proto::SystemType SystemType);
+    
+    /**
+     * @inheritDoc
+     */
+    std::map<Proto::SystemType, ISystem*> get(void);
 
-/**
- *  @inheritDoc
- */
-void Singleton::operator delete(void*) {
-    ASSERTMSG(false, "Not allowed to dynamically free a singleton.");
-}
+protected:
+    std::map<Proto::SystemType, ISystem*>       m_systems;
 
-/**
- *  @inheritDoc
- */
-void Singleton::operator delete[](void*) {
-    ASSERTMSG(false, "Not allowed to dynamically free a singleton.");
-}
-#endif
+};

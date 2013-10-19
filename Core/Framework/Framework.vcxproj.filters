@@ -13,17 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Parser">
-      <UniqueIdentifier>{24d49827-53d7-4003-979c-4cdd58e57122}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Manager">
       <UniqueIdentifier>{8ac2cd4d-20c6-4d6c-8c7a-32d43558873f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Manager">
       <UniqueIdentifier>{d4afc8bd-0583-4960-b501-19d1394230b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Parser">
-      <UniqueIdentifier>{b40ef2f4-0ec7-4d3f-88ae-58e1fc4c1eff}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Debugger">
       <UniqueIdentifier>{f50a1b9e-a143-4b8e-9bed-83ff019dc5ab}</UniqueIdentifier>
@@ -37,31 +31,28 @@
     <Filter Include="Source Files\Universal">
       <UniqueIdentifier>{0b434cf3-16f6-4729-8ae2-2e114e8745f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Service">
+      <UniqueIdentifier>{1a7bff06-874f-462f-bd9e-d616ebcbd10b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{77a637c1-2d83-45b3-bbf4-0b420e4bb744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Service">
+      <UniqueIdentifier>{1507608c-9c44-4e29-ba8b-f1edd4502309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{da91ce3f-f960-4493-aebb-990dd7de7332}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\EnvironmentManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\MemoryManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\PlatformManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Manager\ServiceManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Manager\SystemManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Manager\TaskManager.cpp">
       <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Parser\DefinitionParser.cpp">
-      <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Source\ThreadPool.cpp">
       <Filter>Source Files</Filter>
@@ -96,8 +87,20 @@
     <ClCompile Include="Source\Manager\LogManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\ManagerInterfaces.cpp">
-      <Filter>Source Files\Manager</Filter>
+    <ClCompile Include="Source\Service\SettingService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Service\SystemService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Service\DefinitionService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Service\WindowService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Service\RuntimeService.cpp">
+      <Filter>Source Files\Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,26 +122,11 @@
     <ClInclude Include="Source\Manager\ChangeControlManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\EnvironmentManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\MemoryManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\PlatformManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manager\ServiceManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\SystemManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Manager\TaskManager.h">
       <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Parser\DefinitionParser.h">
-      <Filter>Header Files\Parser</Filter>
     </ClInclude>
     <ClInclude Include="Source\Debugger\Debugger.h">
       <Filter>Header Files\Debugger</Filter>
@@ -161,8 +149,23 @@
     <ClInclude Include="Source\Manager\LogManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\ManagerInterfaces.h">
-      <Filter>Header Files\Manager</Filter>
+    <ClInclude Include="Source\Service\SettingService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\SystemService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SystemInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\DefinitionService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\RuntimeService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\WindowService.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

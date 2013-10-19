@@ -16,16 +16,16 @@
 
 #pragma warning( push )
 #pragma warning( disable : 4100 4189 4244 4512 4634 )
-#include "tbb/task.h"
-#include "tbb/task_scheduler_init.h"
-#include "tbb/tbb_thread.h"
+#include <tbb/task.h>
+#include <tbb/task_scheduler_init.h>
+#include <tbb/tbb_thread.h>
 #pragma warning( pop )
 
 #include "Interface.h"
-
 #include "SpinMutex.h"
-
 #include "IttNotify.h"
+
+class Instrumentation;
 
 // The current mechanism of by-job statistics does not work correctly in case of
 // nested parallelism, since work-stealing TBB scheduler may (and does) interleave
@@ -41,8 +41,16 @@
  * @sa  ITaskManager
  */
 class TaskManager: public ITaskManager {
-
     public:
+        /**
+         * Constructor.
+         */
+        TaskManager(u32 m_uRequestedNumberOfThreads);
+
+        /**
+         * Destructor.
+         */
+        ~TaskManager(void);
 
         /**
          * Initialises this TaskManager.
@@ -55,6 +63,13 @@ class TaskManager: public ITaskManager {
          * Call this from the primary thread as the last <c>TaskManager</c> call.
          */
         void Shutdown(void);
+
+        /**
+         * Updates the periodic data described by deltaTime.
+         *
+         * @param   deltaTime   Time of the delta.
+         */
+        void updatePeriodicData(f32 deltaTime);
 
         /**
          * Issue jobs for system tasks.
@@ -147,6 +162,8 @@ class TaskManager: public ITaskManager {
         static void SystemTaskCallback(void* pData);
 
     private:
+        // TODO completely remove it when disabled.
+        Instrumentation*            m_instrumentation;
 
         tbb::tbb_thread::id         m_uPrimaryThreadID;
 
@@ -207,7 +224,6 @@ class TaskManager: public ITaskManager {
 
         std::map<ISystemTask*, SystemTaskSupport> m_SupportForSystemTasks;
 #endif /* USE_THREAD_PROFILER */
-
 
         typedef std::vector<ISystemTask*> SystemTasksList;
 

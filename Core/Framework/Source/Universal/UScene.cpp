@@ -13,11 +13,11 @@
 // responsibility to update it.
 
 #include "Interface.h"
-
+#include "Framework.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Object/ISceneObject.h"
-#include "Manager/SystemManager.h"
+#include "Manager/ServiceManager.h"
 
 /**
  * @inheritDoc
@@ -35,7 +35,7 @@ UScene::~UScene(void) {
     //
     // Send "pre-destroying objects" message to the scene extensions.
     //
-    for (SystemScenesConstIt it = m_SystemScenes.begin(); it != m_SystemScenes.end(); it++) {
+    for (auto it = m_SystemScenes.begin(); it != m_SystemScenes.end(); it++) {
         it->second->GlobalSceneStatusChanged(
             ISystemScene::GlobalSceneStatus::PreDestroyingObjects
         );
@@ -70,6 +70,39 @@ UScene::~UScene(void) {
         Unextend(pSystemScene);
     }
     m_SystemScenes.clear();
+}
+
+/**
+ * @inheritDoc
+ */
+void UScene::init(void) {
+    //
+    // Process the link messages in the CCMs first, for both the object and scene CCMs.
+    // The link needs to be established before any other messages come through.
+    //
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Link | System::Changes::ParentLink);
+
+    //
+    // Distribute changes for object and scene CCMs.
+    // The UObject propagates some object messages up to the scene so it needs to go first.
+    //
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+}
+
+/**
+ * @inheritDoc
+ */
+void UScene::update(void) {
+    // Process first the object creation messages alone since it will 
+    // generate some object messages that need to be processed by the object CCM.
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::Generic::CreateObject);
+    //
+    // Distribute changes for object and scene CCMs.  The UObject propagates some object
+    // messages up to the scene CCM so it needs to go first.
+    m_pObjectCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All);
+    m_pSceneCCM->DistributeQueuedChanges(System::Types::All, System::Changes::All ^ System::Changes::Generic::CreateObject);
 }
 
 /**
@@ -122,7 +155,7 @@ Error UScene::Unextend(ISystemScene* pScene) {
     //
     // Find the system scene in the collection and remove it.
     //
-    SystemScenesIt it = m_SystemScenes.find(SystemType);
+    auto it = m_SystemScenes.find(SystemType);
     ASSERTMSG(it != m_SystemScenes.end(), "The scene to delete for its system type doesn't exist.");
     m_SystemScenes.erase(it);
     //
@@ -174,6 +207,8 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     if (parent != nullptr) {
         parent->addChildren(pObject);
     }
+
+    ISystemService* systemService = IServiceManager::get()->getSystemService();
     
     //
     // Start by the template object.
@@ -184,9 +219,9 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
             //
             // Create object.
             //
-            ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+            ISystem* m_pSystem = systemService->get(objectProto.systemtype());
             ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
-            UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
+            auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
             ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type());
             ASSERT(pSystemObject != NULL);
@@ -206,9 +241,9 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
         //
         UObject::SystemObjects extensions = pObject->GetExtensions();
         if (extensions.find(objectProto.systemtype()) == extensions.end()) {
-            ISystem* m_pSystem = Singletons::SystemManager.Get(objectProto.systemtype());
+            ISystem* m_pSystem = systemService->get(objectProto.systemtype());
             ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
-            UScene::SystemScenesConstIt it = GetSystemScenes().find(m_pSystem->GetSystemType());
+            auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
             ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
             pSystemObject = pObject->Extend(it->second, objectProto.type());
             ASSERT(pSystemObject != NULL);
@@ -344,3 +379,4 @@ Error UScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask Change
 
     return Errors::Success;
 }
+

@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,17 +12,36 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Interface.h"
+#pragma once
 
-#include "MemoryManager.h"
+#include "Service/IRuntimeService.h"
 
-MemoryManager::MemoryManager(
-    void
-) {
-}
+/**
+ * An interface for environment runtime functionality.
+ */
+class RuntimeService : public IRuntimeService {
+public:
+    /**
+     * @inheritDoc
+     */
+    IRuntimeService::Status getStatus(void);
 
+    /**
+     * @inheritDoc
+     */
+    void setStatus(IRuntimeService::Status Status);
+    
+    /**
+     * @inheritDoc
+     */
+    bool isPaused(void);
+    
+    /**
+     * @inheritDoc
+     */
+    bool isQuit(void);
 
-MemoryManager::~MemoryManager(
-    void
-) {
-}
+private:
+    IRuntimeService::Status      m_runtimeStatus;
+
+};

@@ -12,35 +12,41 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Interface.h"
-
-#include "Manager/ServiceManager.h"
-#include "Manager/IServiceManager.h"
-#include "Manager/TaskManager.h"
+#include "Defines.h"
 #include "Service/RuntimeService.h"
-#include "Service/SettingService.h"
-#include "Service/SystemService.h"
-#include "Service/WindowService.h"
+
+#if defined(MSC_COMPILER)
+#include <windows.h>
+#endif
 
 /**
- * @inheritDoc
+ * @inhertiDoc
  */
-ServiceManager::ServiceManager(void)
-    : IServiceManager()
-    , m_runtimeService(new RuntimeService())
-    , m_settingService(new SettingService())
-    , m_systemService(new SystemService())
-    , m_windowService(new WindowService()) {
+IRuntimeService::Status RuntimeService::getStatus(void) {
+    return m_runtimeStatus;
 }
 
 /**
- * @inheritDoc
+ * @inhertiDoc
  */
-ServiceManager::~ServiceManager(void) {
-    delete m_runtimeService;
-    delete m_settingService;
-    delete m_systemService;
-    delete m_windowService;
+void RuntimeService::setStatus(IRuntimeService::Status Status) {
+#if defined(MSC_COMPILER)
+    ::InterlockedExchange((LONG*)&m_runtimeStatus, Status);
+#endif
 }
 
-IServiceManager* ServiceManager::sm_instance = nullptr;
+/**
+ * @inhertiDoc
+ */
+bool RuntimeService::isPaused(void) {
+    return m_runtimeStatus == IRuntimeService::Status::Paused;
+}
+
+/**
+ * @inhertiDoc
+ */
+bool RuntimeService::isQuit(void) {
+    return m_runtimeStatus == IRuntimeService::Status::Quit;
+}
+
+

@@ -15,9 +15,10 @@
 #pragma once
 
 #include "System/Types.h"
-#include "Manager/ManagerInterfaces.h"
 #include "Manager/IServiceManager.h"
+#include "Service/RuntimeService.h"
 
+class ServiceManager;
 class Scheduler;
 class ChangeManager;
 class UScene;
@@ -28,10 +29,8 @@ class Gdf;
  * Framework.
  * Responsible for tying in all the different managers and systems.  Also handles
  * loading and parsing of the global definition file (gdf).
- * 
- * @sa  IService::ISystemAccess
  */
-class Framework : public IServiceManager::ISystemAccess {
+class Framework {
 public:
     /**
      * Default constructor.
@@ -64,29 +63,9 @@ public:
 
 protected:
     /**
-     * Implementation of IService::ISystemAccess::GetSystem.
-     *
-     * @param   Type    The type.
-     * @return  The system.
+     * Process the messages.
      */
-    virtual Handle GetSystem(Proto::SystemType Type);
-
-    /**
-     * Implementation of IService::ISystemAccess::GetScene.
-     *
-     * @param   Type    The type.
-     * @return  The scene.
-     */
-    virtual Handle GetScene(Proto::SystemType Type);
-
-    /**
-     * Implementation of IService::ISystemAccess::GetSystemObject.
-     *
-     * @param   Type    The type.
-     * @param   pszName The name.
-     * @return  The system object.
-     */
-    virtual Handle GetSystemObject(Proto::SystemType Type, const char* pszName);
+    void processMessages(void);
 
     /**
      * Issues all the pending property changes.  This only occurs after the scheduler has
@@ -97,14 +76,13 @@ protected:
     void IssuePendingSystemPropertyChanges(System::Types::BitMask SystemTypes = System::Types::All);
     
 private:
-    ManagerInterfaces*                      m_pManagerInterfaces;
+    ServiceManager*                         m_serviceManager;
+
     Scheduler*                              m_pScheduler;
-    TaskManager*                            m_pTaskManager;
     ChangeManager*                          m_pSceneCCM;
     ChangeManager*                          m_pObjectCCM;
-    UScene*                                 m_pScene;
 
-    bool                                    m_bExecuteLoop;
+    UScene*                                 m_pScene;
     std::string                             m_sNextScene;
 
 };

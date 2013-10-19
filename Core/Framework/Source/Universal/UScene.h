@@ -16,7 +16,6 @@
 
 #include "Generic/IObserver.h"
 #include "System/ISystemScene.h"
-
 #include "Object/IGeometryObject.h"
 
 class UObject;
@@ -33,18 +32,9 @@ public:
 
     // TODO move
     typedef std::map<std::string, Proto::Object*>                       Templates;
-
     typedef std::map<Proto::SystemType, ISystem*>                       Systems;
-    typedef Systems::iterator                                           SystemsIt;
-    typedef Systems::const_iterator                                     SystemsConstIt;
-
     typedef std::map<Proto::SystemType, ISystemScene*>                  SystemScenes;
-    typedef SystemScenes::iterator                                      SystemScenesIt;
-    typedef SystemScenes::const_iterator                                SystemScenesConstIt;
-
     typedef std::list<UObject*>                                         Objects;
-    typedef Objects::iterator                                           ObjectsIt;
-    typedef Objects::const_iterator                                     ObjectsConstIt;
 
     struct ObjectLinkData {
         ISubject*               pSubject;
@@ -57,8 +47,9 @@ public:
     /**
      * Constructor.
      *
-     * @param [in,out]  pUSceneCCM  If non-null, the u scene ccm.
-     * @param [in,out]  pUObjectCCM If non-null, the u object ccm.
+     * @param [in,out]  systemService   If non-null, the system service.
+     * @param [in,out]  pUSceneCCM      If non-null, the u scene ccm.
+     * @param [in,out]  pUObjectCCM     If non-null, the u object ccm.
      */
     UScene(IChangeManager* pUSceneCCM, IChangeManager* pUObjectCCM);
 
@@ -66,6 +57,16 @@ public:
      * Destructor.
      */
     ~UScene(void);
+
+    /**
+     * Initialises this object.
+     */
+    void init(void);
+
+    /**
+     * Updates this object.
+     */
+    void update(void);
 
     /**
      * Creates a new ISystemScene for the passed in ISystem.

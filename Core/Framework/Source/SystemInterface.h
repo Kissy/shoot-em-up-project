@@ -15,9 +15,9 @@
 #pragma once
 
 #include "Proto/Common.pb.h"
-#include "Manager/IManagerInterfaces.h"
 #include "Defines.h"
 
+class IServiceManager;
 class ISystem;
 
 /**
@@ -27,16 +27,16 @@ extern "C" {
 
 #if defined( MSC_COMPILER )
     /**
-     * Function definition for calling into a system library for initializing a system.
-     */
-    typedef void (__stdcall* InitializeSystemLibFunction)(IManagerInterfaces* pManagers);
-
-    /**
      * Function definition for calling into a system library for creating a system.
      * 
      * @return   The newly created system.
      */
     typedef ISystem* (__stdcall* CreateSystemFunction)();
+
+    /**
+     * Function definition for calling into a system library for initializing a system.
+     */
+    typedef void (__stdcall* InitializeSystemLibFunction)(IServiceManager* serviceManager);
 
     /**
      * Function definition for calling into a system library for destroying a system.
@@ -46,16 +46,16 @@ extern "C" {
     typedef void (__stdcall* DestroySystemFunction)(ISystem* pSystem);
 #elif defined( GCC_COMPILER )
     /**
-     * Function definition for calling into a system library for initializing a system.
-     */
-    void __attribute__((__stdcall)) InitializeSystemLibFunction(IManagerInterfaces* pManagers);
-
-    /**
      * Function definition for calling into a system library for creating a system.
      * 
      * @return   The newly created system.
      */
     ISystem* __attribute__((__stdcall)) CreateSystemFunction(Log::Logger* p_logger);
+
+    /**
+     * Function definition for calling into a system library for initializing a system.
+     */
+    void __attribute__((__stdcall)) InitializeSystemLibFunction(IServiceManager* serviceManager);
 
     /**
      * Function definition for calling into a system library for destroying a system.

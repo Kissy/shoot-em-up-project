@@ -18,19 +18,18 @@
 #include <include/cef_app.h>
 
 #pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include <Ogre.h>
 #include <OgrePlugin.h>
 #include <OgreWindowEventUtilities.h>
 #pragma warning( pop )
 
-#include "Manager/IEnvironmentManager.h"
+#include "Manager/IServiceManager.h"
 #include "Defines.h"
 #include "Interface.h"
 #include "System.h"
 #include "Scene.h"
 
-extern ManagerInterfaces    g_Managers;
+extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -126,8 +125,8 @@ Error GraphicSystem::initialize(void) {
     // Save the window handle & render window
     size_t hWnd;
     m_pRenderWindow->getCustomAttribute("WINDOW", &hWnd);
-    g_Managers.pPlatform->Window().SetHandle(hWnd);
-    g_Managers.pPlatform->Window().SetRenderWindow(m_pRenderWindow);
+    g_serviceManager->getWindowService()->setHandle(hWnd);
+    g_serviceManager->getWindowService()->setRenderWindow(m_pRenderWindow);
 
     // listen to the RenderWindow
     Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWindow, this);
@@ -156,7 +155,7 @@ Error GraphicSystem::initialize(void) {
 void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
     ASSERT(pRenderWindow == m_pRenderWindow);
     UNREFERENCED_PARAM(pRenderWindow);
-    g_Managers.pEnvironment->Runtime().SetStatus(IEnvironmentManager::IRuntime::Status::Quit);
+    g_serviceManager->getRuntimeService()->setStatus(IRuntimeService::Status::Quit);
 }
 /**
  * @inheritDoc

@@ -84,7 +84,7 @@ void Debugger::setScene(const UScene* pUScene) {
 
     DebugProto debugProto;
     UScene::SystemScenes Scenes = m_pUScene->GetSystemScenes();
-    for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
+    for (auto it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
         DebugEntityProto* debugEntityProto = debugProto.add_entities();
         debugEntityProto->set_id(Proto::SystemType_Name(pScene->GetSystemType()));
@@ -94,7 +94,7 @@ void Debugger::setScene(const UScene* pUScene) {
     }
 
     UScene::Objects Objects = m_pUScene->GetObjects();
-    for (UScene::ObjectsConstIt it = Objects.begin(); it != Objects.end(); it++) {
+    for (auto it = Objects.begin(); it != Objects.end(); it++) {
         debugObject(*it, debugProto);
     }
 
@@ -110,16 +110,16 @@ void Debugger::clean(void) {
     }
 
     UScene::SystemScenes Scenes = m_pUScene->GetSystemScenes();
-    for (UScene::SystemScenesConstIt it = Scenes.begin(); it != Scenes.end(); it++) {
+    for (auto it = Scenes.begin(); it != Scenes.end(); it++) {
         ISystemScene* pScene = it->second;
         m_pSceneCCM->Unregister(pScene, m_pSceneChangesDebugger);
     }
 
     UScene::Objects Objects = m_pUScene->GetObjects();
-    for (UScene::ObjectsConstIt it = Objects.begin(); it != Objects.end(); it++) {
+    for (auto it = Objects.begin(); it != Objects.end(); it++) {
         UObject* pUObject = *it;
         UObject::SystemObjects SystemObjects = pUObject->GetExtensions();
-        for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
+        for (auto it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
             ISystemObject* pObject = it->second;
             m_pObjectCCM->Unregister(pObject, m_pObjectChangesDebugger);
         }
@@ -186,7 +186,7 @@ void Debugger::debugObject(UObject* object, DebugProto& debugProto) {
     debugEntityProto->set_name(object->getName());
     debugEntityProto->set_category(System::getComponentName(System::Components::Object));
     UObject::SystemObjects SystemObjects = object->GetExtensions();
-    for (UObject::SystemObjectsConstIt it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
+    for (auto it = SystemObjects.begin(); it != SystemObjects.end(); it++) {
         ISystemObject* systemObject = it->second;
         DebugPropertyProto* debugPropertyProto = debugEntityProto->add_properties();
         debugPropertyProto->set_category(Proto::SystemType_Name(systemObject->GetSystemType()));

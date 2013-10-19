@@ -15,15 +15,13 @@
 // Instrumentation class, to collect execution and performance stats.
 
 #include <sstream>
-
-#include "Interface.h"
-
 #include <tchar.h>
 #include <pdh.h>
 #include <pdhmsg.h>
 
+#include "Interface.h"
+
 #include "Manager/ServiceManager.h"
-#include "Manager/PlatformManager.h"
 #include "Manager/ITaskManager.h"
 #include "Instrumentation.h"
 
@@ -86,7 +84,7 @@ Instrumentation::Instrumentation(void) :
     m_activeThreadCount(0),
     m_numCounters(0) {
     // Register this provider with the service manager.
-    Singletons::ServiceManager.RegisterInstrumentationProvider(this);
+    //Singletons::ServiceManager.RegisterInstrumentationProvider(this);
     // Prepare to monitor CPU performance.
     std::vector< TCHAR* >   vecCounterInstanceNames;
     PDH_STATUS              pdhStatus               = ERROR_SUCCESS;
@@ -250,7 +248,7 @@ Instrumentation::~Instrumentation() {
     // Delete all locally-allocated things.
     delete [] m_CPUPercentCounters;
     // Undo the registration, probably not too important since we're shutting down.
-    Singletons::ServiceManager.UnregisterInstrumentationProvider(this);
+    //Singletons::ServiceManager.UnregisterInstrumentationProvider(this);
 
     // Clean up queries.
     while (!m_vecProcessorCounters.empty()) {

@@ -14,7 +14,10 @@
 
 #pragma once
 
+#pragma warning( push, 0 )
 #include <Overlay/OgreOverlaySystem.h>
+#pragma warning( pop )
+
 #include <include/cef_client.h>
 
 #include "DataTypes.h"

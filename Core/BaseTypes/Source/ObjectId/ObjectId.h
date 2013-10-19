@@ -24,8 +24,8 @@
 #include <iosfwd>                       // for ostream
 #include <string>                       // for string
 
-#include "Date_t.h"                     // for Date_t
-#include "Hex.h"                        // for toHexLower
+#include "ObjectId/Date_t.h"            // for Date_t
+#include "ObjectId/Hex.h"               // for toHexLower
 
 #pragma pack(1)
 /** Object ID type.
