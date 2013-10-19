@@ -73,13 +73,14 @@ public class Varint32Stage extends SymmetricPipelineStage<PipelineContext, ByteS
                                 return res;
                             }
 
-                            if (current.length() - prefixLength < length) {
+                            int totalLength = length + prefixLength;
+                            if (current.length() < totalLength) {
                                 buffer = current;
-                                return res;
                             } else {
-                                res.add(makeEvent(current.slice(prefixLength, length + prefixLength)));
-                                current = current.drop(prefixLength + length);
+                                res.add(makeEvent(current.slice(prefixLength, totalLength)));
+                                buffer = current.drop(prefixLength + length);
                             }
+                            return res;
                         }
                     }
                 } catch (IOException e) {
