@@ -22,6 +22,9 @@
     <Filter Include="Source Files\ObjectId">
       <UniqueIdentifier>{f30a9ca7-ecc8-491a-a24f-2e0552d6172f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Task">
+      <UniqueIdentifier>{9a159fa2-4a7f-4c32-802f-c9a155750d47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Assert.h">
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="Source\ObjectId\Hex.h">
       <Filter>Header Files\ObjectId</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\PerformanceHint.h">
+      <Filter>Header Files\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

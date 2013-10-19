@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include "System/Types.h"
+
 /**
 * The Instrumentation class collects and records performance stats about the various parts of
 * the system.

@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Generic">
       <UniqueIdentifier>{fb6d4dc5-2ec6-4252-9363-e1bcaaf8d683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Task">
+      <UniqueIdentifier>{79689423-5679-462a-a308-efddca6c7469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Task">
+      <UniqueIdentifier>{9769c84f-b730-46b8-9d7f-b0d169fce8ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
@@ -102,23 +108,20 @@
     <ClCompile Include="Source\Generic\ThreadPool.cpp">
       <Filter>Source Files\Generic</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Task\StallTask.cpp">
+      <Filter>Source Files\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Task\SynchronizeTask.cpp">
+      <Filter>Source Files\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Task\GenericCallbackData.cpp">
+      <Filter>Source Files\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Task\ParallelForBody.cpp">
+      <Filter>Source Files\Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Instrumentation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\IttNotify.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scheduler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ThreadPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manager\ChangeControlManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
@@ -181,6 +184,21 @@
     </ClInclude>
     <ClInclude Include="Source\Generic\SystemInterface.h">
       <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\StallTask.h">
+      <Filter>Header Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\SynchronizeTask.h">
+      <Filter>Header Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\GenericCallbackTask.h">
+      <Filter>Header Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\GenericCallbackData.h">
+      <Filter>Header Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Task\ParallelForBody.h">
+      <Filter>Header Files\Task</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

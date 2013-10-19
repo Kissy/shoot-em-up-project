@@ -97,6 +97,7 @@
     <ClInclude Include="Source\System\Changes.h" />
     <ClInclude Include="Source\System\Components.h" />
     <ClInclude Include="Source\System\Types.h" />
+    <ClInclude Include="Source\Task\PerformanceHint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MathUtils.cpp" />

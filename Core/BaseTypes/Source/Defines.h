@@ -17,7 +17,7 @@
 #define WIN32_LEAN_AND_MEAN
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0501
-#endif 
+#endif
 
 //
 // Build options
@@ -26,6 +26,14 @@
     #define DEBUG_BUILD
 #endif
 #define LOGGER_ENABLED
+
+// The current mechanism of by-job statistics does not work correctly in case of
+// nested parallelism, since work-stealing TBB scheduler may (and does) interleave
+// different jobs on the same thread. To make it work correctly the statistics
+// should be accumulated on a per-thread basis. Besides with the fine grained job
+// tasks (which are necessary to achieve acceptable load balancing) the overhead
+// of statistics tracking may become noticeable.
+#define STATISTICS_BY_JOB_TYPE
 
 //
 // Compiler options

@@ -28,6 +28,10 @@
     <ClCompile Include="Source\Service\SettingService.cpp" />
     <ClCompile Include="Source\Service\SystemService.cpp" />
     <ClCompile Include="Source\Service\WindowService.cpp" />
+    <ClCompile Include="Source\Task\GenericCallbackData.cpp" />
+    <ClCompile Include="Source\Task\ParallelForBody.cpp" />
+    <ClCompile Include="Source\Task\StallTask.cpp" />
+    <ClCompile Include="Source\Task\SynchronizeTask.cpp" />
     <ClCompile Include="Source\Universal\UObject.cpp" />
     <ClCompile Include="Source\Universal\UScene.cpp" />
   </ItemGroup>
@@ -35,7 +39,6 @@
     <ClInclude Include="Source\Debugger\Debugger.h" />
     <ClInclude Include="Source\Debugger\ObjectChangesDebugger.h" />
     <ClInclude Include="Source\Debugger\SceneChangesDebugger.h" />
-    <ClInclude Include="Source\Framework.h" />
     <ClInclude Include="Source\Generic\Framework.h" />
     <ClInclude Include="Source\Generic\Instrumentation.h" />
     <ClInclude Include="Source\Generic\IttNotify.h" />
@@ -43,19 +46,20 @@
     <ClInclude Include="Source\Generic\SystemInterface.h" />
     <ClInclude Include="Source\Generic\ThreadPool.h" />
     <ClInclude Include="Source\Main.h" />
-    <ClInclude Include="Source\Instrumentation.h" />
-    <ClInclude Include="Source\IttNotify.h" />
     <ClInclude Include="Source\Manager\ChangeControlManager.h" />
     <ClInclude Include="Source\Manager\LogManager.h" />
     <ClInclude Include="Source\Manager\ServiceManager.h" />
     <ClInclude Include="Source\Manager\TaskManager.h" />
-    <ClInclude Include="Source\Scheduler.h" />
     <ClInclude Include="Source\Service\DefinitionService.h" />
     <ClInclude Include="Source\Service\RuntimeService.h" />
     <ClInclude Include="Source\Service\SettingService.h" />
     <ClInclude Include="Source\Service\SystemService.h" />
     <ClInclude Include="Source\Service\WindowService.h" />
-    <ClInclude Include="Source\ThreadPool.h" />
+    <ClInclude Include="Source\Task\GenericCallbackData.h" />
+    <ClInclude Include="Source\Task\GenericCallbackTask.h" />
+    <ClInclude Include="Source\Task\ParallelForBody.h" />
+    <ClInclude Include="Source\Task\StallTask.h" />
+    <ClInclude Include="Source\Task\SynchronizeTask.h" />
     <ClInclude Include="Source\Universal\UObject.h" />
     <ClInclude Include="Source\Universal\UScene.h" />
   </ItemGroup>

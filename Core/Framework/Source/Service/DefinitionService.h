@@ -15,6 +15,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "Assert.h"
 #include "Proto.h"
@@ -34,7 +35,12 @@ public:
      * @param [in,out]  pScene  If non-null, the scene.
      * @param   sGDF            The gdf.
      */
-    DefinitionService(UScene* pScene, std::string sGDF);
+    DefinitionService(UScene* pScene);
+
+    /**
+     * Destructor.
+     */
+    ~DefinitionService(void);
 
     /**
      * Parse environment.
@@ -78,7 +84,13 @@ private:
      * @param [in,out]  ppSystem    If non-null, the system.
      */
     Error loadSystemLibrary(Proto::SystemType type, ISystem** ppSystem);
+    
+    struct SystemLib {
+        Handle      hLib;
+        ISystem*    pSystem;
+    };
 
+    std::vector<SystemLib>                          m_systemLibs;
     Proto::Application                              m_gdProto;
     UScene*                                         m_pScene;
     ISystem*                                        m_pSystem;

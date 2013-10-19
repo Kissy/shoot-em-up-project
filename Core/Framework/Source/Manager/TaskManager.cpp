@@ -12,11 +12,12 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Defines.h"
-#include "System/ISystemTask.h"
-#include "Manager/TaskManager.h"
-#include "Manager/ServiceManager.h"
-#include "Generic/Instrumentation.h"
+#pragma warning (push)
+#pragma warning (disable: 4100)
+#include <tbb/parallel_for.h>
+#include <tbb/blocked_range.h>
+#include <tbb/partitioner.h>
+#pragma warning (pop)
 
 #if defined(MSC_COMPILER)
     #include <process.h>
@@ -31,211 +32,30 @@
     }
 #endif
 
-#pragma warning (push)
-#pragma warning (disable: 4100)
-#include "tbb/parallel_for.h"
-#include "tbb/blocked_range.h"
-#include "tbb/partitioner.h"
-#pragma warning (pop)
-
-//#include "trace.h"
-
-#if defined(STATISTICS_BY_JOB_TYPE)
-
-#define DECLARE_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent ) \
-     , Proto::SystemType jobType                                       \
-     DECLARE_TP_EVENT_ARG( tpEvent )
-
-#define PASS_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent )    \
-     , jobType                                           \
-     PASS_TP_EVENT_ARG( tpEvent )
-
-#define JOB_TASK_STARTED( jobType, tpEvent )      \
-     __ITT_EVENT_START( tpEvent, PROFILE_TASKMANAGER );               \
-     {                                           \
-         i64 counter = __rdtsc();
-    
-#define JOB_TASK_FINISHED( jobType, tpEvent )     \
-         counter = __rdtsc() - counter;          \
-         m_instrumentation->CaptureJobCounterTicks( jobType, counter ); \
-     }                                           \
-     __ITT_EVENT_END( tpEvent, PROFILE_TASKMANAGER );
-
-#else /* !STATISTICS_BY_JOB_TYPE */
-
-#define DECLARE_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent ) \
-     DECLARE_TP_EVENT_ARG( tpEvent )
-
-#define PASS_JOB_AND_TP_EVENT_ARGS( jobType, tpEvent )    \
-     PASS_TP_EVENT_ARG( tpEvent )
-
-#define JOB_TASK_STARTED( jobType, tpEvent )     \
-     __ITT_EVENT_START( tpEvent, 0 );
-
-#define JOB_TASK_FINISHED( jobType, tpEvent )    \
-     __ITT_EVENT_END( tpEvent, 0 );
-
-#endif /* STATISTICS_BY_JOB_TYPE */
-
+#include "Defines.h"
+#include "System/ISystemTask.h"
+#include "Manager/TaskManager.h"
+#include "Manager/ServiceManager.h"
+#include "Generic/Instrumentation.h"
+#include "Task/StallTask.h"
+#include "Task/SynchronizeTask.h"
+#include "Task/GenericCallbackTask.h"
+#include "Task/ParallelForBody.h"
+#include "Task/PerformanceHint.h"
 
 namespace local {
-
-    /// <summary>
-    /// Base class containing data common to classes handling different callbacks.
-    /// </summary>
-    class GenericCallbackData {
-        public:
-            GenericCallbackData(Instrumentation* instrumentation, void* pParam
-                                DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
-                               )
-                : m_instrumentation(instrumentation)
-                , m_pParam(pParam)
-#if defined(STATISTICS_BY_JOB_TYPE)
-                , m_jobType(jobType)
-#endif
-#if defined(USE_THREAD_PROFILER)
-                , m_tpEvent(tpEvent)
-#endif
-            {}
-
-        protected:
-            Instrumentation*    m_instrumentation;
-            void*               m_pParam;
-
-#if defined(STATISTICS_BY_JOB_TYPE)
-            Proto::SystemType   m_jobType;
-#endif
-
-#if defined(USE_THREAD_PROFILER)
-            __itt_event         m_tpEvent;
-#endif
-
-    }; // template class GenericCallbackTask
-
-
-    /// <summary>
-    /// This class is used by <c>TaskManager</c> to execute a generic callback.
-    /// </summary>
-    template<class Fptr>
-    class GenericCallbackTask : public tbb::task, public GenericCallbackData {
-        public:
-            GenericCallbackTask(Instrumentation* instrumentation, Fptr fFunc, void* pParam
-                                DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
-                               )
-                : GenericCallbackData(instrumentation, pParam
-                                      PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
-                , m_fFunc(fFunc)
-            {}
-
-            virtual
-            tbb::task* execute() {
-                // Call the callback function, mark it for TP, and figure out how long it took.
-                ASSERT(m_fFunc != NULL);
-                JOB_TASK_STARTED(m_jobType, m_tpEvent);
-                m_fFunc(m_pParam);
-                JOB_TASK_FINISHED(m_jobType, m_tpEvent);
-                return NULL;
-            }
-
-        protected:
-            Fptr                m_fFunc;
-
-    }; // template class GenericCallbackTask
-
     typedef GenericCallbackTask<ITaskManager::JobFunction> SystemTask;
     typedef GenericCallbackTask<ITaskManager::JobFunction> JobTask;
     typedef GenericCallbackTask<ITaskManager::JobCompletionFunction> JobCompletionTask;
-
-    /// <summary>
-    /// This class is used by <c>TaskManager</c> to stall unused threads.
-    /// </summary>
-    /// <seealso cref="TaskManager::SetNumberOfThreads"/>
-    class StallTask : public tbb::task {
-        public:
-            StallTask(TaskManager* pTaskManager, Handle hWaitFor)
-                : m_pTaskManager(pTaskManager),
-                  m_hWaitFor(hWaitFor)
-            {}
-
-            tbb::task* execute() {
-                if (m_pTaskManager->IsPrimaryThread()) {
-                    // we can't stall, so stall somebody else
-                    m_pTaskManager->AddStallTask();
-                    // wait for a tenth of a second to encourage somebody else to grab the stall task
-                    tbb::this_tbb_thread::sleep(tbb::tick_count::interval_t(0.1));
-                } else {
-                    ASSERT(m_hWaitFor != NULL);
-#if defined(MSC_COMPILER)
-                    WaitForSingleObject(m_hWaitFor, INFINITE);
-#endif
-                }
-
-                return NULL;
-            }
-
-        protected:
-            TaskManager* m_pTaskManager;
-            Handle m_hWaitFor;
-
-    }; // class StallTask
-
-    /// <summary>
-    /// This class is used by <c>TaskManager</c> to manage synchronized callbacks.
-    /// </summary>
-    /// <seealso cref="TaskManager::NonStandardPerThreadCallback"/>
-    class SynchronizeTask: public tbb::task {
-        public:
-            SynchronizeTask() {}
-
-            tbb::task* execute() {
-                ASSERT(m_fCallback != NULL);
-                ASSERT(m_hAllCallbacksInvokedEvent != NULL);
-                m_fCallback(m_pCallbackParam);
-
-#if defined(MSC_COMPILER)
-                if (InterlockedDecrement(&m_lCallbacksCount) == 0) {
-                    // set all of the SynchronizeTasks free
-                    SetEvent(m_hAllCallbacksInvokedEvent);
-                } else {
-                    // wait for somebody else to finish up
-                    WaitForSingleObject(m_hAllCallbacksInvokedEvent, INFINITE);
-                }
-#endif
-
-                return NULL;
-            }
-
-            static void PrepareCallback(
-                ITaskManager::JobFunction fFunc,
-                void* pParam,
-                u32 uCount
-            ) {
-                m_fCallback = fFunc;
-                m_pCallbackParam = pParam;
-                m_lCallbacksCount = uCount;
-#if defined(MSC_COMPILER)
-                ResetEvent(m_hAllCallbacksInvokedEvent);
-#endif
-            }
-
-        protected:
-            friend class TaskManager;
-            static Handle m_hAllCallbacksInvokedEvent;
-            static ITaskManager::JobFunction m_fCallback;
-            static void* m_pCallbackParam;
-            static volatile long m_lCallbacksCount;
-    }; // class SynchronizeTask
-
-    Handle SynchronizeTask::m_hAllCallbacksInvokedEvent = NULL;
-    ITaskManager::JobFunction SynchronizeTask::m_fCallback = NULL;
-    void* SynchronizeTask::m_pCallbackParam = NULL;
-    volatile long SynchronizeTask::m_lCallbacksCount = 0;
 
     static TaskManager* g_pTaskManager = NULL;
 } // namespace local
 
 using namespace local;
 
+/**
+ * @inhertiDoc
+ */
 TaskManager::TaskManager(u32 requestedNumberOfThreads) 
     : m_instrumentation(new Instrumentation())
     , m_bTimeToQuit(false)
@@ -247,10 +67,16 @@ TaskManager::TaskManager(u32 requestedNumberOfThreads)
 
 }
 
+/**
+ * @inhertiDoc
+ */
 TaskManager::~TaskManager(void) {
     delete m_instrumentation;
 }
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::AddStallTask(void) {
     ASSERT(m_pStallPoolParent != NULL);
     tbb::task* pStallTask = new(m_pStallPoolParent->allocate_additional_child_of(*m_pStallPoolParent))
@@ -259,17 +85,26 @@ void TaskManager::AddStallTask(void) {
     m_pStallPoolParent->spawn(*pStallTask);
 }
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::SystemTaskCallback(void* pData) {
     ISystemTask* pTask = static_cast<ISystemTask*>(pData);
     pTask->Update(g_pTaskManager->m_fDeltaTime);
 }
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::InitAffinityData(void* mgr) {
     TaskManager* pThis = static_cast<TaskManager*>(mgr);
     SCOPED_SPIN_LOCK(pThis->m_spinMutex);
     pThis->m_affinityIDs.push_back(tbb::task::self().affinity());
 }
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::Init(void) {
     // Call this from the primary thread before calling any other TaskManager methods.
     g_pTaskManager = this;
@@ -282,7 +117,6 @@ void TaskManager::Init(void) {
         // results in smaller FPS. So this is probably one of the cases when TP
         // misinterprets the behavior of threads created by some of the Windows
         // subsystems (DirectX is historically its weak place).
-        //
         m_uRequestedNumberOfThreads = tbb::task_scheduler_init::default_num_threads();
     }
 
@@ -312,8 +146,11 @@ void TaskManager::Init(void) {
 #ifdef STATISTICS_BY_JOB_TYPE
     m_instrumentation->setActiveThreadCount(m_uRequestedNumberOfThreads);
 #endif
-} // TaskManager::Init
+}
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::Shutdown(void) {
     // Call this from the primary thread as the last TaskManager call.
     ASSERT(IsPrimaryThread());
@@ -336,70 +173,20 @@ void TaskManager::Shutdown(void) {
 #ifdef USE_THREAD_PROFILER
     m_SupportForSystemTasks.clear();
 #endif
-} // TaskManager::Shutdown
+}
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::updatePeriodicData(f32 deltaTime) {
 #ifdef STATISTICS_BY_JOB_TYPE
     m_instrumentation->UpdatePeriodicData(deltaTime);
 #endif
 }
 
-// PerformanceHint is used to modify the order that tasks are sent to the scheduler.
-// The order of definition is the order of scheduling.
-enum PerformanceHint {
-    Task_LongSerial = 0,
-    Task_LongParallel,
-    Task_Short,
-    Task_NoPerformanceHint,
-    Task_MAX
-};
-
-inline PerformanceHint GetPerformanceHint(ISystemTask* pTask) {
-    // The indices of this array need to match System::TypeIndices.
-    // Custom type indices are added here for convenience, but they are not guaranteed
-    // to match (they're created in code with System::Types::MakeCustom()).
-    //
-    // If you modify System::TypeIndices or System::Types, please modify this to match.
-    static PerformanceHint hints[System::Types::MAX] = {
-        Task_NoPerformanceHint, // 0:  Null
-        Task_NoPerformanceHint, // 1:  Not used
-        Task_NoPerformanceHint, // 2:  Generic
-        Task_Short,             // 3:  Geometry
-        Task_LongSerial,        // 4:  Graphics
-        Task_LongSerial,        // 5:  PhysicsCollision
-        Task_NoPerformanceHint, // 6:  Audio
-        Task_NoPerformanceHint, // 7:  Input
-        Task_LongParallel,      // 8:  AI
-        Task_NoPerformanceHint, // 9:  Animation
-        Task_Short,             // 10: Scripting
-        Task_NoPerformanceHint, // 11: Explosion - test for ideal hint
-        Task_NoPerformanceHint, // 12: Water - test for ideal hint
-        Task_NoPerformanceHint, // 13: Not used
-        Task_NoPerformanceHint, // 14: Not used
-        Task_NoPerformanceHint, // 15: Not used
-        Task_Short,             // 16: ProceduralTrees
-        Task_NoPerformanceHint, // 17: Not used
-        Task_LongParallel,      // 18: ProceduralFire
-
-        // Not used below here, initialized for safety.
-        Task_NoPerformanceHint, // 19: Not used
-        Task_NoPerformanceHint, // 20: Not used
-        Task_NoPerformanceHint, // 21: Not used
-        Task_NoPerformanceHint, // 22: Not used
-        Task_NoPerformanceHint, // 23: Not used
-        Task_NoPerformanceHint, // 24: Not used
-        Task_NoPerformanceHint, // 25: Not used
-        Task_NoPerformanceHint, // 26: Not used
-        Task_NoPerformanceHint, // 27: Not used
-        Task_NoPerformanceHint, // 28: Not used
-        Task_NoPerformanceHint, // 29: Not used
-        Task_NoPerformanceHint, // 30: Not used
-        Task_NoPerformanceHint  // 31: Not used
-    };
-    u32 jobIndex = System::Types::GetIndex(pTask->GetSystemType());
-    return hints[jobIndex];
-}
-
+/**
+ * @inhertiDoc
+ */
 void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, f32 fDeltaTime) {
     // Call this from the primary thread to schedule system work.
     ASSERT(IsPrimaryThread());
@@ -417,7 +204,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
 
     u32 h = 0;
     u32 i = 0;
-    for (h = 0; h < Task_MAX; h++) {
+    for (h = 0; h < Task::Task_MAX; h++) {
         for (i = 0; i < uTaskCount; i++) {
             if (pTasks[i]->IsPrimaryThreadOnly()) {
                 // put this task on the list of tasks to be run on the primary thread
@@ -427,7 +214,7 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
                 }
             } else {
                 // see if it's time to dispatch this task
-                if (GetPerformanceHint(pTasks[i]) == (PerformanceHint)h) {
+                if (Task::getPerformanceHint(pTasks[i]->GetSystemType()) == (Task::PerformanceHint) h) {
                     // this task can be run on an arbitrary thread -- allocate it
                     SystemTask* pSystemTask = new(m_pSystemTasksRoot->allocate_additional_child_of(*m_pSystemTasksRoot))
                     SystemTask(m_instrumentation, SystemTaskCallback, pTasks[i] 
@@ -446,9 +233,11 @@ void TaskManager::IssueJobsForSystemTasks(ISystemTask** pTasks, u32 uTaskCount, 
     // Waiting for the whole bunch completion happens in WaitForSystemTasks.
     m_pSystemTasksRoot->spawn(tTaskList);
     __ITT_EVENT_END(m_tpSystemTaskSpawn, PROFILE_TASKMANAGER);
-} // TaskManager::IssueJobsForSystemTasks
+}
 
-
+/**
+ * @inhertiDoc
+ */
 void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pData) {
     // This method triggers a synchronized callback to be called once by each thread used
     // by the TaskManager.  This method waits until all callbacks have executed.
@@ -486,9 +275,11 @@ void TaskManager::NonStandardPerThreadCallback(JobFunction pfnCallback, void* pD
     }
 
     __ITT_EVENT_END(m_tSynchronizeTPEvent, PROFILE_TASKMANAGER);
-} // TaskManager::NonStandardPerThreadCallback
+} 
 
-
+/**
+ * @inhertiDoc
+ */
 u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints Hints) {
     // Call this method to determine the ideal number of tasks to submit to the TaskManager
     // for maximum performance.
@@ -499,29 +290,9 @@ u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints H
     return m_uNumberOfThreads;
 }
 
-
-class ParallelForBody : public GenericCallbackData {
-    public:
-        ParallelForBody(Instrumentation* instrumentation, ITaskManager::ParallelForFunction pfn, void* pParam
-                        DECLARE_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent)
-                       )
-            : GenericCallbackData(instrumentation, pParam
-                                  PASS_JOB_AND_TP_EVENT_ARGS(jobType, tpEvent))
-            , m_pfnCallback(pfn)
-        {}
-
-        void operator()(const tbb::blocked_range<u32>& r) const {
-            JOB_TASK_STARTED(m_jobType, m_tpEvent);
-            m_pfnCallback(m_pParam, r.begin(), r.end());
-            JOB_TASK_FINISHED(m_jobType, m_tpEvent);
-        }
-
-    private:
-        ITaskManager::ParallelForFunction m_pfnCallback;
-
-}; // class ParallelForBody
-
-
+/**
+ * @inhertiDoc
+ */
 void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJobFunction, void* pParam, u32 begin, u32 end, u32 minGrainSize) {
 #if defined(STATISTICS_BY_JOB_TYPE)
     // ??? How often does this fail over to NULL?
@@ -541,7 +312,9 @@ void TaskManager::ParallelFor(ISystemTask* pSystemTask, ParallelForFunction pfnJ
     }
 }
 
-
+/**
+ * @inhertiDoc
+ */
 void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
     // Call this from the primary thread to wait until specified tasks spawned with IssueJobsForSystemTasks
     // and all of their subtasks are complete.
@@ -579,13 +352,9 @@ void TaskManager::WaitForSystemTasks(ISystemTask** pTasks, u32 uTaskCount) {
     m_pSystemTasksRoot->wait_for_all();
 }
 
-
-u32 TaskManager::GetNumberOfThreads(void) {
-    // Call this method to get the number of threads in the thread pool which are active for running work.
-    return m_uNumberOfThreads;
-}
-
-
+/**
+ * @inhertiDoc
+ */
 void TaskManager::SetNumberOfThreads(u32 uNumberOfThreads) {
     // This method constrains the number of threads used by the TaskManager.
     u32 uTargetNumberOfThreads = uNumberOfThreads;
@@ -600,21 +369,19 @@ void TaskManager::SetNumberOfThreads(u32 uNumberOfThreads) {
 
 #if defined(USE_THREAD_PROFILER)
 
-#define InitTpEventsForSystem(base_name, base_len) \
-    if( m_bTPEventsForTasks ) \
-    { \
-        support.m_tpeSystemTask = __itt_event_createA( base_name, base_len ); \
-    } \
-    if( m_bTPEventsForJobs ) \
-    { \
-        support.m_tpeSystemTaskJob = __itt_event_createA( base_name"Job", base_len + 3 );  \
-        support.m_tpeSystemTaskJobCompletion = __itt_event_createA( base_name"JobCompletion", base_len + 13 ); \
+#define InitTpEventsForSystem(base_name, base_len)                                                                  \
+    if( m_bTPEventsForTasks ) {                                                                                     \
+        support.m_tpeSystemTask = __itt_event_createA( base_name, base_len );                                       \
+    }                                                                                                               \
+    if( m_bTPEventsForJobs ) {                                                                                      \
+        support.m_tpeSystemTaskJob = __itt_event_createA( base_name"Job", base_len + 3 );                           \
+        support.m_tpeSystemTaskJobCompletion = __itt_event_createA( base_name"JobCompletion", base_len + 13 );      \
     }
 
-TaskManager::SystemTaskSupport&
-TaskManager::GetSupportForSystemTask(
-    ISystemTask* pTask
-) {
+/**
+ * @inhertiDoc
+ */
+TaskManager::SystemTaskSupport& TaskManager::GetSupportForSystemTask(ISystemTask* pTask) {
     if (!pTask) {
         static SystemTaskSupport emptySupport;
         return emptySupport;
@@ -678,11 +445,16 @@ TaskManager::GetSupportForSystemTask(
 
 #endif /* USE_THREAD_PROFILER */
 
-
+/**
+ * @inhertiDoc
+ */
 bool TaskManager::IsPrimaryThread(void) {
     return (tbb::this_tbb_thread::get_id() == m_uPrimaryThreadID);
 }
 
+/**
+ * @inhertiDoc
+ */
 bool TaskManager::IsTBBThread(void) {
     // This method is used to determine if the calling thread is an Intel Threading Building Blocks thread.
 #ifdef DEBUG_BUILD
@@ -693,6 +465,9 @@ bool TaskManager::IsTBBThread(void) {
 #endif
 }
 
+/**
+ * @inhertiDoc
+ */
 void TaskManager::UpdateThreadPoolSize(void) {
     // This method is called within IssueJobsForSystemTasks to update the size of TBB thread pool
     // if necessary.  The thread pool is resized by a call to SetNumberOfThreads.
