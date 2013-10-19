@@ -19,12 +19,11 @@
 #include <OgreSceneManager.h>
 #pragma warning( pop )
 
-#include "Interface.h"
-
 #include "System.h"
 #include "Scene.h"
 #include "Object.h"
-#include "CameraGraphicObject.h"
+#include "Object/CameraGraphicObject.h"
+#include "Object/IGeometryObject.h"
 
 #define PSCENE          (reinterpret_cast<GraphicScene*>(m_pSystemScene))
 #define PSYSTEM         (m_pSystemScene->GetSystem<GraphicSystem>())

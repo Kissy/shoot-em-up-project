@@ -13,9 +13,10 @@
 // responsibility to update it.
 
 #include "Defines.h"
+#include "System/ISystemTask.h"
 #include "Manager/TaskManager.h"
 #include "Manager/ServiceManager.h"
-#include "Instrumentation.h"
+#include "Generic/Instrumentation.h"
 
 #if defined(MSC_COMPILER)
     #include <process.h>

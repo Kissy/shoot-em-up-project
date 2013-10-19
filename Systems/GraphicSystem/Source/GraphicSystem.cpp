@@ -17,7 +17,7 @@
 
 #include "System/ISystem.h"
 #include "Manager/IServiceManager.h"
-#include "SystemInterface.h"
+#include "Generic/SystemInterface.h"
 #include "System.h"
 
 IServiceManager*        g_serviceManager;

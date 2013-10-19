@@ -17,7 +17,6 @@
 #include <list>
 
 #include "Errors.h"
-#include "Interface.h"
 #include "System/ISystem.h"
 
 /**

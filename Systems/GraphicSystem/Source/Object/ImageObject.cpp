@@ -17,11 +17,10 @@
 #include <OgreSceneNode.h>
 #pragma warning( pop )
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "Object.h"
-#include "ImageObject.h"
+#include "Object/ImageObject.h"
+#include "Object/IGeometryObject.h"
 
 const std::string ImageGraphicObject::IMAGE_BASE_PATH = "../../Assets/Media/Graphic/";
 

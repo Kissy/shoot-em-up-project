@@ -16,7 +16,6 @@
 #include <tchar.h>
 
 #include "Defines.h"
-#include "Interface.h"
 #include "Main.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {

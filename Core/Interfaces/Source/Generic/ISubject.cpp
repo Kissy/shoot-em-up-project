@@ -13,9 +13,10 @@
 // responsibility to update it.
 
 #include "Assert.h"
+#include "Defines.h"
+#include "System/Types.h"
 #include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
-#include "Interface.h"
 
 /**
  * @inheritDoc

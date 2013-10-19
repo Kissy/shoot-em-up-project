@@ -15,12 +15,10 @@
 #include <boost/thread/thread.hpp>
 #include <boost/timer/timer.hpp>
 
-#include "Interface.h"
-
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
 #include "Universal/UScene.h"
-#include "Scheduler.h"
+#include "Generic/Scheduler.h"
 #include "Debugger/Debugger.h"
 
 // Set the timer to 120Hz

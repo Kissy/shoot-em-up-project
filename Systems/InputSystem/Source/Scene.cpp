@@ -15,8 +15,6 @@
 #include <boost/functional/factory.hpp>
 #include <OISB.h>
 
-#include "Interface.h"
-
 #include "Manager/IServiceManager.h"
 #include "System.h"
 #include "Scene.h"

@@ -17,6 +17,7 @@
 #include <boost/thread.hpp>
 #include <set>
 
+#include "Manager/IChangeManager.h"
 #include "SpinMutex.h"
 
 class ITaskManager;
@@ -197,7 +198,7 @@ class ChangeManager : public IChangeManager {
 
         Error RemoveSubject(ISubject* pSubject);
 
-        friend NotifyList& GetNotifyList( u32 tlsIndex );
+        friend NotifyList& GetNotifyList(u32 tlsIndex);
 
         static void DistributionCallback(void* param, u32 begin, u32 end);
         void DistributeRange(u32 begin, u32 end);

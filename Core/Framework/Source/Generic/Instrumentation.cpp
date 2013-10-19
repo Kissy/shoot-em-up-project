@@ -19,11 +19,9 @@
 #include <pdh.h>
 #include <pdhmsg.h>
 
-#include "Interface.h"
-
 #include "Manager/ServiceManager.h"
 #include "Manager/ITaskManager.h"
-#include "Instrumentation.h"
+#include "Generic/Instrumentation.h"
 
 
 // Constant number of seconds per update.

@@ -15,8 +15,6 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "Object/PhysicObject.h"
 

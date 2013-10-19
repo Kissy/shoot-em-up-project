@@ -20,8 +20,6 @@
 #include <Ogre.h>
 #pragma warning( pop )
 
-#include "Interface.h"
-
 #include "Manager/IServiceManager.h"
 #include "System.h"
 #include "Scene.h"
@@ -97,14 +95,14 @@ Error GraphicScene::initialize(void) {
     m_pSceneManager->setSkyBox(true, "nebula");
     m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
     
-    Berkelium::Context* windowContext = Berkelium::Context::create();
+    /*Berkelium::Context* windowContext = Berkelium::Context::create();
     Berkelium::Window* window = Berkelium::Window::create(windowContext);
     delete windowContext;
     window->resize(500, 500);
     window->setTransparent(true);
     window->setDelegate(new BrowserWindow());
     window->navigateTo(Berkelium::URLString::point_to("file://D:/My Documents/GitHub/shoot-em-up-project/Assets/Media/Gui/index.html"));
-
+    */
     m_bInitialized = true;
     return Errors::Success;
 }

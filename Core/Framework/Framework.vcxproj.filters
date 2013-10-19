@@ -34,14 +34,14 @@
     <Filter Include="Header Files\Service">
       <UniqueIdentifier>{1a7bff06-874f-462f-bd9e-d616ebcbd10b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{77a637c1-2d83-45b3-bbf4-0b420e4bb744}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Service">
       <UniqueIdentifier>{1507608c-9c44-4e29-ba8b-f1edd4502309}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{da91ce3f-f960-4493-aebb-990dd7de7332}</UniqueIdentifier>
+    <Filter Include="Header Files\Generic">
+      <UniqueIdentifier>{d59cb1eb-fd4c-4c08-bf33-95fe84f9470a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Generic">
+      <UniqueIdentifier>{fb6d4dc5-2ec6-4252-9363-e1bcaaf8d683}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -53,18 +53,6 @@
     </ClCompile>
     <ClCompile Include="Source\Manager\TaskManager.cpp">
       <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ThreadPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scheduler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Instrumentation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Debugger\Debugger.cpp">
       <Filter>Source Files\Debugger</Filter>
@@ -101,6 +89,18 @@
     </ClCompile>
     <ClCompile Include="Source\Service\RuntimeService.cpp">
       <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Generic\Framework.cpp">
+      <Filter>Source Files\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Generic\Instrumentation.cpp">
+      <Filter>Source Files\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Generic\Scheduler.cpp">
+      <Filter>Source Files\Generic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Generic\ThreadPool.cpp">
+      <Filter>Source Files\Generic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +155,6 @@
     <ClInclude Include="Source\Service\SystemService.h">
       <Filter>Header Files\Service</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SystemInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Service\DefinitionService.h">
       <Filter>Header Files\Service</Filter>
     </ClInclude>
@@ -166,6 +163,24 @@
     </ClInclude>
     <ClInclude Include="Source\Service\WindowService.h">
       <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\Instrumentation.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\IttNotify.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\Scheduler.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\ThreadPool.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\Framework.h">
+      <Filter>Header Files\Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Generic\SystemInterface.h">
+      <Filter>Header Files\Generic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

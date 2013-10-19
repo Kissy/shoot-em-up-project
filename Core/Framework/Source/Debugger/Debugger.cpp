@@ -18,7 +18,8 @@
 
 #include "Proto/Debug/DebugEntity.pb.h"
 
-#include "Interface.h"
+#include "Manager/IChangeManager.h"
+#include "System/ISystemObject.h"
 #include "System/Components.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"

@@ -15,8 +15,6 @@
 #include "boost/functional/factory.hpp"
 #include "boost/bind.hpp"
 
-#include "Interface.h"
-
 #include "System.h"
 #include "Scene.h"
 

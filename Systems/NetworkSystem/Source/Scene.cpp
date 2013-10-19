@@ -22,8 +22,6 @@
 
 #include <boost/functional/factory.hpp>
 
-#include "Interface.h"
-
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"

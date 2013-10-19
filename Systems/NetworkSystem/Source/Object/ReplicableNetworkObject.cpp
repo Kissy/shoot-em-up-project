@@ -14,10 +14,10 @@
 
 #include <boost/lexical_cast.hpp>
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "Object/Object.h"
+#include "Object/IMoveObject.h"
+#include "Object/IGeometryObject.h"
 #include "Object/ReplicableNetworkObject.h"
 #include "Proto/Server/DownstreamMessage.pb.h"
 #include "Proto/Message.pb.h"

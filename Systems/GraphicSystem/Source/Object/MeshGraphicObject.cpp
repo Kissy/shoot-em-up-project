@@ -21,16 +21,15 @@
 #pragma warning( push, 0 )
 #pragma warning( disable : 4244 6211 6386 )
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "System.h"
 #include "Object.h"
 #include "Object/MeshGraphicObject.h"
+#include "Object/IGeometryObject.h"
 
 #define POGRESCENEMGR (reinterpret_cast<GraphicScene*>(m_pSystemScene)->getSceneManager())
 
-#include <IttNotify.h>
+#include "Generic/IttNotify.h"
 
 __ITT_DEFINE_STATIC_EVENT(g_tpeChangeOccurred, "Graphics Mesh: ChangeOccurred", 29);
 

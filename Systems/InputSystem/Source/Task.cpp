@@ -14,8 +14,6 @@
 
 #include <OISB.h>
 
-#include "Interface.h"
-
 #include "System.h"
 #include "Scene.h"
 #include "Object/Object.h"

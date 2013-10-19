@@ -14,8 +14,8 @@
 
 #include <Windows.h>
 
-#include "Interface.h"
-#include "ThreadPool.h"
+#include "Assert.h"
+#include "Generic/ThreadPool.h"
 
 void
 BasicThreadPool::Initialize(

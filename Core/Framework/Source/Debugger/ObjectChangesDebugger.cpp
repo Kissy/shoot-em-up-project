@@ -17,7 +17,6 @@
 
 #include "ObjectChangesDebugger.h"
 #include "Debugger.h"
-#include "Interface.h"
 #include "Universal/UScene.h"
 
 ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)

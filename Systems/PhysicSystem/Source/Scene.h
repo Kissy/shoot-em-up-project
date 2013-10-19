@@ -16,6 +16,7 @@
 
 #include "System/ISystemScene.h"
 #include "System/ISystem.h"
+#include "Object/ISceneObject.h"
 #include "System.h"
 #include "Task.h"
 

@@ -25,7 +25,6 @@
 
 #include "Manager/IServiceManager.h"
 #include "Defines.h"
-#include "Interface.h"
 #include "System.h"
 #include "Scene.h"
 
@@ -57,7 +56,6 @@ GraphicSystem::GraphicSystem(void)
  * @inheritDoc
  */
 GraphicSystem::~GraphicSystem(void) {
-// quit listening to the RenderWindow
     if (m_bInitialized) {
         Ogre::WindowEventUtilities::removeWindowEventListener(m_pRenderWindow, this);
 
@@ -69,11 +67,13 @@ GraphicSystem::~GraphicSystem(void) {
         // should a new version of the ParticleFX plugin and/or Ogre become available.
         // m_pRoot->unloadPlugin("Plugin_ParticleFX");
         // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
+
+        Berkelium::destroy();
     }
 
-    Berkelium::destroy();
-
     m_pRoot->shutdown();
+
+    delete m_pOverlaySystem;
     delete m_pRoot;
 }
 

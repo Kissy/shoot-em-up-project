@@ -19,6 +19,7 @@
 #pragma warning( pop )
 
 #include "System/ISystemScene.h"
+#include "System/ISystemTask.h"
 
 class GraphicScene;
 

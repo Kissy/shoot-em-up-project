@@ -13,8 +13,6 @@
 // responsibility to update it.
 
 #include "Defines.h"
-#include "Interface.h"
-
 #include "Proto.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
@@ -23,9 +21,9 @@
 #include "Manager/ServiceManager.h"
 #include "Manager/TaskManager.h"
 #include "Service/DefinitionService.h"
-#include "Scheduler.h"
-#include "Instrumentation.h"
-#include "Framework.h"
+#include "Generic/Scheduler.h"
+#include "Generic/Instrumentation.h"
+#include "Generic/Framework.h"
 
 /**
  * @inheritDoc
@@ -33,9 +31,10 @@
 Framework::Framework(void)
     : m_serviceManager(new ServiceManager())
     , m_pSceneCCM(new ChangeManager())
-    , m_pObjectCCM(new ChangeManager()) {
+    , m_pObjectCCM(new ChangeManager())
+    , m_pScheduler(new Scheduler()) {
     m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
-    m_pScheduler = new Scheduler();
+    m_definitionService = new DefinitionService(m_pScene);
 }
 
 /**
@@ -46,6 +45,7 @@ Framework::~Framework(void) {
     delete m_pScheduler;
     delete m_pSceneCCM;
     delete m_pObjectCCM;
+    delete m_definitionService;
     delete m_serviceManager;
 }
 
@@ -53,8 +53,7 @@ Framework::~Framework(void) {
  * @inheritDoc
  */
 Error Framework::Initialize(void) {
-    DefinitionService definitionService(m_pScene, "Application.gdf.bin");
-    definitionService.parseEnvironment();
+    m_definitionService->parseEnvironment();
     
     //
     // Init debugger
@@ -76,9 +75,9 @@ Error Framework::Initialize(void) {
     //
     // Complete the parsing of the GDF and the initial scene.
     //
-    definitionService.parseSystems();
-    m_sNextScene = definitionService.getStartupScene();
-    definitionService.parseScene(m_sNextScene);
+    m_definitionService->parseSystems();
+    m_sNextScene = m_definitionService->getStartupScene();
+    m_definitionService->parseScene(m_sNextScene);
 
     m_pScheduler->SetScene(m_pScene);
 
@@ -104,10 +103,7 @@ void Framework::Shutdown(void) {
 #ifdef DEBUG_BUILD
     //Singletons::Debugger.clean();
 #endif
-    //
-    // De-register the framework as the system access provider.
-    //
-    //Singletons::ServiceManager.UnregisterSystemAccessProvider(this);
+
     //
     // Free resources used for parallel execution by the change manager.
     //

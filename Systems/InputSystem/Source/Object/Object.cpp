@@ -12,10 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Interface.h"
 #include "Generic/IEntity.h"
-
 #include "Object/Object.h"
+#include "System/ISystemObject.h"
 
 /**
  * @inheritDoc

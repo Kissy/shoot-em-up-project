@@ -14,7 +14,7 @@
 
 #include "Defines.h"
 #include "Errors.h"
-#include "Framework.h"
+#include "Generic/Framework.h"
 
 /**
  * @inheritDoc

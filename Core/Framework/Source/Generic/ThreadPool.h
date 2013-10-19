@@ -16,6 +16,8 @@
 
 #include <queue>
 
+#include "Defines.h"
+#include "DataTypes.h"
 #include "SpinMutex.h"
 
 /// <summary>

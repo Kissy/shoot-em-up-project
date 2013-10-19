@@ -18,8 +18,6 @@
 #include <Ogre.h>
 #pragma warning( pop )
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "System.h"
 #include "Object.h"

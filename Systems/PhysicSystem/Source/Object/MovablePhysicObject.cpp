@@ -14,8 +14,6 @@
 
 #include <boost/bind.hpp>
 
-#include "Interface.h"
-
 #include "Scene.h"
 #include "PhysicObject.h"
 #include "Generic/IEntity.h"

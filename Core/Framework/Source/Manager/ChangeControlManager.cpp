@@ -14,12 +14,12 @@
 
 #pragma warning ( disable: 4718 )
 
-#include "Windows.h" // For ::TlsXxx()
+#include <Windows.h> // For ::TlsXxx()
 
-#include "Interface.h"
-
-#include "ChangeControlManager.h"
-#include "IttNotify.h"
+#include "Generic/ISubject.h"
+#include "Manager/ITaskManager.h"
+#include "Manager/ChangeControlManager.h"
+#include "Generic/IttNotify.h"
 
 // Declare Thread Profiler events
 __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionPreprocessTpEvent, "Change Distribution Preprocess", 30);

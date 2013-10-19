@@ -18,6 +18,7 @@
 #include "Manager/IServiceManager.h"
 #include "Service/RuntimeService.h"
 
+class DefinitionService;
 class ServiceManager;
 class Scheduler;
 class ChangeManager;
@@ -77,6 +78,7 @@ protected:
     
 private:
     ServiceManager*                         m_serviceManager;
+    DefinitionService*                      m_definitionService;
 
     Scheduler*                              m_pScheduler;
     ChangeManager*                          m_pSceneCCM;

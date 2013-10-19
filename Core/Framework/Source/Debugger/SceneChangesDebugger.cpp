@@ -17,7 +17,7 @@
 
 #include "SceneChangesDebugger.h"
 #include "Debugger.h"
-#include "Interface.h"
+#include "Object/ISceneObject.h"
 #include "Universal/UScene.h"
 
 SceneChangesDebugger::SceneChangesDebugger(Debugger* debugger) :

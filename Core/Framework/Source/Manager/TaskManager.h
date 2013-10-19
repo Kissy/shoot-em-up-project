@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <vector>
 #pragma warning( push )
 #pragma warning( disable : 4100 4189 4244 4512 4634 )
 #include <tbb/task.h>
@@ -21,9 +22,11 @@
 #include <tbb/tbb_thread.h>
 #pragma warning( pop )
 
-#include "Interface.h"
+#include "Defines.h"
+#include "DataTypes.h"
 #include "SpinMutex.h"
-#include "IttNotify.h"
+#include "Generic/IttNotify.h"
+#include "Manager/ITaskManager.h"
 
 class Instrumentation;
 

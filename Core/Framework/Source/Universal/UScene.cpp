@@ -12,12 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Interface.h"
-#include "Framework.h"
+#include "Generic/Framework.h"
 #include "Universal/UScene.h"
 #include "Universal/UObject.h"
 #include "Object/ISceneObject.h"
 #include "Manager/ServiceManager.h"
+#include "Manager/IChangeManager.h"
+#include "System/ISystemObject.h"
 
 /**
  * @inheritDoc

@@ -16,6 +16,7 @@
 
 #include "System.h"
 #include "Generic/IEntity.h"
+#include "System/ISystemObject.h"
 
 class InputSystem;
 class InputScene;

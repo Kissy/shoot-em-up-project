@@ -22,17 +22,39 @@
 #include "Universal/UObject.h"
 #include "Manager/ServiceManager.h"
 #include "Service/SettingService.h"
-#include "SystemInterface.h"
+#include "Generic/SystemInterface.h"
 #include "Service/DefinitionService.h"
-
 
 /**
  * @inheritDoc
  */
-DefinitionService::DefinitionService(UScene* pScene, std::string sGDF)
+DefinitionService::DefinitionService(UScene* pScene)
     : m_pScene(pScene) {
-    Error result = loadProto(sGDF.c_str(), &m_gdProto);
+    Error result = loadProto("Application.gdf.bin", &m_gdProto);
     ASSERT(result == Errors::Success);
+}
+
+/**
+ * @inheritDoc
+ */
+DefinitionService::~DefinitionService(void) {
+    //
+    // Iterate through all the loaded libraries.
+    //
+    for (auto it = m_systemLibs.begin(); it != m_systemLibs.end(); it++) {
+        HMODULE hLib = reinterpret_cast<HMODULE>(it->hLib);
+        //
+        // Get the system destruction function.
+        //
+        DestroySystemFunction fnDestroySystem = reinterpret_cast<DestroySystemFunction>(GetProcAddress(hLib, "DestroySystem"));
+        if (fnDestroySystem != NULL) {
+            fnDestroySystem(it->pSystem);
+        }
+
+        FreeLibrary(hLib);
+    }
+
+    m_systemLibs.clear();
 }
 
 /**
@@ -208,10 +230,14 @@ Error DefinitionService::loadSystemLibrary(Proto::SystemType type,  ISystem** pp
     }
 
     systemService->add(pSystem);
-    // TODO
-    /*SystemLib sl = { reinterpret_cast<Handle>(hLib), pSystem };
-    m_SystemLibs.push_back(sl);*/
+    
+    SystemLib systemLib = {
+        reinterpret_cast<Handle>(hLib),
+        pSystem
+    };
+    m_systemLibs.push_back(systemLib);
 
     *ppSystem = pSystem;
     return Errors::Success;
 }
+

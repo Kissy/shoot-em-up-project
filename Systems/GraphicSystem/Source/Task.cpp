@@ -14,15 +14,13 @@
 
 #include <berkelium/Berkelium.hpp>
 #pragma warning( push, 0 )
-// Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include <Ogre.h>
 #pragma warning( pop )
 
-#include "Interface.h"
 #include "Scene.h"
 #include "Task.h"
 #include "Object/Object.h"
-#include "IttNotify.h"
+#include "Generic/IttNotify.h"
 
 
 __ITT_DEFINE_STATIC_EVENT(g_tpeRendering, "Graphics: Rendering", 19);
@@ -65,6 +63,7 @@ void GraphicTask::Update(f32 DeltaTime) {
     // Update objects for next frame
     //
     m_pSystemScene->Update(DeltaTime);
+
     // Update GUI
     Berkelium::update();
 }
