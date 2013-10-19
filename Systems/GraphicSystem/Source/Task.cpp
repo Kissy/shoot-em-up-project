@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <include/cef_app.h>
+#include <berkelium/Berkelium.hpp>
 #pragma warning( push, 0 )
 // Temporarily switching warning level to 0 to ignore warnings in extern/Ogre
 #include <Ogre.h>
@@ -66,5 +66,5 @@ void GraphicTask::Update(f32 DeltaTime) {
     //
     m_pSystemScene->Update(DeltaTime);
     // Update GUI
-    CefDoMessageLoopWork();
+    Berkelium::update();
 }

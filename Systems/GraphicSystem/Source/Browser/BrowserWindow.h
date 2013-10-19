@@ -14,39 +14,45 @@
 
 #pragma once
 
-#include <include/cef_client.h>
-#include <include/cef_render_handler.h>
+#pragma warning( push, 0 )
+#include <Overlay/OgreOverlay.h>
+#include <OgreTexture.h>
+#pragma warning( pop )
 
-#include "RenderHandler.h"
+#include <berkelium/WindowDelegate.hpp>
 
 /**
 * Implementation of the Surface.
 */
-class BrowserClient : public CefClient {
+class BrowserWindow : public Berkelium::WindowDelegate {
 public:
-
     /**
      * Default constructor.
      */
-    BrowserClient(RenderHandler *renderHandler);
+    BrowserWindow();
 
     /**
      * Destructor.
      */
-    ~BrowserClient(void);
+    ~BrowserWindow(void);
 
     /**
-     * Handler, called when the get render.
+     * Rectangle to box.
      *
-     * @return  The render handler.
+     * @param   rect    The rectangle.
+     *
+     * @return  .
      */
-    virtual inline CefRefPtr<CefRenderHandler> GetRenderHandler() {
-        return m_renderHandler;
-    }
+    inline Ogre::Box rectToBox(Berkelium::Rect rect);
 
-    IMPLEMENT_REFCOUNTING(BrowserClient);
+    /**
+     * @inheritDoc
+     */
+    virtual void onPaint(Berkelium::Window *win, const unsigned char *sourceBuffer, const Berkelium::Rect &sourceBufferRect, size_t numCopyRects, 
+        const Berkelium::Rect *copyRects, int dx, int dy, const Berkelium::Rect &scrollRect);
 
 private:
-    CefRefPtr<CefRenderHandler>     m_renderHandler;
+    Ogre::TexturePtr        m_texture;
+    Ogre::Overlay*          m_overlay;
 
 };

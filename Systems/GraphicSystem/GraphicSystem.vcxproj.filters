@@ -62,10 +62,7 @@
     <ClCompile Include="Source\Object\ParticleGraphicObject.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Browser\BrowserClient.cpp">
-      <Filter>Source Files\Browser</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Browser\RenderHandler.cpp">
+    <ClCompile Include="Source\Browser\BrowserWindow.cpp">
       <Filter>Source Files\Browser</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,10 +94,7 @@
     <ClInclude Include="Source\Object\ParticleGraphicObject.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Browser\BrowserClient.h">
-      <Filter>Header Files\Browser</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Browser\RenderHandler.h">
+    <ClInclude Include="Source\Browser\BrowserWindow.h">
       <Filter>Header Files\Browser</Filter>
     </ClInclude>
   </ItemGroup>

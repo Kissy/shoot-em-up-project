@@ -14,7 +14,8 @@
 
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
-#include <include/cef_client.h>
+#include <berkelium/Berkelium.hpp>
+#include <berkelium/Context.hpp>
 #pragma warning( push, 0 )
 #include <Ogre.h>
 #pragma warning( pop )
@@ -31,7 +32,7 @@
 #include "Object/ParticleGraphicObject.h"
 #include "Object/CameraGraphicObject.h"
 #include "Object/MeshGraphicObject.h"
-#include "Browser/BrowserClient.h"
+#include "Browser/BrowserWindow.h"
 
 extern IServiceManager* g_serviceManager;
 
@@ -55,8 +56,8 @@ void ProcessObjects(void* Data);
  */
 GraphicScene::GraphicScene(ISystem* pSystem) 
     : ISystemScene(pSystem)
-    , m_pSceneManager(NULL)
-    , m_pRootNode(NULL)
+    , m_pSceneManager(nullptr)
+    , m_pRootNode(nullptr)
     , m_FogMode(Ogre::FOG_NONE) {
     m_TaskFactory = boost::factory<GraphicTask*>();
     
@@ -73,7 +74,7 @@ GraphicScene::GraphicScene(ISystem* pSystem)
  * @inheritDoc
  */
 GraphicScene::~GraphicScene(void) {
-    reinterpret_cast<GraphicSystem*>(m_pSystem)->getRoot()->destroySceneManager(m_pSceneManager);
+    GetSystem<GraphicSystem>()->getRoot()->destroySceneManager(m_pSceneManager);
 }
 
 /**
@@ -82,7 +83,7 @@ GraphicScene::~GraphicScene(void) {
 Error GraphicScene::initialize(void) {
     ASSERT(!m_bInitialized);
 
-    m_pSceneManager = reinterpret_cast<GraphicSystem*>(m_pSystem)->getRoot()->createSceneManager(Ogre::ST_GENERIC);
+    m_pSceneManager = GetSystem<GraphicSystem>()->getRoot()->createSceneManager(Ogre::ST_GENERIC);
     ASSERT(m_pSceneManager != NULL);
     if (!m_pSceneManager) {
         return Errors::Failure;
@@ -96,26 +97,14 @@ Error GraphicScene::initialize(void) {
     m_pSceneManager->setSkyBox(true, "nebula");
     m_pSceneManager->addRenderQueueListener(GetSystem<GraphicSystem>()->getOverlaySystem());
     
-    m_renderHandler = new RenderHandler();
+    Berkelium::Context* windowContext = Berkelium::Context::create();
+    Berkelium::Window* window = Berkelium::Window::create(windowContext);
+    delete windowContext;
+    window->resize(500, 500);
+    window->setTransparent(true);
+    window->setDelegate(new BrowserWindow());
+    window->navigateTo(Berkelium::URLString::point_to("file://D:/My Documents/GitHub/shoot-em-up-project/Assets/Media/Gui/index.html"));
 
-    {
-        CefWindowInfo window_info;
-        window_info.SetTransparentPainting(true);
-        CefBrowserSettings browserSettings;
-
-        // in linux set a gtk widget, in windows a hwnd. If not available set nullptr - may cause some render errors, in context-menu and plugins.
-        window_info.SetAsOffScreen(nullptr);
-
-        m_browserClient = new BrowserClient(m_renderHandler);
-        m_browser = CefBrowserHost::CreateBrowserSync(window_info, m_browserClient.get(), "file://D:/My Documents/GitHub/shoot-em-up-project/Assets/Media/Gui/index.html", browserSettings);
-        
-        // inject user-input by calling
-        // browser->GetHost()->SendKeyEvent(...);
-        // browser->GetHost()->SendMouseMoveEvent(...);
-        // browser->GetHost()->SendMouseClickEvent(...);
-        // browser->GetHost()->SendMouseWheelEvent(...);
-    }
-    
     m_bInitialized = true;
     return Errors::Success;
 }
@@ -139,7 +128,6 @@ void GraphicScene::Update(f32 DeltaTime) {
  * @inheritDoc
  */
 void GraphicScene::UpdateCallback(void* param, u32 begin, u32 end) {
-    //ASSERT (dynamic_cast<OGREGraphicsScene*>(param));
     GraphicScene* pThis = static_cast<GraphicScene*>(param);
     pThis->ProcessRange(begin, end);
 }
@@ -148,9 +136,9 @@ void GraphicScene::UpdateCallback(void* param, u32 begin, u32 end) {
  * @inheritDoc
  */
 void GraphicScene::ProcessRange(u32 begin, u32 end) {
-    ObjectsList::const_iterator start = m_pObjects.begin() + begin;
-    for (ObjectsList::const_iterator iterator = start; iterator < start + end; iterator++) {
-        GraphicObject* pObject = reinterpret_cast<GraphicObject*>(iterator->second);
+    auto start = m_pObjects.begin() + begin;
+    for (auto iterator = start; iterator < start + end; iterator++) {
+        GraphicObject* pObject = static_cast<GraphicObject*>(iterator->second);
 
         // Update objects based on paused state
         // TODO maybe not pause some objects ?

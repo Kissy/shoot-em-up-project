@@ -18,12 +18,9 @@
 #include <Overlay/OgreOverlaySystem.h>
 #pragma warning( pop )
 
-#include <include/cef_client.h>
-
 #include "DataTypes.h"
 #include "SpinMutex.h"
 #include "Task.h"
-#include "Browser/BrowserClient.h"
 
 class GraphicSystem;
 class GraphicObject;
@@ -109,10 +106,6 @@ class GraphicScene : public ISystemScene {
         void setAmbientLight(Proto::RepeatedString* values);
 
     protected:
-        RenderHandler*                      m_renderHandler;
-        CefRefPtr<CefBrowser>               m_browser;
-        CefRefPtr<BrowserClient>            m_browserClient;
-
         Ogre::SceneManager*                 m_pSceneManager;
         Ogre::SceneNode*                    m_pRootNode;
         

@@ -15,7 +15,7 @@
 #include <boost/functional/factory.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <include/cef_app.h>
+#include <berkelium/Berkelium.hpp>
 
 #pragma warning( push, 0 )
 #include <Ogre.h>
@@ -51,9 +51,6 @@ GraphicSystem::GraphicSystem(void)
     m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
     m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
     m_pOverlaySystem = new Ogre::OverlaySystem();
-    
-    CefMainArgs main_args;
-    CefExecuteProcess(main_args, nullptr);
 }
 
 /**
@@ -74,7 +71,7 @@ GraphicSystem::~GraphicSystem(void) {
         // m_pRoot->uninstallPlugin("Plugin_ParticleFX");
     }
 
-    CefShutdown();
+    Berkelium::destroy();
 
     m_pRoot->shutdown();
     delete m_pRoot;
@@ -136,14 +133,8 @@ Error GraphicSystem::initialize(void) {
     m_pResourceGroupManager->addResourceLocation("../../Assets/Media/Graphic", "FileSystem", "Default", true);
     m_pResourceGroupManager->initialiseResourceGroup("Default");
     m_pResourceGroupManager->loadResourceGroup("Default");
-
-    {
-        CefSettings settings;
-        settings.pack_loading_disabled = 1;
-        CefString(&settings.log_file).FromASCII("logs/interface.log");
-        CefMainArgs main_args;
-        CefInitialize(main_args, settings, nullptr);
-    }
+    
+    Berkelium::init(Berkelium::FileString::empty());
 
     m_bInitialized = true;
     return Errors::Success;

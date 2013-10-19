@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#pragma warning( push, 0 )
 #include <Overlay/OgreOverlayManager.h>
 #include <Overlay/OgreOverlayContainer.h>
 #include <OgreTexture.h>
@@ -20,13 +21,14 @@
 #include <OgreHardwarePixelBuffer.h>
 #include <OgreTextureManager.h>
 #include <OgreMaterialManager.h>
+#pragma warning( pop )
 
-#include "RenderHandler.h"
+#include "BrowserWindow.h"
 
 /**
  * @inheritDoc
  */
-RenderHandler::RenderHandler() {
+BrowserWindow::BrowserWindow() {
     m_texture = Ogre::TextureManager::getSingleton().createManual("HUDTexture", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
        Ogre::TEX_TYPE_2D, 500, 500, 0, Ogre::PF_BYTE_BGRA, Ogre::TU_DYNAMIC);
 
@@ -49,26 +51,27 @@ RenderHandler::RenderHandler() {
 /**
  * @inheritDoc
  */
-RenderHandler::~RenderHandler() {
+BrowserWindow::~BrowserWindow() {
+
 }
 
 /**
- * @inheritDoc
+ * @inheritDoc.
  */
-bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) {
-    rect = CefRect(0, 0, m_texture->getWidth(), m_texture->getHeight());
-    return true;
+inline Ogre::Box BrowserWindow::rectToBox(Berkelium::Rect rect) {
+    return Ogre::Box(rect.left(), rect.top(), 0, rect.right(), rect.bottom(), 1);
 }
 
 /**
- * @inheritDoc
+ * @inheritDoc.
  */
-void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) {
+void BrowserWindow::onPaint(Berkelium::Window *win, const unsigned char *sourceBuffer, const Berkelium::Rect &sourceBufferRect, size_t numCopyRects, const Berkelium::Rect *copyRects, int dx, int dy, const Berkelium::Rect &scrollRect) {
     const Ogre::HardwarePixelBufferSharedPtr textureBuffer = m_texture->getBuffer();
-    const Ogre::PixelBox srcBox = Ogre::PixelBox(Ogre::Box(0, 0, 0, width, height, 1), Ogre::PF_BYTE_BGRA, const_cast<void *>(buffer));
+    const Ogre::PixelBox srcBox = Ogre::PixelBox(rectToBox(sourceBufferRect), Ogre::PF_BYTE_BGRA, const_cast<unsigned char*>(sourceBuffer));
 
-    for(CefRect dirtyRect : dirtyRects) {
-        const Ogre::Box destBox(dirtyRect.x, dirtyRect.y, 0, dirtyRect.width, dirtyRect.height, 1);
+    for(int i = 0; i < numCopyRects; i++) {
+        const Ogre::Box destBox = rectToBox(copyRects[i]);
         textureBuffer->blitFromMemory(srcBox.getSubVolume(destBox), destBox);
     }
 }
+
