@@ -51,9 +51,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Manager\ChangeControlManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Manager\ServiceManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
     <ClCompile Include="Source\Generic\Scheduler.cpp">
       <Filter>Source Files\Generic</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Generic\ThreadPool.cpp">
-      <Filter>Source Files\Generic</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Task\StallTask.cpp">
       <Filter>Source Files\Task</Filter>
     </ClCompile>
@@ -120,11 +114,11 @@
     <ClCompile Include="Source\Service\LogService.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Manager\ChangeManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Manager\ChangeControlManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manager\ServiceManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
@@ -173,9 +167,6 @@
     <ClInclude Include="Source\Generic\Scheduler.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Generic\ThreadPool.h">
-      <Filter>Header Files\Generic</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Generic\Framework.h">
       <Filter>Header Files\Generic</Filter>
     </ClInclude>
@@ -199,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="Source\Service\LogService.h">
       <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\ChangeManager.h">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@
 
 #include "Generic/ISubject.h"
 #include "Manager/ITaskManager.h"
-#include "Manager/ChangeControlManager.h"
+#include "Manager/ChangeManager.h"
 #include "Generic/IttNotify.h"
 
 // Declare Thread Profiler events

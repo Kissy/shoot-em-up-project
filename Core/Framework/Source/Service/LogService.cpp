@@ -12,7 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <Service/LogService.h>
+#include <boost/filesystem/operations.hpp>
+
+#include "Service/LogService.h"
 
 /**
  * @inheritDoc
@@ -36,6 +38,7 @@ LogService::~LogService() {
 void LogService::initSystem(Proto::SystemType type) {
     logog::Initialize();
     std::string fileName = "logs/" + Proto::SystemType_Name(type) + ".log";
+    boost::filesystem::remove(boost::filesystem::path(fileName));
     m_logFile[type] = new logog::LogFile(fileName.c_str());
 };
 

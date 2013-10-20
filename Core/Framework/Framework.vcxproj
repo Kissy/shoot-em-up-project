@@ -17,9 +17,8 @@
     <ClCompile Include="Source\Generic\Framework.cpp" />
     <ClCompile Include="Source\Generic\Instrumentation.cpp" />
     <ClCompile Include="Source\Generic\Scheduler.cpp" />
-    <ClCompile Include="Source\Generic\ThreadPool.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Manager\ChangeControlManager.cpp" />
+    <ClCompile Include="Source\Manager\ChangeManager.cpp" />
     <ClCompile Include="Source\Manager\ServiceManager.cpp" />
     <ClCompile Include="Source\Manager\TaskManager.cpp" />
     <ClCompile Include="Source\Service\DefinitionService.cpp" />
@@ -44,9 +43,8 @@
     <ClInclude Include="Source\Generic\IttNotify.h" />
     <ClInclude Include="Source\Generic\Scheduler.h" />
     <ClInclude Include="Source\Generic\SystemInterface.h" />
-    <ClInclude Include="Source\Generic\ThreadPool.h" />
     <ClInclude Include="Source\Main.h" />
-    <ClInclude Include="Source\Manager\ChangeControlManager.h" />
+    <ClInclude Include="Source\Manager\ChangeManager.h" />
     <ClInclude Include="Source\Manager\ServiceManager.h" />
     <ClInclude Include="Source\Manager\TaskManager.h" />
     <ClInclude Include="Source\Service\DefinitionService.h" />

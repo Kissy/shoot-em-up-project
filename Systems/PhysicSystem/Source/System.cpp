@@ -12,11 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "boost/functional/factory.hpp"
-#include "boost/bind.hpp"
+#include <boost/functional/factory.hpp>
+#include <boost/bind.hpp>
 
+#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
+
+extern IServiceManager* g_serviceManager;
 
 /**
  * @inheritDoc
@@ -42,6 +45,7 @@ PhysicSystem::~PhysicSystem(void) {
 Error PhysicSystem::initialize(void) {
     ASSERT(!m_bInitialized);
     
+    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;
 }
