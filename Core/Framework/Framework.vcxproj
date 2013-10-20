@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Manager\ServiceManager.cpp" />
     <ClCompile Include="Source\Manager\TaskManager.cpp" />
     <ClCompile Include="Source\Service\DefinitionService.cpp" />
+    <ClCompile Include="Source\Service\LogService.cpp" />
     <ClCompile Include="Source\Service\RuntimeService.cpp" />
     <ClCompile Include="Source\Service\SettingService.cpp" />
     <ClCompile Include="Source\Service\SystemService.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="Source\Manager\ServiceManager.h" />
     <ClInclude Include="Source\Manager\TaskManager.h" />
     <ClInclude Include="Source\Service\DefinitionService.h" />
+    <ClInclude Include="Source\Service\LogService.h" />
     <ClInclude Include="Source\Service\RuntimeService.h" />
     <ClInclude Include="Source\Service\SettingService.h" />
     <ClInclude Include="Source\Service\SystemService.h" />

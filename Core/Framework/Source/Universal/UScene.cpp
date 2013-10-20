@@ -209,7 +209,7 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
         parent->addChildren(pObject);
     }
 
-    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    SystemService* systemService = IServiceManager::get()->getSystemService();
     
     //
     // Start by the template object.

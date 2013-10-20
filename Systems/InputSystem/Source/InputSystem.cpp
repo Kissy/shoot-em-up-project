@@ -16,7 +16,7 @@
 #include <windows.h>
 
 #include "System/ISystem.h"
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "Generic/SystemInterface.h"
 #include "System.h"
 

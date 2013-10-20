@@ -15,10 +15,11 @@
 #pragma once
 
 #include "Manager/ITaskManager.h"
-#include "Service/IRuntimeService.h"
-#include "Service/ISettingService.h"
-#include "Service/ISystemService.h"
-#include "Service/IWindowService.h"
+
+class RuntimeService;
+class SettingService;
+class SystemService;
+class WindowService;
 
 /**
  * Interface class for providing services to the systems.
@@ -59,28 +60,28 @@ public:
      *
      * @return  null if it fails, else the system service.
      */
-    virtual IRuntimeService* getRuntimeService(void) = 0;
+    virtual RuntimeService* getRuntimeService(void) = 0;
 
     /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
      */
-    virtual ISettingService* getSettingService(void) = 0;
+    virtual SettingService* getSettingService(void) = 0;
 
     /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
      */
-    virtual ISystemService* getSystemService(void) = 0;
+    virtual SystemService* getSystemService(void) = 0;
 
     /**
      * Gets window service.
      *
      * @return  null if it fails, else the window service.
      */
-    virtual IWindowService* getWindowService(void) = 0;
+    virtual WindowService* getWindowService(void) = 0;
 
     /**
      * Gets the get.

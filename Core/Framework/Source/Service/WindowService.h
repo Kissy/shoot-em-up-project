@@ -19,7 +19,7 @@
 /**
  * An interface for environment runtime functionality.
  */
-class WindowService : public IWindowService {
+class WindowService {
 public:
     /**
      * @inheritDoc

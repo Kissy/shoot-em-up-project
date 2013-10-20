@@ -20,7 +20,7 @@
 #include <Ogre.h>
 #pragma warning( pop )
 
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"

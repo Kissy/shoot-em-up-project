@@ -12,7 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <Manager/LogManager.h>
+#include <Service/LogService.h>
 
 /**
  * @inheritDoc

@@ -22,14 +22,14 @@
 /**
  * @inhertiDoc
  */
-IRuntimeService::Status RuntimeService::getStatus(void) {
+RuntimeService::Status RuntimeService::getStatus(void) {
     return m_runtimeStatus;
 }
 
 /**
  * @inhertiDoc
  */
-void RuntimeService::setStatus(IRuntimeService::Status Status) {
+void RuntimeService::setStatus(Status Status) {
 #if defined(MSC_COMPILER)
     ::InterlockedExchange((LONG*)&m_runtimeStatus, Status);
 #endif
@@ -39,14 +39,14 @@ void RuntimeService::setStatus(IRuntimeService::Status Status) {
  * @inhertiDoc
  */
 bool RuntimeService::isPaused(void) {
-    return m_runtimeStatus == IRuntimeService::Status::Paused;
+    return m_runtimeStatus == Status::Paused;
 }
 
 /**
  * @inhertiDoc
  */
 bool RuntimeService::isQuit(void) {
-    return m_runtimeStatus == IRuntimeService::Status::Quit;
+    return m_runtimeStatus == Status::Quit;
 }
 
 

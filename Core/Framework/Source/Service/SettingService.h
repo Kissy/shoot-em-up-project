@@ -22,7 +22,7 @@
 /**
  * An interface for environment runtime functionality.
  */
-class SettingService : public ISettingService {
+class SettingService {
 public:
     /**
      * @inheritDoc

@@ -14,7 +14,7 @@
 
 #pragma once
 
-class IRuntimeService;
+class RuntimeService;
 class TaskManager;
 
 /**
@@ -64,7 +64,7 @@ public:
 protected:
     static const boost::timer::nanosecond_type          sm_defaultClockFrequency;
 
-    IRuntimeService*                                    m_runtimeService;
+    RuntimeService*                                     m_runtimeService;
     TaskManager*                                        m_pTaskManager;
     
     bool                                                m_benchmarkingEnabled;

@@ -117,6 +117,9 @@
     <ClCompile Include="Source\Task\ParallelForBody.cpp">
       <Filter>Source Files\Task</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Service\LogService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Manager\ChangeControlManager.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="Source\Task\ParallelForBody.h">
       <Filter>Header Files\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Service\LogService.h">
+      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -113,7 +113,7 @@ void Framework::Shutdown(void) {
 
 
 Error Framework::Execute(void) {
-    IServiceManager::get()->getRuntimeService()->setStatus(IRuntimeService::Status::Running);
+    ServiceManager::get()->getRuntimeService()->setStatus(RuntimeService::Status::Running);
 
     while (true) {
         processMessages();

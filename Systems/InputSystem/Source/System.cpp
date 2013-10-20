@@ -16,7 +16,7 @@
 #include <OIS.h>
 #include <OISB.h>
 
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 

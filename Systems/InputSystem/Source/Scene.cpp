@@ -15,7 +15,7 @@
 #include <boost/functional/factory.hpp>
 #include <OISB.h>
 
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "System.h"
 #include "Scene.h"
 #include "Task.h"
@@ -64,7 +64,7 @@ Error InputScene::initialize(void) {
  */
 void InputScene::Update(f32 DeltaTime) {
     if (m_quitInputAction->isActive()) {
-        g_serviceManager->getRuntimeService()->setStatus(IRuntimeService::Status::Quit);
+        g_serviceManager->getRuntimeService()->setStatus(RuntimeService::Status::Quit);
         return;
     }
 

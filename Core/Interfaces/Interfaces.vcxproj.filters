@@ -16,9 +16,6 @@
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{3f3b6416-06f5-4163-981c-ef739780561c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Service">
-      <UniqueIdentifier>{ab4133e5-c645-4481-af16-bf308ab0aab1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{b919bb46-79a8-4885-a963-07771fd3ad97}</UniqueIdentifier>
     </Filter>
@@ -92,18 +89,6 @@
     </ClInclude>
     <ClInclude Include="Source\Generic\IEntity.h">
       <Filter>Header Files\Generic</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\ISystemService.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\IRuntimeService.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\ISettingService.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Service\IWindowService.h">
-      <Filter>Header Files\Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

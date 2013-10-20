@@ -27,7 +27,7 @@ class ISystem;
  * Provides a single location for access to the different systems that are available for use.
  * @sa  Singleton
  */
-class SystemService : public ISystemService {
+class SystemService {
 public:
     /**
      * Constructor.

@@ -62,7 +62,7 @@ DefinitionService::~DefinitionService(void) {
  */
 void DefinitionService::parseEnvironment(void) {
     ASSERT(m_gdProto.IsInitialized());
-    ISettingService* settingService = IServiceManager::get()->getSettingService();
+    SettingService* settingService = IServiceManager::get()->getSettingService();
     for (auto property : m_gdProto.properties()) {
         settingService->add(property);
     }
@@ -95,7 +95,7 @@ void DefinitionService::parseScene(std::string sScene) {
         return;
     }
     
-    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    SystemService* systemService = IServiceManager::get()->getSystemService();
     
     //
     // Create the initial scene for each system.
@@ -222,7 +222,7 @@ Error DefinitionService::loadSystemLibrary(Proto::SystemType type,  ISystem** pp
         return Err;
     }
 
-    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    SystemService* systemService = IServiceManager::get()->getSystemService();
     Proto::SystemType systemType = pSystem->GetSystemType();
     ISystem* pCurrSystem = systemService->get(systemType);
     if (pCurrSystem != NULL) {

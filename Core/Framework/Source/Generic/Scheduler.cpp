@@ -17,6 +17,8 @@
 
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
+#include "Service/SettingService.h"
+#include "Service/RuntimeService.h"
 #include "Universal/UScene.h"
 #include "Generic/Scheduler.h"
 #include "Debugger/Debugger.h"
@@ -29,7 +31,7 @@ const boost::timer::nanosecond_type Scheduler::sm_defaultClockFrequency =  boost
  */
 Scheduler::Scheduler()
     : m_runtimeService(IServiceManager::get()->getRuntimeService()) {
-    ISettingService* settingService = IServiceManager::get()->getSettingService();
+    SettingService* settingService = IServiceManager::get()->getSettingService();
     m_benchmarkingEnabled = settingService->getBool("Scheduler::Benchmarking");
     m_pTaskManager = new TaskManager(settingService->getInt("TaskManager::Threads"));
     IServiceManager::get()->setTaskManager(m_pTaskManager);

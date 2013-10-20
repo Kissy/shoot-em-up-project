@@ -55,28 +55,28 @@ public:
     /**
      * @inheritDoc
      */
-    IRuntimeService* getRuntimeService(void) {
+    RuntimeService* getRuntimeService(void) {
         return m_runtimeService;
     };
 
     /**
      * @inheritDoc
      */
-    ISettingService* getSettingService(void) {
+    SettingService* getSettingService(void) {
         return m_settingService;
     };
 
     /**
      * @inheritDoc
      */
-    ISystemService* getSystemService(void) {
+    SystemService* getSystemService(void) {
         return m_systemService;
     };
 
     /**
      * @inheritDoc
      */
-    IWindowService* getWindowService(void) {
+    WindowService* getWindowService(void) {
         return m_windowService;
     };
 

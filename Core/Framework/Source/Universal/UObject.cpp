@@ -188,7 +188,7 @@ ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
  * @inheritDoc
  */
 void UObject::update(const Proto::Object* object) {
-    ISystemService* systemService = IServiceManager::get()->getSystemService();
+    SystemService* systemService = IServiceManager::get()->getSystemService();
     for (auto objectProto : object->systemobjects()) {
         ISystem* m_pSystem = systemService->get(objectProto.systemtype());
         ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());

@@ -14,22 +14,24 @@
 
 #pragma once
 
-#include "Service/IRuntimeService.h"
-
 /**
  * An interface for environment runtime functionality.
  */
-class RuntimeService : public IRuntimeService {
+class RuntimeService {
 public:
-    /**
-     * @inheritDoc
-     */
-    IRuntimeService::Status getStatus(void);
+    enum Status {
+        Unknown, Running, Paused, NextScene, Quit
+    };
 
     /**
      * @inheritDoc
      */
-    void setStatus(IRuntimeService::Status Status);
+    Status getStatus(void);
+
+    /**
+     * @inheritDoc
+     */
+    void setStatus(Status Status);
     
     /**
      * @inheritDoc
@@ -42,6 +44,6 @@ public:
     bool isQuit(void);
 
 private:
-    IRuntimeService::Status      m_runtimeStatus;
+    Status      m_runtimeStatus;
 
 };

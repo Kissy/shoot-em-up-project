@@ -23,7 +23,7 @@
 #include <OgreWindowEventUtilities.h>
 #pragma warning( pop )
 
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "Defines.h"
 #include "System.h"
 #include "Scene.h"
@@ -145,7 +145,7 @@ Error GraphicSystem::initialize(void) {
  */
 void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
     ASSERT(pRenderWindow == m_pRenderWindow);
-    g_serviceManager->getRuntimeService()->setStatus(IRuntimeService::Status::Quit);
+    g_serviceManager->getRuntimeService()->setStatus(RuntimeService::Status::Quit);
 }
 /**
  * @inheritDoc
