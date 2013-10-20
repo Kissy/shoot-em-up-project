@@ -17,28 +17,26 @@
 #include "DataTypes.h"
 
 namespace Errors {
-#define MakeError( System, Error )                  ((System << 16) | (Error & 0xFFFF))
-
     namespace System {
         static const u32 None                           = 0x0000;
         static const u32 Memory                         = 0x0001;
         static const u32 File                           = 0x0002;
     }
 
-    static const u32 Undefined                          = MakeError(System::None, 0xffff);
-    static const u32 Success                            = MakeError(System::None, 0x0000);
-    static const u32 Failure                            = MakeError(System::None, 0x0001);
+    static const u32 Undefined                          = (System::None << 16) | (0xffff & 0xffff);
+    static const u32 Success                            = (System::None << 16) | (0x0000 & 0xffff);
+    static const u32 Failure                            = (System::None << 16) | (0x0001 & 0xffff);
 
-    static const u32 NotImplemented                     = MakeError(System::None, 0x0010);
+    static const u32 NotImplemented                     = (System::None << 16) | (0x0001 & 0xffff);
 
     namespace Memory {
-        static const u32 OutOfMemory                    = MakeError(System::Memory, 0x0001);
-        static const u32 InvalidAddress                 = MakeError(System::Memory, 0x0002);
+        static const u32 OutOfMemory                    = (System::Memory << 16) | (0x0001 & 0xffff);
+        static const u32 InvalidAddress                 = (System::Memory << 16) | (0x0002 & 0xffff);
     }
 
     namespace File {
-        static const u32 ErrorLoading                   = MakeError(System::File, 0x0001);
-        static const u32 InvalidFormat                  = MakeError(System::File, 0x0002);
-        static const u32 NotFound                       = MakeError(System::File, 0x0003);
+        static const u32 ErrorLoading                   = (System::File << 16) | (0x0001 & 0xffff);
+        static const u32 InvalidFormat                  = (System::File << 16) | (0x0002 & 0xffff);
+        static const u32 NotFound                       = (System::File << 16) | (0x0003 & 0xffff);
     }
 }

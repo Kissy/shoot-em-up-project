@@ -27,11 +27,14 @@ namespace System {
      * The List of components
      */
     enum Components {
-        System, Scene, Object, Task
+        System, 
+        Scene, 
+        Object, 
+        Task
     };
 
 #ifdef DEBUG_BUILD
-    __forceinline std::string getComponentName(const System::Components component) {
+    inline std::string getComponentName(const System::Components component) {
         switch (component) {
         case Components::System:
             return "System";

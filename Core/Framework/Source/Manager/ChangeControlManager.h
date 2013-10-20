@@ -22,188 +22,192 @@
 
 class ITaskManager;
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-///   Responsible for queuing up changes requests and then issuing them to the system for modifying
-///    to the correct state.
-/// </summary>
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Responsible for queuing up changes requests and then issuing them to the system for modifying
+ *  to the correct state.
+ *
+ * @sa  IChangeManager
+ */
 class ChangeManager : public IChangeManager {
-    public:
+public:
 
-        ChangeManager(void);
-        virtual ~ChangeManager(void);
+    struct Notification {
+        Notification(ISubject* pSubject, u32 changedBits)
+            : m_pSubject(pSubject)
+            , m_changedBits(changedBits)
+        {}
 
-        // Must be called after construction for a valid Change Manager
+        ISubject*   m_pSubject;
+        u32         m_changedBits;
+    };
 
-        // IChangeManager Functionality
-        Error Register(ISubject* pInSubject,
-                       System::Changes::BitMask uInIntrestBits,
-                       IObserver* pInObserver,
-                       System::Types::BitMask observerIdBits = System::Types::All);
-        Error Unregister(ISubject* pSubject, IObserver* pObserver);
-        Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
+    typedef std::vector<Notification> NotifyList;
 
-        // IObserver Functionality
-        Error ChangeOccurred(ISubject* pInChangedSubject,
-                             System::Changes::BitMask uInChangedBits);
+    typedef std::list<NotifyList*> ListOfNotifyLists;
+
+    /**
+        * Default constructor.
+        */
+    ChangeManager(void);
+
+    /**
+        * Destructor.
+        */
+    virtual ~ChangeManager(void);
+
+    // Must be called after construction for a valid Change Manager
+
+    // IChangeManager Functionality
+    Error Register(ISubject* pInSubject,
+                    System::Changes::BitMask uInIntrestBits,
+                    IObserver* pInObserver,
+                    System::Types::BitMask observerIdBits = System::Types::All);
+    Error Unregister(ISubject* pSubject, IObserver* pObserver);
+    Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
+
+    // IObserver Functionality
+    Error ChangeOccurred(ISubject* pInChangedSubject,
+                            System::Changes::BitMask uInChangedBits);
         
-        /**
-         * @inheritDoc
-         */
-        inline System::Changes::BitMask GetDesiredSystemChanges(void) {
-            return System::Changes::All;
-        }
+    /**
+        * @inheritDoc
+        */
+    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+        return System::Changes::All;
+    }
 
-        // Must be called before any parallel execution starts (that is
-        // before changes start being accumulated in thread local lists),
-        // but after the task manager has been initialized
-        Error SetTaskManager(ITaskManager*);
+    // Must be called before any parallel execution starts (that is
+    // before changes start being accumulated in thread local lists),
+    // but after the task manager has been initialized
+    Error SetTaskManager(ITaskManager*);
 
-        // Must be called before the previously set task manager has been shut down
-        void ResetTaskManager();
+    // Must be called before the previously set task manager has been shut down
+    void ResetTaskManager();
 
+    inline NotifyList& GetNotifyList(u32 tlsIndex);
 
-    protected:
+protected:
 
-        /// <summary>
-        ///   Defines a structure used by the CCM to store information about observers
-        /// </summary>
-        class ObserverRequest {
-            public:
-                ObserverRequest(IObserver* pObserver = NULL, u32 Interests = 0, u32 idBits = System::Changes::All)
-                    : m_pObserver(pObserver)
-                    , m_interestBits(Interests)
-                    , m_observerIdBits(idBits) {
-                }
+    /// <summary>
+    ///   Defines a structure used by the CCM to store information about observers
+    /// </summary>
+    class ObserverRequest {
+        public:
+            ObserverRequest(IObserver* pObserver = nullptr, u32 Interests = 0, u32 idBits = System::Changes::All)
+                : m_pObserver(pObserver)
+                , m_interestBits(Interests)
+                , m_observerIdBits(idBits) {
+            }
 
-                IObserver*  m_pObserver;
-                u32         m_interestBits;
-                u32         m_observerIdBits;
+            IObserver*  m_pObserver;
+            u32         m_interestBits;
+            u32         m_observerIdBits;
 
-                bool operator < (const ObserverRequest& rhs) const {
-                    return m_pObserver < rhs.m_pObserver;
-                }
+            bool operator < (const ObserverRequest& rhs) const {
+                return m_pObserver < rhs.m_pObserver;
+            }
 
-                bool operator == (IObserver* rhs) const {
-                    return m_pObserver == rhs;
-                }
-        }; // class ChangeManager::ObserverRequest
+            bool operator == (IObserver* rhs) const {
+                return m_pObserver == rhs;
+            }
+    }; // class ChangeManager::ObserverRequest
 
-        typedef std::vector<ObserverRequest> ObserversList;;
+    typedef std::vector<ObserverRequest> ObserversList;;
 
-        /// <summary>
-        ///   Represents a list of observers extended with cumulative data.
-        /// </summary>
-        struct SubjectInfo {
-            SubjectInfo()
-                : m_pSubject(NULL)
-                , m_interestBits(0)
-            {}
-
-            /// <summary>
-            ///   Subject described by this data structure
-            /// </summary>
-            ISubject*       m_pSubject;
-
-            /// <summary>
-            ///   Cumulative interest bits of all observers from this list
-            /// </summary>
-            u32     m_interestBits;
-
-            /// <summary>
-            ///   Observers subscribed to this subject
-            /// </summary>
-            ObserversList   m_observersList;
-
-        }; // class ChangeManager::ObserversList
-
-        typedef std::vector<u32> IDsList;
+    /// <summary>
+    ///   Represents a list of observers extended with cumulative data.
+    /// </summary>
+    struct SubjectInfo {
+        SubjectInfo()
+            : m_pSubject(nullptr)
+            , m_interestBits(0)
+        {}
 
         /// <summary>
-        ///   List of IDs that become free after the subjects associated with them were unregistered
+        ///   Subject described by this data structure
         /// </summary>
-        IDsList             m_freeIDsList;
+        ISubject*       m_pSubject;
 
         /// <summary>
-        ///   Next ID value to be assigned to a newly registered observer, if free list is empty
+        ///   Cumulative interest bits of all observers from this list
         /// </summary>
-        u32                 m_lastID;
-
-        typedef std::vector<SubjectInfo> SubjectsList;
+        u32     m_interestBits;
 
         /// <summary>
-        ///   Vector of observers list indexed by subject ID.
+        ///   Observers subscribed to this subject
         /// </summary>
-        SubjectsList        m_subjectsList;
+        ObserversList   m_observersList;
 
-        struct Notification {
-            Notification(ISubject* pSubject, u32 changedBits)
-                : m_pSubject(pSubject)
-                , m_changedBits(changedBits)
-            {}
+    }; // class ChangeManager::ObserversList
 
-            ISubject*   m_pSubject;
-            u32         m_changedBits;
-        };
+    typedef std::vector<u32> IDsList;
 
-        typedef std::vector<Notification> NotifyList;
+    /// <summary>
+    ///   List of IDs that become free after the subjects associated with them were unregistered
+    /// </summary>
+    IDsList             m_freeIDsList;
 
-        typedef std::list<NotifyList*> ListOfNotifyLists;
+    /// <summary>
+    ///   Next ID value to be assigned to a newly registered observer, if free list is empty
+    /// </summary>
+    u32                 m_lastID;
 
-        /// <summary>
-        ///   Cross-thread list of notification lists. Accessed only from the main thread.
-        /// </summary>
-        ListOfNotifyLists   m_NotifyLists;
+    typedef std::vector<SubjectInfo> SubjectsList;
 
-        /// <summary>
-        ///   TLS slot that store pointers to NotifyListInfo values, containing pointer
-        ///   to thread local notification lists with fast search ability and .
-        /// </summary>
-        //static boost::thread_specific_ptr<NotifyList> m_tlsNotifyList;
-        u32                 m_tlsNotifyList;
+    /// <summary>
+    ///   Vector of observers list indexed by subject ID.
+    /// </summary>
+    SubjectsList        m_subjectsList;
 
-        struct MappedNotification {
-            MappedNotification(u32 uID, u32 changedBits)
-                : m_subjectID(uID)
-                , m_changedBits(changedBits)
-            {}
+    /// <summary>
+    ///   Cross-thread list of notification lists. Accessed only from the main thread.
+    /// </summary>
+    ListOfNotifyLists   m_NotifyLists;
 
-            u32 m_subjectID;
-            u32 m_changedBits;
-        };
+    /// <summary>
+    ///   TLS slot that store pointers to NotifyListInfo values, containing pointer
+    ///   to thread local notification lists with fast search ability and .
+    /// </summary>
+    //static boost::thread_specific_ptr<NotifyList> m_tlsNotifyList;
+    u32                 m_tlsNotifyList;
 
-        typedef std::vector<MappedNotification> MappedNotifyList;
+    struct MappedNotification {
+        MappedNotification(u32 uID, u32 changedBits)
+            : m_subjectID(uID)
+            , m_changedBits(changedBits)
+        {}
 
-        /// <summary>
-        ///   Cumulative list of notifications posted during the last execution stage.
-        ///   Used during distribution stage only.
-        /// </summary>
-        MappedNotifyList    m_cumulativeNotifyList;
+        u32 m_subjectID;
+        u32 m_changedBits;
+    };
 
-        /// <summary>
-        ///   Used while generating cumulative list during the distribution stage.
-        /// </summary>
-        IDsList             m_indexList;
+    typedef std::vector<MappedNotification> MappedNotifyList;
 
-        ITaskManager*       m_pTaskManager;
+    /// <summary>
+    ///   Cumulative list of notifications posted during the last execution stage.
+    ///   Used during distribution stage only.
+    /// </summary>
+    MappedNotifyList    m_cumulativeNotifyList;
 
-        DEFINE_SPIN_MUTEX(m_swUpdate);
+    /// <summary>
+    ///   Used while generating cumulative list during the distribution stage.
+    /// </summary>
+    IDsList             m_indexList;
 
-    private:
-        static void InitThreadLocalData(void* mgr);
-        static void FreeThreadLocalData(void* mgr);
+    ITaskManager*       m_pTaskManager;
 
-        Error RemoveSubject(ISubject* pSubject);
+    DEFINE_SPIN_MUTEX(m_swUpdate);
 
-        friend NotifyList& GetNotifyList(u32 tlsIndex);
+private:
+    static void InitThreadLocalData(void* mgr);
+    static void FreeThreadLocalData(void* mgr);
 
-        static void DistributionCallback(void* param, u32 begin, u32 end);
-        void DistributeRange(u32 begin, u32 end);
+    Error RemoveSubject(ISubject* pSubject);
 
-        System::Types::BitMask      m_systems2BeNotified;
-        System::Changes::BitMask    m_ChangesToDist;
+    static void DistributionCallback(void* param, u32 begin, u32 end);
+    void DistributeRange(u32 begin, u32 end);
+
+    System::Types::BitMask      m_systems2BeNotified;
+    System::Changes::BitMask    m_ChangesToDist;
 
 };

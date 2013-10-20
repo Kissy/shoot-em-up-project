@@ -14,6 +14,20 @@
 
 #pragma once
 
+//
+// Compiler options
+//
+#ifdef _MSC_VER
+#define MSC_COMPILER
+#elif __GNUC__
+#define GCC_COMPILER
+#else
+#pragma error "Unkown compiler"
+#endif
+
+//
+// Windows Specific
+// 
 #define WIN32_LEAN_AND_MEAN
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0501
@@ -22,8 +36,8 @@
 //
 // Build options
 //
-#if defined( _DEBUG )
-    #define DEBUG_BUILD
+#ifdef _DEBUG
+#define DEBUG_BUILD
 #endif
 #define LOGGER_ENABLED
 
@@ -35,46 +49,13 @@
 // of statistics tracking may become noticeable.
 #define STATISTICS_BY_JOB_TYPE
 
-//
-// Compiler options
-//
-#if defined( _MSC_VER )
-    #define MSC_COMPILER
-#elif defined( __GNUC__ )
-    #define GCC_COMPILER
-#else
-    #pragma error "Unkown compiler"
-#endif
+#define USE_SPIN_MUTEX 1
 
 //
 // Custom values
 //
 #ifndef NULL
-    #define NULL                            0
-#endif
-
-//
-// Easy macro
-//
-#define UNREFERENCED_PARAM(P)               (P)
-#define SAFE_DELETE(p)                    	if ((p)!=NULL){delete (p); (p)=NULL;}
-#define SAFE_DELETE_ARRAY(p)              	if ((p)!=NULL){delete [] (p); (p)=NULL;}
-
-//
-// In Out InOut Inline
-//
-#ifdef MSC_COMPILER
-    //#define In                              __in const
-    //#define Out                             __out
-    //#define InOut                           __inout
-    #define In                              const
-    #define Out                             
-    #define InOut                           
-#else
-    #define In                              const
-    #define Out
-    #define InOut
-    #define __forceinline                   inline __attribute__((always_inline))
+    #define NULL nullptr
 #endif
 
 //
@@ -83,3 +64,8 @@
 #ifndef MSC_COMPILER
 #define __stdcall
 #endif
+
+//
+// Unused param
+//
+#define UNUSED_PARAM(p) (p);

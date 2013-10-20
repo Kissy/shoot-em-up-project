@@ -33,38 +33,23 @@
  * @inheritDoc
  */
 CameraGraphicObject::CameraGraphicObject(ISystemScene* pSystemScene, IEntity* entity) : GraphicObject(pSystemScene, entity)
-    , m_pCamera(NULL)
-    , m_pViewport(NULL)
-    , m_vLookAt(Ogre::Vector3::ZERO) {
+    , m_pViewport(nullptr)
+    , m_vLookAt(Ogre::Vector3::ZERO)
+    , m_pCamera(GetSystemScene<GraphicScene>()->getSceneManager()->createCamera(entity->getName())) {
     m_propertySetters["FOVy"] = boost::bind(&CameraGraphicObject::setFOVy, this, _1);
     m_propertySetters["ClipDistances"] = boost::bind(&CameraGraphicObject::setClipDistances, this, _1);
-    
-    //
-    // Create the camera.
-    //
-    m_pCamera = POGRESCENEMGR->createCamera(m_entity->getName());
-    ASSERT(m_pCamera != NULL);
 }
 
 /**
  * @inheritDoc
  */
 CameraGraphicObject::~CameraGraphicObject(void) {
-    ASSERT(m_pCamera != NULL);
-    ASSERT(m_pViewport != NULL);
-
-    if (m_pViewport != NULL) {
-        Ogre::RenderWindow* pRenderWindow = PSYSTEM->getRenderWindow();
-        pRenderWindow->removeViewport(m_pViewport->getZOrder());
-    }
-
     if (m_bInitialized) {
+        GetSystemScene<GraphicScene>()->GetSystem<GraphicSystem>()->getRenderWindow()->removeViewport(m_pViewport->getZOrder());
         m_pCameraNode->detachObject(m_pCamera);
     }
-
-    if (m_pCamera != NULL) {
-        POGRESCENEMGR->destroyCamera(m_pCamera);
-    }
+    
+    GetSystemScene<GraphicScene>()->getSceneManager()->destroyCamera(m_pCamera);
 }
 
 /**
@@ -138,7 +123,6 @@ Error CameraGraphicObject::initialize(void) {
  * @inheritDoc
  */
 void CameraGraphicObject::Update(f32 DeltaTime) {
-    UNREFERENCED_PARAM(DeltaTime);
     m_pCamera->lookAt(m_vLookAt);
 }
 

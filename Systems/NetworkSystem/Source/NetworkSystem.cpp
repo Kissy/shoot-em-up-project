@@ -24,7 +24,6 @@ IServiceManager*        g_serviceManager;
 HINSTANCE               g_hInstance;
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
-    UNREFERENCED_PARAM(pReserved);
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
             g_hInstance = hModule;

@@ -286,7 +286,6 @@ u32 TaskManager::GetRecommendedJobCount(ITaskManager::JobCountInstructionHints H
     //
     // Ignoring hints for now and just returning the number of available threads.
     //
-    UNREFERENCED_PARAM(Hints);
     return m_uNumberOfThreads;
 }
 

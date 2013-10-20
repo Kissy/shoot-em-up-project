@@ -91,7 +91,6 @@
     <ClInclude Include="Source\Generic\ISubject.h" />
     <ClInclude Include="Source\Generic\IUpdatable.h" />
     <ClInclude Include="Source\Manager\IChangeManager.h" />
-    <ClInclude Include="Source\Manager\IPlatformManager.h" />
     <ClInclude Include="Source\Manager\IServiceManager.h" />
     <ClInclude Include="Source\Manager\ITaskManager.h" />
     <ClInclude Include="Source\Object\IGeometryObject.h" />

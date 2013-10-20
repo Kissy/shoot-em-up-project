@@ -72,9 +72,6 @@
     <ClInclude Include="Source\Manager\IServiceManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\IPlatformManager.h">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Manager\IChangeManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>

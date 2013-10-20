@@ -61,7 +61,7 @@ public:
      * @return  A pointer to the system.
      */
     template <typename TSystemScene>
-    inline ISystemScene* GetSystemScene(void) {
+    inline TSystemScene* GetSystemScene(void) {
         return static_cast<TSystemScene*>(m_pSystemScene);
     }
 

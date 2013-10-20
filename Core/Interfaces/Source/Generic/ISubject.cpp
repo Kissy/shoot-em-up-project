@@ -67,7 +67,7 @@ void ISubject::PreDestruct() {
  */
 Error ISubject::Attach(IObserver* pObserver, System::Types::BitMask inInterest, u32 uID, u32 shift) {
     // To make compiler happy in release builds while keeping the next assertion
-    UNREFERENCED_PARAM(shift);
+    UNUSED_PARAM(shift);
     // If the following assertion fails, it means that Change Control Manager (CCM)
     // was modified to start using "shifts". Please update the code of this class
     // appropriately (original version did not have any meaningful support except

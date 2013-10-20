@@ -56,7 +56,7 @@ const Color4 Color4::White = { 1.0f, 1.0f, 1.0f, 1.0f };
  * @param	Angle			The angle.
  * @return	.
  */
-const Quaternion& Quaternion::Set(In Vector3& Axis, In f32 Angle) {
+const Quaternion& Quaternion::Set(const Vector3& Axis, const f32 Angle) {
     ASSERTMSG(1.0f - Axis.Magnitude() < 0.0001f,
               "This function requires the vector to be normalized upon entry.");
     const f32 Sin = Angle::Sin(Angle / 2.0f);
@@ -117,7 +117,7 @@ f32 Quaternion::GetAngle() const {
  * @param [in,out]	a	The In Vector3&amp; to process.
  * @return	The result of the operation.
  */
-Vector3 Matrix4x4::operator*(In Vector3& a) const {
+Vector3 Matrix4x4::operator*(Vector3& a) const {
     Vector3 r;
     r.x = m[ 0 ] * a.x + m[ 4 ] * a.y + m[  8 ] * a.z + m[ 12 ];
     r.y = m[ 1 ] * a.x + m[ 5 ] * a.y + m[  9 ] * a.z + m[ 13 ];
@@ -131,7 +131,7 @@ Vector3 Matrix4x4::operator*(In Vector3& a) const {
  * @param [in,out]	a	The In Vector4&amp; to process.
  * @return	The result of the operation.
  */
-Vector4 Matrix4x4::operator*(In Vector4& a) const {
+Vector4 Matrix4x4::operator*(Vector4& a) const {
     Vector4 r;
     r.x = m[ 0 ] * a.x + m[ 4 ] * a.y + m[  8 ] * a.z + m[ 12 ] * a.w;
     r.y = m[ 1 ] * a.x + m[ 5 ] * a.y + m[  9 ] * a.z + m[ 13 ] * a.w;
@@ -150,7 +150,7 @@ Vector4 Matrix4x4::operator*(In Vector4& a) const {
  * @param [in,out]	a	The In Matrix4x4&amp; to process.
  * @return	The result of the operation.
  */
-Matrix4x4 Matrix4x4::operator*(In Matrix4x4& a) const {
+Matrix4x4 Matrix4x4::operator*(Matrix4x4& a) const {
     Matrix4x4 r;
     u32 idx = 0;
 
@@ -174,7 +174,7 @@ Matrix4x4 Matrix4x4::operator*(In Matrix4x4& a) const {
 /**
  * The matrix 4x4 operator*.
  */
-const Matrix4x4& Matrix4x4::operator*=(In Matrix4x4& a) {
+const Matrix4x4& Matrix4x4::operator*=(Matrix4x4& a) {
     *this = *this * a;
     return *this;
 }
@@ -265,7 +265,7 @@ const Matrix4x4& Matrix4x4::SetOrientation(const Quaternion& Orientation) {
 
 const Matrix4x4&
 Matrix4x4::Transpose(
-    Out Matrix4x4& T
+    Matrix4x4& T
 ) {
     Matrix4x4 temp;
     temp = temp.Identity;
@@ -283,7 +283,7 @@ Matrix4x4::Transpose(
 
 const Matrix4x4&
 Matrix4x4::Inverse(
-    Out Matrix4x4& Inverse
+    Matrix4x4& Inverse
 ) {
     Matrix4x4 A;
     A = Inverse;

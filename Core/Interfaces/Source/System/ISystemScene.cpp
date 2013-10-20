@@ -42,15 +42,12 @@ ISystemScene::~ISystemScene() {
  * @inheritDoc
  */
 void ISystemScene::GlobalSceneStatusChanged(GlobalSceneStatus Status) {
-    UNREFERENCED_PARAM(Status);
 }
 
 /**
  * @inheritDoc
  */
 Error ISystemScene::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    UNREFERENCED_PARAM(pSubject);
-    UNREFERENCED_PARAM(ChangeType);
     return Errors::Success;
 }
 

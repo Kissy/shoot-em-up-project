@@ -14,19 +14,17 @@
 
 #pragma once
 
-#define USE_SPIN_MUTEX 1
+#include "Defines.h"
 
 #if USE_SPIN_MUTEX
 
-//#if !defined(__PLATFORM_MANAGER)
-#include "tbb/spin_mutex.h"
-//#endif
+#include <tbb/spin_mutex.h>
 
 #define DEFINE_SPIN_MUTEX(mutex)             tbb::spin_mutex mutex
 #define DECLARE_STATIC_SPIN_MUTEX(mutex)     static tbb::spin_mutex mutex
 
 #define SCOPED_SPIN_LOCK(mutex)              tbb::spin_mutex::scoped_lock _lock(mutex)
-#define SCOPED_SPIN_LOCK_CONFLICT( mutex )   tbb::spin_mutex::scoped_lock _lock##mutex( mutex )
+#define SCOPED_SPIN_LOCK_CONFLICT( mutex )   tbb::spin_mutex::scoped_lock _lock##mutex(mutex)
 #define SCOPED_SPIN_LOCK_BEGIN(mutex)        { tbb::spin_mutex::scoped_lock _lock(mutex)
 #define SCOPED_SPIN_LOCK_END()               }
 

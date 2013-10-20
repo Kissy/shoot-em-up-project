@@ -26,12 +26,12 @@
 #ifdef DEBUG_BUILD
     #ifdef _MSC_VER
         #include <crtdbg.h>
-        #define ASSERT(c)                         (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, #c )) || (__debugbreak(), 0))
-        #define ASSERTMSG(c, m)                   (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m )) || (__debugbreak(), 0))
-        #define ASSERTMSG1(c,  m, p1)              (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1 )) || (__debugbreak(), 0))
-        #define ASSERTMSG2(c,  m, p1, p2)          (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1, p2 )) || (__debugbreak(), 0))
-        #define ASSERTMSG3(c,  m, p1, p2, p3)      (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1, p2, p3 )) || (__debugbreak(), 0))
-        #define ASSERTMSG4(c,  m, p1, p2, p3, p4)  (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, NULL, m, p1, p2, p3, p4 )) || (__debugbreak(), 0))
+        #define ASSERT(c)                          (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, #c )) || (__debugbreak(), 0))
+        #define ASSERTMSG(c, m)                    (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, m )) || (__debugbreak(), 0))
+        #define ASSERTMSG1(c,  m, p1)              (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, m, p1 )) || (__debugbreak(), 0))
+        #define ASSERTMSG2(c,  m, p1, p2)          (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, m, p1, p2 )) || (__debugbreak(), 0))
+        #define ASSERTMSG3(c,  m, p1, p2, p3)      (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, m, p1, p2, p3 )) || (__debugbreak(), 0))
+        #define ASSERTMSG4(c,  m, p1, p2, p3, p4)  (void) ((!!(c)) || (1 != _CrtDbgReport( _CRT_ASSERT, __FILE__, __LINE__, nullptr, m, p1, p2, p3, p4 )) || (__debugbreak(), 0))
     #else
         #define ASSERT(c)                         
         #define ASSERTMSG(c, m)                   

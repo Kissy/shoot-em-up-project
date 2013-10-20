@@ -29,10 +29,8 @@ __ITT_DEFINE_STATIC_EVENT(m_ChangeDistributionTpEvent, "Change Distribution", 19
 
 ///////////////////////////////////////////////////////////////////////////////
 // ChangeManager - Default constructor
-ChangeManager::ChangeManager(
-    void
-)
-    : m_pTaskManager(NULL)
+ChangeManager::ChangeManager(void)
+    : m_pTaskManager(nullptr)
     , m_lastID(0)
     , m_tlsNotifyList(TLS_OUT_OF_INDEXES) {
     // Reserve some reasonable space to avoid delays because of multiple reallocations
@@ -55,31 +53,30 @@ ChangeManager::ChangeManager(
 
 ///////////////////////////////////////////////////////////////////////////////
 // ~ChangeManager - Default destructor
-ChangeManager::~ChangeManager(
-    void
-) {
+ChangeManager::~ChangeManager(void) {
     // Loop through all the subjects and their observers and clean up
-    SubjectsList::iterator it;
+    for (auto it : m_subjectsList) {
+        if (it.m_pSubject == nullptr) {
+            continue;
+        }
 
-    for (it = m_subjectsList.begin(); it != m_subjectsList.end(); ++it) {
-        if (it->m_pSubject) {
-            ObserversList& observersList = it->m_observersList;
-            ObserversList::iterator obsIt;
+        ObserversList& observersList = it.m_observersList;
+        ObserversList::iterator obsIt;
 
-            for (obsIt = observersList.begin(); obsIt != observersList.end(); ++obsIt) {
-                Unregister(it->m_pSubject, obsIt->m_pObserver);
-            }
+        for (obsIt = observersList.begin(); obsIt != observersList.end(); ++obsIt) {
+            Unregister(it.m_pSubject, obsIt->m_pObserver);
         }
     }
 
     // Free thread local storage (tls)
-    if ( m_tlsNotifyList != TLS_OUT_OF_INDEXES )
-    {
+    if (m_tlsNotifyList != TLS_OUT_OF_INDEXES) {
         ::TlsFree(m_tlsNotifyList);
     }
 
     NotifyList* pList = (NotifyList*)m_NotifyLists.back();
-    SAFE_DELETE(pList);
+    if (pList != nullptr) {
+        delete pList;
+    }
 }
 
 
@@ -155,7 +152,7 @@ ChangeManager::Unregister(
             observersList.erase(itObs);
 
             if (observersList.empty()) {
-                m_subjectsList[uID].m_pSubject = NULL;
+                m_subjectsList[uID].m_pSubject = nullptr;
                 m_freeIDsList.push_back(uID);
                 pInSubject->Detach(this);
             }
@@ -187,7 +184,7 @@ ChangeManager::RemoveSubject(
         }
 
         observersList = m_subjectsList[uID].m_observersList;
-        m_subjectsList[uID].m_pSubject = NULL;
+        m_subjectsList[uID].m_pSubject = nullptr;
         m_freeIDsList.push_back(uID);
         curError = Errors::Success;
     }
@@ -202,10 +199,8 @@ ChangeManager::RemoveSubject(
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetNotifyList - Get the NotifyList for this thread (using tls)
-inline ChangeManager::NotifyList&
-GetNotifyList( u32 tlsIndex )
-{
-    return *static_cast<ChangeManager::NotifyList*>(::TlsGetValue(tlsIndex));
+inline ChangeManager::NotifyList& ChangeManager::GetNotifyList(u32 tlsIndex) {
+    return *static_cast<NotifyList*>(::TlsGetValue(tlsIndex));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -310,9 +305,9 @@ Error ChangeManager::DistributeQueuedChanges(System::Types::BitMask systems2BeNo
         // If we have a task manager and there are more than 50 notifications to process, let's do it parallel
         static const u32 GrainSize = 50;
 
-        if (m_pTaskManager != NULL && (u32)NumberOfChanges > GrainSize) {
+        if (m_pTaskManager != nullptr && (u32)NumberOfChanges > GrainSize) {
             // Process noticitions in parallel
-            m_pTaskManager->ParallelFor(NULL, DistributionCallback, this, 0, (u32)NumberOfChanges, GrainSize);
+            m_pTaskManager->ParallelFor(nullptr, DistributionCallback, this, 0, (u32)NumberOfChanges, GrainSize);
         } else {
             // Not enough notifications to worry about running in parallel, just distribute in this thread
             DistributeRange(0, (u32)NumberOfChanges);
@@ -418,7 +413,7 @@ void ChangeManager::ResetTaskManager(void) {
         // Make each thread call FreeThreadLocalData
         m_pTaskManager->NonStandardPerThreadCallback(FreeThreadLocalData, this);
         m_NotifyLists.clear();
-        m_pTaskManager = NULL;
+        m_pTaskManager = nullptr;
         // Restore main (this) thread data
         NotifyList* pList = new NotifyList();
         ::TlsSetValue(m_tlsNotifyList, pList);
@@ -435,7 +430,7 @@ void ChangeManager::InitThreadLocalData(void* arg) {
 
     // Check if we have allocated a NotifyList for this thread.
     // The notify list is keep in tls (thread local storage).
-    if(NULL == ::TlsGetValue(mgr->m_tlsNotifyList)) {
+    if(::TlsGetValue(mgr->m_tlsNotifyList) == nullptr) {
         // Reserve some reasonable space to avoid delays because of multiple reallocations
         NotifyList* pList = new NotifyList();
         pList->reserve(8192);
@@ -459,6 +454,6 @@ void ChangeManager::FreeThreadLocalData(void* arg) {
         //delete mgr->m_tlsNotifyList.get();
         //mgr->m_tlsNotifyList.release();
         delete static_cast<NotifyList*>(::TlsGetValue(mgr->m_tlsNotifyList));
-        ::TlsSetValue(mgr->m_tlsNotifyList, NULL);
+        ::TlsSetValue(mgr->m_tlsNotifyList, nullptr);
     }
 }

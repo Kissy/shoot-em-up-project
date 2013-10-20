@@ -145,7 +145,6 @@ Error GraphicSystem::initialize(void) {
  */
 void GraphicSystem::windowClosed(Ogre::RenderWindow* pRenderWindow) {
     ASSERT(pRenderWindow == m_pRenderWindow);
-    UNREFERENCED_PARAM(pRenderWindow);
     g_serviceManager->getRuntimeService()->setStatus(IRuntimeService::Status::Quit);
 }
 /**

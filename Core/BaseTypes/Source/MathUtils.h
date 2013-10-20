@@ -644,7 +644,7 @@ namespace Math {
         /// <param name="Axis">The normalized vector axis."</param>
         /// <param name="Angle">The angle of the vector axis."</param>
         /// <returns>A reference to this quaternion.</returns>
-        const Quaternion& Set(In Vector3& Axis, In f32 Angle);
+        const Quaternion& Set(const Vector3& Axis, const f32 Angle);
 
         /// <summary>
         ///   Sets a quaternion using Euler angles.
@@ -740,28 +740,28 @@ namespace Math {
         /// </summary>
         /// <param name="a">The vector to multiply to this matrix.</param>
         /// <returns>The new vector.</returns>
-        Vector3 operator*(In Vector3& a) const;
+        Vector3 operator*(Vector3& a) const;
 
         /// <summary>
         ///   Vector matrix multiplication.
         /// </summary>
         /// <param name="a">The vector to multiply to this matrix.</param>
         /// <returns>The new vector.</returns>
-        Vector4 operator*(In Vector4& a) const;
+        Vector4 operator*(Vector4& a) const;
 
         /// <summary>
         ///   Functionality for multiplying two matrices.
         /// </summary>
         /// <param name="a">The matrix to multiply to this matrix.</param>
         /// <returns>The new matrix.</returns>
-        Matrix4x4 operator*(In Matrix4x4& a) const;
+        Matrix4x4 operator*(Matrix4x4& a) const;
 
         /// <summary>
         ///   Functionality for multiplying two matrices with assignment.
         /// </summary>
         /// <param name="a">The matrix to multiply to this matrix.</param>
         /// <returns>A reference to this matrix.</returns>
-        const Matrix4x4& operator*=(In Matrix4x4& a);
+        const Matrix4x4& operator*=(Matrix4x4& a);
 
         /// <summary>
         ///   Makes this matrix a transformation matrix based on the translation and orientation
@@ -811,14 +811,14 @@ namespace Math {
         /// </summary>
         /// <param name="Transpose">The matrix to set as the transpose.</param>
         /// <returns>A reference to the transpose matrix.</returns>
-        const Matrix4x4& Transpose(Out Matrix4x4& Transpose);
+        const Matrix4x4& Transpose(Matrix4x4& Transpose);
 
         /// <summary>
         ///   Set the inverse of this matrix.
         /// </summary>
         /// <param name="Inverse">The matrix to set as the inverse.</param>
         /// <returns>A reference to the inverse matrix.</returns>
-        const Matrix4x4& Inverse(Out Matrix4x4& Inverse);
+        const Matrix4x4& Inverse(Matrix4x4& Inverse);
 
         /// <summary>
         ///   calulates a cofactor for a 3x3 matrix.

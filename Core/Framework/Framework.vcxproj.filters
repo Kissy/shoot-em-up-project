@@ -78,9 +78,6 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\LogManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Service\SettingService.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
@@ -148,9 +145,6 @@
     </ClInclude>
     <ClInclude Include="Source\Main.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Manager\LogManager.h">
-      <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Service\SettingService.h">
       <Filter>Header Files\Service</Filter>

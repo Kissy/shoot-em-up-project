@@ -20,7 +20,6 @@
     <ClCompile Include="Source\Generic\ThreadPool.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Manager\ChangeControlManager.cpp" />
-    <ClCompile Include="Source\Manager\LogManager.cpp" />
     <ClCompile Include="Source\Manager\ServiceManager.cpp" />
     <ClCompile Include="Source\Manager\TaskManager.cpp" />
     <ClCompile Include="Source\Service\DefinitionService.cpp" />
@@ -47,7 +46,6 @@
     <ClInclude Include="Source\Generic\ThreadPool.h" />
     <ClInclude Include="Source\Main.h" />
     <ClInclude Include="Source\Manager\ChangeControlManager.h" />
-    <ClInclude Include="Source\Manager\LogManager.h" />
     <ClInclude Include="Source\Manager\ServiceManager.h" />
     <ClInclude Include="Source\Manager\TaskManager.h" />
     <ClInclude Include="Source\Service\DefinitionService.h" />

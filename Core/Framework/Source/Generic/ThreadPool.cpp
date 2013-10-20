@@ -58,10 +58,7 @@ BasicThreadPool::Initialize(
 }
 
 
-void
-BasicThreadPool::Shutdown(
-    void
-) {
+void BasicThreadPool::Shutdown(void) {
     // wake up all of our threads so they can shut down
     SetActiveThreadCount(m_NumThreads);
 
@@ -69,8 +66,8 @@ BasicThreadPool::Shutdown(
     // send an event to shutdown the threads.
     //
     for (u32 i = 0; i < m_NumThreads; i++) {
-        m_pThreadContext[ i ].status = ThreadContext::Status::Shutdown;
-        SetEvent(m_pThreadContext[ i ].hStatusEvent);
+        m_pThreadContext[i].status = ThreadContext::Status::Shutdown;
+        SetEvent(m_pThreadContext[i].hStatusEvent);
     }
 
     //
@@ -82,18 +79,17 @@ BasicThreadPool::Shutdown(
     while (!m_pWorkQueue->empty()) {
         PopAndProcessWorkItem(false);
     }
-
-    SAFE_DELETE(m_pWorkQueue);
+    delete m_pWorkQueue;
 
     // clean up synch prims
     for (u32 i = 0; i < m_NumThreads; i++) {
-        CloseHandle(m_pThreadContext[ i ].hStatusEvent);
+        CloseHandle(m_pThreadContext[i].hStatusEvent);
     }
 
     CloseHandle(m_hWorkQueueSemaphore);
-    SAFE_DELETE_ARRAY(m_pThreadContext);
-    SAFE_DELETE_ARRAY(m_hWorkerThreads);
-    SAFE_DELETE_ARRAY(m_hWorkerthreadIds);
+    delete [] m_pThreadContext;
+    delete [] m_hWorkerThreads;
+    delete [] m_hWorkerthreadIds;
     m_bInitialized = false;
 }
 

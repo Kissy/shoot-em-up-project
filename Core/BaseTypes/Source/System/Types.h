@@ -42,11 +42,11 @@ namespace System {
          * @param   SystemType  Type - The type ID of a system.
          * @return  u32 - Index of this system.
          */
-        __forceinline u32 GetIndex(const Proto::SystemType systemType) {
+        inline u32 GetIndex(const Proto::SystemType systemType) {
             u32 Index = All;
-#if defined( MSC_COMPILER )
+#if defined(MSC_COMPILER)
             _BitScanForward((unsigned long*)&Index, systemType);
-#elif defined( GCC_COMPILER )
+#elif defined(GCC_COMPILER)
             Index = __builtin_ffs(systemType);
 #endif
             return Index;
@@ -58,7 +58,7 @@ namespace System {
          * @param   SystemType  Type of the system.
          * @return  The type.
          */
-        __forceinline Proto::SystemType GetType(const u32 index) {
+        inline Proto::SystemType GetType(const u32 index) {
             return (Proto::SystemType) (1 << index);
         }
 

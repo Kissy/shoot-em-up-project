@@ -205,8 +205,6 @@ void UObject::update(const Proto::Object* object) {
  * @inheritDoc
  */
 Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
-    UNREFERENCED_PARAM(pSubject);
-
     // Objects are probably not observers,
     // Objects can be subjects through links
     // TODO : check
