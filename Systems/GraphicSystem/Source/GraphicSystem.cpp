@@ -39,6 +39,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
 
 extern "C" void __stdcall InitializeGraphicSystem(IServiceManager* serviceManager) {
     g_serviceManager = serviceManager;
+    g_serviceManager->getLogService()->initSystem(Proto::SystemType::Graphic);
 }
 
 extern "C" ISystem* __stdcall CreateGraphicSystem() {
@@ -47,5 +48,6 @@ extern "C" ISystem* __stdcall CreateGraphicSystem() {
 
 extern "C" void __stdcall DestroyGraphicSystem(ISystem* pSystem) {
     delete reinterpret_cast<GraphicSystem*>(pSystem);
+    g_serviceManager->getLogService()->closeSystem(Proto::SystemType::Graphic);
 }
 

@@ -23,7 +23,6 @@
 IServiceManager*        g_serviceManager;
 HINSTANCE               g_hInstance;
 
-
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
     switch (Reason) {
         case DLL_PROCESS_ATTACH:
@@ -40,6 +39,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
 
 extern "C" void __stdcall InitializeInputSystem(IServiceManager* serviceManager) {
     g_serviceManager = serviceManager;
+    g_serviceManager->getLogService()->initSystem(Proto::SystemType::Input);
 }
 
 extern "C" ISystem* __stdcall CreateInputSystem() {
@@ -48,4 +48,5 @@ extern "C" ISystem* __stdcall CreateInputSystem() {
 
 extern "C" void __stdcall DestroyInputSystem(ISystem* pSystem) {
     delete reinterpret_cast<InputSystem*>(pSystem);
+    g_serviceManager->getLogService()->closeSystem(Proto::SystemType::Input);
 }

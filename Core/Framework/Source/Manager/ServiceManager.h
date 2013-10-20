@@ -16,6 +16,7 @@
 
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
+#include "Service/LogService.h"
 #include "Service/RuntimeService.h"
 #include "Service/SettingService.h"
 #include "Service/SystemService.h"
@@ -44,35 +45,42 @@ public:
     ITaskManager* getTaskManager(void) {
         return m_taskManager;
     };
-
+    
     /**
      * @inheritDoc
      */
     void setTaskManager(ITaskManager* taskManager) {
         m_taskManager = taskManager;
     };
-
+    
+    /**
+     * @inheritDoc
+     */
+    LogService* getLogService(void) {
+        return m_logService;
+    };
+    
     /**
      * @inheritDoc
      */
     RuntimeService* getRuntimeService(void) {
         return m_runtimeService;
     };
-
+    
     /**
      * @inheritDoc
      */
     SettingService* getSettingService(void) {
         return m_settingService;
     };
-
+    
     /**
      * @inheritDoc
      */
     SystemService* getSystemService(void) {
         return m_systemService;
     };
-
+    
     /**
      * @inheritDoc
      */
@@ -82,6 +90,7 @@ public:
 
 private:
     ITaskManager*               m_taskManager;
+    LogService*                 m_logService;
     RuntimeService*             m_runtimeService;
     SettingService*             m_settingService;
     SystemService*              m_systemService;

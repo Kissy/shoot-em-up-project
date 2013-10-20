@@ -24,6 +24,7 @@
 #pragma warning( pop )
 
 #include "Manager/ServiceManager.h"
+#include "Listener/CustomLogListener.h"
 #include "Defines.h"
 #include "System.h"
 #include "Scene.h"
@@ -47,7 +48,11 @@ GraphicSystem::GraphicSystem(void)
     m_propertySetters["VerticalSync"] = boost::bind(&GraphicSystem::setVerticalSync, this, _1);
     m_propertySetters["AntiAliasing"] = boost::bind(&GraphicSystem::setAntiAliasing, this, _1);
 
-    m_pRoot = new Ogre::Root("", "", "logs\\graphic.log");
+    Ogre::LogManager* logManager = new Ogre::LogManager();
+    logManager->createLog("", true, false, true);
+    logManager->getDefaultLog()->addListener(new CustomLogListener());
+
+    m_pRoot = new Ogre::Root("", "", "");
     m_pResourceGroupManager = Ogre::ResourceGroupManager::getSingletonPtr();
     m_pOverlaySystem = new Ogre::OverlaySystem();
 }
@@ -96,7 +101,7 @@ Error GraphicSystem::initialize(void) {
     pRenderList = m_pRoot->getAvailableRenderers();
     m_pRenderSystem = pRenderList.front();
     m_pRoot->setRenderSystem(m_pRenderSystem);
-    m_pRoot->initialise(false);
+    m_pRoot->initialise(false, "Shoot Em Up Project");
 
     // Install the particle fx plugin
 #ifdef DEBUG_BUILD
@@ -135,7 +140,8 @@ Error GraphicSystem::initialize(void) {
     m_pResourceGroupManager->loadResourceGroup("Default");
     
     Berkelium::init(Berkelium::FileString::empty());
-
+    
+    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;
 }

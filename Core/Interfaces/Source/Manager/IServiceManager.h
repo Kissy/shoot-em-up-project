@@ -16,6 +16,7 @@
 
 #include "Manager/ITaskManager.h"
 
+class LogService;
 class RuntimeService;
 class SettingService;
 class SystemService;
@@ -54,6 +55,13 @@ public:
      * @param [in,out]  taskManager If non-null, manager for task.
      */
     virtual void setTaskManager(ITaskManager* taskManager) = 0;
+
+    /**
+     * Gets runtime service.
+     *
+     * @return  null if it fails, else the runtime service.
+     */
+    virtual LogService* getLogService(void) = 0;
 
     /**
      * Gets system service.

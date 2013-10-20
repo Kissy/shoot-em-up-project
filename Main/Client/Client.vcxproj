@@ -62,8 +62,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;C:\Program Files (x86)\SDK\ZeroMQ\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;C:\Program Files (x86)\SDK\ZeroMQ\lib\Release;D:\My Documents\SDK\logog\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;libzmq.lib;logogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

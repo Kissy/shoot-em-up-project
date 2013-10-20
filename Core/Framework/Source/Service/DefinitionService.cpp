@@ -12,6 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
 #include <Windows.h>
 
 #include <boost/filesystem/operations.hpp>

@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Browser">
       <UniqueIdentifier>{1108e9ad-edc2-452b-8f9b-f0eac634f8a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Listener">
+      <UniqueIdentifier>{a0245b88-7f85-4e75-918f-0e37991905c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Listener">
+      <UniqueIdentifier>{2208565c-a7b2-42a0-96c0-8eb93f8c8270}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="GraphicSystem.def">
@@ -65,6 +71,9 @@
     <ClCompile Include="Source\Browser\BrowserWindow.cpp">
       <Filter>Source Files\Browser</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Listener\CustomLogListener.cpp">
+      <Filter>Source Files\Listener</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Task.h">
@@ -96,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="Source\Browser\BrowserWindow.h">
       <Filter>Header Files\Browser</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Listener\CustomLogListener.h">
+      <Filter>Header Files\Listener</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

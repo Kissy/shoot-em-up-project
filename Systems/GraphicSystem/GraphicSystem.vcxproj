@@ -56,15 +56,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRAPHICSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;D:\My Documents\SDK\OgreSDK\include\OGRE;D:\My Documents\SDK\Berkelium\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;D:\My Documents\SDK\OgreSDK\include\OGRE;D:\My Documents\SDK\Berkelium\include;D:\My Documents\SDK\logog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>GraphicSystem.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;D:\My Documents\SDK\OgreSDK\lib\Debug;D:\My Documents\SDK\Berkelium\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libprotobuf.lib;OgreMain_d.lib;OgreOverlay_d.lib;berkelium.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;D:\My Documents\SDK\OgreSDK\lib\Debug;D:\My Documents\SDK\Berkelium\lib;D:\My Documents\SDK\logog\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libprotobuf.lib;OgreMain_d.lib;OgreOverlay_d.lib;berkelium.lib;logogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Browser\BrowserWindow.cpp" />
     <ClCompile Include="Source\GraphicSystem.cpp" />
+    <ClCompile Include="Source\Listener\CustomLogListener.cpp" />
     <ClCompile Include="Source\Object\CameraGraphicObject.cpp" />
     <ClCompile Include="Source\Object\ImageObject.cpp" />
     <ClCompile Include="Source\Object\LightGraphicObject.cpp" />
@@ -109,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Browser\BrowserWindow.h" />
+    <ClInclude Include="Source\Listener\CustomLogListener.h" />
     <ClInclude Include="Source\Object\CameraGraphicObject.h" />
     <ClInclude Include="Source\Object\ImageObject.h" />
     <ClInclude Include="Source\Object\LightGraphicObject.h" />

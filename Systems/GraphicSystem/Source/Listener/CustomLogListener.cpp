@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,40 +12,43 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/functional/factory.hpp>
-
-#include "Defines.h"
 #include "Manager/ServiceManager.h"
-#include "System.h"
-#include "Scene.h"
-#include "Object/Object.h"
+#include "Listener/CustomLogListener.h"
 
 extern IServiceManager* g_serviceManager;
-
-/**
- * @inheritDoc
- */
-NetworkSystem::NetworkSystem(void) : ISystem() {
-    m_SceneFactory = boost::factory<NetworkScene*>();
-    m_networkService = new NetworkService(static_cast<NetworkSystem*>(this));
-}
-
-/**
- * @inheritDoc
- */
-NetworkSystem::~NetworkSystem(void) {
-    boost::checked_delete(m_networkService);
-}
-
-/**
- * @inheritDoc
- */
-Error NetworkSystem::initialize(void) {
-    ASSERT(!m_bInitialized);
     
-    m_networkService->connect("kissy.synology.me", "26000");
+/**
+ * @inheritDoc
+ */
+CustomLogListener::CustomLogListener(void) {
+};
+
+/**
+ * @inheritDoc
+ */
+CustomLogListener::~CustomLogListener(void) {
+};
+ 
+/**
+ * @inheritDoc
+ */
+void CustomLogListener::messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName, bool& skipThisMessage) {
+    if (skipThisMessage) {
+        return;
+    }
+
+    LOGOG_LEVEL_TYPE logLevel;
+    switch (lml) {
+    case Ogre::LogMessageLevel::LML_TRIVIAL:
+        logLevel = LOGOG_LEVEL_DEBUG;
+        break;
+    case Ogre::LogMessageLevel::LML_NORMAL:
+        logLevel = LOGOG_LEVEL_INFO;
+        break;
+    case Ogre::LogMessageLevel::LML_CRITICAL:
+        logLevel = LOGOG_LEVEL_CRITICAL;
+        break;
+    }
     
-    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
-    m_bInitialized = true;
-    return Errors::Success;
-}
+    g_serviceManager->getLogService()->log(logLevel, "Ogre", message.c_str());
+};

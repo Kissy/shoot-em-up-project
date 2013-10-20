@@ -56,14 +56,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OISB_STATIC_LIB;INPUTSYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;D:\My Documents\SDK\OgreSDK\include\OIS;D:\My Documents\SDK\OISB\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\..\Core\BaseTypes\Source;..\..\Core\Interfaces\Source;..\..\Core\Generated\Source;..\..\Core\Framework\Source;C:\Program Files (x86)\SDK\Boost\include;C:\Program Files (x86)\SDK\Protobuf\include;C:\Program Files (x86)\SDK\TBB\include;D:\My Documents\SDK\OgreSDK\include\OIS;D:\My Documents\SDK\OISB\Source;D:\My Documents\SDK\logog\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;D:\My Documents\SDK\OgreSDK\lib\Debug;D:\My Documents\SDK\OISB\Build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;OIS_d.lib;OISB.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\SDK\Boost\lib;C:\Program Files (x86)\SDK\TBB\lib\ia32\Debug;C:\Program Files (x86)\SDK\Protobuf\lib\Debug;D:\My Documents\SDK\OgreSDK\lib\Debug;D:\My Documents\SDK\OISB\Build\Debug;D:\My Documents\SDK\logog\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pdh.lib;comctl32.lib;libprotobuf.lib;OIS_d.lib;OISB.lib;logogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>InputSystem.def</ModuleDefinitionFile>
     </Link>
     <Bscmake>

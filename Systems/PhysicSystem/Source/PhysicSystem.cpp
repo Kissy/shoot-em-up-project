@@ -16,7 +16,7 @@
 #include <windows.h>
 
 #include "System/ISystem.h"
-#include "Manager/IServiceManager.h"
+#include "Manager/ServiceManager.h"
 #include "Generic/SystemInterface.h"
 #include "System.h"
 
@@ -39,6 +39,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD Reason, LPVOID pReserved) {
 
 extern "C" void __stdcall InitializePhysicSystem(IServiceManager* serviceManager) {
     g_serviceManager = serviceManager;
+    g_serviceManager->getLogService()->initSystem(Proto::SystemType::Physic);
 }
 
 extern "C" ISystem* __stdcall CreatePhysicSystem() {
@@ -47,4 +48,5 @@ extern "C" ISystem* __stdcall CreatePhysicSystem() {
 
 extern "C" void __stdcall DestroyPhysicSystem(ISystem* pSystem) {
     delete reinterpret_cast<PhysicSystem*>(pSystem);
+    g_serviceManager->getLogService()->closeSystem(Proto::SystemType::Physic);
 }

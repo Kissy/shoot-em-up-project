@@ -17,7 +17,6 @@
 #include <map>
 
 #include "Proto/Common.pb.h"
-#include "Service/ISettingService.h"
 
 /**
  * An interface for environment runtime functionality.

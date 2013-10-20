@@ -13,11 +13,11 @@
 // responsibility to update it.
 
 #include "Defines.h"
-#include "Service/RuntimeService.h"
-
 #if defined(MSC_COMPILER)
-#include <windows.h>
+#include <Windows.h>
 #endif
+
+#include "Service/RuntimeService.h"
 
 /**
  * @inhertiDoc

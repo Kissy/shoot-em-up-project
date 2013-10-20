@@ -52,6 +52,12 @@
 #define USE_SPIN_MUTEX 1
 
 //
+// Log level
+// 
+#undef LOGOG_LEVEL
+#define LOGOG_LEVEL LOGOG_LEVEL_WARN
+
+//
 // Custom values
 //
 #ifndef NULL

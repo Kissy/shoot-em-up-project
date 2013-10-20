@@ -14,49 +14,71 @@
 
 #pragma once
 
+#include <vector>
 #include <logog.hpp>
 
-#undef LOGOG_LEVEL
-#define LOGOG_LEVEL LOGOG_LEVEL_WARN
-
-/**
- * Types of log files.
- */
-namespace LogType {
-    enum LogType {
-        Common,
-
-        Graphic,
-        Input,
-        Network,
-        Physic,
-
-        e_LogTypeCount,
-
-        e_Invalid
-    };
-};
-
+#include "Defines.h"
+#include "Proto/Common.pb.h"
 
 /**
  * LogManager class.
  */
-class LogManager {
+class LogService {
 public:
 
     /**
      * Constructor.
      */
-    LogManager();
+    LogService();
 
     /**
      * Destructor.
      */
-    ~LogManager();
+    ~LogService();
+
+    /**
+     * Initialises the system.
+     *
+     * @param   type    The type.
+     */
+    void initSystem(Proto::SystemType type);
+
+    /**
+     * Closes a system.
+     *
+     * @param   type    The type.
+     */
+    void closeSystem(Proto::SystemType type);
+
+    /**
+     * Logs.
+     *
+     * @param   type    The type.
+     * @param   message The message.
+     */
+    void log(const LOGOG_LEVEL_TYPE level, const char* message, ...);
+
+    /**
+     * Logs.
+     *
+     * @param   level   The level.
+     * @param   group   The group.
+     * @param   message The message.
+     */
+    void log(const LOGOG_LEVEL_TYPE level, const char* group, const char* message, ...);
+
+    /**
+     * Logs.
+     *
+     * @param   level       The level.
+     * @param   group       The group.
+     * @param   category    The category.
+     * @param   message     The message.
+     */
+    void log(const LOGOG_LEVEL_TYPE level, const char* group, const char* category, const char* message, ...);
 
 private:
-    logog::Mutex        m_logMutex;
-    logog::LogFile*     m_logFiles[LogType::e_LogTypeCount];
+    std::map<Proto::SystemType, logog::LogFile*>    m_logFile;
 
 };
 

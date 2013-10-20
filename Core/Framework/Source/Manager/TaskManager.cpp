@@ -12,6 +12,8 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
+
 #pragma warning (push)
 #pragma warning (disable: 4100)
 #include <tbb/parallel_for.h>
@@ -20,8 +22,8 @@
 #pragma warning (pop)
 
 #if defined(MSC_COMPILER)
+    #include <Windows.h>
     #include <process.h>
-    #include <windows.h>
 #elif defined(GCC_COMPILER)
     #include <cstdint>
      
@@ -32,7 +34,6 @@
     }
 #endif
 
-#include "Defines.h"
 #include "System/ISystemTask.h"
 #include "Manager/TaskManager.h"
 #include "Manager/ServiceManager.h"

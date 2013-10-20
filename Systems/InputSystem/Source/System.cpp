@@ -66,7 +66,8 @@ Error InputSystem::initialize(void) {
 
     OIS::InputManager* inputManager = OIS::InputManager::createInputSystem(paramList);
     OISB::System::getSingleton().initialize(inputManager);
-
+    
+    g_serviceManager->getLogService()->log(LOGOG_LEVEL_INFO, "System initialized");
     m_bInitialized = true;
     return Errors::Success;
 }

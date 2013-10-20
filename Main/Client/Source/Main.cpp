@@ -12,10 +12,10 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Defines.h"
 #include <windows.h>
 #include <tchar.h>
 
-#include "Defines.h"
 #include "Main.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstanceExe, HINSTANCE, PTSTR pszCmdLine, int nCmdShow) {

@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "Service/IWindowService.h"
+#include "DataTypes.h"
 
 /**
  * An interface for environment runtime functionality.

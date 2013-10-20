@@ -15,6 +15,7 @@
 #include "Manager/ServiceManager.h"
 #include "Manager/IServiceManager.h"
 #include "Manager/TaskManager.h"
+#include "Service/LogService.h"
 #include "Service/RuntimeService.h"
 #include "Service/SettingService.h"
 #include "Service/SystemService.h"
@@ -25,6 +26,7 @@
  */
 ServiceManager::ServiceManager(void)
     : IServiceManager()
+    , m_logService(new LogService())
     , m_runtimeService(new RuntimeService())
     , m_settingService(new SettingService())
     , m_systemService(new SystemService())
@@ -35,6 +37,7 @@ ServiceManager::ServiceManager(void)
  * @inheritDoc
  */
 ServiceManager::~ServiceManager(void) {
+    delete m_logService;
     delete m_runtimeService;
     delete m_settingService;
     delete m_systemService;

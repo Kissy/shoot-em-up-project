@@ -14,6 +14,7 @@
 
 #pragma warning ( disable: 4718 )
 
+#include "Defines.h"
 #include <Windows.h> // For ::TlsXxx()
 
 #include "Generic/ISubject.h"

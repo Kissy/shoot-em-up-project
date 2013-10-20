@@ -1,4 +1,4 @@
-// Copyright © 2008-2009 Intel Corporation
+ï»¿// Copyright ï¿½ 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -14,51 +14,27 @@
 
 #pragma once
 
-#include <map>
+#pragma warning( push, 0 )
+#include <OgreLog.h>
+#pragma warning( pop )
 
-#include "Errors.h"
-#include "System/ISystem.h"
-#include "System/Types.h"
-
-class ISystem;
-
-/**
- * Provides a single location for access to the different systems that are available for use.
- * @sa  Singleton
- */
-class SystemService {
+class CustomLogListener : public Ogre::LogListener {
 public:
+
     /**
-     * Constructor.
+     * Default constructor.
      */
-    SystemService(void);
+    CustomLogListener(void);
 
     /**
      * Destructor.
      */
-    ~SystemService(void);
-
-    /**
-     * @inheritDoc
-     */
-    Error add(ISystem* pSystem);
+    ~CustomLogListener(void);
     
     /**
      * @inheritDoc
      */
-    Error remove(const Proto::SystemType SystemType);
-    
-    /**
-     * @inheritDoc
-     */
-    ISystem* get(const Proto::SystemType SystemType);
-    
-    /**
-     * @inheritDoc
-     */
-    std::map<Proto::SystemType, ISystem*> get(void);
-
-protected:
-    std::map<Proto::SystemType, ISystem*>       m_systems;
+    void messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml, bool maskDebug, const Ogre::String& logName, bool& skipThisMessage);
 
 };
+
