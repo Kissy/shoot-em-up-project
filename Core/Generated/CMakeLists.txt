@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(Generated)
 
+find_package(Protobuf REQUIRED)
+
+include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(Source)
 
 aux_source_directory(Source/Proto Generated_Proto_SOURCES)
