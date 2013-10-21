@@ -12,13 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "System/ISystemScene.h"
+
 #include "Assert.h"
 #include "Errors.h"
 #include "Generic/IEntity.h"
-#include "Generic/ISubject.h"
 #include "Generic/IProperty.h"
-#include "System/ISystem.h"
-#include "System/ISystemScene.h"
+#include "Generic/ISubject.h"
 #include "System/ISystemObject.h"
 
 /**
@@ -28,7 +28,7 @@ ISystemScene::ISystemScene(ISystem* pSystem)
     : ISubject()
     , IProperty()
     , m_pSystem(pSystem) {
-    ASSERT(m_pSystem != NULL);
+    ASSERT(m_pSystem != nullptr);
 }
 
 /**
@@ -66,7 +66,7 @@ ISystemObject* ISystemScene::CreateObject(IEntity* entity, std::string type) {
 
     ISystemObject* systemObject = m_ObjectFactories[type](this, entity);
 
-    if (systemObject != NULL) {
+    if (systemObject != nullptr) {
         m_pObjects[systemObject->getEntity()->getId()] = systemObject;
     } else {
         ASSERTMSG2(false, "Impossible to create the object with name %s and type %s", entity->getName(), type);
@@ -80,9 +80,9 @@ ISystemObject* ISystemScene::CreateObject(IEntity* entity, std::string type) {
  */
 Error ISystemScene::DestroyObject(ISystemObject* pSystemObject) {
     ASSERT(m_bInitialized);
-    ASSERT(pSystemObject != NULL);
+    ASSERT(pSystemObject != nullptr);
 
-    if (pSystemObject != NULL) {
+    if (pSystemObject != nullptr) {
         m_pObjects.erase(pSystemObject->getEntity()->getId());
         delete pSystemObject;
     }

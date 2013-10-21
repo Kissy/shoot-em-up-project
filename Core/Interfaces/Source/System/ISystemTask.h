@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include "System/Types.h"
 #include "Generic/IComponent.h"
 #include "Generic/IUpdatable.h"
 

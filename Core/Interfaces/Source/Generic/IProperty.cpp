@@ -12,13 +12,18 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Generic/IProperty.h"
+
+#include <google/protobuf/repeated_field.h>
 #include <boost/lexical_cast.hpp>
+#include <sstream>
+#include <utility>
 
 #include "Assert.h"
 #include "Errors.h"
 #include "MathUtils.h"
+#include "Proto/Common.pb.h"
 #include "System/Changes.h"
-#include "Generic/IProperty.h"
 
 /**
  * @inheritDoc

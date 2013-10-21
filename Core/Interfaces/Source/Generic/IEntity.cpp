@@ -12,9 +12,9 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <string>
-
 #include "Generic/IEntity.h"
+
+#include <string>
 
 /**
  * @inheritDoc

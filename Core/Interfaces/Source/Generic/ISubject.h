@@ -14,9 +14,10 @@
 
 #pragma once
 
+#include <stddef.h>
 #include <list>
 
-#include "Errors.h"
+#include "DataTypes.h"
 #include "System/Changes.h"
 
 class IObserver;

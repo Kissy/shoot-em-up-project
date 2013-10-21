@@ -30,9 +30,9 @@
  */
 Framework::Framework(void)
     : m_serviceManager(new ServiceManager())
+    , m_pScheduler(new Scheduler()) 
     , m_pSceneCCM(new ChangeManager())
-    , m_pObjectCCM(new ChangeManager())
-    , m_pScheduler(new Scheduler()) {
+    , m_pObjectCCM(new ChangeManager()) {
     m_pScene = new UScene(m_pSceneCCM, m_pObjectCCM);
     m_definitionService = new DefinitionService(m_pScene);
 }
@@ -132,9 +132,11 @@ Error Framework::Execute(void) {
  * @inheritDoc
  */
 void Framework::processMessages(void) {
+#if defined(MSC_COMPILER)
     MSG Msg;
     while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {
         TranslateMessage(&Msg);
         DispatchMessage(&Msg);
     }
+#endif
 }

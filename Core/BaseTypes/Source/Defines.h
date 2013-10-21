@@ -17,9 +17,9 @@
 //
 // Compiler options
 //
-#ifdef _MSC_VER
+#if defined(_MSC_VER)
 #define MSC_COMPILER
-#elif __GNUC__
+#elif defined(__GNUC__)
 #define GCC_COMPILER
 #else
 #pragma error "Unkown compiler"
@@ -29,16 +29,17 @@
 // Windows Specific
 // 
 #define WIN32_LEAN_AND_MEAN
-#ifndef _WIN32_WINNT
+#if !defined(_WIN32_WINNT)
 #define _WIN32_WINNT 0x0501
 #endif
 
 //
 // Build options
 //
-#ifdef _DEBUG
+#if defined(_DEBUG)
 #define DEBUG_BUILD
 #endif
+
 #define LOGGER_ENABLED
 
 // The current mechanism of by-job statistics does not work correctly in case of
@@ -60,18 +61,22 @@
 //
 // Custom values
 //
-#ifndef NULL
-    #define NULL nullptr
+#if !defined(NULL)
+#define NULL nullptr
 #endif
 
 //
 // stdcall
 //
-#ifndef MSC_COMPILER
+#if !defined(MSC_COMPILER)
 #define __stdcall
 #endif
 
 //
 // Unused param
 //
+#if defined(MSC_COMPILER)
 #define UNUSED_PARAM(p) (p);
+#else
+#define UNUSED_PARAM(p)
+#endif

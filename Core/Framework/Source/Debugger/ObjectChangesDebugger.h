@@ -14,6 +14,10 @@
 
 #pragma once
 
+#include "Defines.h"
+
+#if defined DEBUG_BUILD
+
 #include <boost/timer/timer.hpp>
 
 #include "Generic/IObserver.h"
@@ -56,3 +60,5 @@ private:
     Debugger*                       m_pDebugger;
 
 };
+
+#endif

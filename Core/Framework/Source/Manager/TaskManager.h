@@ -137,7 +137,7 @@ public:
      *
      * @return  the number of threads being used.
      */
-    u32 TaskManager::GetNumberOfThreads(void) {
+    inline u32 GetNumberOfThreads(void) {
         return m_uNumberOfThreads;
     };
 

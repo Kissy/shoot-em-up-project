@@ -12,11 +12,13 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "MathUtils.h"
+
 #include <stdlib.h>
 #include <cmath>
 
+#include "DataTypes.h"
 #include "Assert.h"
-#include "MathUtils.h"
 
 using namespace Math;
 
@@ -105,7 +107,6 @@ f32 Quaternion::GetAngle() const {
     if (scale == 0 || w > 1.0f || w < -1.0f) {
         angle = 0.0f;
     } else {
-        const f32 invscale = 1 / scale;
         angle = 2.0f * acosf(w);
     }
     return angle;

@@ -15,11 +15,17 @@
 #pragma once
 
 #include <boost/function.hpp>
+#include <map>
+#include <string>
 
-#include "Errors.h"
+#include "DataTypes.h"
 #include "Proto.h"
-#include "MathUtils.h"
 #include "System/Changes.h"
+
+namespace Math { struct Quaternion; }
+namespace Math { struct Vector3; }
+namespace Math { struct Vector4; }
+namespace Proto { class Property; }
 
 /**
  * Interface defining methods to Initialize & Set properties to an object.
@@ -79,7 +85,8 @@ public:
      * @param [in,out]  value   If non-null, the value.
      * @param [in,out]  values  If non-null, the values.
      */
-    template<typename T> void setSimpleType(System::Changes::BitMask changeType, T* value, Proto::RepeatedString* values);
+    template<typename T>
+    void setSimpleType(System::Changes::BitMask changeType, T* value, Proto::RepeatedString* values);
 
     /**
      * Gets f32.
@@ -88,7 +95,8 @@ public:
      * @param [in,out]  value   The value to fill.
      * @param [in,out]  values  If non-null, the values.
      */
-    template<typename T> void getSimpleType(T* value, Proto::RepeatedString* values);
+    template<typename T>
+    void getSimpleType(T* value, Proto::RepeatedString* values);
 
     /**
      * Sets a string.

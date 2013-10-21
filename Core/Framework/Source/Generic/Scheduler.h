@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <boost/timer/timer.hpp>
+
 class RuntimeService;
 class TaskManager;
 

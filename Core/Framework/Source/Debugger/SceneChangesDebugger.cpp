@@ -12,11 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Debugger/SceneChangesDebugger.h"
+
+#if defined DEBUG_BUILD
+
 #include "Proto/Debug/Debug.pb.h"
 #include "Proto/Debug/DebugEntity.pb.h"
 
-#include "SceneChangesDebugger.h"
-#include "Debugger.h"
+#include "Debugger/Debugger.h"
 #include "Object/ISceneObject.h"
 #include "Universal/UScene.h"
 
@@ -36,3 +39,5 @@ Error SceneChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes::
     }
     return Errors::Success;
 }
+
+#endif

@@ -12,11 +12,15 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Generic/ISubject.h"
+
+#include <algorithm>
+
 #include "Assert.h"
 #include "Defines.h"
-#include "System/Types.h"
-#include "Generic/ISubject.h"
+#include "Errors.h"
 #include "Generic/IObserver.h"
+#include "System/Types.h"
 
 /**
  * @inheritDoc

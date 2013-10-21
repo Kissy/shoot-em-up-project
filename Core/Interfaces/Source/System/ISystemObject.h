@@ -14,18 +14,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include "Errors.h"
-#include "Generic/IEntity.h"
 #include "Generic/IComponent.h"
-#include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
+#include "Generic/ISubject.h"
 #include "Generic/IUpdatable.h"
-#include "System/Types.h"
+#include "System/Changes.h"
 
+class IEntity;
 class ISystemScene;
 
 /**

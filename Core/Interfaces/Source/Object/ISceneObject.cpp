@@ -12,9 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <list>
-
-#include "Proto/Common.pb.h"
 #include "Object/ISceneObject.h"
 
 /**

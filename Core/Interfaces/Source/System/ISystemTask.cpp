@@ -12,9 +12,6 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Assert.h"
-#include "Generic/IProperty.h"
-#include "System/ISystem.h"
 #include "System/ISystemTask.h"
 
 /**

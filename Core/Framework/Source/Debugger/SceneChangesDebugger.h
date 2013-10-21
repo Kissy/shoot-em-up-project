@@ -14,6 +14,10 @@
 
 #pragma once
 
+#include "Defines.h"
+
+#if defined DEBUG_BUILD
+
 #include "Generic/IObserver.h"
 
 class Debugger;
@@ -54,3 +58,5 @@ private:
     Debugger*       m_pDebugger;
 
 };
+
+#endif

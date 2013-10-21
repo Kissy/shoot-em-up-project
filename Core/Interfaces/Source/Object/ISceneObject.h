@@ -15,10 +15,7 @@
 #pragma once
 
 #include <list>
-
-#include "Proto.h"
-
-#include "System/Types.h"
+#include "Proto/Common.pb.h"
 
 /**
  * <c>IGenericScene</c> is an interface for providing generic scene related functionality. Any

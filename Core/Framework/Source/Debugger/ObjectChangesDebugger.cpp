@@ -12,11 +12,14 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
+#include "Debugger/ObjectChangesDebugger.h"
+
+#ifdef DEBUG_BUILD
+
 #include "Proto/Debug/Debug.pb.h"
 #include "Proto/Debug/DebugEntity.pb.h"
 
-#include "ObjectChangesDebugger.h"
-#include "Debugger.h"
+#include "Debugger/Debugger.h"
 #include "Universal/UScene.h"
 
 ObjectChangesDebugger::ObjectChangesDebugger(Debugger* debugger)
@@ -31,3 +34,5 @@ Error ObjectChangesDebugger::ChangeOccurred(ISubject* pSubject, System::Changes:
     m_pDebugger->addUpdatedObject(pSubject);
     return Errors::Success;
 }
+
+#endif

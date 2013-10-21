@@ -14,24 +14,23 @@
 
 #pragma once
 
-#include <map>
-#include <vector>
-#include <string>
-#include <boost/function.hpp>
 #include <boost/container/flat_map.hpp>
+#include <boost/function.hpp>
+#include <map>
+#include <string>
 
-#include "Errors.h"
-#include "Generic/IEntity.h"
+#include "DataTypes.h"
 #include "Generic/IComponent.h"
-#include "Generic/ISubject.h"
 #include "Generic/IObserver.h"
 #include "Generic/IProperty.h"
+#include "Generic/ISubject.h"
 #include "Generic/IUpdatable.h"
-#include "System/Types.h"
+#include "System/Changes.h"
 
+class IEntity;
 class ISystem;
-class ISystemTask;
 class ISystemObject;
+class ISystemTask;
 
 /**
  * <c>ISystemScene</c> is an interface class for managing a scene or scenes in a system.

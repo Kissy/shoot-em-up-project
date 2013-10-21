@@ -14,16 +14,17 @@
 
 #pragma once
 
+#include "Defines.h"
+
+#if defined DEBUG_BUILD
+
 #include <set>
 #include <list>
 
 #include "Proto/Debug/Debug.pb.h"
 
-#include "Defines.h"
 #include "SceneChangesDebugger.h"
 #include "ObjectChangesDebugger.h"
-
-#if defined DEBUG_BUILD
 
 #include <zmq.hpp>
 

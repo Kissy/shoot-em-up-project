@@ -14,13 +14,11 @@
 
 #pragma once
 
-#include "boost/function.hpp"
-#include "Proto/Common.pb.h"
+#include <boost/function.hpp>
 
-#include "Errors.h"
-#include "System/Types.h"
-#include "Generic/IProperty.h"
+#include "DataTypes.h"
 #include "Generic/IComponent.h"
+#include "Generic/IProperty.h"
 
 class ISystemScene;
 

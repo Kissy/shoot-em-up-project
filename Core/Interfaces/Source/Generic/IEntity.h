@@ -17,9 +17,6 @@
 #include <string>
 #include <list>
 
-#include "Errors.h"
-#include "System/Changes.h"
-
 /**
  * The <c>IEntity</c> interface supplies id & name management.
  */

@@ -36,7 +36,7 @@ public:
     /**
      * Default constructor.
      */
-    Framework(void) throw(...);
+    Framework(void);
 
     /**
      * Destructor.
@@ -60,7 +60,7 @@ public:
      *
      * @return An error code.
      */
-    Error Execute(void) throw(...);
+    Error Execute(void);
 
 protected:
     /**

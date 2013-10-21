@@ -12,19 +12,19 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include "Assert.h"
-#include "Generic/IProperty.h"
-#include "Generic/IEntity.h"
-#include "System/ISystem.h"
 #include "System/ISystemObject.h"
+
+#include "Generic/IProperty.h"
+
+class IEntity;
 
 /**
  * @inheritDoc
  */
 ISystemObject::ISystemObject(ISystemScene* pSystemScene, IEntity* entity) 
     : IProperty()
-    , m_entity(entity) 
-    , m_pSystemScene(pSystemScene) {
+    , m_pSystemScene(pSystemScene)
+    , m_entity(entity)  {
 }
 
 /**
