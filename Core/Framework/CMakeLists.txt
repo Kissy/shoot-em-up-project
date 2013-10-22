@@ -2,6 +2,16 @@ cmake_minimum_required(VERSION 2.8)
 
 project(Framework)
 
+find_package(Boost REQUIRED)
+find_package(Protobuf REQUIRED)
+find_package(ZeroMQ REQUIRED)
+find_package(TBB REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${PROTOBUF_INCLUDE_DIRS})
+include_directories(${ZEROMQ_INCLUDE_DIRS})
+include_directories(${TBB_INCLUDE_DIRS})
+
 include_directories(Source)
 include_directories(${BaseTypes_SOURCE_DIR}/Source)
 include_directories(${Generated_SOURCE_DIR}/Source)

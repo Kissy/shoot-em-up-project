@@ -5,8 +5,9 @@ project(Interfaces)
 find_package(Boost REQUIRED)
 find_package(Protobuf REQUIRED)
 
-include_directories(${BOOST_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${PROTOBUF_INCLUDE_DIRS})
+
 include_directories(Source)
 include_directories(${BaseTypes_SOURCE_DIR}/Source)
 include_directories(${Generated_SOURCE_DIR}/Source)
