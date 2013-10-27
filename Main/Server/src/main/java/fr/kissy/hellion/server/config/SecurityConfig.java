@@ -2,6 +2,7 @@ package fr.kissy.hellion.server.config;
 
 import fr.kissy.hellion.server.config.realm.ShiroBaseRealm;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -14,6 +15,7 @@ public class SecurityConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultSecurityManager securityManager = new DefaultSecurityManager(realm());
+        securityManager.setCacheManager(new MemoryConstrainedCacheManager());
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
     }
