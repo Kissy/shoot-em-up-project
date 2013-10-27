@@ -16,6 +16,7 @@
 
 #include <boost/timer/timer.hpp>
 
+#include "MathUtils.h"
 #include "System.h"
 #include "Object/Object.h"
 

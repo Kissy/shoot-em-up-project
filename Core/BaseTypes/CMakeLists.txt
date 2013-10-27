@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(BaseTypes)
+project("BaseTypes")
 
-aux_source_directory(Source BaseTypes_SOURCES)
-
-add_library(BaseTypes STATIC ${BaseTypes_SOURCES})
+check_root_module()
+add_project_sources("Source")
+add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCES})
 
 # Testing
 if(BUILD_TEST)
@@ -17,4 +17,4 @@ if(BUILD_TEST)
     target_link_libraries(BaseTypesTest BaseTypes pthread ${GTEST_BOTH_LIBRARIES})
 
     add_test(SingletonTest BaseTypesTest)
-endif()
+endif(BUILD_TEST)
