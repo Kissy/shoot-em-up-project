@@ -89,26 +89,30 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
         object->set_id(m_entity->getId());
         object->set_name(m_entity->getName());
         object->set_template_("ShotTemplate");
-        Proto::SystemObject* systemObject = object->add_systemobjects();
-        systemObject->set_type("Movable");
-        systemObject->set_systemtype(Proto::SystemType::Physic);
+        
+        Proto::SystemObject* inputSystemObject = object->add_systemobjects();
+        inputSystemObject->set_type("Passive");
+        inputSystemObject->set_systemtype(Proto::SystemType::Input);
+        Proto::SystemObject* physicSystemObject = object->add_systemobjects();
+        physicSystemObject->set_type("Movable");
+        physicSystemObject->set_systemtype(Proto::SystemType::Physic);
 
         if (m_velocityDirty) {
             m_velocityDirty = false;
-            Proto::Property* positionProperty = systemObject->add_properties();
+            Proto::Property* positionProperty = physicSystemObject->add_properties();
             positionProperty->set_name("Position");
             getVector3(&m_position, positionProperty->mutable_value());
-            Proto::Property* velocityProperty = systemObject->add_properties();
+            Proto::Property* velocityProperty = inputSystemObject->add_properties();
             velocityProperty->set_name("Velocity");
             getVector3(&m_velocity, velocityProperty->mutable_value());
         }
 
         if (m_rotationDirty) {
             m_rotationDirty = false;
-            Proto::Property* orientationProperty = systemObject->add_properties();
+            Proto::Property* orientationProperty = physicSystemObject->add_properties();
             orientationProperty->set_name("Orientation");
             getQuaternion(&m_orientation, orientationProperty->mutable_value());
-            Proto::Property* rotationProperty = systemObject->add_properties();
+            Proto::Property* rotationProperty = inputSystemObject->add_properties();
             rotationProperty->set_name("Rotation");
             getVector3(&m_rotation, rotationProperty->mutable_value());
         }
