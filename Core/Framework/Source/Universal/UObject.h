@@ -102,14 +102,14 @@ public:
      * @inheritDoc
      */
     inline System::Changes::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Generic::All;
+        return System::Changes::None;
     }
     
     /**
      * @inheritDoc
      */
     inline System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Generic::All | System::Changes::Physic::Position;
+        return System::Changes::None;
     }
 
 protected:

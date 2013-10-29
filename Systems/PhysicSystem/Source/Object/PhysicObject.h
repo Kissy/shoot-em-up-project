@@ -51,7 +51,4 @@ public:
         return Proto::SystemType::Physic;
     }
 
-protected:
-    f32                 m_rotation;
-
 };

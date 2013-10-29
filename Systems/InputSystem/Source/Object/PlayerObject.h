@@ -53,7 +53,8 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Generic::CreateObject | System::Changes::Physic::Velocity | System::Changes::Input::Keyboard;
+        return System::Changes::Generic::CreateObject | System::Changes::Input::Keyboard 
+             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
     };
 
     /**

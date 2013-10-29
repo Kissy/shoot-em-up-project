@@ -22,7 +22,6 @@ import java.util.Set;
  * @version $Id$
  */
 public class SynchronizeActor extends UntypedActor {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SynchronizeActor.class);
 
     @Autowired

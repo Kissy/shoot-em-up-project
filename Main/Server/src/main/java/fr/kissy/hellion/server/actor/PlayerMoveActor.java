@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.Arrays;
+
 
 /**
  * @author Guillaume Le Biller <lebiller@ekino.com>
@@ -40,21 +42,27 @@ public class PlayerMoveActor extends UntypedActor {
                 );
             } else if (propertyProto.getName().equals("Orientation")) {
                 player.setOrientation(
-                    propertyProto.getValue(0),
-                    propertyProto.getValue(1),
-                    propertyProto.getValue(2),
-                    propertyProto.getValue(3)
+                        propertyProto.getValue(0),
+                        propertyProto.getValue(1),
+                        propertyProto.getValue(2),
+                        propertyProto.getValue(3)
                 );
             } else if (propertyProto.getName().equals("Velocity")) {
                 player.setVelocity(
+                        propertyProto.getValue(0),
+                        propertyProto.getValue(1),
+                        propertyProto.getValue(2)
+                );
+            } else if (propertyProto.getName().equals("Rotation")) {
+                player.setRotationProperty(
                     propertyProto.getValue(0),
                     propertyProto.getValue(1),
-                    propertyProto.getValue(2),
-                    propertyProto.getValue(3)
+                    propertyProto.getValue(2)
                 );
             }
         }
 
+        LOGGER.debug("Received player move for user {}", messageEvent.getSubject().getPrincipal());
         synchronizeActorRef.tell(o, getSelf());
     }
 

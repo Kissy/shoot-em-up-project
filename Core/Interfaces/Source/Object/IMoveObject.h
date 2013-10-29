@@ -28,7 +28,8 @@ public:
      * Default constructor.
      */
     IMoveObject()
-        : m_velocity(Math::Vector4::Zero) {
+        : m_velocity(Math::Vector3::Zero)
+        , m_rotation(Math::Vector3::Zero) {
     }
 
     /**
@@ -42,11 +43,21 @@ public:
      *
      * @return  A constant pointer to the velocity.
      */
-    inline const Math::Vector4* getVelocity(void) {
+    inline const Math::Vector3* getVelocity(void) {
         return &m_velocity;
     }
 
+    /**
+     * Gets the rotation.
+     *
+     * @return  null if it fails, else the rotation.
+     */
+    inline const Math::Vector3* getRotation(void) {
+        return &m_rotation;
+    }
+
 protected:
-    Math::Vector4       m_velocity;
+    Math::Vector3       m_velocity;
+    Math::Vector3       m_rotation;
 
 };

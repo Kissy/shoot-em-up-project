@@ -90,14 +90,11 @@ Error MeshGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
     ASSERT(m_bInitialized);
 
     if (ChangeType & System::Changes::Physic::Position) {
-        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
-        const Math::Vector3& Position = *pGeometryObject->GetPosition();
+        const Math::Vector3& Position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
         m_pNode->setPosition(Position.x, Position.y, Position.z);
     }
-
     if (ChangeType & System::Changes::Physic::Orientation) {
-        IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
-        const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();
+        const Math::Quaternion& Orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
         m_pNode->setOrientation(Orientation.w, Orientation.x, Orientation.y, Orientation.z);
     }
 

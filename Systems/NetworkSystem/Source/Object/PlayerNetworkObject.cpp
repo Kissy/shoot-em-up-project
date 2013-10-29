@@ -27,9 +27,12 @@
  */
 PlayerNetworkObject::PlayerNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
     : NetworkObject(pSystemScene, entity)
-    , m_dirty(true)
-    , m_velocity(Math::Vector4::Zero)
+    , m_velocityDirty(true)
+    , m_rotationDirty(true)
+    , m_position(Math::Vector3::Zero)
     , m_orientation(Math::Quaternion::Zero)
+    , m_velocity(Math::Vector3::Zero)
+    , m_rotation(Math::Vector3::Zero)
     , m_heartbeat_delay(500000000LL) /* 500ms */ {
     m_heartbeat.stop();
 }
@@ -56,17 +59,20 @@ Error PlayerNetworkObject::initialize(void) {
  */
 Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
-
-    if (ChangeType & System::Changes::Physic::Velocity) {
-        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
-        m_dirty = true;
-    }
+    
     if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
         m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_dirty = true;
+    }
+    if (ChangeType & System::Changes::Physic::Velocity) {
+        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
+        m_velocityDirty = true;
+    }
+    if (ChangeType & System::Changes::Physic::Rotation) {
+        m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
+        m_rotationDirty = true;
     }
 
     return Errors::Success;
@@ -80,10 +86,12 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
 
     // Send the packet everytime it's dirty or for a heartbeat
     bool heartbeat_triggered = !m_heartbeat.is_stopped() && m_heartbeat.elapsed().wall >= m_heartbeat_delay;
-    if (m_dirty || heartbeat_triggered) {
-        m_dirty = false;
+    if (m_velocityDirty || m_rotationDirty || heartbeat_triggered) {
+        bool velocityNotNull = m_velocity != Math::Vector3::Zero;
+        bool rotationNotNull = m_rotation != Math::Vector3::Zero;
+
         m_heartbeat.stop();
-        if (m_velocity != Math::Vector4::Zero) {
+        if (velocityNotNull || rotationNotNull) {
             m_heartbeat.start();
         }
         
@@ -94,15 +102,25 @@ void PlayerNetworkObject::Update(f32 DeltaTime) {
         Proto::SystemObject* systemObject = object->add_systemobjects();
         systemObject->set_type(Proto::SystemType_Name(Proto::SystemType::Network));
         systemObject->set_systemtype(Proto::SystemType::Network);
-        Proto::Property* velocityProperty = systemObject->add_properties();
-        velocityProperty->set_name("Velocity");
-        getVector4(&m_velocity, velocityProperty->mutable_value());
-        Proto::Property* orientationProperty = systemObject->add_properties();
-        orientationProperty->set_name("Orientation");
-        getQuaternion(&m_orientation, orientationProperty->mutable_value());
-        Proto::Property* positionProperty = systemObject->add_properties();
-        positionProperty->set_name("Position");
-        getVector3(&m_position, positionProperty->mutable_value());
+
+        if (m_velocityDirty || velocityNotNull) {
+            m_velocityDirty = false;
+            Proto::Property* positionProperty = systemObject->add_properties();
+            positionProperty->set_name("Position");
+            getVector3(&m_position, positionProperty->mutable_value());
+            Proto::Property* velocityProperty = systemObject->add_properties();
+            velocityProperty->set_name("Velocity");
+            getVector3(&m_velocity, velocityProperty->mutable_value());
+        }
+        if (m_rotationDirty || rotationNotNull) {
+            m_rotationDirty = false;
+            Proto::Property* orientationProperty = systemObject->add_properties();
+            orientationProperty->set_name("Orientation");
+            getQuaternion(&m_orientation, orientationProperty->mutable_value());
+            Proto::Property* rotationProperty = systemObject->add_properties();
+            rotationProperty->set_name("Rotation");
+            getVector3(&m_rotation, rotationProperty->mutable_value());
+        }
 
         std::string data;
         objectUpdated.AppendToString(&data);

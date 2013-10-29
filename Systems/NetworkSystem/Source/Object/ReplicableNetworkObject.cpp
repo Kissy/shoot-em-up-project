@@ -27,9 +27,12 @@
  */
 ReplicableNetworkObject::ReplicableNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
     : NetworkObject(pSystemScene, entity)
-    , m_dirty(true)
-    , m_velocity(Math::Vector4::Zero)
-    , m_orientation(Math::Quaternion::Zero) {
+    , m_velocityDirty(true)
+    , m_rotationDirty(true)
+    , m_position(Math::Vector3::Zero)
+    , m_orientation(Math::Quaternion::Zero) 
+    , m_velocity(Math::Vector3::Zero)
+    , m_rotation(Math::Vector3::Zero) {
 }
 
 /**
@@ -54,17 +57,20 @@ Error ReplicableNetworkObject::initialize(void) {
  */
 Error ReplicableNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
-
-    if (ChangeType & System::Changes::Physic::Velocity) {
-        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
-        m_dirty = true;
-    }
+    
     if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
     if (ChangeType & System::Changes::Physic::Orientation) {
         m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-        m_dirty = true;
+    }
+    if (ChangeType & System::Changes::Physic::Velocity) {
+        m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
+        m_velocityDirty = true;
+    }
+    if (ChangeType & System::Changes::Physic::Rotation) {
+        m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
+        m_rotationDirty = true;
     }
 
     return Errors::Success;
@@ -77,9 +83,7 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
 
     // Send the packet everytime it's dirty
-    if (m_dirty) {
-        m_dirty = false;
-        
+    if (m_velocityDirty || m_rotationDirty) {
         Proto::ObjectUpdated objectUpdated;
         Proto::Object* object = objectUpdated.add_objects();
         object->set_id(m_entity->getId());
@@ -88,12 +92,26 @@ void ReplicableNetworkObject::Update(f32 DeltaTime) {
         Proto::SystemObject* systemObject = object->add_systemobjects();
         systemObject->set_type("Movable");
         systemObject->set_systemtype(Proto::SystemType::Physic);
-        Proto::Property* orientationProperty = systemObject->add_properties();
-        orientationProperty->set_name("Orientation");
-        getQuaternion(&m_orientation, orientationProperty->mutable_value());
-        Proto::Property* positionProperty = systemObject->add_properties();
-        positionProperty->set_name("Position");
-        getVector3(&m_position, positionProperty->mutable_value());
+
+        if (m_velocityDirty) {
+            m_velocityDirty = false;
+            Proto::Property* positionProperty = systemObject->add_properties();
+            positionProperty->set_name("Position");
+            getVector3(&m_position, positionProperty->mutable_value());
+            Proto::Property* velocityProperty = systemObject->add_properties();
+            velocityProperty->set_name("Velocity");
+            getVector3(&m_velocity, velocityProperty->mutable_value());
+        }
+
+        if (m_rotationDirty) {
+            m_rotationDirty = false;
+            Proto::Property* orientationProperty = systemObject->add_properties();
+            orientationProperty->set_name("Orientation");
+            getQuaternion(&m_orientation, orientationProperty->mutable_value());
+            Proto::Property* rotationProperty = systemObject->add_properties();
+            rotationProperty->set_name("Rotation");
+            getVector3(&m_rotation, rotationProperty->mutable_value());
+        }
 
         std::string data;
         objectUpdated.AppendToString(&data);

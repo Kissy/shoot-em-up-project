@@ -104,12 +104,12 @@ void PlayerInputObject::Update(f32 DeltaTime) {
         m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
     }
     if (m_rightRotateInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
-        m_velocity.w += m_rightRotateInputAction->isActive() ? -1 : 1;
+        mModified |= System::Changes::Physic::Rotation;
+        m_rotation.z += m_rightRotateInputAction->isActive() ? -1 : 1;
     }
     if (m_leftRotateInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
-        m_velocity.w += m_leftRotateInputAction->isActive() ? 1 : -1;
+        mModified |= System::Changes::Physic::Rotation;
+        m_rotation.z += m_leftRotateInputAction->isActive() ? 1 : -1;
     }
     if (m_shotInputAction->hasChanged()) {
         if (m_shotInputAction->isActive()) {

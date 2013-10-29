@@ -23,8 +23,9 @@ public class Player implements BoxObject {
     private String name;
     private Common.Property.Builder meshProperty;
     private Common.Property.Builder positionProperty;
-    private Common.Property.Builder velocityProperty;
     private Common.Property.Builder orientationProperty;
+    private Common.Property.Builder velocityProperty;
+    private Common.Property.Builder rotationProperty;
 
     // Local Instance
     private ActorRef sessionActor;
@@ -53,7 +54,12 @@ public class Player implements BoxObject {
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
         velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
-        velocityProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+
+        rotationProperty = Common.Property.newBuilder();
+        rotationProperty.setName("Rotation");
+        rotationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        rotationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
+        rotationProperty.addValue(ByteString.copyFromUtf8(String.valueOf(0)));
     }
 
     public ObjectId getId() {
@@ -86,17 +92,6 @@ public class Player implements BoxObject {
         positionProperty.setValue(2, z);
     }
 
-    public Common.Property.Builder getVelocityProperty() {
-        return velocityProperty;
-    }
-
-    public void setVelocity(ByteString x, ByteString y, ByteString z, ByteString w) {
-        velocityProperty.setValue(0, x);
-        velocityProperty.setValue(1, y);
-        velocityProperty.setValue(2, z);
-        velocityProperty.setValue(3, w);
-    }
-
     public Common.Property.Builder getOrientationProperty() {
         return orientationProperty;
     }
@@ -106,6 +101,26 @@ public class Player implements BoxObject {
         orientationProperty.setValue(1, y);
         orientationProperty.setValue(2, z);
         orientationProperty.setValue(3, w);
+    }
+
+    public Common.Property.Builder getVelocityProperty() {
+        return velocityProperty;
+    }
+
+    public void setVelocity(ByteString x, ByteString y, ByteString z) {
+        velocityProperty.setValue(0, x);
+        velocityProperty.setValue(1, y);
+        velocityProperty.setValue(2, z);
+    }
+
+    public Common.Property.Builder getRotationProperty() {
+        return rotationProperty;
+    }
+
+    public void setRotationProperty(ByteString x, ByteString y, ByteString z) {
+        rotationProperty.setValue(0, x);
+        rotationProperty.setValue(1, y);
+        rotationProperty.setValue(2, z);
     }
 
     @Transient

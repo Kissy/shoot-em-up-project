@@ -2,11 +2,17 @@ package fr.kissy.hellion.server.service;
 
 import fr.kissy.hellion.proto.Common;
 import fr.kissy.hellion.server.domain.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 /**
  * @author Guillaume LE BILLER
  */
 public class ObjectService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectService.class);
+
     private static final String MOVABLE = "Movable";
     private static final String PLAYER = "Player";
     private static final String MESH = "Mesh";
@@ -46,7 +52,7 @@ public class ObjectService {
         physicSystemObject.addProperties(player.getPositionProperty().build());
         physicSystemObject.addProperties(player.getOrientationProperty().build());
         physicSystemObject.addProperties(player.getVelocityProperty().build());
-
+        physicSystemObject.addProperties(player.getRotationProperty().build());
         return builder.build();
     }
 
@@ -67,6 +73,7 @@ public class ObjectService {
         networkSystemObject.addProperties(player.getPositionProperty().build());
         networkSystemObject.addProperties(player.getOrientationProperty().build());
         networkSystemObject.addProperties(player.getVelocityProperty().build());
+        networkSystemObject.addProperties(player.getRotationProperty().build());
         return builder.build();
     }
 

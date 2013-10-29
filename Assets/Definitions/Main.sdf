@@ -17,9 +17,9 @@
 			<Properties SystemType="Graphic" ObjectType="Particle">
 			</Properties>
 			<Properties SystemType="Physic" ObjectType="Movable">
-				<Property Name="SpeedMultiplier" value1="80" />
+				<Property Name="VelocityMultiplier" value1="80" />
 				<Property Name="ConstraintPosition" value1="0" />
-				<Property Name="Velocity" Value1="0" Value2="-1" Value3="0" Value4="0" />
+				<Property Name="Velocity" Value1="0" Value2="-1" Value3="0" />
 			</Properties>
 		</Object>
 	</Templates>

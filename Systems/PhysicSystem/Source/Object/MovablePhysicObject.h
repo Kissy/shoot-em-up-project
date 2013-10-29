@@ -49,14 +49,16 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation
+             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Physic::Velocity | System::Changes::Physic::Position | System::Changes::Physic::Orientation;
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation
+             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
     };
 
     /**
@@ -71,6 +73,7 @@ public:
 
 private:
     bool    m_constraint_position;
-    f32     m_speed_multiplier;
+    f32     m_velocity_multiplier;
+    f32     m_rotation_multiplier;
 
 };
