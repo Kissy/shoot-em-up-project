@@ -187,23 +187,6 @@ ISystemObject* UObject::GetExtension(Proto::SystemType SystemType) {
 /**
  * @inheritDoc
  */
-void UObject::update(const Proto::Object* object) {
-    SystemService* systemService = IServiceManager::get()->getSystemService();
-    for (auto objectProto : object->systemobjects()) {
-        ISystem* m_pSystem = systemService->get(objectProto.systemtype());
-        ASSERTMSG1(m_pSystem != NULL, "Unable to get system %s.", objectProto.systemtype());
-
-        if (m_pSystem != NULL) {
-            ISystemObject* systemObject = GetExtension(m_pSystem->GetSystemType());
-            ASSERTMSG1(systemObject != nullptr, "Unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            systemObject->setProperties(objectProto.properties());
-        }
-    }
-}
-
-/**
- * @inheritDoc
- */
 Error UObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     // Objects are probably not observers,
     // Objects can be subjects through links

@@ -22,6 +22,7 @@
 #include "Object/Object.h"
 #include "Object/PlayerObject.h"
 #include "Object/ConnectInputObject.h"
+#include "Object/PassiveInputObject.h"
 
 extern IServiceManager* g_serviceManager;
 
@@ -35,6 +36,7 @@ InputScene::InputScene(ISystem* pSystem)
 
     m_ObjectFactories["Player"] = boost::factory<PlayerInputObject*>();
     m_ObjectFactories["Connect"] = boost::factory<ConnectInputObject*>();
+    m_ObjectFactories["Passive"] = boost::factory<PassiveInputObject*>();
     
     m_defaultSchema = OISB::System::getSingleton().getDefaultActionSchemaAutoCreate();
     m_quitInputAction = m_defaultSchema->createAction<OISB::TriggerAction>("Exit");

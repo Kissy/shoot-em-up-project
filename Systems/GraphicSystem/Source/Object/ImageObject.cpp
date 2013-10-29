@@ -33,7 +33,7 @@ ImageGraphicObject::ImageGraphicObject(ISystemScene* pSystemScene, IEntity* enti
     m_position->x = 0;
     m_position->y = 0;*/
 
-    m_propertySetters["Image"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_image, _1);
+    m_propertySetters["Image"] = boost::bind(&IProperty::setString, this, System::Changes::None, &m_image, _1);
     m_propertyGetters["Image"] = boost::bind(&IProperty::getString, this, &m_image, _1);
 }
 

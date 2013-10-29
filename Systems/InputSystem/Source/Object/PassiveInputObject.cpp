@@ -1,4 +1,4 @@
-// Copyright � 2008-2009 Intel Corporation
+﻿// Copyright � 2008-2009 Intel Corporation
 // All Rights Reserved
 //
 // Permission is granted to use, copy, distribute and prepare derivative works of this
@@ -12,30 +12,46 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-#include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
-
+#include "Generic/IEntity.h"
 #include "Scene.h"
-#include "Object/PhysicObject.h"
+#include "PassiveInputObject.h"
 
 /**
  * @inheritDoc
  */
-PhysicObject::PhysicObject(ISystemScene* pSystemScene, IEntity* entity) 
-    : ISystemObject(pSystemScene, entity)
-    , IGeometryObject() {
-    m_orientation.Set(Math::Vector3::UnitZ, 0);
-    
-    m_propertySetters["Position"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Position, &m_position, _1);
-    m_propertyGetters["Position"] = boost::bind(&IProperty::getVector3, this, &m_position, _1);
-    
-    m_propertySetters["Orientation"] = boost::bind(&IProperty::setQuaternion, this, System::Changes::Physic::Orientation, &m_orientation, _1);
-    m_propertyGetters["Orientation"] = boost::bind(&IProperty::getQuaternion, this, &m_orientation, _1);
+PassiveInputObject::PassiveInputObject(ISystemScene* pSystemScene, IEntity* entity) 
+    : InputObject(pSystemScene, entity) {
 }
 
 /**
  * @inheritDoc
  */
-PhysicObject::~PhysicObject(void) {
+PassiveInputObject::~PassiveInputObject(void) {
+}
+
+/**
+ * @inheritDoc
+ */
+Error PassiveInputObject::initialize(void) {
+    ASSERT(!m_bInitialized);
+    
+    m_bInitialized = true;
+    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+Error PassiveInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
+    ASSERT(m_bInitialized);
+
+    return Errors::Success;
+}
+
+/**
+ * @inheritDoc
+ */
+void PassiveInputObject::Update(f32 DeltaTime) {
+    ASSERT(m_bInitialized);
 
 }

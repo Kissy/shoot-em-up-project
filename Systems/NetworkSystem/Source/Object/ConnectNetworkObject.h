@@ -46,7 +46,7 @@ public:
      * @inheritDoc
      */
     inline System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Input::Keyboard;
+        return System::Changes::Input::Action;
     };
 
     /**

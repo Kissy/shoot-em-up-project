@@ -20,6 +20,7 @@
 
 class UObject;
 class IChangeManager;
+class SystemService;
 
 /**
  * Implements a universal scene for holding all the scenes of the different systems and acts as
@@ -56,17 +57,17 @@ public:
     /**
      * Destructor.
      */
-    ~UScene(void);
+    ~UScene();
 
     /**
      * Initialises this object.
      */
-    void init(void);
+    void init();
 
     /**
      * Updates this object.
      */
-    void update(void);
+    void update();
 
     /**
      * Creates a new ISystemScene for the passed in ISystem.
@@ -91,7 +92,7 @@ public:
      *
      * @return  The system scene collection.
      */
-    const SystemScenes& GetSystemScenes(void) const {
+    const SystemScenes& GetSystemScenes() const {
         return m_SystemScenes;
     }
 
@@ -126,7 +127,7 @@ public:
      *
      * @return  The system scene collection.
      */
-    const Objects& GetObjects(void) const {
+    const Objects& GetObjects() const {
         return m_Objects;
     }
 
@@ -163,13 +164,29 @@ public:
     /**
      * @inheritDoc
      */
-    inline System::Changes::BitMask GetDesiredSystemChanges(void) {
+    inline System::Changes::BitMask GetDesiredSystemChanges() {
         return System::Changes::Generic::All;
     }
 
-    inline IChangeManager* getObjectCCM(void) {
+    /**
+     * Gets object ccm.
+     *
+     * @return  null if it fails, else the object ccm.
+     */
+    inline IChangeManager* getObjectCCM() {
         return m_pObjectCCM;
     }
+
+private:
+
+    /**
+     * Creates system object.
+     *
+     * @param [in,out]  systemService   If non-null, the system service.
+     * @param [in,out]  pObject         If non-null, the object.
+     * @param   objectProto             The object prototype.
+     */
+    void createSystemObject(SystemService* systemService, UObject* pObject, Proto::SystemObject objectProto);
 
 protected:
     IChangeManager*                         m_pSceneCCM;

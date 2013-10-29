@@ -41,7 +41,7 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Input::Keyboard;
+        return System::Changes::Input::Action;
     };
 
     /**

@@ -17,7 +17,6 @@
 #include <OISB.h>
 
 #include "System.h"
-#include "Object/IMoveObject.h"
 #include "Object/IGeometryObject.h"
 #include "Object/ISceneObject.h"
 #include "Object/Object.h"
@@ -31,7 +30,7 @@ struct KeyboardButtonData;
  *
  * @sa  ISystemObject
  */
-class PlayerInputObject : public InputObject, public IMoveObject, public IGeometryObject, public ISceneObject {
+class PlayerInputObject : public InputObject, public ISceneObject, public IGeometryObject {
 public:
 
     /**
@@ -53,8 +52,8 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Generic::CreateObject | System::Changes::Input::Keyboard 
-             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
+        return System::Changes::Generic::CreateObject | System::Changes::Input::Action 
+             | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**

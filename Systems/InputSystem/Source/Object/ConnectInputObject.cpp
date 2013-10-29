@@ -62,16 +62,16 @@ Error ConnectInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bi
 
 void ConnectInputObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
-    int modified = 0;
+    m_modified = 0;
 
     if (m_connectInputAction->hasChanged()) {
         m_keyboardButtonData.type = 0;
         m_keyboardButtonData.down = m_connectInputAction->isActive();
-        modified |= System::Changes::Input::Keyboard;
+        m_modified |= System::Changes::Input::Action;
         Proto::Object objectProto;
         objectProto.set_id(this->getEntity()->getParent()->getId());
         static_cast<InputScene*>(m_pSystemScene)->queueDeleteObject(objectProto);
     }
     
-    PostChanges(modified);
+    PostChanges(m_modified);
 }

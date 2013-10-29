@@ -34,10 +34,10 @@ UpdatableNetworkObject::UpdatableNetworkObject(ISystemScene* pSystemScene, IEnti
     m_propertySetters["Orientation"] = boost::bind(&IProperty::setQuaternion, this, System::Changes::Physic::Orientation, &m_orientation, _1);
     m_propertyGetters["Orientation"] = boost::bind(&IProperty::getQuaternion, this, &m_orientation, _1);
 
-    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Velocity, &m_velocity, _1);
+    m_propertySetters["Velocity"] = boost::bind(&IProperty::setVector3, this, System::Changes::Input::Velocity, &m_velocity, _1);
     m_propertyGetters["Velocity"] = boost::bind(&IProperty::getVector3, this, &m_velocity, _1);
     
-    m_propertySetters["Rotation"] = boost::bind(&IProperty::setVector3, this, System::Changes::Physic::Rotation, &m_rotation, _1);
+    m_propertySetters["Rotation"] = boost::bind(&IProperty::setVector3, this, System::Changes::Input::Rotation, &m_rotation, _1);
     m_propertyGetters["Rotation"] = boost::bind(&IProperty::getVector3, this, &m_rotation, _1);
 }
 

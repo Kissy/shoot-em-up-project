@@ -17,7 +17,7 @@
 #include "System.h"
 #include "Generic/IEntity.h"
 #include "Object/PhysicObject.h"
-#include "Object/IGeometryObject.h"
+#include "Object/IMoveObject.h"
 
 class ISystemScene;
 
@@ -27,7 +27,7 @@ class ISystemScene;
 *
 * @sa  ISystemObject
 */
-class MovablePhysicObject : public PhysicObject {
+class MovablePhysicObject : public PhysicObject, public IMoveObject {
 public:
 
     /**
@@ -49,16 +49,14 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation
-             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
+        return System::Changes::Physic::Position | System::Changes::Physic::Orientation;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation
-             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
+        return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**

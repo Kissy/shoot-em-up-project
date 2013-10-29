@@ -54,7 +54,7 @@ public:
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
         return System::Changes::Physic::Position | System::Changes::Physic::Orientation
-             | System::Changes::Physic::Velocity | System::Changes::Physic::Rotation;
+             | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**

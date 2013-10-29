@@ -137,7 +137,6 @@ Error CameraGraphicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
         const Math::Vector3& Position = *pGeometryObject->GetPosition();
         m_pNode->setPosition(Position.x, Position.y, Position.z);
     }
-
     if (ChangeType & System::Changes::Physic::Orientation) {
         IGeometryObject* pGeometryObject = dynamic_cast<IGeometryObject*>(pSubject);
         const Math::Quaternion& Orientation = *pGeometryObject->GetOrientation();

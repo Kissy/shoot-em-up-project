@@ -71,7 +71,6 @@ Error PlayerInputObject::ChangeOccurred(ISubject* pSubject, System::Changes::Bit
     if (ChangeType & System::Changes::Physic::Position) {
         m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
     }
-
     if (ChangeType & System::Changes::Physic::Orientation) {
         m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
     }
@@ -88,34 +87,34 @@ void PlayerInputObject::Update(f32 DeltaTime) {
     u32 mModified = 0;
     
     if (m_upInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
+        mModified |= System::Changes::Input::Velocity;
         m_velocity.y += m_upInputAction->isActive() ? -1 : 1;
     }
     if (m_rightInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
+        mModified |= System::Changes::Input::Velocity;
         m_velocity.x += m_rightInputAction->isActive() ? 1 : -1;
     }
     if (m_downInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
+        mModified |= System::Changes::Input::Velocity;
         m_velocity.y += m_downInputAction->isActive() ? 1 : -1;
     }
     if (m_leftInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Velocity;
+        mModified |= System::Changes::Input::Velocity;
         m_velocity.x += m_leftInputAction->isActive() ? -1 : 1;
     }
     if (m_rightRotateInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Rotation;
+        mModified |= System::Changes::Input::Rotation;
         m_rotation.z += m_rightRotateInputAction->isActive() ? -1 : 1;
     }
     if (m_leftRotateInputAction->hasChanged()) {
-        mModified |= System::Changes::Physic::Rotation;
+        mModified |= System::Changes::Input::Rotation;
         m_rotation.z += m_leftRotateInputAction->isActive() ? 1 : -1;
     }
     if (m_shotInputAction->hasChanged()) {
         if (m_shotInputAction->isActive()) {
             createShot();
         }
-        mModified |= System::Changes::Input::Keyboard;
+        mModified |= System::Changes::Input::Action;
         m_shotKeyboardButtonData->down = m_shotInputAction->isActive();
     }
     
@@ -132,18 +131,22 @@ void PlayerInputObject::createShot(void) {
     shotProto.set_id(ObjectId::gen().str());
     shotProto.set_name("Shot");
     shotProto.set_template_("ShotTemplate");
+
     auto physicSystemObject = shotProto.add_systemobjects();
     physicSystemObject->set_systemtype(Proto::SystemType::Physic);
     physicSystemObject->set_type("Movable");
+
     auto positionProperty = physicSystemObject->add_properties();
     positionProperty->set_name("Position");
     getVector3(&m_position, positionProperty->mutable_value());
     auto orientationProperty = physicSystemObject->add_properties();
     orientationProperty->set_name("Orientation");
     getQuaternion(&m_orientation, orientationProperty->mutable_value());
+
     auto networkSystemObject = shotProto.add_systemobjects();
     networkSystemObject->set_systemtype(Proto::SystemType::Network);
     networkSystemObject->set_type("Replicable");
+
     m_createObjectQueue->push_back(shotProto);
     PostChanges(System::Changes::Generic::CreateObject);
 }

@@ -60,16 +60,10 @@ Error MovablePhysicObject::initialize(void) {
 Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-    if (ChangeType & System::Changes::Physic::Position) {
-        m_position = *dynamic_cast<IGeometryObject*>(pSubject)->GetPosition();
-    }
-    if (ChangeType & System::Changes::Physic::Velocity) {
+    if (ChangeType & System::Changes::Input::Velocity) {
         m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
     }
-    if (ChangeType & System::Changes::Physic::Orientation) {
-        m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
-    }
-    if (ChangeType & System::Changes::Physic::Rotation) {
+    if (ChangeType & System::Changes::Input::Rotation) {
         m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
     }
 
@@ -81,7 +75,7 @@ Error MovablePhysicObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
  */
 void MovablePhysicObject::Update(f32 DeltaTime) {
     ASSERT(m_bInitialized);
-    u32 modified = 0;
+    m_modified = 0;
 
     // Rotation
     if (m_rotation != Math::Vector3::Zero) {
@@ -89,11 +83,11 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         additionalOrientation.Set(m_rotation, Math::Angle::Deg2Rad(m_rotation_multiplier * DeltaTime));
         m_orientation *= additionalOrientation;
 
-        modified |= System::Changes::Physic::Orientation;
+        m_modified |= System::Changes::Physic::Orientation;
     }
     
     // Velocity
-    if (m_velocity != Math::Vector4::Zero) {
+    if (m_velocity != Math::Vector3::Zero) {
         Math::Vector3 normalizedVelocity = Math::Vector3(m_velocity.x, m_velocity.y, m_velocity.z);
         m_orientation.Rotate(normalizedVelocity);
         normalizedVelocity.Normalize();
@@ -105,8 +99,10 @@ void MovablePhysicObject::Update(f32 DeltaTime) {
         m_position.x = (m_constraint_position && m_position.x > 35) ? 35 : ((m_constraint_position && m_position.x < -35) ? -35 : m_position.x);
         m_position.y = (m_constraint_position && m_position.y > 25) ? 25 : ((m_constraint_position && m_position.y < -25) ? -25 : m_position.y);
             
-        modified |= System::Changes::Physic::Position;
+        m_modified |= System::Changes::Physic::Position;
     }
 
-    PostChanges(modified);
+    if (m_modified != System::Changes::None) {
+        PostChanges(m_modified);
+    }
 }

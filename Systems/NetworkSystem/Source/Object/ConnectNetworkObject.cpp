@@ -26,7 +26,7 @@
  */
 ConnectNetworkObject::ConnectNetworkObject(ISystemScene* pSystemScene, IEntity* entity) 
     : NetworkObject(pSystemScene, entity) {
-    m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::Physic::Velocity, &m_username, _1);
+    m_propertySetters["Username"] = boost::bind(&IProperty::setString, this, System::Changes::None, &m_username, _1);
     m_propertyGetters["Username"] = boost::bind(&IProperty::getString, this, &m_username, _1);
 }
 
@@ -52,7 +52,7 @@ Error ConnectNetworkObject::initialize(void) {
 Error ConnectNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) {
     ASSERT(m_bInitialized);
 
-    if (ChangeType & System::Changes::Input::Keyboard) {
+    if (ChangeType & System::Changes::Input::Action) {
         const KeyboardButtonData* keyboardButtonData = dynamic_cast<IKeyboardObject*>(pSubject)->getKeyboardButtonData();
         if (keyboardButtonData->down) {
             DownstreamMessageProto downstreamMessageProto;

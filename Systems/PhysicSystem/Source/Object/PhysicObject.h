@@ -17,7 +17,6 @@
 #include "System/ISystemScene.h"
 #include "System/ISystemObject.h"
 #include "Object/IGeometryObject.h"
-#include "Object/IMoveObject.h"
 #include "Generic/IEntity.h"
 
 class HavokPhysicsSystem;
@@ -31,7 +30,7 @@ class HavokPhysicsTask;
 /// </summary>
 ///////////////////////////////////////////////////////////////////////////////
 
-class PhysicObject : public ISystemObject, public IGeometryObject, public IMoveObject {
+class PhysicObject : public ISystemObject, public IGeometryObject {
 public:
 
     /**

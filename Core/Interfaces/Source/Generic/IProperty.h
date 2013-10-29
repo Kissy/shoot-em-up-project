@@ -62,13 +62,6 @@ public:
      * @param   properties Property structure array to get values from.
      */
     void setProperties(const Proto::RepeatedProperty& properties);
-        
-    /**
-     * Sets the property for this system.
-     *
-     * @param   property Property to get values from.
-     */
-    void setProperty(const Proto::Property& property);
 
     /**
      * Get the properties and their values for this system.
@@ -174,9 +167,18 @@ public:
      */
     virtual void propertyChanged(System::Changes::BitMask uInChangedBits);
 
+private:
+    /**
+     * Sets the property for this system.
+     *
+     * @param   property Property to get values from.
+     */
+    void setProperty(const Proto::Property& property);
+
 protected:
-    bool                    m_bInitialized;
-    PropertySetters         m_propertySetters;
-    PropertyGetters         m_propertyGetters;
+    bool                        m_bInitialized;
+    PropertySetters             m_propertySetters;
+    PropertyGetters             m_propertyGetters;
+    System::Changes::BitMask    m_modified;
 
 };

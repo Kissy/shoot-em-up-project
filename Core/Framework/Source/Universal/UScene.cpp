@@ -210,51 +210,30 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     }
 
     SystemService* systemService = IServiceManager::get()->getSystemService();
+    Templates::iterator templateIt = m_templates.find(objectProto->template_());
     
     //
-    // Start by the template object.
+    // SystemObjects
     // 
-    Templates::iterator templateIt = m_templates.find(objectProto->template_());
     if (templateIt != m_templates.end()) {
         for (auto objectProto : (*templateIt).second->systemobjects()) {
-            //
-            // Create object.
-            //
-            ISystem* m_pSystem = systemService->get(objectProto.systemtype());
-            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
-            auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
-            ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type());
-            ASSERT(pSystemObject != NULL);
-            m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
-            pSystemObject->setProperties(objectProto.properties());
+            createSystemObject(systemService, pObject, objectProto);
         }
     }
-
-    //
-    // Added systems extension.
-    //
     for (auto objectProto : objectProto->systemobjects()) {
-        ISystemObject* pSystemObject;
-        
-        //
-        // Get or Create object.
-        //
-        UObject::SystemObjects extensions = pObject->GetExtensions();
-        if (extensions.find(objectProto.systemtype()) == extensions.end()) {
-            ISystem* m_pSystem = systemService->get(objectProto.systemtype());
-            ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
-            auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
-            ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
-            pSystemObject = pObject->Extend(it->second, objectProto.type());
-            ASSERT(pSystemObject != NULL);
-            m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
-        } else {
-            pSystemObject = pObject->GetExtension(objectProto.systemtype());
-            ASSERT(pSystemObject != NULL);
-        }
+        createSystemObject(systemService, pObject, objectProto);
+    }
 
-        pSystemObject->setProperties(objectProto.properties());
+    // 
+    // Properties
+    // 
+    if (templateIt != m_templates.end()) {
+        for (auto objectProto : (*templateIt).second->systemobjects()) {
+            pObject->GetExtension(objectProto.systemtype())->setProperties(objectProto.properties());
+        }
+    }
+    for (auto objectProto : objectProto->systemobjects()) {
+        pObject->GetExtension(objectProto.systemtype())->setProperties(objectProto.properties());
     }
 
     //
@@ -265,6 +244,24 @@ UObject* UScene::createObject(const Proto::Object* objectProto) {
     }
     return pObject;
 }
+
+/**
+ * @inheritDoc
+ */
+void UScene::createSystemObject(SystemService* systemService, UObject* pObject, Proto::SystemObject objectProto) {
+    UObject::SystemObjects extensions = pObject->GetExtensions();
+    if (extensions.find(objectProto.systemtype()) != extensions.end()) {
+        return;
+    }
+
+    ISystem* m_pSystem = systemService->get(objectProto.systemtype());
+    ASSERTMSG1(m_pSystem != NULL, "Parser was unable to get system %s.", objectProto.systemtype());        
+    auto it = GetSystemScenes().find(m_pSystem->GetSystemType());
+    ASSERTMSG1(it != GetSystemScenes().end(), "Parser was unable to find a scene for the system %s.", m_pSystem->GetSystemType());
+    ISystemObject* pSystemObject = pObject->Extend(it->second, objectProto.type());
+    ASSERT(pSystemObject != NULL);
+    m_pSceneCCM->Register(pSystemObject, System::Changes::Generic::All, this);
+};
 
 /**
  * @inheritDoc

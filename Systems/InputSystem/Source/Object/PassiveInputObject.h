@@ -14,29 +14,22 @@
 
 #pragma once
 
-#include "System.h"
-#include "Object/Object.h"
+#include <OISB.h>
 
-class ISystemScene;
+#include "Object.h"
 
-/**
-* Implementation of the IGraphicsObject interface. See Interfaces\Graphics.h and Interfaces\
-* System.h for a definition of the class and its functions.
-*
-* @sa  ISystemObject
-*/
-class ReplicableNetworkObject : public NetworkObject {
+class PassiveInputObject : public InputObject {
 public:
 
     /**
-     * @inheritDoc
+     * Default constructor.
      */
-    ReplicableNetworkObject(ISystemScene* pSystemScene, IEntity* entity);
+    PassiveInputObject(ISystemScene* pSystemScene, IEntity* entity);
 
     /**
-     * @inheritDoc
+     * Destructor.
      */
-    ~ReplicableNetworkObject(void);
+    ~PassiveInputObject(void);
 
     /**
      * @inheritDoc
@@ -47,33 +40,24 @@ public:
      * @inheritDoc
      */
     System::Changes::BitMask GetPotentialSystemChanges(void) {
-        return System::Changes::None;
+        return System::Changes::Input::Velocity | System::Changes::Input::Rotation;
     };
 
     /**
      * @inheritDoc
      */
     System::Types::BitMask GetDesiredSystemChanges(void) {
-        return System::Changes::Physic::Position | System::Changes::Physic::Orientation
-             | System::Changes::Input::Velocity | System::Changes::Input::Rotation;
+        return System::Changes::None;
     };
-
+        
     /**
      * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType);
-
+    
     /**
      * @inheritDoc
      */
     void Update(f32 DeltaTime);
-
-private:
-    bool                            m_velocityDirty;
-    bool                            m_rotationDirty;
-    Math::Vector3                   m_position;
-    Math::Quaternion                m_orientation;
-    Math::Vector3                   m_velocity;
-    Math::Vector3                   m_rotation;
 
 };

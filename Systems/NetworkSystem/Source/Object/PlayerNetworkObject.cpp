@@ -66,11 +66,11 @@ Error PlayerNetworkObject::ChangeOccurred(ISubject* pSubject, System::Changes::B
     if (ChangeType & System::Changes::Physic::Orientation) {
         m_orientation = *dynamic_cast<IGeometryObject*>(pSubject)->GetOrientation();
     }
-    if (ChangeType & System::Changes::Physic::Velocity) {
+    if (ChangeType & System::Changes::Input::Velocity) {
         m_velocity = *dynamic_cast<IMoveObject*>(pSubject)->getVelocity();
         m_velocityDirty = true;
     }
-    if (ChangeType & System::Changes::Physic::Rotation) {
+    if (ChangeType & System::Changes::Input::Rotation) {
         m_rotation = *dynamic_cast<IMoveObject*>(pSubject)->getRotation();
         m_rotationDirty = true;
     }

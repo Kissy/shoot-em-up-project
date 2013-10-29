@@ -86,14 +86,6 @@ public:
     ISystemObject* GetExtension(Proto::SystemType System);
 
     /**
-     * Updates the object using an object proto.
-     *
-     * @param   objectProto The object prototype.
-     */
-    // TODO maybe move it to system scene instead ?
-    void update(const Proto::Object* object);
-
-    /**
      * @inheritDoc
      */
     Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask SystemChanges);
