@@ -37,21 +37,21 @@ public:
     /**
      * Get the entity ID.
      */
-    inline std::string getId(void) {
+    inline std::string getId() {
         return m_id;
     }
     
     /**
      * Get the entity name.
      */
-    inline std::string getName(void) {
+    inline std::string getName() {
         return m_name;
     }
     
     /**
      * Get the entity parent.
      */
-    inline IEntity* getParent(void) {
+    inline IEntity* getParent() {
         return m_parent;
     }
 
@@ -60,7 +60,7 @@ public:
      *
      * @return  null if it fails, else the children.
      */
-    inline std::list<IEntity*> getChildren(void) {
+    inline std::list<IEntity*> getChildren() {
         return m_children;
     }
 

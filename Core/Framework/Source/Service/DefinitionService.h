@@ -40,17 +40,17 @@ public:
     /**
      * Destructor.
      */
-    ~DefinitionService(void);
+    ~DefinitionService();
 
     /**
      * Parse environment.
      */
-    void parseEnvironment(void);
+    void parseEnvironment();
 
     /**
      * Parse systems.
      */
-    void parseSystems(void);
+    void parseSystems();
 
     /**
      * Parse scene.

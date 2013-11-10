@@ -18,6 +18,7 @@
 #include <set>
 
 #include "Manager/IChangeManager.h"
+#include "Manager/ObserverRequest.h"
 #include "SpinMutex.h"
 
 class ITaskManager;
@@ -42,7 +43,6 @@ public:
     };
 
     typedef std::vector<Notification> NotifyList;
-
     typedef std::list<NotifyList*> ListOfNotifyLists;
 
     /**
@@ -58,16 +58,12 @@ public:
     // Must be called after construction for a valid Change Manager
 
     // IChangeManager Functionality
-    Error Register(ISubject* pInSubject,
-                    System::Changes::BitMask uInIntrestBits,
-                    IObserver* pInObserver,
-                    System::Types::BitMask observerIdBits = System::Types::All);
+    Error Register(ISubject* pInSubject, System::Changes::BitMask uInIntrestBits, IObserver* pInObserver, System::Types::BitMask observerIdBits = System::Types::All);
     Error Unregister(ISubject* pSubject, IObserver* pObserver);
     Error DistributeQueuedChanges(System::Types::BitMask Systems2BeNotified, System::Changes::BitMask ChangesToDist);
 
     // IObserver Functionality
-    Error ChangeOccurred(ISubject* pInChangedSubject,
-                            System::Changes::BitMask uInChangedBits);
+    Error ChangeOccurred(ISubject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
         
     /**
         * @inheritDoc
@@ -87,30 +83,6 @@ public:
     inline NotifyList& GetNotifyList(u32 tlsIndex);
 
 protected:
-
-    /// <summary>
-    ///   Defines a structure used by the CCM to store information about observers
-    /// </summary>
-    class ObserverRequest {
-        public:
-            ObserverRequest(IObserver* pObserver = nullptr, u32 Interests = 0, u32 idBits = System::Changes::All)
-                : m_pObserver(pObserver)
-                , m_interestBits(Interests)
-                , m_observerIdBits(idBits) {
-            }
-
-            IObserver*  m_pObserver;
-            u32         m_interestBits;
-            u32         m_observerIdBits;
-
-            bool operator < (const ObserverRequest& rhs) const {
-                return m_pObserver < rhs.m_pObserver;
-            }
-
-            bool operator == (IObserver* rhs) const {
-                return m_pObserver == rhs;
-            }
-    }; // class ChangeManager::ObserverRequest
 
     typedef std::vector<ObserverRequest> ObserversList;;
 

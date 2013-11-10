@@ -22,21 +22,21 @@
 /**
  * @inheritDoc
  */
-ISystem::ISystem(void) : IProperty() {
+ISystem::ISystem() : IProperty() {
 
 }
 
 /**
  * @inheritDoc
  */
-ISystem::~ISystem(void) {
+ISystem::~ISystem() {
 
 }
 
 /**
  * @inheritDoc
  */
-void ISystem::createScene(void) {
+void ISystem::createScene() {
     m_pSystemScene = m_SceneFactory(this);
 }
 

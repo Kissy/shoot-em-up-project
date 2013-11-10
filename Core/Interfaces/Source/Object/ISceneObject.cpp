@@ -17,7 +17,7 @@
 /**
  * @inheritDoc
  */
-ISceneObject::ISceneObject(void) 
+ISceneObject::ISceneObject() 
     : m_createObjectQueue(new ObjectProtoQueue())
     , m_deleteObjectQueue(new ObjectProtoQueue()) {
 }
@@ -25,7 +25,7 @@ ISceneObject::ISceneObject(void)
 /**
  * @inheritDoc
  */
-ISceneObject::~ISceneObject(void) {
+ISceneObject::~ISceneObject() {
     delete m_createObjectQueue;
     delete m_deleteObjectQueue;
 }
@@ -33,13 +33,13 @@ ISceneObject::~ISceneObject(void) {
 /**
  * @inheritDoc
  */
-void ISceneObject::resetCreateObjectQueues(void) {
+void ISceneObject::resetCreateObjectQueues() {
     m_createObjectQueue->clear();
 }
 
 /**
  * @inheritDoc
  */
-void ISceneObject::resetDeleteObjectQueues(void) {
+void ISceneObject::resetDeleteObjectQueues() {
     m_deleteObjectQueue->clear();
 }
