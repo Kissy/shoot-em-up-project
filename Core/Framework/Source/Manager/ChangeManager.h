@@ -18,7 +18,8 @@
 #include <set>
 
 #include "Manager/IChangeManager.h"
-#include "Manager/ObserverRequest.h"
+#include "Manager/Notification.h"
+#include "Manager/SubjectInfo.h"
 #include "SpinMutex.h"
 
 class ITaskManager;
@@ -31,28 +32,14 @@ class ITaskManager;
  */
 class ChangeManager : public IChangeManager {
 public:
-
-    struct Notification {
-        Notification(ISubject* pSubject, u32 changedBits)
-            : m_pSubject(pSubject)
-            , m_changedBits(changedBits)
-        {}
-
-        ISubject*   m_pSubject;
-        u32         m_changedBits;
-    };
-
-    typedef std::vector<Notification> NotifyList;
-    typedef std::list<NotifyList*> ListOfNotifyLists;
-
     /**
-        * Default constructor.
-        */
+     * Default constructor.
+     */
     ChangeManager(void);
 
     /**
-        * Destructor.
-        */
+     * Destructor.
+     */
     virtual ~ChangeManager(void);
 
     // Must be called after construction for a valid Change Manager
@@ -66,8 +53,8 @@ public:
     Error ChangeOccurred(ISubject* pInChangedSubject, System::Changes::BitMask uInChangedBits);
         
     /**
-        * @inheritDoc
-        */
+     * @inheritDoc
+     */
     inline System::Changes::BitMask GetDesiredSystemChanges(void) {
         return System::Changes::All;
     }
@@ -80,68 +67,10 @@ public:
     // Must be called before the previously set task manager has been shut down
     void ResetTaskManager();
 
-    inline NotifyList& GetNotifyList(u32 tlsIndex);
+    inline std::vector<Notification>& GetNotifyList(u32 tlsIndex);
 
 protected:
-
-    typedef std::vector<ObserverRequest> ObserversList;;
-
-    /// <summary>
-    ///   Represents a list of observers extended with cumulative data.
-    /// </summary>
-    struct SubjectInfo {
-        SubjectInfo()
-            : m_pSubject(nullptr)
-            , m_interestBits(0)
-        {}
-
-        /// <summary>
-        ///   Subject described by this data structure
-        /// </summary>
-        ISubject*       m_pSubject;
-
-        /// <summary>
-        ///   Cumulative interest bits of all observers from this list
-        /// </summary>
-        u32     m_interestBits;
-
-        /// <summary>
-        ///   Observers subscribed to this subject
-        /// </summary>
-        ObserversList   m_observersList;
-
-    }; // class ChangeManager::ObserversList
-
-    typedef std::vector<u32> IDsList;
-
-    /// <summary>
-    ///   List of IDs that become free after the subjects associated with them were unregistered
-    /// </summary>
-    IDsList             m_freeIDsList;
-
-    /// <summary>
-    ///   Next ID value to be assigned to a newly registered observer, if free list is empty
-    /// </summary>
-    u32                 m_lastID;
-
-    typedef std::vector<SubjectInfo> SubjectsList;
-
-    /// <summary>
-    ///   Vector of observers list indexed by subject ID.
-    /// </summary>
-    SubjectsList        m_subjectsList;
-
-    /// <summary>
-    ///   Cross-thread list of notification lists. Accessed only from the main thread.
-    /// </summary>
-    ListOfNotifyLists   m_NotifyLists;
-
-    /// <summary>
-    ///   TLS slot that store pointers to NotifyListInfo values, containing pointer
-    ///   to thread local notification lists with fast search ability and .
-    /// </summary>
-    //static boost::thread_specific_ptr<NotifyList> m_tlsNotifyList;
-    u32                 m_tlsNotifyList;
+    ITaskManager*       m_pTaskManager;
 
     struct MappedNotification {
         MappedNotification(u32 uID, u32 changedBits)
@@ -153,20 +82,13 @@ protected:
         u32 m_changedBits;
     };
 
-    typedef std::vector<MappedNotification> MappedNotifyList;
-
-    /// <summary>
-    ///   Cumulative list of notifications posted during the last execution stage.
-    ///   Used during distribution stage only.
-    /// </summary>
-    MappedNotifyList    m_cumulativeNotifyList;
-
-    /// <summary>
-    ///   Used while generating cumulative list during the distribution stage.
-    /// </summary>
-    IDsList             m_indexList;
-
-    ITaskManager*       m_pTaskManager;
+    u32                                     m_lastID;
+    std::vector<u32>                        m_indexList;
+    std::vector<u32>                        m_freeIDsList;
+    std::vector<SubjectInfo>                m_subjectsList;
+    std::list<std::vector<Notification>*>   m_NotifyLists;
+    std::vector<MappedNotification>         m_cumulativeNotifyList;
+    u32                                     m_tlsNotifyList;
 
     DEFINE_SPIN_MUTEX(m_swUpdate);
 

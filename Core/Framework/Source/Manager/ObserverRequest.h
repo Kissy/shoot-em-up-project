@@ -12,9 +12,7 @@
 // assume any responsibility for any errors which may appear in this software nor any
 // responsibility to update it.
 
-/**
- * Defines a structure used by the CCM to store information about observers.
- */
+#pragma once
 
 #include "DataTypes.h"
 #include "System/Changes.h"

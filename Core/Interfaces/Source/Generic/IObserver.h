@@ -31,7 +31,6 @@ class ISubject;
  */
 class IObserver {
 public:
-
     /**
      * Destructor.
      * All interfaces must have virtual destructors
@@ -61,4 +60,5 @@ public:
      *          change.
      */
     virtual inline Error ChangeOccurred(ISubject* pSubject, System::Changes::BitMask ChangeType) = 0;
+
 };

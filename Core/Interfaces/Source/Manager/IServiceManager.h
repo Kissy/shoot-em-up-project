@@ -30,16 +30,14 @@ public:
     /**
      * Default constructor.
      */
-    IServiceManager(void) {
+    IServiceManager() {
         sm_instance = this;
     };
 
     /**
      * Destructor.
      */
-    virtual ~IServiceManager(void) {
-
-    };
+    virtual ~IServiceManager() {};
 
     /**
      * Gets task manager.
@@ -47,7 +45,7 @@ public:
      * @return  null if it fails, else the task manager.
      */
     // TODO Wrap it inside a service
-    virtual ITaskManager* getTaskManager(void) = 0;
+    virtual ITaskManager* getTaskManager() = 0;
 
     /**
      * Sets task manager.
@@ -61,35 +59,35 @@ public:
      *
      * @return  null if it fails, else the runtime service.
      */
-    virtual LogService* getLogService(void) = 0;
+    virtual LogService* getLogService() = 0;
 
     /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
      */
-    virtual RuntimeService* getRuntimeService(void) = 0;
+    virtual RuntimeService* getRuntimeService() = 0;
 
     /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
      */
-    virtual SettingService* getSettingService(void) = 0;
+    virtual SettingService* getSettingService() = 0;
 
     /**
      * Gets system service.
      *
      * @return  null if it fails, else the system service.
      */
-    virtual SystemService* getSystemService(void) = 0;
+    virtual SystemService* getSystemService() = 0;
 
     /**
      * Gets window service.
      *
      * @return  null if it fails, else the window service.
      */
-    virtual WindowService* getWindowService(void) = 0;
+    virtual WindowService* getWindowService() = 0;
 
     /**
      * Gets the get.
